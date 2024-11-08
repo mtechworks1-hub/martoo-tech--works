@@ -17,39 +17,37 @@
             min-height: 100vh; /* Ensure content takes up at least full viewport height */
         }
 
-        /* Header styles with background image */
+        /* Header styles with main background image */
         header {
             background-image: url('background.jpg'); /* Main background image */
             background-size: cover;
             background-position: center;
             color: white;
             text-align: center;
-            padding: 20px;
-            position: relative;
+            padding: 60px 20px;
+            position: relative; /* For absolute positioning of logo */
             width: 100vw;
         }
 
-        /* Logo placed behind the text */
-        header::before {
-            content: "";
+        /* Logo placed in top left corner as circle */
+        .logo {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('logo.jpg'); /* Path to your logo */
-            background-size: contain; /* Fit the logo inside */
-            background-repeat: no-repeat;
-            background-position: center;
-            opacity: 0.1; /* Make the logo subtle */
-            z-index: 0; /* Ensure it stays behind the text */
+            top: 20px;
+            left: 20px;
+            width: 100px; /* Size of the logo */
+            height: 100px;
+            border-radius: 50%; /* Circle shape */
+            object-fit: cover; /* Ensures logo fits well */
+            border: 4px solid #ffcc00; /* Orange border around logo */
         }
 
         /* Header Text Styling */
         header h1 {
             color: #ffcc00; /* Orange color for the header text */
+            font-size: 36px;
             position: relative; /* Allow header text to overlay */
             z-index: 1; /* Ensure the text stays on top of the logo */
+            margin-top: 20px;
         }
 
         /* Hamburger menu styling */
@@ -150,7 +148,10 @@
 
     <!-- Header -->
     <header>
-        <!-- Text on top of the logo -->
+        <!-- Logo placed in the top left corner as a circle -->
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
+        
+        <!-- Header text -->
         <h1>Welcome to Martoo Tech Works</h1>
         
         <!-- Hamburger icon -->

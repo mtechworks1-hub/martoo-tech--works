@@ -68,7 +68,6 @@
         nav ul {
             list-style-type: none;
             padding: 0;
-            display: none;
             margin: 0;
         }
 
@@ -90,36 +89,22 @@
             background-color: #000; /* Black highlight */
         }
 
-        /* Dropdown menu styles */
-        .dropdown {
-            position: relative;
-        }
-
+        /* Dropdown content styles */
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #333;
+            background-color: rgba(0, 0, 0, 0.7);
             min-width: 160px;
             z-index: 1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
+            border-radius: 5px;
         }
 
         .dropdown-content a {
-            color: #ffcc00;
             padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #000;
         }
 
         /* Show the menu when toggled */
-        #menu.show {
+        .show {
             display: block;
         }
 
@@ -188,11 +173,8 @@
         <!-- Navigation menu -->
         <nav>
             <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-
-                <!-- Dropdown for Services -->
                 <li class="dropdown">
-                    <a href="services.html">Services</a>
+                    <a href="services.html" onclick="toggleDropdown(event)">Services</a>
                     <div class="dropdown-content">
                         <a href="vmess.html">Vmess</a>
                         <a href="trojan.html">Trojan</a>
@@ -201,7 +183,6 @@
                         <a href="assignments.html">Assignments</a>
                     </div>
                 </li>
-
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="posts.html">Posts</a></li>
@@ -228,6 +209,14 @@
     </footer>
 
     <script>
+        // Toggle the dropdown visibility
+        function toggleDropdown(event) {
+            event.preventDefault(); // Prevent default link behavior
+            var dropdown = event.target.nextElementSibling; // Get the dropdown menu
+            dropdown.classList.toggle("show"); // Toggle the 'show' class for visibility
+        }
+
+        // Toggle the hamburger menu
         function toggleMenu() {
             var menu = document.getElementById("menu");
             menu.classList.toggle("show");

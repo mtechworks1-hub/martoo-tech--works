@@ -103,12 +103,29 @@
             padding: 40px;
             margin-top: 40px;
             border-radius: 10px;
-            max-width: 600px;
+            max-width: 800px;
             margin: 40px auto;
         }
 
         #service-section h2 {
             color: #ffcc00; /* Orange color */
+        }
+
+        /* Embedded video styling */
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            max-width: 560px; /* Set a max width for mobile-friendly display */
+            height: 315px; /* Maintain aspect ratio */
+            border: none;
+            border-radius: 10px;
         }
 
         /* Footer styles */
@@ -172,6 +189,18 @@
             <li>School Materials</li>
             <li>Consulting Services</li>
         </ul>
+
+        <!-- Video Section -->
+        <div class="video-container">
+            <h3>Watch Our Videos</h3>
+
+            <!-- Embedded YouTube Videos -->
+            <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs?si=MmtxGW6zt759VvOu" title="YouTube video 1"></iframe>
+            <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM?si=TrNCukz56cDy0BHu" title="YouTube video 2"></iframe>
+            <iframe src="https://www.youtube.com/embed/J-DNnARdB8E?si=CVWRmdWCjT0XHbcY" title="YouTube video 3"></iframe>
+            <iframe src="https://www.youtube.com/embed/w0_sFwO1IR8?si=xEPdg6tv5X4MsRjM" title="YouTube video 4"></iframe>
+            <iframe src="https://www.youtube.com/embed/Y1buMCBNh-U?si=akNq69PVhGVCOP23" title="YouTube video 5"></iframe>
+        </div>
     </section>
 
     <!-- Footer -->

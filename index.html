@@ -39,6 +39,14 @@
             border-radius: 50%; /* Makes the logo circular */
             object-fit: cover; /* Ensures the image doesn't stretch */
             border: 5px solid #ffcc00; /* Optional: border around logo */
+            z-index: -1; /* Make sure the logo stays in the background */
+        }
+
+        /* Header Text Styling */
+        header h1 {
+            color: #ffcc00; /* Orange color for the header text */
+            position: relative; /* Allow header text to overlay */
+            z-index: 1; /* Ensure the text stays on top of the logo */
         }
 
         /* Hamburger menu styling */

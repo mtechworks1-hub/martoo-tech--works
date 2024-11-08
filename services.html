@@ -184,6 +184,28 @@
             margin-top: 10px;
             font-size: 14px;
         }
+
+        /* Make the menu full-width when it's active */
+        @media (max-width: 768px) {
+            nav ul {
+                width: 100%;
+                position: absolute;
+                top: 60px; /* Place the menu below the header */
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+                z-index: 10;
+                display: none;
+            }
+
+            #menu.show {
+                display: block;
+            }
+
+            nav ul li {
+                text-align: center;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -237,29 +259,28 @@
             <!-- Embedded YouTube Videos -->
             <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs?si=MmtxGW6zt759VvOu" title="YouTube video 1"></iframe>
             <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM?si=TrNCukz56cDy0BHu" title="YouTube video 2"></iframe>
+            <iframe src="https://www.youtube.com/embed/J-DNnARdB8E?si=CVWRmdWCjT0XHbcY"
             <iframe src="https://www.youtube.com/embed/J-DNnARdB8E?si=CVWRmdWCjT0XHbcY" title="YouTube video 3"></iframe>
-            <iframe src="https://www.youtube.com/embed/w0_sFwO1IR8?si=xEPdg6tv5X4MsRjM" title="YouTube video 4"></iframe>
-            <iframe src="https://www.youtube.com/embed/Y1buMCBNh-U?si=akNq69PVhGVCOP23" title="YouTube video 5"></iframe>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="social-icons">
-            <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
-            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://wa.me/260950322498" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
-        <p class="license">Copyright 2024, All rights        <p class="license">Copyright 2024, All rights reserved.</p>
+
+        <p class="license">Copyright 2024, All rights reserved.</p>
     </footer>
 
+    <!-- Script to toggle the menu visibility -->
     <script>
-        // Toggle menu visibility for mobile view
         function toggleMenu() {
-            var menu = document.getElementById("menu");
+            const menu = document.getElementById("menu");
             menu.classList.toggle("show");
         }
     </script>
-
 </body>
 </html>

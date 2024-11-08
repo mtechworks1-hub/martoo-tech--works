@@ -35,7 +35,9 @@
             top: 20px;
             left: 20px; /* Positioning the logo to the left */
             width: 120px; /* Set the width of the logo */
-            height: auto;
+            height: 120px; /* Set height equal to width for a circle */
+            border-radius: 50%; /* Makes the logo circular */
+            object-fit: cover; /* Ensures the image fits within the circle */
             z-index: 10; /* Ensure the logo is above the text */
         }
 
@@ -195,7 +197,8 @@
         <h2>Get in Touch</h2>
         <p>If you have any questions or need further information, feel free to reach out to us. We're here to assist you!</p>
 
-        <form action="submit_form.php" method="POST">
+        <!-- Contact Form -->
+        <form action="send_email.php" method="POST">
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="email" placeholder="Your Email" required>
             <textarea name="message" rows="5" placeholder="Your Message" required></textarea>

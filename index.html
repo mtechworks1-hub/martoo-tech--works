@@ -62,6 +62,7 @@
             padding: 10px;
             border-radius: 5px;
             border: 2px solid #ffcc00;
+            z-index: 2; /* Ensure the hamburger is above everything */
         }
 
         /* Navigation styles */
@@ -69,36 +70,50 @@
             list-style-type: none;
             padding: 0;
             margin: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Dark background for menu */
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1; /* Menu appears above content */
+            transition: 0.3s ease-in-out; /* Smooth animation */
+        }
+
+        /* Show the menu when toggled */
+        #menu.show {
+            display: flex; /* Menu becomes visible */
         }
 
         nav ul li {
-            margin: 10px 0;
-            position: relative; /* Needed for the dropdown */
+            margin: 20px 0;
         }
 
         nav ul li a {
             color: #ffcc00; /* Dark Orange color */
             text-decoration: none;
-            padding: 10px;
+            padding: 15px;
             display: block;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
             border-radius: 5px;
-            transition: background-color 0.3s ease; /* Smooth transition for highlight */
+            transition: background-color 0.3s ease;
         }
 
         nav ul li a:hover {
-            background-color: #000; /* Black highlight */
+            background-color: #ff7f00; /* Dark Orange highlight */
         }
 
         /* Dropdown styling */
         .dropdown-content {
             display: none;
-            position: absolute;
+            position: relative;
             background-color: rgba(0, 0, 0, 0.8);
             min-width: 160px;
             z-index: 1;
-            top: 40px;
-            left: 0;
             border-radius: 5px;
         }
 
@@ -113,8 +128,7 @@
             background-color: #ff7f00;
         }
 
-        /* Show the dropdown when the menu is active */
-        #menu.show .dropdown-content {
+        .dropdown:hover .dropdown-content {
             display: block;
         }
 

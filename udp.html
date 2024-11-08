@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UDP | Martoo Tech Works</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CSS -->
+    <style>
+        /* General body background and layout settings */
+        body {
+            background-color: #3f51b5; /* Indigo background */
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding-bottom: 60px; /* Make space for footer */
+            min-height: 100vh; /* Ensure content takes up at least full viewport height */
+        }
+
+        /* Header styles with main background image */
+        header {
+            background-image: url('background.jpg'); /* Main background image */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative; /* For absolute positioning of logo */
+            width: 100vw;
+        }
+
+        /* Logo placed in top left corner as circle */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px; /* Size of the logo */
+            height: 100px;
+            border-radius: 50%; /* Circle shape */
+            object-fit: cover; /* Ensures logo fits well */
+            border: 4px solid #ffcc00; /* Orange border around logo */
+        }
+
+        /* Header Text Styling */
+        header h1 {
+            color: #ffcc00; /* Orange color for the header text */
+            font-size: 36px;
+            position: relative; /* Allow header text to overlay */
+            z-index: 1; /* Ensure the text stays on top of the logo */
+            margin-top: 20px;
+        }
+
+        /* Hamburger menu styling */
+        .hamburger {
+            position: absolute;
+            top: 15px; /* Move it down a bit for visibility */
+            right: 20px; /* Adjust from the far-right edge */
+            font-size: 30px;
+            color: #ffcc00; /* Dark Orange color */
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid #ffcc00;
+        }
+
+        /* Navigation styles */
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: none;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 10px 0;
+        }
+
+        nav ul li a {
+            color: #ffcc00; /* Dark Orange color */
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            transition: background-color 0.3s ease; /* Smooth transition for highlight */
+        }
+
+        nav ul li a:hover {
+            background-color: #000; /* Black highlight */
+        }
+
+        /* Show the menu when toggled */
+        #menu.show {
+            display: block;
+        }
+
+        /* Section for UDP explanation */
+        #udp-section {
+            background-color: #222;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        #udp-section h2 {
+            margin-bottom: 30px;
+        }
+
+        #udp-section p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .udp-features {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .udp-features li {
+            background-color: rgba(0, 0, 0, 0.7);
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Social media icons */
+        .social-icons a {
+            margin: 0 15px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .social-icons a:hover {
+            color: #ff7f00; /* Dark Orange highlight */
+        }
+
+        /* License text */
+        .license {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <!-- Logo placed in the top left corner as a circle -->
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
+        
+        <!-- Header text -->
+        <h1>UDP Protocol</h1>
+        
+        <!-- Hamburger icon -->
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+
+        <!-- Navigation menu -->
+        <nav>
+            <ul id="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="posts.html">Posts</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- UDP Content Section -->
+    <section id="udp-section">
+        <h2>What is UDP?</h2>
+        <p>The User Datagram Protocol (UDP) is a connectionless protocol used in networking for transmitting data. It is faster than other protocols, such as TCP, because it does not establish a connection before sending data, making it ideal for real-time applications like gaming and streaming.</p>
+
+        <h3>Features of UDP</h3>
+        <ul class="udp-features">
+            <li><strong>Faster than TCP:</strong> UDP doesn't establish a connection, making it faster for data transmission.</li>
+            <li><strong>Lower Latency:</strong> Ideal for applications requiring real-time data transmission (e.g., live streaming).</li>
+            <li><strong>No Acknowledgement:</strong> Unlike TCP, UDP doesn't require an acknowledgment for each sent packet, reducing overhead.</li>
+            <li><strong>Connectionless:</strong> UDP doesn't establish a session between sender and receiver, making it suitable for one-way communications.</li>
+            <li><strong>Ideal for Streaming:</strong> UDP is great for media streaming and online gaming due to its low-latency and real-time capabilities.</li>
+        </ul>
+
+        <p>UDP is a lightweight and high-performance protocol suitable for scenarios where speed is more important than reliability. It is commonly used for video calls, voice over IP (VoIP), and online gaming.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-icons">
+            <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="license">
+            <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            menu.classList.toggle("show");
+        }
+    </script>
+
+</body>
+</html>

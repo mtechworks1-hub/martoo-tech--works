@@ -15,6 +15,7 @@
             color: white;
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
+            padding-bottom: 60px; /* Make space for footer */
         }
 
         /* Header styles */
@@ -43,13 +44,13 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 30px;
-            color: white;
+            font-size: 40px; /* Increase the size of the icon */
+            color: #ff7f00; /* Dark Orange color */
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            border: 2px solid white;
+            padding: 12px;
+            border-radius: 50%;
+            border: 2px solid #ff7f00; /* Dark Orange border */
         }
 
         /* Navigation styles */
@@ -105,7 +106,11 @@
             color: white;
             text-align: center;
             padding: 20px;
-            position: relative;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+            right: 0;
         }
 
         /* Social media icons */
@@ -117,6 +122,12 @@
 
         .social-icons a:hover {
             color: #ff7f00; /* Dark Orange highlight */
+        }
+
+        /* License text */
+        .license {
+            margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -146,11 +157,13 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
         <div class="social-icons">
             <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
             <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
             <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="license">
+            <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
         </div>
     </footer>
 

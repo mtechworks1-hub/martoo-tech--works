@@ -3,63 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Martoo Tech Works - Home</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/scripts.js" defer></script>
+    <link rel="canonical" href="http://www.martootechhub.wuaze.com/">
+    <title>Martoo Tech Works</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CSS -->
 
-    <!-- Add Font Awesome for social icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General body background and layout settings */
+        body {
+            background-color: #3f51b5; /* Indigo background */
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+        }
+
+        /* Header styles */
+        header {
+            background-image: url('background.jpg'); /* Background image path */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            width: 100vw;
+        }
+
+        /* Logo styling (Optional, if you want to display a logo image) */
+        header img.logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px; /* Adjust as needed */
+            height: auto;
+        }
+
+        /* Hamburger menu styling */
+        .hamburger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid white;
+        }
+
+        /* Navigation styles */
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: none;
+        }
+
+        nav ul li {
+            margin: 10px 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 165, 0, 0.7); /* Dark Orange highlight */
+        }
+
+        /* Show the menu when toggled */
+        #menu.show {
+            display: block;
+        }
+
+        /* Section for key content with a background image */
+        #content-section {
+            background-image: url('background.jpg'); /* Your background image */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        #content-section h2, #content-section p {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 20px auto;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Social media icons */
+        .social-icons a {
+            margin: 0 15px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .social-icons a:hover {
+            color: #ff7f00; /* Dark Orange highlight */
+        }
+    </style>
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <div class="logo">
-            <img src="assets/images/logo.png" alt="">
-        </div>
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Logo path -->
+        <h1>Welcome to Martoo Tech Works</h1>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
         <nav>
-            <ul id="nav-links">
+            <ul id="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="services.html">Services</a></li>
-                <li><a href="post.html">Posts</a></li>
-                <li><a href="contacts.html">Contacts</a></li>
                 <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="posts.html">Posts</a></li>
             </ul>
-            <div id="hamburger-menu" class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        <section class="intro">
-            <h2>Welcome to Martoo Tech Works</h2>
-            <p>Your trusted partner in technology and digital solutions. We provide VPN services, typing assistants, and educational resources to help you succeed in the digital age.</p>
-        </section>
-
-        <section class="services-preview">
-            <h3>Our Services</h3>
-            <ul>
-                <li><a href="services.html">Explore Our Services</a></li>
-                <li><a href="vpn.html">Learn About VPN Services</a></li>
-                <li><a href="typing_assistant.html">Boost Your Typing Speed</a></li>
-                <li><a href="school_materials.html">Access School Materials</a></li>
-            </ul>
-        </section>
-    </main>
+    <!-- Content Section -->
+    <section id="content-section">
+        <h2>Your Gateway to Technology</h2>
+        <p>At Martoo Tech Works, we offer a range of tech services to help you navigate the digital world. From VPN configurations to educational materials, we're here to support your growth.</p>
+    </section>
 
     <!-- Footer -->
     <footer>
-        <p>© 2024 Martoo Tech Works. All rights reserved.</p>
-        <div class="social-links">
-            <a href="https://wa.me/260950322498" target="_blank"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank"><i class="fab fa-youtube"></i></a>
+        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
         </div>
     </footer>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            menu.classList.toggle("show");
+        }
+    </script>
 
 </body>
 </html>

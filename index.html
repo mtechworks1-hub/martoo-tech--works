@@ -73,6 +73,7 @@
 
         nav ul li {
             margin: 10px 0;
+            position: relative; /* Needed for the dropdown */
         }
 
         nav ul li a {
@@ -89,22 +90,31 @@
             background-color: #000; /* Black highlight */
         }
 
-        /* Dropdown content styles */
+        /* Dropdown styling */
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
             min-width: 160px;
             z-index: 1;
+            top: 40px;
+            left: 0;
             border-radius: 5px;
         }
 
         .dropdown-content a {
+            color: #ffcc00;
             padding: 12px 16px;
+            text-decoration: none;
+            display: block;
         }
 
-        /* Show the menu when toggled */
-        .show {
+        .dropdown-content a:hover {
+            background-color: #ff7f00;
+        }
+
+        /* Show the dropdown when the menu is active */
+        #menu.show .dropdown-content {
             display: block;
         }
 
@@ -173,14 +183,16 @@
         <!-- Navigation menu -->
         <nav>
             <ul id="menu">
+                <li><a href="index.html">Home</a></li>
                 <li class="dropdown">
-                    <a href="services.html" onclick="toggleDropdown(event)">Services</a>
+                    <a href="services.html">Services</a>
+                    <!-- Dropdown content -->
                     <div class="dropdown-content">
+                        <a href="vpn.html">VPN</a>
                         <a href="vmess.html">Vmess</a>
                         <a href="trojan.html">Trojan</a>
                         <a href="udp.html">UDP</a>
-                        <a href="school-materials.html">School Materials</a>
-                        <a href="assignments.html">Assignments</a>
+                        <a href="typing_assistant.html">Typing Assistant</a>
                     </div>
                 </li>
                 <li><a href="about.html">About</a></li>
@@ -209,14 +221,6 @@
     </footer>
 
     <script>
-        // Toggle the dropdown visibility
-        function toggleDropdown(event) {
-            event.preventDefault(); // Prevent default link behavior
-            var dropdown = event.target.nextElementSibling; // Get the dropdown menu
-            dropdown.classList.toggle("show"); // Toggle the 'show' class for visibility
-        }
-
-        // Toggle the hamburger menu
         function toggleMenu() {
             var menu = document.getElementById("menu");
             menu.classList.toggle("show");

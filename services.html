@@ -36,7 +36,7 @@
             left: 20px; /* Positioning the logo to the left */
             width: 120px; /* Set the width of the logo */
             height: auto;
-            z-index: 10; /* Ensure the logo is above the text */
+            z-index: 5; /* Ensure the logo stays at the top */
         }
 
         /* Title text styling */
@@ -45,7 +45,7 @@
             color: #ffcc00; /* Orange color for the text */
             font-size: 36px; /* Adjust the size */
             margin-top: 0;
-            z-index: 5; /* Ensure the text appears on top */
+            z-index: 10; /* Ensure the text appears on top */
         }
 
         /* Hamburger menu styling */
@@ -94,23 +94,19 @@
             display: block;
         }
 
-        /* Section for Services content */
-        #content-section {
+        /* Service Section */
+        #service-section {
             position: relative;
-            background-image: url('background.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            margin-top: 40px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 40px auto;
         }
 
-        #content-section h2, #content-section p {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            margin: 20px auto;
+        #service-section h2 {
+            color: #ffcc00; /* Orange color */
         }
 
         /* Footer styles */
@@ -150,7 +146,7 @@
         <!-- Logo placed here -->
         <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
         
-        <h1>Services - Martoo Tech Works</h1>
+        <h1>Our Services</h1>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
         <nav>
             <ul id="menu">
@@ -163,25 +159,17 @@
         </nav>
     </header>
 
-    <!-- Content Section for Services -->
-    <section id="content-section">
-        <h2>Our Tech Services</h2>
-        <p>At Martoo Tech Works, we offer a variety of services to assist with your tech needs, from VPN configurations to educational resources. Explore our services below!</p>
-        
-        <div>
-            <h3>VPN Configuration</h3>
-            <p>Secure your internet browsing with our customized VPN configurations, including protocols like Vmess, Trojan, and UDP.</p>
-        </div>
+    <!-- Service Section -->
+    <section id="service-section">
+        <h2>Our Services</h2>
+        <p>At Martoo Tech Works, we offer a variety of services that cater to your tech needs. Whether you're looking for secure VPN setups, typing assistance, or educational materials, we are here to help!</p>
 
-        <div>
-            <h3>Typing Assistant</h3>
-            <p>Improve your typing speed and accuracy with our interactive typing assistant tool. Perfect for students and professionals alike!</p>
-        </div>
-
-        <div>
-            <h3>School Materials</h3>
-            <p>Access a wide range of school materials to aid in your learning. We provide notes, guides, and educational resources tailored to your needs.</p>
-        </div>
+        <ul>
+            <li>VPN Setup & Configuration</li>
+            <li>Typing Assistant</li>
+            <li>School Materials</li>
+            <li>Consulting Services</li>
+        </ul>
     </section>
 
     <!-- Footer -->

@@ -19,7 +19,7 @@
 
         /* Header styles with background image */
         header {
-            background-image: url('background.jpg'); /* Add your header background image */
+            background-image: url('background.jpg'); /* Header background image */
             background-size: cover;
             background-position: center;
             color: white;
@@ -29,24 +29,26 @@
             width: 100vw;
         }
 
-        /* Logo styling */
-        .logo {
-            position: absolute;
-            top: 20px;
-            left: 20px; /* Positioning the logo to the left */
-            width: 120px; /* Set the width of the logo */
-            height: 120px; /* Make the height equal to the width */
-            border-radius: 50%; /* Makes the logo circular */
-            object-fit: cover; /* Ensures the image doesn't stretch */
-            border: 5px solid #ffcc00; /* Optional: border around logo */
-            z-index: -1; /* Make sure the logo stays in the background */
-        }
-
         /* Header Text Styling */
         header h1 {
             color: #ffcc00; /* Orange color for the header text */
             position: relative; /* Allow header text to overlay */
-            z-index: 1; /* Ensure the text stays on top of the logo */
+            z-index: 1; /* Ensure the text stays on top */
+        }
+
+        /* Logo Styling */
+        .logo-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('logo.jpg'); /* Path to your logo image */
+            background-size: contain; /* Make sure the logo fits within its container */
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.2; /* Make the logo less intrusive */
+            z-index: -1; /* Ensure the logo stays behind the text */
         }
 
         /* Hamburger menu styling */
@@ -147,11 +149,16 @@
 
     <!-- Header -->
     <header>
-        <!-- Logo placed here -->
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
+        <!-- Logo background behind the text -->
+        <div class="logo-background"></div>
         
+        <!-- Text on top of the logo -->
         <h1>Welcome to Martoo Tech Works</h1>
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
+        
+        <!-- Hamburger icon -->
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+
+        <!-- Navigation menu -->
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>

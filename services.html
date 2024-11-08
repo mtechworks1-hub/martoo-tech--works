@@ -29,13 +29,15 @@
             width: 100vw;
         }
 
-        /* Logo styling */
+        /* Logo styling to make it circular */
         .logo {
             position: absolute;
             top: 20px;
             left: 20px; /* Positioning the logo to the left */
             width: 120px; /* Set the width of the logo */
-            height: auto;
+            height: 120px; /* Set height equal to width for a circle */
+            border-radius: 50%; /* Makes the logo circular */
+            object-fit: cover; /* Ensures the image fits within the circle */
             z-index: 5; /* Ensure the logo stays at the top */
         }
 

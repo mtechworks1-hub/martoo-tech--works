@@ -3,54 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="http://www.martootechhub.wuaze.com/">
     <title>Martoo Tech Works</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CSS -->
-
     <style>
         /* General body background and layout settings */
         body {
             background-color: #3f51b5; /* Indigo background */
             color: white;
-            font-family: 'Times New Roman', Times, serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding-bottom: 60px; /* Make space for footer */
         }
 
-        /* Header styles */
+        /* Header styles with background image */
         header {
-            background-image: url('background.jpg'); /* Background image path */
+            background-image: url('background.jpg'); /* Add your header background image */
             background-size: cover;
             background-position: center;
             color: white;
             text-align: center;
-            padding: 40px;
+            padding: 20px;
             position: relative;
             width: 100vw;
-        }
-
-        /* Logo styling (Optional, if you want to display a logo image) */
-        header img.logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 100px; /* Adjust as needed */
-            height: auto;
         }
 
         /* Hamburger menu styling */
         .hamburger {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 40px; /* Increase the size of the icon */
-            color: #ff7f00; /* Dark Orange color */
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            color: #ffcc00; /* Dark Orange color */
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
-            padding: 12px;
-            border-radius: 50%;
-            border: 2px solid #ff7f00; /* Dark Orange border */
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid #ffcc00;
         }
 
         /* Navigation styles */
@@ -65,7 +54,7 @@
         }
 
         nav ul li a {
-            color: white;
+            color: #ffcc00; /* Dark Orange color */
             text-decoration: none;
             padding: 10px;
             display: block;
@@ -74,7 +63,7 @@
         }
 
         nav ul li a:hover {
-            background-color: rgba(255, 165, 0, 0.7); /* Dark Orange highlight */
+            background-color: rgba(255, 204, 0, 0.5);
         }
 
         /* Show the menu when toggled */
@@ -84,7 +73,8 @@
 
         /* Section for key content with a background image */
         #content-section {
-            background-image: url('background.jpg'); /* Your background image */
+            position: relative;
+            background-image: url('background.jpg');
             background-size: cover;
             background-position: center;
             color: white;
@@ -109,8 +99,6 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            left: 0;
-            right: 0;
         }
 
         /* Social media icons */
@@ -135,7 +123,6 @@
 
     <!-- Header -->
     <header>
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Logo path -->
         <h1>Welcome to Martoo Tech Works</h1>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
         <nav>

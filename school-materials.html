@@ -9,17 +9,17 @@
     <style>
         /* General body background and layout settings */
         body {
-            background-color: #3f51b5; /* Indigo background */
+            background-color: #3f51b5;
             color: white;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding-bottom: 60px; /* Make space for footer */
-            min-height: 100vh; /* Ensure content takes up at least full viewport height */
+            padding-bottom: 60px;
+            min-height: 100vh;
         }
 
         /* Header styles with background image */
         header {
-            background-image: url('background.jpg'); /* Add your header background image */
+            background-image: url('background.jpg'); 
             background-size: cover;
             background-position: center;
             color: white;
@@ -29,40 +29,97 @@
             width: 100vw;
         }
 
-        /* Logo styling to make it circular */
         .logo {
             position: absolute;
             top: 20px;
-            left: 20px; /* Positioning the logo to the left */
-            width: 120px; /* Set the width of the logo */
-            height: 120px; /* Set height equal to width for a circle */
-            border-radius: 50%; /* Makes the logo circular */
-            object-fit: cover; /* Ensures the image fits within the circle */
-            z-index: 5; /* Ensure the logo stays at the top */
+            left: 20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 5;
         }
 
-        /* Title text styling */
         header h1 {
-            position: relative;
-            color: #ffcc00; /* Orange color for the text */
-            font-size: 36px; /* Adjust the size */
+            color: #ffcc00;
+            font-size: 36px;
             margin-top: 0;
-            z-index: 10; /* Ensure the text appears on top */
+            z-index: 10;
         }
 
-        /* Hamburger menu styling */
         .hamburger {
             position: absolute;
-            top: 15px; /* Move it down a bit for visibility */
-            right: 20px; /* Adjust from the far-right edge */
+            top: 15px;
+            right: 20px;
             font-size: 30px;
-            color: #ffcc00; /* Dark Orange color */
+            color: #ffcc00;
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px;
             border-radius: 5px;
             border: 2px solid #ffcc00;
-            z-index: 5; /* Ensure the hamburger icon is visible */
+            z-index: 5;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: none;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 10px 0;
+        }
+
+        nav ul li a {
+            color: #ffcc00;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #000;
+        }
+
+        #menu.show {
+            display: block;
+        }
+
+        /* Dropdown styling */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            min-width: 160px;
+            z-index: 1;
+            border-radius: 5px;
+            padding: 0;
+        }
+
+        .dropdown-menu li a {
+            color: #ffcc00;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #555;
+        }
+
+        /* Show dropdown on hover */
+        .dropdown:hover .dropdown-menu {
+            display: block;
         }
 
         /* School Materials Section */
@@ -77,7 +134,7 @@
         }
 
         #materials-section h2 {
-            color: #ffcc00; /* Orange color */
+            color: #ffcc00;
         }
 
         #materials-section ul {
@@ -92,20 +149,13 @@
             border-radius: 5px;
         }
 
-        /* Download button styling */
-        .download-btn {
-            display: inline-block;
-            padding: 12px 20px;
-            color: #fff;
-            background-color: #ffcc00; /* Yellow color for the button */
+        #materials-section ul li a {
+            color: #ffcc00;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
         }
 
-        .download-btn:hover {
-            background-color: #ffa500; /* Darker yellow on hover */
+        #materials-section ul li a:hover {
+            text-decoration: underline;
         }
 
         /* Footer styles */
@@ -120,7 +170,6 @@
             box-sizing: border-box;
         }
 
-        /* Social media icons */
         .social-icons a {
             margin: 0 15px;
             color: white;
@@ -128,10 +177,9 @@
         }
 
         .social-icons a:hover {
-            color: #ff7f00; /* Dark Orange highlight */
+            color: #ff7f00;
         }
 
-        /* License text */
         .license {
             margin-top: 10px;
             font-size: 14px;
@@ -142,18 +190,15 @@
 
     <!-- Header -->
     <header>
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
-        
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> 
         <h1>School Materials</h1>
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
-
-                <!-- Services Dropdown -->
                 <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropdown-toggle" onclick="toggleDropdown()">Services</a>
-                    <ul class="dropdown-menu" id="services-dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle">Services</a>
+                    <ul class="dropdown-menu">
                         <li><a href="vmess.html">Vmess</a></li>
                         <li><a href="trojan.html">Trojan</a></li>
                         <li><a href="udp.html">UDP</a></li>
@@ -161,7 +206,6 @@
                         <li><a href="assignments.html">Assignments</a></li>
                     </ul>
                 </li>
-                
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="posts.html">Posts</a></li>
@@ -169,18 +213,15 @@
         </nav>
     </header>
 
-    <!-- School Materials Section -->
+    <!-- School Materials Section with Download Button -->
     <section id="materials-section">
         <h2>School Materials</h2>
-        <p>Welcome to the school materials section. Here you will find various educational resources, guides, and study materials to support your learning journey.</p>
+        <p>Welcome to the school materials section. Here you will find various educational resources to assist you.</p>
 
-        <ul>
-            <li><p>Click the button below to download the "Community Health Nutrition Questions and Answers" document:</p></li>
-            <li>
-                <a href="https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/raw/main/COMMUNITY%20HEALTH%20NUTRITION%20QUESTIONS%20AND%20ANSWERS.docx" 
-                   class="download-btn" download>Download Community Health Nutrition Questions and Answers</a>
-            </li>
-        </ul>
+        <button onclick="showDownloadLink()">Click here to download the Community Health Nutrition document</button>
+        <div id="download-link" style="display:none; margin-top: 10px;">
+            <a href="COMMUNITY_HEALTH_NUTRITION_QUESTIONS_AND_ANSWERS.docx" download>Download Document</a>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -190,22 +231,19 @@
             <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
             <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
         </div>
-
         <div class="license">
             <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Function to toggle the menu visibility
         function toggleMenu() {
             document.getElementById("menu").classList.toggle("show");
         }
 
-        // Function to toggle the dropdown menu visibility
-        function toggleDropdown() {
-            document.getElementById("services-dropdown").classList.toggle("show");
+        function showDownloadLink() {
+            document.getElementById("download-link").style.display = "block";
         }
     </script>
 </body>
-</html>
+        </html>

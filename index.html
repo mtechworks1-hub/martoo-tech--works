@@ -29,6 +29,15 @@
             width: 100vw;
         }
 
+        /* Logo styling */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px; /* Positioning the logo to the left */
+            width: 120px; /* Set the width of the logo */
+            height: auto;
+        }
+
         /* Hamburger menu styling */
         .hamburger {
             position: absolute;
@@ -127,6 +136,9 @@
 
     <!-- Header -->
     <header>
+        <!-- Logo placed here -->
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
+        
         <h1>Welcome to Martoo Tech Works</h1>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
         <nav>

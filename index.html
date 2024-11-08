@@ -19,7 +19,7 @@
 
         /* Header styles with background image */
         header {
-            background-image: url('background.jpg'); /* Header background image */
+            background-image: url('background.jpg'); /* Main background image */
             background-size: cover;
             background-position: center;
             color: white;
@@ -29,26 +29,27 @@
             width: 100vw;
         }
 
-        /* Header Text Styling */
-        header h1 {
-            color: #ffcc00; /* Orange color for the header text */
-            position: relative; /* Allow header text to overlay */
-            z-index: 1; /* Ensure the text stays on top */
-        }
-
-        /* Logo Styling */
-        .logo-background {
+        /* Logo placed behind the text */
+        header::before {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('logo.jpg'); /* Path to your logo image */
-            background-size: contain; /* Make sure the logo fits within its container */
+            background-image: url('logo.jpg'); /* Path to your logo */
+            background-size: contain; /* Fit the logo inside */
             background-repeat: no-repeat;
             background-position: center;
-            opacity: 0.2; /* Make the logo less intrusive */
-            z-index: -1; /* Ensure the logo stays behind the text */
+            opacity: 0.1; /* Make the logo subtle */
+            z-index: 0; /* Ensure it stays behind the text */
+        }
+
+        /* Header Text Styling */
+        header h1 {
+            color: #ffcc00; /* Orange color for the header text */
+            position: relative; /* Allow header text to overlay */
+            z-index: 1; /* Ensure the text stays on top of the logo */
         }
 
         /* Hamburger menu styling */
@@ -149,9 +150,6 @@
 
     <!-- Header -->
     <header>
-        <!-- Logo background behind the text -->
-        <div class="logo-background"></div>
-        
         <!-- Text on top of the logo -->
         <h1>Welcome to Martoo Tech Works</h1>
         

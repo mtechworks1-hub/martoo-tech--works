@@ -111,21 +111,37 @@
             color: #ffcc00; /* Orange color */
         }
 
-        /* Embedded video styling */
-        .video-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            margin-top: 20px;
+        /* Dropdown menu styles */
+        nav ul li.dropdown {
+            position: relative;
         }
 
-        .video-container iframe {
-            width: 100%;
-            max-width: 560px; /* Set a max width for mobile-friendly display */
-            height: 315px; /* Maintain aspect ratio */
-            border: none;
-            border-radius: 10px;
+        nav ul li .dropdown-menu {
+            display: none;  /* Hide the dropdown by default */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.8); /* Dark background for the dropdown */
+            padding: 10px;
+            list-style: none;
+            min-width: 200px;
+            border-radius: 5px;
+        }
+
+        nav ul li .dropdown-menu.show {
+            display: block;  /* Show the dropdown when toggled */
+        }
+
+        nav ul li .dropdown-menu li a {
+            color: #ffcc00; /* Yellow for links */
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li .dropdown-menu li a:hover {
+            background-color: #000; /* Darken background on hover */
         }
 
         /* Footer styles */
@@ -170,7 +186,19 @@
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
+
+                <!-- Services Dropdown -->
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" onclick="toggleDropdown()">Services</a>
+                    <ul class="dropdown-menu" id="services-dropdown">
+                        <li><a href="vmess.html">Vmess</a></li>
+                        <li><a href="trojan.html">Trojan</a></li>
+                        <li><a href="udp.html">UDP</a></li>
+                        <li><a href="school-materials.html">School Materials</a></li>
+                        <li><a href="assignments.html">Assignments</a></li>
+                    </ul>
+                </li>
+                
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="posts.html">Posts</a></li>
@@ -209,18 +237,4 @@
             <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
             <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
             <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
-        </div>
-        <div class="license">
-            <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        function toggleMenu() {
-            var menu = document.getElementById("menu");
-            menu.classList.toggle("show");
-        }
-    </script>
-
-</body>
-</html>
+        </div

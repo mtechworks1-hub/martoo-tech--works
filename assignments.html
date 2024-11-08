@@ -126,23 +126,6 @@
             background-color: #ff7f00;
         }
 
-        /* Upload Section */
-        #upload-section {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            margin-top: 40px;
-            border-radius: 10px;
-        }
-
-        #upload-section label {
-            color: #ffcc00;
-            font-size: 18px;
-        }
-
-        #upload-section input[type="file"] {
-            margin-top: 10px;
-        }
-
         /* Footer styles */
         footer {
             background-color: #333;
@@ -201,27 +184,7 @@
     <!-- Assignments Section -->
     <section id="assignments-section">
         <h2>Available Assignments</h2>
-        <ul>
-            <!-- You can add links to actual assignments here -->
-            <li><a href="uploads/assignment1.pdf" download>Assignment 1 - VPN Configuration</a></li>
-            <li><a href="uploads/assignment2.pdf" download>Assignment 2 - Typing Assistant Setup</a></li>
-            <li><a href="uploads/assignment3.pdf" download>Assignment 3 - School Materials Integration</a></li>
-            <li><a href="uploads/assignment4.pdf" download>Assignment 4 - Code Debugging</a></li>
-        </ul>
-    </section>
-
-    <!-- File Upload Section -->
-    <section id="upload-section">
-        <h2>Upload New Assignment</h2>
-        <form action="upload.php" method="post" enctype="multipart/form-data">
-            <label for="fileUpload">Choose a file to upload:</label>
-            <input type="file" name="fileUpload" id="fileUpload" accept=".pdf,.docx,.txt" required>
-            <br><br>
-            <label for="assignmentTitle">Assignment Title:</label>
-            <input type="text" name="assignmentTitle" id="assignmentTitle" required>
-            <br><br>
-            <input type="submit" value="Upload Assignment" name="submit">
-        </form>
+        <p>No assignments uploaded yet. Please check back later.</p>
     </section>
 
     <!-- Footer -->

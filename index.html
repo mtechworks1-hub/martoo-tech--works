@@ -220,6 +220,17 @@
             var menu = document.getElementById("menu");
             menu.classList.toggle("show");
         }
+
+        // Close menu if clicked outside
+        document.addEventListener("click", function(event) {
+            var menu = document.getElementById("menu");
+            var hamburger = document.querySelector(".hamburger");
+
+            // Close the menu if clicked outside of the menu or hamburger
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove("show");
+            }
+        });
     </script>
 
 </body>

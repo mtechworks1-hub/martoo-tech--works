@@ -9,20 +9,20 @@
     <style>
         /* General body background and layout settings */
         body {
-            background-image: url('full site background.jpg'); /* Path for the full-site background */
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
+            background-color: #3f51b5; /* Indigo background */
             color: white;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding-bottom: 60px; /* Make space for footer */
-            min-height: 100vh; /* Ensure content takes up at least full viewport height */
+            padding-bottom: 60px; /* Space for footer */
+            min-height: 100vh;
+            overflow-x: hidden; /* Avoid horizontal scrolling */
         }
 
-        /* Header styles */
+        /* Header styles with background image */
         header {
-            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay for readability */
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
             color: white;
             text-align: center;
             padding: 20px;
@@ -30,7 +30,7 @@
             width: 100vw;
         }
 
-        /* Logo styling to make it circular */
+        /* Logo styling */
         .logo {
             position: absolute;
             top: 20px;
@@ -44,6 +44,7 @@
 
         /* Title text styling */
         header h1 {
+            position: relative;
             color: #ffcc00;
             font-size: 36px;
             margin-top: 0;
@@ -65,24 +66,33 @@
             z-index: 5;
         }
 
-        /* Navigation styles */
+        /* Navigation styles for mobile */
         nav ul {
             list-style-type: none;
             padding: 0;
             margin: 0;
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 90%; /* Slightly narrower to prevent covering the whole screen */
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 10;
+            border-radius: 10px;
+            overflow: hidden;
+            max-height: 80vh; /* Limit height to avoid covering the whole screen */
         }
 
         nav ul li {
-            margin: 10px 0;
+            text-align: center;
+            padding: 15px;
         }
 
         nav ul li a {
             color: #ffcc00;
             text-decoration: none;
-            padding: 10px;
             display: block;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 5px;
+            padding: 10px;
             transition: background-color 0.3s ease;
         }
 
@@ -90,10 +100,14 @@
             background-color: #000;
         }
 
+        /* Show the menu when toggled */
+        #menu.show {
+            display: block;
+        }
+
         /* Dropdown menu */
         .dropdown {
             position: relative;
-            display: inline-block;
         }
 
         .dropdown-content {
@@ -102,6 +116,8 @@
             background-color: #333;
             min-width: 200px;
             z-index: 1;
+            left: 0;
+            border-radius: 5px;
         }
 
         .dropdown:hover .dropdown-content {
@@ -117,10 +133,6 @@
 
         .dropdown-content a:hover {
             background-color: #000;
-        }
-
-        #menu.show {
-            display: block;
         }
 
         /* Service Section */
@@ -166,6 +178,7 @@
             box-sizing: border-box;
         }
 
+        /* Social media icons */
         .social-icons a {
             margin: 0 15px;
             color: white;
@@ -176,31 +189,10 @@
             color: #ff7f00;
         }
 
+        /* License text */
         .license {
             margin-top: 10px;
             font-size: 14px;
-        }
-
-        /* Responsive settings */
-        @media (max-width: 768px) {
-            nav ul {
-                width: 100%;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                background-color: rgba(0, 0, 0, 0.8);
-                z-index: 10;
-                display: none;
-            }
-
-            #menu.show {
-                display: block;
-            }
-
-            nav ul li {
-                text-align: center;
-                padding: 10px;
-            }
         }
     </style>
 </head>
@@ -208,10 +200,10 @@
 
     <!-- Header -->
     <header>
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
         
         <h1>Our Services</h1>
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
@@ -247,13 +239,11 @@
             <li>Consulting Services</li>
         </ul>
 
-        <!-- Document Download Link -->
-        <p><a href="COMMUNITY HEALTH NUTRTION QUESTIONS AND ANSWERS.docx" download>Download Community Health Nutrition Questions and Answers</a></p>
-
         <!-- Video Section -->
         <div class="video-container">
             <h3>Watch Our Videos</h3>
 
+            <!-- Embedded YouTube Videos -->
             <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs?si=MmtxGW6zt759VvOu" title="YouTube video 1"></iframe>
             <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM?si=TrNCukz56cDy0BHu" title="YouTube video 2"></iframe>
             <iframe src="https://www.youtube.com/embed/J-DNnARdB8E?si=CVWRmdWCjT0XHbcY" title="YouTube video 3"></iframe>

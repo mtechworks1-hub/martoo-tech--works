@@ -1,14 +1,14 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Martoo Tech Works - Services</title>
+    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
+    <title>Martoo Tech Works</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Full-site background */
         body {
-            background-image: url('services-background.jpg');
+            background-image: url('full site background.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -26,12 +26,16 @@
             background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
         }
 
+        /* Header text styles */
         header h1 {
-            color: #ff9800;
+            color: #ff9800; /* Nice color for header text */
             font-size: 32px;
             margin: 0;
+            position: relative;
+            z-index: 2;
         }
 
+        /* Logo */
         .logo {
             position: absolute;
             top: 20px;
@@ -41,6 +45,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #ffcc00;
+            z-index: 1; /* Behind header text */
         }
 
         /* Hamburger menu icon */
@@ -55,6 +60,7 @@
             padding: 8px;
             border-radius: 5px;
             border: 2px solid #ffcc00;
+            z-index: 3;
         }
 
         /* Navigation menu styling */
@@ -69,8 +75,11 @@
             background-color: rgba(0, 0, 0, 0.9);
             display: none;
             flex-direction: column;
+            align-items: flex-start;
             border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease-in-out;
+            z-index: 4; /* Ensure it's above the header text */
         }
 
         /* Menu toggle */
@@ -78,6 +87,7 @@
             display: flex;
         }
 
+        /* Menu items */
         nav ul li {
             margin: 3px 0;
         }
@@ -85,11 +95,12 @@
         nav ul li a {
             color: white;
             text-decoration: none;
-            padding: 10px;
+            padding: 5px 10px; /* Reduced padding */
             display: block;
-            font-weight: bold;
+            font-weight: bold; /* Make the font bold */
             border-radius: 5px;
             background-color: rgba(0, 0, 0, 0.8);
+            transition: background-color 0.3s ease;
         }
 
         nav ul li a:hover {
@@ -102,11 +113,14 @@
             position: absolute;
             background-color: rgba(0, 0, 0, 0.9);
             border-radius: 5px;
+            margin-top: 5px;
             padding: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
         }
 
         .dropdown:hover .dropdown-content {
-            display: block;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Main content section */
@@ -120,8 +134,37 @@
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
+            display: inline-block;
             margin: 20px auto;
             max-width: 800px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Social icons */
+        .social-icons a {
+            margin: 0 15px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .social-icons a:hover {
+            color: #ff7f00;
+        }
+
+        /* License text */
+        .license {
+            margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -130,33 +173,46 @@
     <!-- Header with logo and navigation -->
     <header>
         <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
-        <h1>Our Services</h1>
+        <h1>Welcome to Martoo Tech Works</h1>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
                 <li class="dropdown">
-                    <a href="#">Services</a>
+                    <a href="services.html">Services</a>
                     <div class="dropdown-content">
                         <a href="vpn.html">VPN</a>
                         <a href="vmess.html">Vmess</a>
                         <a href="trojan.html">Trojan</a>
                         <a href="udp.html">UDP</a>
                         <a href="typing_assistant.html">Typing Assistant</a>
-                        <a href="school-materials.html">School Materials</a>
+                        <a href="school-materials.html">School Materials</a> <!-- New Link Added -->
                     </div>
                 </li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
+                <li><a href="posts.html">Posts</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Main content section -->
     <section id="content-section">
-        <h2>Explore Our Range of Services</h2>
-        <p>We provide a variety of tech services tailored to support your digital journey. From VPN services to typing assistance and educational materials, Martoo Tech Works is here for you.</p>
+        <h2>Your Gateway to Technology</h2>
+        <p>At Martoo Tech Works, we offer a range of tech services to help you navigate the digital world. From VPN configurations to educational materials, we're here to support your growth.</p>
     </section>
+
+    <!-- Footer with social links -->
+    <footer>
+        <div class="social-icons">
+            <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="license">
+            <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         function toggleMenu() {
@@ -164,10 +220,12 @@
             menu.classList.toggle("show");
         }
 
+        // Close menu if clicked outside
         document.addEventListener("click", function(event) {
             var menu = document.getElementById("menu");
             var hamburger = document.querySelector(".hamburger");
 
+            // Close the menu if clicked outside of the menu or hamburger
             if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
                 menu.classList.remove("show");
             }

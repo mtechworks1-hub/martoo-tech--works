@@ -9,7 +9,10 @@
     <style>
         /* General body background and layout settings */
         body {
-            background-color: #3f51b5; /* Indigo background */
+            background-image: url('full site background.jpg'); /* Path for the full-site background */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
             color: white;
             font-family: Arial, sans-serif;
             margin: 0;
@@ -17,11 +20,9 @@
             min-height: 100vh; /* Ensure content takes up at least full viewport height */
         }
 
-        /* Header styles with background image */
+        /* Header styles */
         header {
-            background-image: url('background.jpg'); /* Add your header background image */
-            background-size: cover;
-            background-position: center;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay for readability */
             color: white;
             text-align: center;
             padding: 20px;
@@ -33,36 +34,35 @@
         .logo {
             position: absolute;
             top: 20px;
-            left: 20px; /* Positioning the logo to the left */
-            width: 120px; /* Set the width of the logo */
-            height: 120px; /* Set height equal to width for a circle */
-            border-radius: 50%; /* Makes the logo circular */
-            object-fit: cover; /* Ensures the image fits within the circle */
-            z-index: 5; /* Ensure the logo stays at the top */
+            left: 20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 5;
         }
 
         /* Title text styling */
         header h1 {
-            position: relative;
-            color: #ffcc00; /* Orange color for the text */
-            font-size: 36px; /* Adjust the size */
+            color: #ffcc00;
+            font-size: 36px;
             margin-top: 0;
-            z-index: 10; /* Ensure the text appears on top */
+            z-index: 10;
         }
 
         /* Hamburger menu styling */
         .hamburger {
             position: absolute;
-            top: 15px; /* Move it down a bit for visibility */
-            right: 20px; /* Adjust from the far-right edge */
+            top: 15px;
+            right: 20px;
             font-size: 30px;
-            color: #ffcc00; /* Dark Orange color */
+            color: #ffcc00;
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px;
             border-radius: 5px;
             border: 2px solid #ffcc00;
-            z-index: 5; /* Ensure the hamburger icon is visible */
+            z-index: 5;
         }
 
         /* Navigation styles */
@@ -77,17 +77,17 @@
         }
 
         nav ul li a {
-            color: #ffcc00; /* Dark Orange color */
+            color: #ffcc00;
             text-decoration: none;
             padding: 10px;
             display: block;
             background-color: rgba(0, 0, 0, 0.7);
             border-radius: 5px;
-            transition: background-color 0.3s ease; /* Smooth transition for highlight */
+            transition: background-color 0.3s ease;
         }
 
         nav ul li a:hover {
-            background-color: #000; /* Black highlight */
+            background-color: #000;
         }
 
         /* Dropdown menu */
@@ -119,14 +119,12 @@
             background-color: #000;
         }
 
-        /* Show the menu when toggled */
         #menu.show {
             display: block;
         }
 
         /* Service Section */
         #service-section {
-            position: relative;
             background-color: rgba(0, 0, 0, 0.7);
             padding: 40px;
             margin-top: 40px;
@@ -136,7 +134,7 @@
         }
 
         #service-section h2 {
-            color: #ffcc00; /* Orange color */
+            color: #ffcc00;
         }
 
         /* Embedded video styling */
@@ -150,8 +148,8 @@
 
         .video-container iframe {
             width: 100%;
-            max-width: 560px; /* Set a max width for mobile-friendly display */
-            height: 315px; /* Maintain aspect ratio */
+            max-width: 560px;
+            height: 315px;
             border: none;
             border-radius: 10px;
         }
@@ -168,7 +166,6 @@
             box-sizing: border-box;
         }
 
-        /* Social media icons */
         .social-icons a {
             margin: 0 15px;
             color: white;
@@ -176,23 +173,22 @@
         }
 
         .social-icons a:hover {
-            color: #ff7f00; /* Dark Orange highlight */
+            color: #ff7f00;
         }
 
-        /* License text */
         .license {
             margin-top: 10px;
             font-size: 14px;
         }
 
-        /* Make the menu full-width when it's active */
+        /* Responsive settings */
         @media (max-width: 768px) {
             nav ul {
                 width: 100%;
                 position: absolute;
-                top: 60px; /* Place the menu below the header */
+                top: 60px;
                 left: 0;
-                background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+                background-color: rgba(0, 0, 0, 0.8);
                 z-index: 10;
                 display: none;
             }
@@ -212,11 +208,10 @@
 
     <!-- Header -->
     <header>
-        <!-- Logo placed here -->
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
         
         <h1>Our Services</h1>
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
@@ -252,14 +247,15 @@
             <li>Consulting Services</li>
         </ul>
 
+        <!-- Document Download Link -->
+        <p><a href="COMMUNITY HEALTH NUTRTION QUESTIONS AND ANSWERS.docx" download>Download Community Health Nutrition Questions and Answers</a></p>
+
         <!-- Video Section -->
         <div class="video-container">
             <h3>Watch Our Videos</h3>
 
-            <!-- Embedded YouTube Videos -->
             <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs?si=MmtxGW6zt759VvOu" title="YouTube video 1"></iframe>
             <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM?si=TrNCukz56cDy0BHu" title="YouTube video 2"></iframe>
-            <iframe src="https://www.youtube.com/embed/J-DNnARdB8E?si=CVWRmdWCjT0XHbcY"
             <iframe src="https://www.youtube.com/embed/J-DNnARdB8E?si=CVWRmdWCjT0XHbcY" title="YouTube video 3"></iframe>
         </div>
     </section>

@@ -3,162 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Materials - Martoo Tech Works</title>
+    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
+    <title>Martoo Tech Works</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* General body background and layout settings */
+        /* Full-site background */
         body {
-            background-color: #3f51b5;
+            background-image: url('full site background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding-bottom: 60px;
             min-height: 100vh;
         }
 
-        /* Header styles with background image */
+        /* Header styles */
         header {
-            background-image: url('background.jpg'); 
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 20px;
             position: relative;
-            width: 100vw;
+            text-align: center;
+            padding: 80px 20px;
+            background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
         }
 
+        /* Header text styles */
+        header h1 {
+            color: #ff9800; /* Nice color for header text */
+            font-size: 36px;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Logo */
         .logo {
             position: absolute;
             top: 20px;
             left: 20px;
-            width: 120px;
-            height: 120px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            z-index: 5;
+            border: 2px solid #ffcc00;
+            z-index: 1; /* Behind header text */
         }
 
-        header h1 {
-            color: #ffcc00;
-            font-size: 36px;
-            margin-top: 0;
-            z-index: 10;
-        }
-
+        /* Hamburger menu icon */
         .hamburger {
             position: absolute;
             top: 15px;
             right: 20px;
             font-size: 30px;
-            color: #ffcc00;
+            color: white;
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px;
             border-radius: 5px;
             border: 2px solid #ffcc00;
-            z-index: 5;
+            z-index: 3;
         }
 
+        /* Navigation menu styling */
         nav ul {
             list-style-type: none;
             padding: 0;
-            display: none;
             margin: 0;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            width: 200px;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease-in-out;
         }
 
+        /* Menu toggle */
+        #menu.show {
+            display: flex;
+        }
+
+        /* Menu items */
         nav ul li {
             margin: 10px 0;
         }
 
         nav ul li a {
-            color: #ffcc00;
+            color: white;
             text-decoration: none;
-            padding: 10px;
+            padding: 15px;
             display: block;
-            background-color: rgba(0, 0, 0, 0.7);
             border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.8);
             transition: background-color 0.3s ease;
         }
 
         nav ul li a:hover {
-            background-color: #000;
+            background-color: #ff7f00;
         }
 
-        #menu.show {
-            display: block;
+        /* Dropdown content */
+        .dropdown-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
-        /* Dropdown styling */
-        .dropdown {
-            position: relative;
-            display: inline-block;
+        /* Main content section */
+        #content-section {
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
         }
 
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.8);
-            min-width: 160px;
-            z-index: 1;
-            border-radius: 5px;
-            padding: 0;
-        }
-
-        .dropdown-menu li a {
-            color: #ffcc00;
-            padding: 10px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-menu li a:hover {
-            background-color: #555;
-        }
-
-        /* Show dropdown on hover */
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        /* School Materials Section */
-        #materials-section {
-            position: relative;
+        #content-section h2, #content-section p {
             background-color: rgba(0, 0, 0, 0.7);
-            padding: 40px;
-            margin-top: 40px;
+            padding: 20px;
             border-radius: 10px;
-            max-width: 800px;
-            margin: 40px auto;
+            display: inline-block;
+            margin: 20px auto;
         }
 
-        #materials-section h2 {
-            color: #ffcc00;
-        }
-
-        #materials-section ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        #materials-section ul li {
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.8);
-            margin: 5px 0;
-            border-radius: 5px;
-        }
-
-        #materials-section ul li a {
-            color: #ffcc00;
-            text-decoration: none;
-        }
-
-        #materials-section ul li a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer styles */
+        /* Footer */
         footer {
             background-color: #333;
             color: white;
@@ -167,9 +138,9 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            box-sizing: border-box;
         }
 
+        /* Social icons */
         .social-icons a {
             margin: 0 15px;
             color: white;
@@ -180,6 +151,7 @@
             color: #ff7f00;
         }
 
+        /* License text */
         .license {
             margin-top: 10px;
             font-size: 14px;
@@ -188,23 +160,24 @@
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header with logo and navigation -->
     <header>
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> 
-        <h1>School Materials</h1>
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
+        <h1>Welcome to Martoo Tech Works</h1>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
                 <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropdown-toggle">Services</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="vmess.html">Vmess</a></li>
-                        <li><a href="trojan.html">Trojan</a></li>
-                        <li><a href="udp.html">UDP</a></li>
-                        <li><a href="school-materials.html">School Materials</a></li>
-                        <li><a href="assignments.html">Assignments</a></li>
-                    </ul>
+                    <a href="services.html">Services</a>
+                    <div class="dropdown-content">
+                        <a href="vpn.html">VPN</a>
+                        <a href="vmess.html">Vmess</a>
+                        <a href="trojan.html">Trojan</a>
+                        <a href="udp.html">UDP</a>
+                        <a href="typing_assistant.html">Typing Assistant</a>
+                        <a href="school-materials.html">School Materials</a> <!-- New Link Added -->
+                    </div>
                 </li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
@@ -213,18 +186,13 @@
         </nav>
     </header>
 
-    <!-- School Materials Section with Download Button -->
-    <section id="materials-section">
-        <h2>School Materials</h2>
-        <p>Welcome to the school materials section. Here you will find various educational resources to assist you.</p>
-
-        <button onclick="showDownloadLink()">Click here to download the Community Health Nutrition document</button>
-        <div id="download-link" style="display:none; margin-top: 10px;">
-            <a href="COMMUNITY_HEALTH_NUTRITION_QUESTIONS_AND_ANSWERS.docx" download>Download Document</a>
-        </div>
+    <!-- Main content section -->
+    <section id="content-section">
+        <h2>Your Gateway to Technology</h2>
+        <p>At Martoo Tech Works, we offer a range of tech services to help you navigate the digital world. From VPN configurations to educational materials, we're here to support your growth.</p>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer with social links -->
     <footer>
         <div class="social-icons">
             <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
@@ -238,12 +206,10 @@
 
     <script>
         function toggleMenu() {
-            document.getElementById("menu").classList.toggle("show");
-        }
-
-        function showDownloadLink() {
-            document.getElementById("download-link").style.display = "block";
+            var menu = document.getElementById("menu");
+            menu.classList.toggle("show");
         }
     </script>
+
 </body>
 </html>

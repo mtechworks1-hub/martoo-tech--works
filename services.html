@@ -3,171 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services - Martoo Tech Works</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Martoo Tech Works - Services</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* General body settings with full background image */
+        /* Full-site background */
         body {
-            background-image: url('background.jpg'); /* Ensure this path is correct */
+            background-image: url('services-background.jpg');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: white;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding-bottom: 60px;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         /* Header styling */
         header {
-            text-align: center;
-            padding: 20px;
-            color: white;
             position: relative;
-            width: 100%;
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
         }
 
-        /* Logo styling */
+        header h1 {
+            color: #ff9800;
+            font-size: 32px;
+            margin: 0;
+        }
+
         .logo {
             position: absolute;
             top: 20px;
             left: 20px;
-            width: 120px;
-            height: 120px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             object-fit: cover;
+            border: 2px solid #ffcc00;
         }
 
-        /* Title styling */
-        header h1 {
-            color: #ffcc00;
-            font-size: 36px;
-            margin-top: 0;
-        }
-
-        /* Hamburger menu */
+        /* Hamburger menu icon */
         .hamburger {
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 30px;
-            color: #ffcc00;
+            font-size: 28px;
+            color: white;
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
+            padding: 8px;
             border-radius: 5px;
             border: 2px solid #ffcc00;
         }
 
-        /* Navigation menu styles */
+        /* Navigation menu styling */
         nav ul {
             list-style-type: none;
             padding: 0;
             margin: 0;
-            display: none;
-            position: fixed;
+            position: absolute;
             top: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85%; /* Restricting width */
+            right: 20px;
+            width: 200px;
             background-color: rgba(0, 0, 0, 0.9);
-            border-radius: 10px;
-            z-index: 10;
-            max-height: 70vh; /* Height restriction */
-            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
         }
 
-        /* Menu item styling */
+        /* Menu toggle */
+        #menu.show {
+            display: flex;
+        }
+
         nav ul li {
-            text-align: center;
-            padding: 15px;
+            margin: 3px 0;
         }
 
         nav ul li a {
-            color: #ffcc00;
+            color: white;
             text-decoration: none;
-            display: block;
             padding: 10px;
-            transition: background-color 0.3s ease;
+            display: block;
+            font-weight: bold;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
         nav ul li a:hover {
-            background-color: #000;
+            background-color: #ff7f00;
         }
 
-        /* Display the menu */
-        #menu.show {
-            display: block;
-        }
-
-        /* Dropdown styling */
-        .dropdown {
-            position: relative;
-        }
-
+        /* Dropdown content */
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #333;
-            min-width: 200px;
-            z-index: 1;
-            left: 0;
+            background-color: rgba(0, 0, 0, 0.9);
             border-radius: 5px;
+            padding: 5px;
+            width: 100%;
         }
 
         .dropdown:hover .dropdown-content {
             display: block;
         }
 
-        .dropdown-content a {
-            color: #ffcc00;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
+        /* Main content section */
+        #content-section {
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
         }
 
-        .dropdown-content a:hover {
-            background-color: #000;
+        #content-section h2, #content-section p {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        /* Footer with license and social icons */
+        footer {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            color: white;
+        }
+
+        footer .social-icons i {
+            margin: 0 10px;
+            font-size: 24px;
+            color: white;
+        }
+
+        footer .social-icons i:hover {
+            color: #ff9800;
+        }
+
+        footer .license {
+            margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header with logo and navigation -->
     <header>
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
-        
-        <h1>Our Services</h1>
+        <img src="logo.jpg" alt="Martoo Tech Logo" class="logo">
+        <h1>Martoo Tech Works - Services</h1>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
                 <li class="dropdown">
-                    <a href="services.html">Services</a>
+                    <a href="#">Services</a>
                     <div class="dropdown-content">
-                        <a href="vmess.html">Vmess</a>
-                        <a href="trojan.html">Trojan</a>
-                        <a href="udp.html">UDP</a>
-                        <a href="school-materials.html">School Materials</a>
-                        <a href="assignments.html">Assignments</a>
+                        <a href="typing.html">Typing Assistant</a>
+                        <a href="vpn.html">VPN</a>
+                        <a href="materials.html">Materials</a>
                     </div>
                 </li>
-                <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="posts.html">Posts</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Footer script to toggle menu -->
+    <!-- Main content section -->
+    <section id="content-section">
+        <h2>Welcome to Our Services</h2>
+        <p>Explore our range of services, including Typing Assistance, VPN configurations, and access to essential materials. Each service is crafted to support your tech needs.</p>
+    </section>
+
+    <!-- Footer with social icons and license -->
+    <footer>
+        <div class="social-icons">
+            <a href="https://facebook.com"><i class="fab fa-facebook"></i></a>
+            <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+            <a href="https://linkedin.com"><i class="fab fa-linkedin"></i></a>
+            <a href="https://youtube.com"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="license">
+            &copy; 2024 Martoo Tech Works. All rights reserved.
+        </div>
+    </footer>
+
     <script>
         function toggleMenu() {
-            const menu = document.getElementById("menu");
-            menu.classList.toggle("show");
+            document.getElementById("menu").classList.toggle("show");
         }
     </script>
+
 </body>
 </html>

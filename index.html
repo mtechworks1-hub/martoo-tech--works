@@ -71,9 +71,9 @@
             padding: 0;
             margin: 0;
             position: absolute;
-            top: 70px;
+            top: 20px;
             right: 20px;
-            width: 200px;
+            width: 250px;
             background-color: rgba(0, 0, 0, 0.9);
             display: none;
             flex-direction: column;
@@ -81,6 +81,7 @@
             border-radius: 5px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease-in-out;
+            z-index: 4; /* Ensure it's above the header text */
         }
 
         /* Menu toggle */
@@ -90,14 +91,15 @@
 
         /* Menu items */
         nav ul li {
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
         nav ul li a {
             color: white;
             text-decoration: none;
-            padding: 15px;
+            padding: 10px 15px;
             display: block;
+            font-weight: bold; /* Make the font bold */
             border-radius: 5px;
             background-color: rgba(0, 0, 0, 0.8);
             transition: background-color 0.3s ease;

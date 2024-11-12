@@ -3,207 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
     <title>Martoo Tech Works</title>
+
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- External CSS Stylesheet -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CSS -->
+    
     <style>
-        /* General body background and layout settings */
+        /* Global Styles */
         body {
-            background-color: #3f51b5; /* Indigo background */
-            color: white;
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding-bottom: 60px; /* Make space for footer */
-            min-height: 100vh; /* Ensure content takes up at least full viewport height */
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #3f51b5;
+            color: white;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
         }
 
-        /* Header styles with main background image */
         header {
-            background-image: url('background.jpg'); /* Main background image */
-            background-size: cover;
-            background-position: center;
+            position: relative;
+            background: url('background.jpg') no-repeat center center/cover;
             color: white;
             text-align: center;
-            padding: 60px 20px;
-            position: relative; /* For absolute positioning of logo */
-            width: 100vw;
+            padding: 100px 20px;
         }
 
-        /* Logo placed in top left corner as circle */
+        /* Header styles */
         .logo {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 100px; /* Size of the logo */
+            top: 30px;
+            left: 30px;
+            width: 100px;
             height: 100px;
-            border-radius: 50%; /* Circle shape */
-            object-fit: cover; /* Ensures logo fits well */
-            border: 4px solid #ffcc00; /* Orange border around logo */
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ffcc00;
         }
 
-        /* Header Text Styling */
         header h1 {
-            color: #ffcc00; /* Orange color for the header text */
-            font-size: 36px;
-            position: relative; /* Allow header text to overlay */
-            z-index: 1; /* Ensure the text stays on top of the logo */
-            margin-top: 20px;
+            font-size: 40px;
+            font-weight: 700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
         }
 
-        /* Hamburger menu styling */
+        /* Hamburger menu styles */
         .hamburger {
+            font-size: 32px;
             position: absolute;
-            top: 15px; /* Move it down a bit for visibility */
-            right: 20px; /* Adjust from the far-right edge */
-            font-size: 30px;
-            color: #ffcc00; /* Dark Orange color */
+            top: 30px;
+            right: 30px;
             cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            border: 2px solid #ffcc00;
-            z-index: 2; /* Ensure the hamburger is above everything */
+            color: #ffcc00;
+            background-color: rgba(0, 0, 0, 0.6);
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
         }
 
-        /* Navigation styles */
+        /* Navigation menu styles */
+        nav {
+            position: absolute;
+            top: 130px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            display: none;
+            z-index: 2;
+            width: 250px;
+        }
+
+        nav.show {
+            display: block;
+        }
+
         nav ul {
             list-style-type: none;
             padding: 0;
-            margin: 0;
-            position: absolute;
-            top: 70px; /* Positioned below the hamburger icon */
-            right: 20px; /* Align to the right */
-            width: 200px;
-            background-color: rgba(0, 0, 0, 0.9); /* Dark background for menu */
-            display: none; /* Initially hidden */
-            flex-direction: column;
-            align-items: flex-start;
-            border-radius: 5px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-            z-index: 1; /* Menu appears above content */
-            transition: all 0.3s ease-in-out; /* Smooth animation */
-        }
-
-        /* Show the menu when toggled */
-        #menu.show {
-            display: flex; /* Menu becomes visible */
         }
 
         nav ul li {
-            margin: 10px 0;
+            margin: 15px 0;
         }
 
         nav ul li a {
-            color: #ffcc00; /* Dark Orange color */
+            color: #ffcc00;
             text-decoration: none;
-            padding: 15px;
+            padding: 12px;
             display: block;
-            background-color: rgba(0, 0, 0, 0.8);
             border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
             transition: background-color 0.3s ease;
         }
 
         nav ul li a:hover {
-            background-color: #ff7f00; /* Dark Orange highlight */
+            background-color: #ff7f00;
         }
 
-        /* Dropdown styling */
         .dropdown-content {
             display: none;
             position: relative;
             background-color: rgba(0, 0, 0, 0.8);
-            min-width: 160px;
-            z-index: 1;
+            padding: 10px;
             border-radius: 5px;
-        }
-
-        .dropdown-content a {
-            color: #ffcc00;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #ff7f00;
         }
 
         .dropdown:hover .dropdown-content {
             display: block;
         }
 
-        /* Section for key content with a background image */
+        /* Content section with background image */
         #content-section {
             position: relative;
-            background-image: url('background.jpg');
+            background-image: url('background2.jpg');
             background-size: cover;
             background-position: center;
             color: white;
+            padding: 80px 20px;
             text-align: center;
-            padding: 60px 20px;
         }
 
-        #content-section h2, #content-section p {
-            background-color: rgba(0, 0, 0, 0.7);
+        #content-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            background-color: rgba(0, 0, 0, 0.6);
             padding: 20px;
             border-radius: 10px;
             display: inline-block;
-            margin: 20px auto;
+            margin: 20px 0;
         }
 
-        /* Footer styles */
+        #content-section p {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        /* Footer Styling */
         footer {
             background-color: #333;
             color: white;
             text-align: center;
             padding: 20px;
-            position: fixed;
+            position: relative;
             bottom: 0;
             width: 100%;
-            box-sizing: border-box;
         }
 
-        /* Social media icons */
         .social-icons a {
             margin: 0 15px;
-            color: white;
             font-size: 24px;
+            color: white;
+            transition: color 0.3s ease;
         }
 
         .social-icons a:hover {
-            color: #ff7f00; /* Dark Orange highlight */
+            color: #ff7f00;
         }
 
-        /* License text */
         .license {
-            margin-top: 10px;
+            margin-top: 20px;
             font-size: 14px;
         }
+
+        /* Mobile responsiveness */
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 80px 20px;
+            }
+
+            header h1 {
+                font-size: 30px;
+            }
+
+            .hamburger {
+                top: 20px;
+                right: 20px;
+            }
+
+            nav {
+                top: 80px;
+                width: 100%;
+                padding: 10px;
+            }
+
+            nav ul li a {
+                padding: 10px;
+                font-size: 18px;
+            }
+
+            #content-section h2 {
+                font-size: 28px;
+            }
+
+            #content-section p {
+                font-size: 18px;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
     </style>
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <!-- Logo placed in the top left corner as a circle -->
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
-        
-        <!-- Header text -->
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
         <h1>Welcome to Martoo Tech Works</h1>
-        
-        <!-- Hamburger icon -->
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
 
         <!-- Navigation menu -->
-        <nav>
-            <ul id="menu">
+        <nav id="menu">
+            <ul>
                 <li><a href="index.html">Home</a></li>
                 <li class="dropdown">
                     <a href="services.html">Services</a>
-                    <!-- Dropdown content -->
                     <div class="dropdown-content">
                         <a href="vpn.html">VPN</a>
-                        <a href="vmess.html">Vmess</a>
+                        <a href="vmess.html">VMess</a>
                         <a href="trojan.html">Trojan</a>
                         <a href="udp.html">UDP</a>
                         <a href="typing_assistant.html">Typing Assistant</a>
@@ -216,10 +246,10 @@
         </nav>
     </header>
 
-    <!-- Content Section -->
+    <!-- Main Content Section -->
     <section id="content-section">
         <h2>Your Gateway to Technology</h2>
-        <p>At Martoo Tech Works, we offer a range of tech services to help you navigate the digital world. From VPN configurations to educational materials, we're here to support your growth.</p>
+        <p>At Martoo Tech Works, we offer a range of tech services to help you navigate the digital world. From VPN configurations to educational materials, we’re here to support your growth.</p>
     </section>
 
     <!-- Footer -->
@@ -240,6 +270,5 @@
             menu.classList.toggle("show");
         }
     </script>
-
 </body>
-</html>
+    </html>

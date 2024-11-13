@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Homepage -->
+    <url>
+        <loc>https://www.martootechworks.wuaze.com/</loc>
+        <lastmod>2024-11-13</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.00</priority>
+    </url>
+    <!-- Posts Page -->
+    <url>
+        <loc>https://www.martootechworks.wuaze.com/posts.html</loc>
+        <lastmod>2024-11-13</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.80</priority>
+    </url>
+    <!-- Contact Page -->
+    <url>
+        <loc>https://www.martootechworks.wuaze.com/contact.html</loc>
+        <lastmod>2024-11-13</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.80</priority>
+    </url>
+    <!-- About Page -->
+    <url>
+        <loc>https://www.martootechworks.wuaze.com/about.html</loc>
+        <lastmod>2024-11-13</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.80</priority>
+    </url>
+    <!-- Services Page -->
+    <url>
+        <loc>https://www.martootechworks.wuaze.com/services.html</loc>
+        <lastmod>2024-11-13</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.80</priority>
+    </url>
+</urlset>

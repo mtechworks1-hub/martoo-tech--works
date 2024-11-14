@@ -80,6 +80,7 @@
 
         nav ul li {
             margin: 3px 0;
+            position: relative; /* For dropdown positioning */
         }
 
         nav ul li a {
@@ -100,14 +101,30 @@
         .dropdown-content {
             display: none;
             position: absolute;
+            top: 0;
+            left: 100%;
             background-color: rgba(0, 0, 0, 0.9);
             border-radius: 5px;
             padding: 5px;
-            width: 100%;
+            min-width: 200px;
+            z-index: 1;
         }
 
         .dropdown:hover .dropdown-content {
             display: block;
+        }
+
+        .dropdown-content a {
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            display: block;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ff7f00;
         }
 
         /* Main content section */
@@ -125,6 +142,23 @@
             max-width: 800px;
         }
 
+        /* Embedded YouTube Videos */
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            border: none;
+            border-radius: 10px;
+        }
+
         /* Footer with license and social icons */
         footer {
             padding: 20px;
@@ -136,13 +170,14 @@
             color: white;
         }
 
-        footer .social-icons i {
+        footer .social-icons a {
             margin: 0 10px;
-            font-size: 24px;
             color: white;
+            font-size: 24px;
+            transition: color 0.3s ease;
         }
 
-        footer .social-icons i:hover {
+        footer .social-icons a:hover {
             color: #ff9800;
         }
 
@@ -150,19 +185,36 @@
             margin-top: 10px;
             font-size: 14px;
         }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            nav ul {
+                width: 90%;
+                top: 60px;
+                right: 5%;
+            }
+
+            .video-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .video-container iframe {
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- Header with logo and navigation -->
     <header>
-        <img src="logo.jpg" alt="Martoo Tech Logo" class="logo">
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
         <h1>Martoo Tech Works - Services</h1>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
                 <li class="dropdown">
                     <a href="#">Services</a>
                     <div class="dropdown-content">
@@ -171,6 +223,7 @@
                         <a href="materials.html">Materials</a>
                     </div>
                 </li>
+                <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
@@ -180,15 +233,34 @@
     <section id="content-section">
         <h2>Welcome to Our Services</h2>
         <p>Explore our range of services, including Typing Assistance, VPN configurations, and access to essential materials. Each service is crafted to support your tech needs.</p>
+
+        <!-- Embedded YouTube Videos -->
+        <div class="video-container">
+            <div>
+                <h3>Service Overview 1</h3>
+                <iframe src="https://www.youtube.com/embed/w0_sFwO1IR8" title="YouTube video 1" allowfullscreen></iframe>
+            </div>
+            <div>
+                <h3>Service Overview 2</h3>
+                <iframe src="https://www.youtube.com/embed/J-DNnARdB8E" title="YouTube video 2" allowfullscreen></iframe>
+            </div>
+            <div>
+                <h3>Service Overview 3</h3>
+                <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM" title="YouTube video 3" allowfullscreen></iframe>
+            </div>
+            <div>
+                <h3>Service Overview 4</h3>
+                <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs" title="YouTube video 4" allowfullscreen></iframe>
+            </div>
+        </div>
     </section>
 
     <!-- Footer with social icons and license -->
     <footer>
         <div class="social-icons">
-            <a href="https://facebook.com"><i class="fab fa-facebook"></i></a>
-            <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
-            <a href="https://linkedin.com"><i class="fab fa-linkedin"></i></a>
-            <a href="https://youtube.com"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/260950322498" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
         <div class="license">
             &copy; 2024 Martoo Tech Works. All rights reserved.
@@ -197,8 +269,19 @@
 
     <script>
         function toggleMenu() {
-            document.getElementById("menu").classList.toggle("show");
+            var menu = document.getElementById("menu");
+            menu.classList.toggle("show");
         }
+
+        // Close menu if clicked outside
+        document.addEventListener("click", function(event) {
+            var menu = document.getElementById("menu");
+            var hamburger = document.querySelector(".hamburger");
+
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove("show");
+            }
+        });
     </script>
 
 </body>

@@ -3,146 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
     <title>Contact - Martoo Tech Works</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* General body background and layout settings */
+        /* Full-site background */
         body {
-            background-color: #3f51b5; /* Indigo background */
+            background-image: url('full site background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding-bottom: 60px; /* Make space for footer */
-            min-height: 100vh; /* Ensure content takes up at least full viewport height */
+            min-height: 100vh;
         }
 
-        /* Header styles with background image */
+        /* Header styles */
         header {
-            background-image: url('background.jpg'); /* Add your header background image */
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 20px;
             position: relative;
-            width: 100vw;
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
         }
 
-        /* Logo styling */
+        /* Header text styles */
+        header h1 {
+            color: #ff9800; /* Nice color for header text */
+            font-size: 32px;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Logo */
         .logo {
             position: absolute;
             top: 20px;
-            left: 20px; /* Positioning the logo to the left */
-            width: 120px; /* Set the width of the logo */
-            height: 120px; /* Set height equal to width for a circle */
-            border-radius: 50%; /* Makes the logo circular */
-            object-fit: cover; /* Ensures the image fits within the circle */
-            z-index: 5; /* Ensure the logo is above the background */
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffcc00;
+            z-index: 1; /* Behind header text */
         }
 
-        /* Title text styling */
-        header h1 {
-            position: relative;
-            color: #ffcc00; /* Orange color for the text */
-            font-size: 36px; /* Adjust the size */
-            margin-top: 0;
-            z-index: 10; /* Ensure the text appears on top */
-        }
-
-        /* Hamburger menu styling */
+        /* Hamburger menu icon */
         .hamburger {
             position: absolute;
-            top: 15px; /* Move it down a bit for visibility */
-            right: 20px; /* Adjust from the far-right edge */
-            font-size: 30px;
-            color: #ffcc00; /* Dark Orange color */
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: white;
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
+            padding: 8px;
             border-radius: 5px;
             border: 2px solid #ffcc00;
-            z-index: 10; /* Ensure the hamburger icon is above the background */
+            z-index: 3;
         }
 
-        /* Navigation styles */
+        /* Navigation menu styling */
         nav ul {
             list-style-type: none;
             padding: 0;
-            display: none;
             margin: 0;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease-in-out;
+            z-index: 4; /* Ensure it's above the header text */
         }
 
+        /* Menu toggle */
+        #menu.show {
+            display: flex;
+        }
+
+        /* Menu items */
         nav ul li {
-            margin: 10px 0;
+            margin: 3px 0;
         }
 
         nav ul li a {
-            color: #ffcc00; /* Dark Orange color */
+            color: white;
             text-decoration: none;
-            padding: 10px;
+            padding: 5px 10px; /* Reduced padding */
             display: block;
-            background-color: rgba(0, 0, 0, 0.7);
+            font-weight: bold; /* Make the font bold */
             border-radius: 5px;
-            transition: background-color 0.3s ease; /* Smooth transition for highlight */
+            background-color: rgba(0, 0, 0, 0.8);
+            transition: background-color 0.3s ease;
         }
 
         nav ul li a:hover {
-            background-color: #000; /* Black highlight */
+            background-color: #ff7f00;
         }
 
-        /* Show the menu when toggled */
-        #menu.show {
-            display: block;
-        }
-
-        /* Contact form section */
-        #contact-section {
-            position: relative;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 40px;
-            margin-top: 40px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: 40px auto;
-        }
-
-        #contact-section h2 {
-            color: #ffcc00; /* Orange color */
-        }
-
-        /* Form styling */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        input, textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: white;
-            color: #333;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #ffcc00;
+        /* Main content section */
+        #content-section {
+            padding: 40px 20px;
+            text-align: center;
             color: white;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
         }
 
-        button:hover {
-            background-color: #ff7f00; /* Darker orange on hover */
+        #content-section h2, #content-section p {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 20px auto;
+            max-width: 800px;
         }
 
-        /* Footer styles */
+        /* Footer */
         footer {
             background-color: #333;
             color: white;
@@ -151,10 +133,9 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            box-sizing: border-box;
         }
 
-        /* Social media icons */
+        /* Social icons */
         .social-icons a {
             margin: 0 15px;
             color: white;
@@ -162,7 +143,7 @@
         }
 
         .social-icons a:hover {
-            color: #ff7f00; /* Dark Orange highlight */
+            color: #ff7f00;
         }
 
         /* License text */
@@ -170,21 +151,61 @@
             margin-top: 10px;
             font-size: 14px;
         }
+
+        /* Form styling */
+        form {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+            color: white;
+        }
+
+        form input, form textarea, form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ff9800;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #ff9800;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: block; /* Ensures button is a block element */
+            width: 100%; /* Makes the button take up full width */
+            margin-top: 10px; /* Adds space above the button */
+        }
+
+        form button:hover {
+            background-color: #ff7f00;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header with logo and navigation -->
     <header>
-        <!-- Logo placed here -->
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
-        
-        <h1>Contact - Martoo Tech Works</h1>
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
+        <h1>Contact Us - Martoo Tech Works</h1>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
+                <li class="dropdown">
+                    <a href="services.html">Services</a>
+                    <div class="dropdown-content">
+                        <a href="vpn.html">VPN</a>
+                        <a href="vmess.html">Vmess</a>
+                        <a href="trojan.html">Trojan</a>
+                        <a href="udp.html">UDP</a>
+                        <a href="typing_assistant.html">Typing Assistant</a>
+                        <a href="school-materials.html">School Materials</a> <!-- New Link Added -->
+                    </div>
+                </li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="posts.html">Posts</a></li>
@@ -192,38 +213,53 @@
         </nav>
     </header>
 
-    <!-- Contact Form Section -->
-    <section id="contact-section">
+    <!-- Main content section -->
+    <section id="content-section">
         <h2>Get in Touch</h2>
-        <p>If you have any questions or need further information, feel free to reach out to us. We're here to assist you!</p>
-
-        <!-- Contact Form -->
-        <form action="send_email.php" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
+        <p>If you have any questions, concerns, or suggestions, feel free to reach out to us. We’re happy to help!</p>
     </section>
 
-    <!-- Footer -->
-    <footer>
+    <!-- Contact Information -->
+    <section>
+        <h3>Our Contact Information</h3>
+        <p>Email us at <a href="mailto:info@martootech.com">info@martootech.com</a></p>
+        <p>Follow us on social media:</p>
         <div class="social-icons">
             <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
             <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
             <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
         </div>
+    </section>
+
+    <!-- Subscription Form Section -->
+    <section>
+        <h2>Subscribe to Our Newsletter</h2>
+        <!-- Form for subscription -->
+        <form action="https://formspree.io/f/xnnqvkpd" method="POST">
+            <label for="email">Your email:</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="message">Your message:</label>
+            <textarea name="message" id="message" required></textarea>
+
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <!-- Footer with social links -->
+    <footer>
         <div class="license">
-            <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+            <p>&copy; 2024 Martoo Tech Works. All rights reserved. Licensed under the Martoo Tech Works Terms of Service.</p>
         </div>
     </footer>
 
+    <!-- JavaScript for menu toggle -->
     <script>
         function toggleMenu() {
-            var menu = document.getElementById("menu");
-            menu.classList.toggle("show");
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('show');
         }
     </script>
 
 </body>
-</html>
+                            </html>

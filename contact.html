@@ -173,15 +173,21 @@
         form button {
             background-color: #ff9800;
             color: white;
-            font-size: 16px;
+            font-size: 14px; /* Smaller button text */
             cursor: pointer;
             display: block; /* Ensures button is a block element */
-            width: 100%; /* Makes the button take up full width */
+            width: auto; /* Makes the button size more compact */
             margin-top: 10px; /* Adds space above the button */
+            padding: 10px 20px; /* More controlled padding */
         }
 
         form button:hover {
             background-color: #ff7f00;
+        }
+
+        /* Adjusted form section position */
+        .form-section {
+            margin-top: 20px; /* Moves form upwards */
         }
     </style>
 </head>
@@ -232,7 +238,7 @@
     </section>
 
     <!-- Subscription Form Section -->
-    <section>
+    <section class="form-section">
         <h2>Subscribe to Our Newsletter</h2>
         <!-- Form for subscription -->
         <form action="https://formspree.io/f/xnnqvkpd" method="POST">
@@ -262,4 +268,4 @@
     </script>
 
 </body>
-                            </html>
+</html>

@@ -31,70 +31,50 @@
             width: 100vw;
         }
 
-        /* Logo placed in top left corner as circle */
-        .logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 100px; /* Size of the logo */
-            height: 100px;
-            border-radius: 50%; /* Circle shape */
-            object-fit: cover; /* Ensures logo fits well */
-            border: 4px solid #ffcc00; /* Orange border around logo */
-        }
-
-        /* Header Text Styling */
-        header h1 {
-            color: #ffcc00; /* Orange color for the header text */
-            font-size: 36px;
-            position: relative; /* Allow header text to overlay */
-            z-index: 1; /* Ensure the text stays on top of the logo */
-            margin-top: 20px;
-        }
-
-        /* Hamburger menu styling */
-        .hamburger {
-            position: absolute;
-            top: 15px; /* Move it down a bit for visibility */
-            right: 20px; /* Adjust from the far-right edge */
-            font-size: 30px;
-            color: #ffcc00; /* Dark Orange color */
-            cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            border: 2px solid #ffcc00;
-        }
-
-        /* Navigation styles */
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: none;
-            margin: 0;
-        }
-
-        nav ul li {
-            margin: 10px 0;
-        }
-
-        nav ul li a {
-            color: #ffcc00; /* Dark Orange color */
-            text-decoration: none;
-            padding: 10px;
-            display: block;
+        /* Comment Form Styling */
+        .comment-section {
             background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 5px;
-            transition: background-color 0.3s ease; /* Smooth transition for highlight */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 30px auto;
         }
 
-        nav ul li a:hover {
-            background-color: #000; /* Black highlight */
+        .comment-section h2 {
+            color: #ffcc00;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        /* Show the menu when toggled */
-        #menu.show {
+        .comment-section label {
             display: block;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .comment-section input,
+        .comment-section textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ffcc00;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .comment-section button {
+            padding: 10px 20px;
+            background-color: #ffcc00;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+
+        .comment-section button:hover {
+            background-color: #ff7f00;
         }
 
         /* Post Section Styling */
@@ -102,29 +82,6 @@
             background-color: #222;
             padding: 60px 20px;
             text-align: center;
-        }
-
-        #post-section h2 {
-            margin-bottom: 30px;
-        }
-
-        .post {
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            margin: 20px auto;
-            max-width: 800px;
-            padding: 20px;
-        }
-
-        .post h3 {
-            font-size: 28px;
-            color: #ffcc00;
-            margin-bottom: 10px;
-        }
-
-        .post p {
-            font-size: 16px;
-            line-height: 1.6;
         }
 
         /* Footer styles */
@@ -149,56 +106,6 @@
         .social-icons a:hover {
             color: #ff7f00; /* Dark Orange highlight */
         }
-
-        /* License text */
-        .license {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        /* Password Modal Styles */
-        #passwordModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-        }
-
-        .modal-content input {
-            padding: 10px;
-            margin: 10px 0;
-            width: 80%;
-            border: 2px solid #ffcc00;
-            border-radius: 5px;
-        }
-
-        .modal-content button {
-            padding: 10px;
-            background-color: #ffcc00;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .modal-content button:hover {
-            background-color: #ff7f00;
-        }
-
     </style>
 </head>
 <body>
@@ -236,43 +143,25 @@
             <p>In today's world, privacy is more important than ever. Learn how VPNs work and why they are essential for keeping your internet browsing safe from prying eyes.</p>
         </div>
 
-        <!-- Post 2 -->
-        <div class="post">
-            <h3>5 Tips to Improve Your Typing Speed</h3>
-            <p>Whether you're working from home or typing up a report, these five tips will help you increase your typing speed and efficiency.</p>
-        </div>
+        <!-- Comment Form -->
+        <div class="comment-section">
+            <h2>Leave a Comment</h2>
+            <!-- Form for submitting comments -->
+            <form action="https://formspree.io/f/xeoqkbzd" method="POST">
+                <label for="name">Your Name:</label>
+                <input type="text" name="name" id="name" required>
 
-        <!-- Post 3 -->
-        <div class="post">
-            <h3>How to Set Up a VPN with Martoo Tech Works</h3>
-            <p>Learn how to set up a VPN using our easy-to-follow guide. This post walks you through each step to ensure your privacy is always protected.</p>
-        </div>
+                <label for="email">Your Email:</label>
+                <input type="email" name="email" id="email" required>
 
-        <!-- Download Links for GIS and Password Protected Files -->
-        <div class="post">
-            <h3>Download GIS Data Set</h3>
-            <p>Click the link below to download the GIS data set.</p>
-            <a href="GIS SET.zip" download="GIS SET.zip">Download GIS data set here</a>
-        </div>
+                <label for="comment">Your Comment:</label>
+                <textarea name="comment" id="comment" required></textarea>
 
-        <!-- Message Before Download -->
-        <div class="post">
-            <h3>Angela, there are two formats, PDF and Word document. Download your preferred format:</h3>
-            <button onclick="showPasswordModal('PROJECT.docx')">Download PROJECT.docx</button>
-            <button onclick="showPasswordModal('PROJECT ASSIGNMENT.pdf')">Download PROJECT ASSIGNMENT.pdf</button>
+                <button type="submit">Post Comment</button>
+            </form>
         </div>
 
     </section>
-
-    <!-- Password Modal -->
-    <div id="passwordModal">
-        <div class="modal-content">
-            <h2>Enter Password</h2>
-            <input type="password" id="passwordInput" placeholder="Enter password">
-            <button onclick="validatePassword()">Submit</button>
-            <button onclick="closePasswordModal()">Cancel</button>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer>
@@ -291,33 +180,6 @@
         function toggleMenu() {
             const menu = document.getElementById('menu');
             menu.classList.toggle('show');
-        }
-
-        // Function to show the password modal
-        function showPasswordModal(file) {
-            const modal = document.getElementById('passwordModal');
-            modal.style.display = 'flex';
-            sessionStorage.setItem('fileToDownload', file); // Store file for later download
-        }
-
-        // Function to close the password modal
-        function closePasswordModal() {
-            const modal = document.getElementById('passwordModal');
-            modal.style.display = 'none';
-        }
-
-        // Function to validate the entered password
-        function validatePassword() {
-            const password = document.getElementById('passwordInput').value;
-            const correctPassword = 'ANGELA'; // Set the correct password
-
-            if (password === correctPassword) {
-                const file = sessionStorage.getItem('fileToDownload');
-                window.location.href = file; // Redirect to the file download
-                closePasswordModal();
-            } else {
-                alert('Incorrect password. Please try again.');
-            }
         }
     </script>
 </body>

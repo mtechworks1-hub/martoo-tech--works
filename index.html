@@ -190,6 +190,9 @@
             color: white;
             font-size: 16px;
             cursor: pointer;
+            display: block; /* Ensures button is a block element */
+            width: 100%; /* Makes the button take up full width */
+            margin-top: 10px; /* Adds space above the button */
         }
 
         form button:hover {
@@ -261,8 +264,7 @@
     <!-- JavaScript for menu toggle -->
     <script>
         function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('show');
+            const menu = document.getElementById('menu');menu.classList.toggle('show');
         }
     </script>
 

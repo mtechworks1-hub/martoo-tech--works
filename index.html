@@ -254,24 +254,17 @@
             <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
         </div>
         <div class="license">
-            <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+            <p>&copy; 2024 Martoo Tech Works. All rights reserved. Licensed under the Martoo Tech Works Terms of Service.</p>
         </div>
     </footer>
 
+    <!-- JavaScript for menu toggle -->
     <script>
         function toggleMenu() {
-            var menu = document.getElementById("menu");
-            menu.classList.toggle("show");
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('show');
         }
-
-        // Close menu if clicked outside
-        window.addEventListener('click', function(e) {
-            var menu = document.getElementById("menu");
-            var hamburger = document.querySelector('.hamburger');
-            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
-                menu.classList.remove('show');
-            }
-        });
     </script>
+
 </body>
 </html>

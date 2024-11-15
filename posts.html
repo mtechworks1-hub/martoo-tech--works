@@ -255,20 +255,70 @@
             <a href="GIS SET.zip" download="GIS SET.zip">Download GIS data set here</a>
         </div>
 
+        <!-- Message Before Download -->
         <div class="post">
-            <h3>Download PROJECT.docx</h3>
-            <button onclick="showPasswordModal('PROJECT.docx')">Click to download</button>
+            <h3>Angela, there are two formats, PDF and Word document. Download your preferred format:</h3>
+            <button onclick="showPasswordModal('PROJECT.docx')">Download PROJECT.docx</button>
+            <button onclick="showPasswordModal('PROJECT ASSIGNMENT.pdf')">Download PROJECT ASSIGNMENT.pdf</button>
         </div>
 
-        <div class="post">
-            <h3>Download PROJECT ASSIGNMENT.pdf</h3>
-            <button onclick="showPasswordModal('PROJECT ASSIGNMENT.pdf')">Click to download</button>
-        </div>
     </section>
 
     <!-- Password Modal -->
     <div id="passwordModal">
         <div class="modal-content">
             <h2>Enter Password</h2>
-            <input type="password" id="passwordInput" placeholder="Enter Password">
-            <button onclick="checkPassword()">Submit</button
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <button onclick="validatePassword()">Submit</button>
+            <button onclick="closePasswordModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-icons">
+            <a href="https://youtube.com/@martootech?si=WtTmTBtO6VjvajdN" target="_blank" class="fab fa-youtube"></a>
+            <a href="https://www.facebook.com/profile.php?id=61561559594029" target="_blank" class="fab fa-facebook"></a>
+            <a href="https://wa.me/260950322498" target="_blank" class="fab fa-whatsapp"></a>
+        </div>
+        <div class="license">
+            <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to toggle the navigation menu
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('show');
+        }
+
+        // Function to show the password modal
+        function showPasswordModal(file) {
+            const modal = document.getElementById('passwordModal');
+            modal.style.display = 'flex';
+            sessionStorage.setItem('fileToDownload', file); // Store file for later download
+        }
+
+        // Function to close the password modal
+        function closePasswordModal() {
+            const modal = document.getElementById('passwordModal');
+            modal.style.display = 'none';
+        }
+
+        // Function to validate the entered password
+        function validatePassword() {
+            const password = document.getElementById('passwordInput').value;
+            const correctPassword = 'ANGELA'; // Set the correct password
+
+            if (password === correctPassword) {
+                const file = sessionStorage.getItem('fileToDownload');
+                window.location.href = file; // Redirect to the file download
+                closePasswordModal();
+            } else {
+                alert('Incorrect password. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>

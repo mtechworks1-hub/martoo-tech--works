@@ -166,6 +166,35 @@
             margin-top: 10px;
             font-size: 14px;
         }
+
+        /* Form styling */
+        form {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+            color: white;
+        }
+
+        form input, form textarea, form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ff9800;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #ff9800;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #ff7f00;
+        }
     </style>
 </head>
 <body>
@@ -202,6 +231,21 @@
         <p>At Martoo Tech Works, we offer a range of tech services to help you navigate the digital world. From VPN configurations to educational materials, we're here to support your growth.</p>
     </section>
 
+    <!-- Subscription Form Section -->
+    <section>
+        <h2>Subscribe to Our Newsletter</h2>
+        <!-- Form for subscription -->
+        <form action="https://formspree.io/f/xnnqvkpd" method="POST">
+            <label for="email">Your email:</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="message">Your message:</label>
+            <textarea name="message" id="message" required></textarea>
+
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
     <!-- Footer with social links -->
     <footer>
         <div class="social-icons">
@@ -221,16 +265,13 @@
         }
 
         // Close menu if clicked outside
-        document.addEventListener("click", function(event) {
+        window.addEventListener('click', function(e) {
             var menu = document.getElementById("menu");
             var hamburger = document.querySelector(".hamburger");
-
-            // Close the menu if clicked outside of the menu or hamburger
-            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
                 menu.classList.remove("show");
             }
         });
     </script>
-
 </body>
 </html>

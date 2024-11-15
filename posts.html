@@ -263,50 +263,75 @@
         <!-- Message Before Download -->
         <div class="post">
             <h3>Angela, there are two formats, PDF and Word document. Download your preferred format:</h3>
-            <button onclick="showPasswordModal('PROJECT.docx')">Download PROJECT.docx</button>
-            <button onclick="showPasswordModal('PROJECT.pdf')">Download PROJECT.pdf</button>
+            <button onclick="showPasswordModal('PROJECT ASSIGNMENT.pdf')">Download PROJECT ASSIGNMENT.pdf</button>
         </div>
-    </<!-- Modal for password entry -->
-    <div id="passwordModal" style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); text-align: center; padding-top: 100px;">
-        <div style="background-color: white; padding: 20px; border-radius: 10px; display: inline-block; max-width: 300px;">
-            <h3>Enter Password to Download</h3>
-            <form id="passwordForm">
-                <input type="password" id="password" placeholder="Enter Password" required>
-                <button type="submit">Submit</button>
-            </form>
-            <p id="errorMessage" style="color: red; display: none;">Incorrect Password. Try again.</p>
-        </div>
-    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="social-icons">
-            <a href="https://youtube.com/@martootech?si=WtTmTBtO6VjvajdN" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61561559594029" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="https://wa.me/260950322498" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <!-- Password Modal -->
+        <div id="passwordModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closePasswordModal()">&times;</span>
+                <h3>Enter Password</h3>
+                <input type="password" id="passwordInput" placeholder="Enter your password">
+                <button onclick="validatePassword()">Submit</button>
+                <p id="passwordError" style="color:red; display:none;">Incorrect password. Please try again.</p>
+            </div>
         </div>
-        <p class="license">© 2024 Martoo Tech Works. All rights reserved.</p>
-    </footer>
+
+        <!-- Footer -->
+        <footer>
+            <div class="social-icons">
+                <a href="https://youtube.com/@martootech?si=WtTmTBtO6VjvajdN" target="_blank" class="fa fa-youtube"></a>
+                <a href="https://www.facebook.com/profile.php?id=61561559594029" target="_blank" class="fa fa-facebook"></a>
+                <a href="https://wa.me/260950322498" target="_blank" class="fa fa-whatsapp"></a>
+            </div>
+            <div class="license">
+                <p>&copy; 2024 Martoo Tech Works. All Rights Reserved.</p>
+            </div>
+        </footer>
+
+    </section>
 
     <script>
-        // Function to toggle the menu visibility
+        // Hamburger menu toggle
         function toggleMenu() {
-            document.getElementById("menu").classList.toggle("show");
+            var menu = document.getElementById("menu");
+            menu.classList.toggle("show");
         }
 
         // Function to show the password modal
-        function showPasswordModal(fileName) {
-            document.getElementById("passwordModal").style.display = "block";
-            const form = document.getElementById("passwordForm");
-            form.onsubmit = function(event) {
-                event.preventDefault(); // Prevent form submission
-                const password = document.getElementById("password").value.toUpperCase();
-                if (password === "ANGELA") {
-                    window.location.href = fileName; // Redirect to download the file
-                } else {
-                    document.getElementById("errorMessage").style.display = "block";
-                }
-            };
+        function showPasswordModal(file) {
+            var modal = document.getElementById("passwordModal");
+            modal.style.display = "block";
+            sessionStorage.setItem('fileToDownload', file); // Store the file to be downloaded
+        }
+
+        // Function to close the password modal
+        function closePasswordModal() {
+            var modal = document.getElementById("passwordModal");
+            modal.style.display = "none";
+        }
+
+        // Password validation function
+        function validatePassword() {
+            var password = document.getElementById("passwordInput").value;
+            var correctPassword = "YourPassword"; // Replace with the correct password
+            var errorMessage = document.getElementById("passwordError");
+
+            if (password === correctPassword) {
+                var fileToDownload = sessionStorage.getItem('fileToDownload');
+                window.location.href = fileToDownload; // Trigger the download of the file
+                closePasswordModal();
+            } else {
+                errorMessage.style.display = "block"; // Show error message
+            }
+        }
+
+        // Close modal if clicked outside of it
+        window.onclick = function(event) {
+            var modal = document.getElementById("passwordModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
         }
     </script>
 

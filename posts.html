@@ -96,12 +96,13 @@
             display: block;
         }
 
-        /* Post Section Styling */
-        #post-section {
-            background-color: #222;
-            padding: 60px 20px;
-            text-align: center;
-        }
+        /* post content section */
+#content-section {
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+    padding-bottom: 60px; /* Added padding to push content up and avoid footer overlap */
+}
 
         #post-section h2 {
             margin-bottom: 30px;
@@ -165,17 +166,15 @@
             background-color: #ff7f00;
         }
 
-        /* Footer styles */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            box-sizing: border-box;
-        }
+        /* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative; /* Changed from fixed to relative */
+    width: 100%;
+}
 
         /* Social media icons */
         .social-icons a {

@@ -227,20 +227,20 @@
             </ul>
         </nav>
     </header>
-<!-- Subscription Form Section -->
-    <section>
-        <h2>Subscribe to Our Newsletter</h2>
-        <!-- Form for subscription -->
-        <form action="https://formspree.io/f/xnnqvkpd" method="POST">
-            <label for="email">Your email:</label>
-            <input type="email" name="email" id="email" required>
+    <!-- Subscription Form Section -->
+<section>
+    <h2>Subscribe to Our Newsletter</h2>
+    <!-- Form for subscription, now pointing to Google Form -->
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSdKz7n2KY4pEiHH9xgaJz2lJfnzHhzRzTvvvjOaL_god0icmQ/formResponse" method="POST">
+        <label for="email">Your email:</label>
+        <input type="email" name="entry.123456789" id="email" required> <!-- 'entry.123456789' should be the field name from Google Form -->
 
-            <label for="message">Your message:</label>
-            <textarea name="message" id="message" required></textarea>
+        <label for="message">Your message:</label>
+        <textarea name="entry.987654321" id="message" required></textarea> <!-- 'entry.987654321' should be the field name from Google Form -->
 
-            <button type="submit">Send</button>
-        </form>
-    </section>
+        <button type="submit">Send</button>
+    </form>
+</section>
     
     <!-- Main content section -->
     <section id="content-section">

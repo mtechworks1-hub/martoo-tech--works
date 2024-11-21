@@ -82,11 +82,12 @@
         }
 
         /* Main content section */
-        #content-section {
-            padding: 40px 20px;
-            text-align: center;
-            color: white;
-        }
+#content-section {
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+    padding-bottom: 60px; /* Added padding to push content up and avoid footer overlap */
+}
 
         #content-section h2, #content-section p {
             background-color: rgba(0, 0, 0, 0.7);
@@ -117,16 +118,14 @@
         }
 
         /* Footer */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative; /* Changed from fixed to relative */
+    width: 100%;
+}
         /* Social icons */
         .social-icons a {
             margin: 0 15px;
@@ -170,7 +169,7 @@
         <!-- Download button for document -->
         <a href="COMMUNITY HEALTH NUTRTION QUESTIONS AND ANSWERS.docx" class="download-button" download>Download Document</a>
     </section>
-    <!-- Download Links for GIS and Password Protected Files -->
+    <!-- Download button for GIS and Password Protected Files -->
         <div class="post">
             <h3>Download GIS Data Set</h3>
             <p>Click the link below to download the GIS data set.</p>

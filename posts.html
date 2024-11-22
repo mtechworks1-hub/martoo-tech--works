@@ -233,10 +233,11 @@ footer {
             <h3>How to Set Up a VPN with Martoo Tech Works</h3>
             <p>Learn how to set up a VPN using our easy-to-follow guide. This post walks you through each step to ensure your privacy is always protected.</p>
         </div>
-<!-- Comment Form -->
+
+        <!-- Comment Form -->
 <div class="comment-form">
     <h3>Your Feedback Matters: Share Your Thoughts to Help Us Improve!</h3>
-    <form id="commentForm">
+    <form action="https://formcarry.com/s/zYwAovO5bOf" method="POST">
         <label for="name">Your Name:</label>
         <input type="text" name="name" id="name" required>
 
@@ -250,44 +251,6 @@ footer {
     </form>
 </div>
 
-<script>
-document.getElementById('commentForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    // Get form data
-    const formData = new FormData(this);
-
-    // Submit to Formcarry
-    fetch('https://formcarry.com/s/zYwAovO5bOf', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Formcarry submission successful', data);
-        alert("Comment submitted successfully to Formcarry!");
-    })
-    .catch(error => {
-        console.error('Error submitting to Formcarry', error);
-        alert("Error with Formcarry submission");
-    });
-
-    // Submit to Formspree
-    fetch('https://formspree.io/f/xeoqkbzd', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Formspree submission successful', data);
-        alert("Comment submitted successfully to Formspree!");
-    })
-    .catch(error => {
-        console.error('Error submitting to Formspree', error);
-        alert("Error with Formspree submission");
-    });
-});
-</script>
         <!-- Download Links for GIS and Password Protected Files -->
         <div class="post">
             <h3>Download GIS Data Set</h3>
@@ -362,4 +325,4 @@ document.getElementById('commentForm').addEventListener('submit', function(event
     </script>
 
 </body>
-</html>
+</html> 

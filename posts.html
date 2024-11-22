@@ -235,96 +235,56 @@ footer {
         </div>
 
         <!-- Comment Form -->
-<div class="comment-form">
-    <h3>Your Feedback Matters: Share Your Thoughts to Help Us Improve!</h3>
-    <form action="https://formcarry.com/s/zYwAovO5bOf" method="POST">
-        <label for="name">Your Name:</label>
-        <input type="text" name="name" id="name" required>
+        <div class="comment-form">
+            <h3>Your Feedback Matters: Share Your Thoughts to Help Us Improve!</h3>
+            <form action="https://formcarry.com/s/zYwAovO5bOf" method="POST">
+                <label for="name">Your Name:</label>
+                <input type="text" name="name" id="name" required>
 
-        <label for="email">Your Email:</label>
-        <input type="email" name="email" id="email" required>
+                <label for="email">Your Email:</label>
+                <input type="email" name="email" id="email" required>
 
-        <label for="comment">Your Comment:</label>
-        <textarea name="comment" id="comment" rows="4" required></textarea>
+                <label for="comment">Your Comment:</label>
+                <textarea name="comment" id="comment" rows="4" required></textarea>
 
-        <button type="submit">Post Comment</button>
-    </form>
-</div>
-
-        <!-- Download Links for GIS and Password Protected Files -->
-        <div class="post">
-            <h3>Download GIS Data Set</h3>
-            <p>Click the link below to download the GIS data set.</p>
-            <a href="GIS SET.zip" download="GIS SET.zip">Download GIS data set here</a>
-        <h3>Download Mid semester GIS Data Set ❤️</h3>
-<p>Click the link below to download the Mid semester GIS data set.</p>
-<a href="Mid semester GIS data set.zip" download="Mid semester GIS data set.zip">Download Mid semester GIS data set here</a>
+                <button type="submit">Post Comment</button>
+            </form>
+        </div>
+        <!-- Download Links for GIS and Password Management Tools -->
+        <div class="download-links">
+            <h3>Useful Tools for Your Projects</h3>
+            <p>Download GIS software and password management tools to enhance your workflow:</p>
+            <ul>
+                <li><a href="https://example.com/gis-download" target="_blank">Download GIS Tool</a></li>
+                <li><a href="https://example.com/password-manager" target="_blank">Download Password Manager</a></li>
+            </ul>
         </div>
 
-        <!-- Message Before Download -->
-        <div class="post">
-            <h3>Hi everyone, click the link 🔗 below 👇 to download Mental health notes. the password is Uppercase: MARTOO:</h3>
-            <button onclick="showPasswordModal('Mental health notes.zip')">Mental health notes.zip</button><button onclick="showPasswordModal('Mental health notes.zip')">Download Mental health notes.zip</button>
-        </div>
     </section>
 
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer>
+        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
         <div class="social-icons">
-            <a href="https://youtube.com/@martootech?si=WtTmTBtO6VjvajdN" target="_blank"><i class="fab fa-youtube"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61561559594029" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://wa.me/260950322498" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://youtube.com/@martootech?si=WtTmTBtO6VjvajdN" target="_blank" title="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61561559594029" target="_blank" title="Facebook">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://wa.me/260950322498" target="_blank" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
         </div>
-        <div class="license">
-            <p>&copy; 2024 Martoo Tech Works. All Rights Reserved. | Designed by Martoo Tech</p>
-        </div>
+        <p class="license">Licensed under the MIT License</p>
     </footer>
 
-    <!-- Password Modal -->
-    <div id="passwordModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
-        <div style="background-color: #fff; padding: 20px; border-radius: 10px; width: 300px; text-align: center;">
-            <h3>Enter Password</h3>
-            <input type="password" id="passwordInput" placeholder="Password" style="padding: 10px; width: 80%; border-radius: 5px; border: 2px solid #ffcc00;">
-            <button onclick="verifyPassword()" style="background-color: #ffcc00; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Submit</button>
-            <button onclick="closePasswordModal()" style="background-color: #ff7f00; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>
-        </div>
-    </div>
-
-    <!-- JavaScript for Menu Toggle and Password Modal -->
     <script>
+        // Toggle the menu visibility
         function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('show');
-        }
-
-        function showPasswordModal(fileName) {
-            const modal = document.getElementById('passwordModal');
-            modal.style.display = 'flex';
-            modal.dataset.fileName = fileName;
-        }
-
-        function closePasswordModal() {
-            const modal = document.getElementById('passwordModal');
-            modal.style.display = 'none';
-        }
-
-        function verifyPassword() {
-            const passwordInput = document.getElementById('passwordInput').value;
-            const modal = document.getElementById('passwordModal');
-            const fileName = modal.dataset.fileName;
-
-            // Hardcoded password for the demonstration
-            const correctPassword = "MARTOO";
-
-            if (passwordInput === correctPassword) {
-                window.location.href = fileName; // Redirect to the file
-            } else {
-                alert("Incorrect password! Please try again.");
-            }
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("show");
         }
     </script>
-
 </body>
 </html>
-
-    

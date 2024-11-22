@@ -263,8 +263,14 @@ document.getElementById('commentForm').addEventListener('submit', function(event
         body: formData
     })
     .then(response => response.json())
-    .then(data => console.log('Formcarry submission successful', data))
-    .catch(error => console.error('Error submitting to Formcarry', error));
+    .then(data => {
+        console.log('Formcarry submission successful', data);
+        alert("Comment submitted successfully to Formcarry!");
+    })
+    .catch(error => {
+        console.error('Error submitting to Formcarry', error);
+        alert("Error with Formcarry submission");
+    });
 
     // Submit to Formspree
     fetch('https://formspree.io/f/xeoqkbzd', {
@@ -272,8 +278,14 @@ document.getElementById('commentForm').addEventListener('submit', function(event
         body: formData
     })
     .then(response => response.json())
-    .then(data => console.log('Formspree submission successful', data))
-    .catch(error => console.error('Error submitting to Formspree', error));
+    .then(data => {
+        console.log('Formspree submission successful', data);
+        alert("Comment submitted successfully to Formspree!");
+    })
+    .catch(error => {
+        console.error('Error submitting to Formspree', error);
+        alert("Error with Formspree submission");
+    });
 });
 </script>
         <!-- Download Links for GIS and Password Protected Files -->

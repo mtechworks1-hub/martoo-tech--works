@@ -233,23 +233,57 @@ footer {
             <h3>How to Set Up a VPN with Martoo Tech Works</h3>
             <p>Learn how to set up a VPN using our easy-to-follow guide. This post walks you through each step to ensure your privacy is always protected.</p>
         </div>
+<!-- Single Form Section -->
+<div class="comment-form">
+    <h3>Your Feedback Matters: Share Your Thoughts to Help Us Improve!</h3>
 
-        <!-- Comment Form -->
-        <div class="comment-form">
-            <h3>Your Feedback Matters: Share Your Thoughts to Help Us Improve!</h3>
-            <form action="https://formcarry.com/s/zYwAovO5bOf" method="POST">
-                <label for="name">Your Name:</label>
-                <input type="text" name="name" id="name" required>
+    <!-- Single Form -->
+    <form id="commentForm" onsubmit="submitBothForms(event)">
+        <label for="name">Your Name:</label>
+        <input type="text" name="name" id="name" required>
 
-                <label for="email">Your Email:</label>
-                <input type="email" name="email" id="email" required>
+        <label for="email">Your Email:</label>
+        <input type="email" name="email" id="email" required>
 
-                <label for="comment">Your Comment:</label>
-                <textarea name="comment" id="comment" rows="4" required></textarea>
+        <label for="comment">Your Comment:</label>
+        <textarea name="comment" id="comment" rows="4" required></textarea>
 
-                <button type="submit">Post Comment</button>
-            </form>
-        </div>
+        <button type="submit">Post Comment</button>
+    </form>
+</div>
+
+<!-- JavaScript to Handle Both Form Submissions -->
+<script>
+    function submitBothForms(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(document.getElementById('commentForm'));
+
+        // Submit to Formcarry
+        fetch('https://formcarry.com/s/zYwAovO5bOf', {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                console.log("Form submitted successfully to Formcarry.");
+            } else {
+                console.log("Error submitting to Formcarry.");
+            }
+        }).catch(error => console.error("Error submitting to Formcarry:", error));
+
+        // Submit to Formspree
+        fetch('https://formspree.io/f/xeoqkbzd', {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                console.log("Form submitted successfully to Formspree.");
+            } else {
+                console.log("Error submitting to Formspree.");
+            }
+        }).catch(error => console.error("Error submitting to Formspree:", error));
+    }
+</script>
         <!-- Download Links for GIS and Password Protected Files -->
         <div class="post">
             <h3>Download GIS Data Set</h3>

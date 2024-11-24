@@ -108,29 +108,13 @@
             background-color: #ff7f00;
         }
 
-        /* Dropdown content */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.9);
-            border-radius: 5px;
-            margin-top: 5px;
-            padding: 5px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: flex;
-            flex-direction: column;
-        }
-
         /* Main content section */
-#content-section {
-    padding: 40px 20px;
-    text-align: center;
-    color: white;
-    padding-bottom: 60px; /* Added padding to push content up and avoid footer overlap */
-}
+        #content-section {
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            padding-bottom: 60px; /* Added padding to push content up and avoid footer overlap */
+        }
 
         #content-section h2, #content-section p {
             background-color: rgba(0, 0, 0, 0.7);
@@ -142,14 +126,14 @@
         }
 
         /* Footer */
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    position: relative; /* Changed from fixed to relative */
-    width: 100%;
-}
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative; /* Changed from fixed to relative */
+            width: 100%;
+        }
 
         /* Social icons */
         .social-icons a {
@@ -199,59 +183,84 @@ footer {
         form button:hover {
             background-color: #ff7f00;
         }
+
+        /* UDP form container */
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container h3 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .recaptcha {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .recaptcha input {
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Generated code display */
+        .generated-code {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ff9800;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .copy-button {
+            background-color: #ff9800;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .copy-button:hover {
+            background-color: #ff7f00;
+        }
     </style>
 </head>
 <body>
-    .form-container {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-family: Arial, sans-serif;
-}
-
-h3 {
-  text-align: center;
-  color: #007bff;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-input[type="text"],
-button {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.recaptcha {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.recaptcha input {
-  margin-right: 10px;
-}
-
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
     <!-- Header with logo and navigation -->
     <header>
         <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
@@ -268,7 +277,7 @@ button:hover {
                         <a href="trojan.html">Trojan</a>
                         <a href="udp.html">UDP</a>
                         <a href="typing_assistant.html">Typing Assistant</a>
-                        <a href="school-materials.html">School Materials</a> <!-- New Link Added -->
+                        <a href="school-materials.html">School Materials</a>
                     </div>
                 </li>
                 <li><a href="about.html">About</a></li>
@@ -277,66 +286,103 @@ button:hover {
             </ul>
         </nav>
     </header>
+
     <!-- Main content section -->
     <section id="content-section">
-        <h2> Here you will be able to generate UDP configuration files</h2>
-        <p>The codes generated here will help you to connect your HTTP CUSTOM using UDP protocol to learn more about these services you can just click on the Youtube icon on the footer it will direct you to our Youtube channel for more guidance</p>
+        <h2>Here you will be able to generate UDP configuration files</h2>
+        <p>The codes generated here will help you to connect your HTTP CUSTOM using UDP protocol. To learn more about these services, click on the relevant links in the menu above.</p>
+        
+        <!-- UDP form for generating configuration files -->
+        <div class="form-container">
+            <h3>Generate UDP Configuration</h3>
+            <form id="udp-form">
+                <label for="server">Server:</label>
+                <input type="text" id="server" name="server" placeholder="Enter your server IP" required>
+
+                <label for="port">Port:</label>
+                <input type="text" id="port" name="port" placeholder="Enter your port number" required>
+
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+                <label for="password">Password:</label>
+                <input type="text" id="password" name="password" placeholder="Enter your password" required>
+
+                <label for="timeout">Timeout:</label>
+                <input type="text" id="timeout" name="timeout" placeholder="Enter your timeout value" required>
+
+                <div class="recaptcha">
+                    <input type="checkbox" id="recaptcha" name="recaptcha" required>
+                    <label for="recaptcha">I'm not a robot</label>
+                </div>
+
+                <button type="submit">Generate Configuration</button>
+            </form>
+
+            <!-- Generated UDP configuration display -->
+            <div class="generated-code" id="generated-code">
+                <p>Your generated code will appear here.</p>
+                <button class="copy-button" id="copy-button">Copy Code</button>
+            </div>
+        </div>
     </section>
-<!-- Subscription Form Section -->
-<section>
-    <h2>Subscribe to Our Newsletter</h2>
-    <!-- Form for subscription, now pointing to Formcarry -->
-    <form action="https://formcarry.com/s/zYwAovO5bOf" method="POST">
-        <label for="email">Your email:</label>
-        <input type="email" name="email" id="email" required> <!-- Updated field name for email -->
 
-        <label for="message">Your message:</label>
-        <textarea name="message" id="message" required></textarea> <!-- Updated field name for message -->
-
-        <button type="submit">Send</button>
-    </form>
-</section>
-    <div class="form-container">
-  <h3>Create UDP Configuration</h3>
-
-  <label for="server">Server Address</label>
-  <input type="text" id="server" placeholder="Enter Server Address" required>
-
-  <label for="port">Port Range</label>
-  <input type="text" id="port" placeholder="Enter Port Range" required>
-
-  <label for="username">Username</label>
-  <input type="text" id="username" placeholder="Enter Username" required>
-
-  <label for="password">Password</label>
-  <input type="text" id="password" placeholder="Enter Password" required>
-
-  <div class="recaptcha">
-    <input type="checkbox" id="recaptcha" required>
-    <label for="recaptcha">I'm not a robot</label>
-  </div>
-
-  <button onclick="generateConfig()">Generate Configuration</button>
-    </div>
-
- <!-- Footer with social links -->
+    <!-- Footer -->
     <footer>
+        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
         <div class="social-icons">
-            <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
-            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
+            <a href="https://youtube.com/@martootech?si=WtTmTBtO6VjvajdN" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61561559594029" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://wa.me/260950322498" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
         <div class="license">
-            <p>&copy; 2024 Martoo Tech Works. All rights reserved. Licensed under the Martoo Tech Works Terms of Service.</p>
+            <p>Licensed under the Creative Commons Attribution 4.0 International License.</p>
         </div>
     </footer>
 
-    <!-- JavaScript for menu toggle -->
     <script>
+        // Toggle the hamburger menu visibility
         function toggleMenu() {
-            const menu = document.getElementById('menu');menu.classList.toggle('show');
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('show');
         }
-    </script>
 
+        // Form submission handling
+        document.getElementById('udp-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            
+            // Get form values
+            const server = document.getElementById('server').value;
+            const port = document.getElementById('port').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const timeout = document.getElementById('timeout').value;
+
+            // Generate the UDP configuration code
+            const configCode = `
+                server: ${server}
+                port: ${port}
+                username: ${username}
+                password: ${password}
+                timeout: ${timeout}
+            `;
+
+            // Display the generated code
+            document.getElementById('generated-code').innerHTML = `
+                <p>${configCode}</p>
+                <button class="copy-button" id="copy-button">Copy Code</button>
+            `;
+        });
+
+        // Handle copy code button click
+        document.getElementById('generated-code').addEventListener('click', function (event) {
+            if (event.target.id === 'copy-button') {
+                const code = document.querySelector('.generated-code p').textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    alert('Code copied to clipboard!');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

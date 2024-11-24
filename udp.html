@@ -196,7 +196,21 @@
 
         <p>UDP is a lightweight and high-performance protocol suitable for scenarios where speed is more important than reliability. It is commonly used for video calls, voice over IP (VoIP), and online gaming.</p>
     </section>
+<div class="container">
+  <label for="serverAddress">Server Address</label>
+  <input type="text" id="serverAddress" placeholder="e.g., is1.sshudp.site" required>
 
+  <label for="portRange">Port Range</label>
+  <input type="text" id="portRange" placeholder="e.g., 1-65535" required>
+
+  <label for="username">Username</label>
+  <input type="text" id="username" placeholder="e.g., sshmax-martootechwoorks" required>
+
+  <label for="password">Password</label>
+  <input type="text" id="password" placeholder="e.g., techworks" required>
+
+  <button onclick="generateConfig()">Generate Configuration</button>
+</div>
     <!-- Footer -->
     <footer>
         <div class="social-icons">

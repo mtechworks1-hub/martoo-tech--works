@@ -3,248 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
     <title>UDP SERVICES</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Full-site background */
+        /* General styling */
         body {
-            background-image: url('full site background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
             margin: 0;
-            min-height: 100vh;
-        }
-
-        /* Header styles */
-        header {
-            position: relative;
-            text-align: center;
-            padding: 60px 20px;
-            background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
-        }
-
-        /* Header text styles */
-        header h1 {
-            color: #ff9800; /* Nice color for header text */
-            font-size: 32px;
-            margin: 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Logo */
-        .logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ffcc00;
-            z-index: 1; /* Behind header text */
-        }
-
-        /* Hamburger menu icon */
-        .hamburger {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            color: white;
-            cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 8px;
-            border-radius: 5px;
-            border: 2px solid #ffcc00;
-            z-index: 3;
-        }
-
-        /* Navigation menu styling */
-        nav ul {
-            list-style-type: none;
             padding: 0;
-            margin: 0;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 200px;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: none;
-            flex-direction: column;
-            align-items: flex-start;
-            border-radius: 5px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease-in-out;
-            z-index: 4; /* Ensure it's above the header text */
         }
-
-        /* Menu toggle */
-        #menu.show {
-            display: flex;
-        }
-
-        /* Menu items */
-        nav ul li {
-            margin: 3px 0;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 5px 10px; /* Reduced padding */
-            display: block;
-            font-weight: bold; /* Make the font bold */
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.8);
-            transition: background-color 0.3s ease;
-        }
-
-        nav ul li a:hover {
-            background-color: #ff7f00;
-        }
-
-        /* Main content section */
-        #content-section {
-            padding: 40px 20px;
-            text-align: center;
-            color: white;
-            padding-bottom: 60px; /* Added padding to push content up and avoid footer overlap */
-        }
-
-        #content-section h2, #content-section p {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            margin: 20px auto;
-            max-width: 800px;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            position: relative; /* Changed from fixed to relative */
-            width: 100%;
-        }
-
-        /* Social icons */
-        .social-icons a {
-            margin: 0 15px;
-            color: white;
-            font-size: 24px;
-        }
-
-        .social-icons a:hover {
-            color: #ff7f00;
-        }
-
-        /* License text */
-        .license {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        /* Form styling */
-        form {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: 20px auto;
-            color: white;
-        }
-
-        form input, form textarea, form button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #ff9800;
-            border-radius: 5px;
-        }
-
-        form button {
-            background-color: #ff9800;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            display: block; /* Ensures button is a block element */
-            width: 100%; /* Makes the button take up full width */
-            margin-top: 10px; /* Adds space above the button */
-        }
-
-        form button:hover {
-            background-color: #ff7f00;
-        }
-
-        /* UDP form container */
         .form-container {
-            max-width: 400px;
-            margin: auto;
+            background-color: #fff;
+            border-radius: 8px;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
-
         .form-container h3 {
             text-align: center;
             color: #007bff;
         }
-
         label {
-            display: block;
-            margin-bottom: 5px;
             font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
         }
-
-        input[type="text"],
-        button {
+        input[type="text"], select, button {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #ccc;
             border-radius: 5px;
+            border: 1px solid #ccc;
         }
-
-        .recaptcha {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .recaptcha input {
-            margin-right: 10px;
-        }
-
         button {
             background-color: #007bff;
             color: white;
+            font-size: 16px;
             border: none;
             cursor: pointer;
         }
-
         button:hover {
             background-color: #0056b3;
         }
-
-        /* Generated code display */
         .generated-code {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: #333;
             color: #ff9800;
             padding: 10px;
             text-align: center;
             border-radius: 5px;
             margin-top: 20px;
         }
-
         .copy-button {
             background-color: #ff9800;
             color: white;
@@ -254,135 +65,71 @@
             margin-top: 10px;
             border-radius: 5px;
         }
-
         .copy-button:hover {
             background-color: #ff7f00;
         }
     </style>
 </head>
 <body>
-    <!-- Header with logo and navigation -->
-    <header>
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
-        <h1>Welcome to UDP protocol Services</h1>
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-        <nav>
-            <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-                <li class="dropdown">
-                    <a href="services.html">Services</a>
-                    <div class="dropdown-content">
-                        <a href="vpn.html">VPN</a>
-                        <a href="vmess.html">Vmess</a>
-                        <a href="trojan.html">Trojan</a>
-                        <a href="udp.html">UDP</a>
-                        <a href="typing_assistant.html">Typing Assistant</a>
-                        <a href="school-materials.html">School Materials</a>
-                    </div>
-                </li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="posts.html">Posts</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Form Container -->
+    <div class="form-container">
+        <h3>Generate UDP Configuration</h3>
+        <form id="udpForm">
+            <!-- Server Dropdown -->
+            <label for="server">Select Server:</label>
+            <select id="server" name="server">
+                <option value="iceland">Iceland</option>
+                <option value="us">United States</option>
+                <option value="uk">United Kingdom</option>
+                <!-- Add other server options here -->
+            </select>
 
-    <!-- Main content section -->
-    <section id="content-section">
-        <h2>Here you will be able to generate UDP configuration files</h2>
-        <p>The codes generated here will help you to connect your HTTP CUSTOM using UDP protocol. To learn more about these services, click on the relevant links in the menu above.</p>
-        
-        <!-- UDP form for generating configuration files -->
-        <div class="form-container">
-            <h3>Generate UDP Configuration</h3>
-            <form id="udp-form">
-                <label for="server">Server:</label>
-                <input type="text" id="server" name="server" placeholder="Enter your server IP" required>
+            <!-- Username Field -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required placeholder="Enter username">
 
-                <label for="port">Port:</label>
-                <input type="text" id="port" name="port" placeholder="Enter your port number" required>
+            <!-- Password Field -->
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" required placeholder="Enter password">
 
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <!-- Submit Button -->
+            <button type="button" onclick="generateCode()">Generate Code</button>
+        </form>
 
-                <label for="password">Password:</label>
-                <input type="text" id="password" name="password" placeholder="Enter your password" required>
-
-                <label for="timeout">Timeout:</label>
-                <input type="text" id="timeout" name="timeout" placeholder="Enter your timeout value" required>
-
-                <div class="recaptcha">
-                    <input type="checkbox" id="recaptcha" name="recaptcha" required>
-                    <label for="recaptcha">I'm not a robot</label>
-                </div>
-
-                <button type="submit">Generate Configuration</button>
-            </form>
-
-            <!-- Generated UDP configuration display -->
-            <div class="generated-code" id="generated-code">
-                <p>Your generated code will appear here.</p>
-                <button class="copy-button" id="copy-button">Copy Code</button>
-            </div>
+        <!-- Display Generated Code -->
+        <div class="generated-code" id="generatedCode" style="display:none;">
+            <p id="codeOutput"></p>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
-        <div class="social-icons">
-            <a href="https://youtube.com/@martootech?si=WtTmTBtO6VjvajdN" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61561559594029" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="https://wa.me/260950322498" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="license">
-            <p>Licensed under the Creative Commons Attribution 4.0 International License.</p>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // Toggle the hamburger menu visibility
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('show');
-        }
+        // Function to generate the code
+        function generateCode() {
+            // Get selected values
+            var server = document.getElementById('server').value;
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
 
-        // Form submission handling
-        document.getElementById('udp-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            
-            // Get form values
-            const server = document.getElementById('server').value;
-            const port = document.getElementById('port').value;
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const timeout = document.getElementById('timeout').value;
-
-            // Generate the UDP configuration code
-            const configCode = `
-                server: ${server}
-                port: ${port}
-                username: ${username}
-                password: ${password}
-                timeout: ${timeout}
-            `;
+            // Generate code in the required format
+            var generatedCode = server + ":1-65535@" + username + ":" + password;
 
             // Display the generated code
-            document.getElementById('generated-code').innerHTML = `
-                <p>${configCode}</p>
-                <button class="copy-button" id="copy-button">Copy Code</button>
-            `;
-        });
+            document.getElementById('codeOutput').innerText = generatedCode;
+            document.getElementById('generatedCode').style.display = 'block';
+        }
 
-        // Handle copy code button click
-        document.getElementById('generated-code').addEventListener('click', function (event) {
-            if (event.target.id === 'copy-button') {
-                const code = document.querySelector('.generated-code p').textContent;
-                navigator.clipboard.writeText(code).then(() => {
-                    alert('Code copied to clipboard!');
-                });
-            }
-        });
+        // Function to copy the generated code
+        function copyCode() {
+            var code = document.getElementById('codeOutput').innerText;
+            var tempInput = document.createElement('input');
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            alert("Code copied to clipboard!");
+        }
     </script>
 </body>
 </html>

@@ -3,141 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UDP | Martoo Tech Works</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CSS -->
+    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
+    <title>UDP SERVICES</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* General body background and layout settings */
+        /* Full-site background */
         body {
-            background-color: #3f51b5; /* Indigo background */
+            background-image: url('full site background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding-bottom: 60px; /* Make space for footer */
-            min-height: 100vh; /* Ensure content takes up at least full viewport height */
+            min-height: 100vh;
         }
 
-        /* Header styles with main background image */
+        /* Header styles */
         header {
-            background-image: url('background.jpg'); /* Main background image */
-            background-size: cover;
-            background-position: center;
-            color: white;
+            position: relative;
             text-align: center;
             padding: 60px 20px;
-            position: relative; /* For absolute positioning of logo */
-            width: 100vw;
+            background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
         }
 
-        /* Logo placed in top left corner as circle */
+        /* Header text styles */
+        header h1 {
+            color: #ff9800; /* Nice color for header text */
+            font-size: 32px;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Logo */
         .logo {
             position: absolute;
             top: 20px;
             left: 20px;
-            width: 100px; /* Size of the logo */
-            height: 100px;
-            border-radius: 50%; /* Circle shape */
-            object-fit: cover; /* Ensures logo fits well */
-            border: 4px solid #ffcc00; /* Orange border around logo */
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffcc00;
+            z-index: 1; /* Behind header text */
         }
 
-        /* Header Text Styling */
-        header h1 {
-            color: #ffcc00; /* Orange color for the header text */
-            font-size: 36px;
-            position: relative; /* Allow header text to overlay */
-            z-index: 1; /* Ensure the text stays on top of the logo */
-            margin-top: 20px;
-        }
-
-        /* Hamburger menu styling */
+        /* Hamburger menu icon */
         .hamburger {
             position: absolute;
-            top: 15px; /* Move it down a bit for visibility */
-            right: 20px; /* Adjust from the far-right edge */
-            font-size: 30px;
-            color: #ffcc00; /* Dark Orange color */
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: white;
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
+            padding: 8px;
             border-radius: 5px;
             border: 2px solid #ffcc00;
+            z-index: 3;
         }
 
-        /* Navigation styles */
+        /* Navigation menu styling */
         nav ul {
             list-style-type: none;
             padding: 0;
-            display: none;
             margin: 0;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease-in-out;
+            z-index: 4; /* Ensure it's above the header text */
         }
 
+        /* Menu toggle */
+        #menu.show {
+            display: flex;
+        }
+
+        /* Menu items */
         nav ul li {
-            margin: 10px 0;
+            margin: 3px 0;
         }
 
         nav ul li a {
-            color: #ffcc00; /* Dark Orange color */
+            color: white;
             text-decoration: none;
-            padding: 10px;
+            padding: 5px 10px; /* Reduced padding */
             display: block;
-            background-color: rgba(0, 0, 0, 0.7);
+            font-weight: bold; /* Make the font bold */
             border-radius: 5px;
-            transition: background-color 0.3s ease; /* Smooth transition for highlight */
+            background-color: rgba(0, 0, 0, 0.8);
+            transition: background-color 0.3s ease;
         }
 
         nav ul li a:hover {
-            background-color: #000; /* Black highlight */
+            background-color: #ff7f00;
         }
 
-        /* Show the menu when toggled */
-        #menu.show {
-            display: block;
-        }
-
-        /* Section for UDP explanation */
-        #udp-section {
-            background-color: #222;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        #udp-section h2 {
-            margin-bottom: 30px;
-        }
-
-        #udp-section p {
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .udp-features {
-            margin-top: 20px;
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .udp-features li {
-            background-color: rgba(0, 0, 0, 0.7);
-            margin: 10px 0;
-            padding: 10px;
+        /* Dropdown content */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.9);
             border-radius: 5px;
+            margin-top: 5px;
+            padding: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
         }
 
-        /* Footer styles */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
+        .dropdown:hover .dropdown-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main content section */
+#content-section {
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+    padding-bottom: 60px; /* Added padding to push content up and avoid footer overlap */
+}
+
+        #content-section h2, #content-section p {
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            box-sizing: border-box;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 20px auto;
+            max-width: 800px;
         }
 
-        /* Social media icons */
+        /* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative; /* Changed from fixed to relative */
+    width: 100%;
+}
+
+        /* Social icons */
         .social-icons a {
             margin: 0 15px;
             color: white;
@@ -145,7 +159,7 @@
         }
 
         .social-icons a:hover {
-            color: #ff7f00; /* Dark Orange highlight */
+            color: #ff7f00;
         }
 
         /* License text */
@@ -153,65 +167,88 @@
             margin-top: 10px;
             font-size: 14px;
         }
+
+        /* Form styling */
+        form {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+            color: white;
+        }
+
+        form input, form textarea, form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ff9800;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #ff9800;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: block; /* Ensures button is a block element */
+            width: 100%; /* Makes the button take up full width */
+            margin-top: 10px; /* Adds space above the button */
+        }
+
+        form button:hover {
+            background-color: #ff7f00;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header with logo and navigation -->
     <header>
-        <!-- Logo placed in the top left corner as a circle -->
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
-        
-        <!-- Header text -->
-        <h1>UDP Protocol</h1>
-        
-        <!-- Hamburger icon -->
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
+        <h1>Welcome to UDP protocol Services</h1>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-
-        <!-- Navigation menu -->
         <nav>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
+                <li class="dropdown">
+                    <a href="services.html">Services</a>
+                    <div class="dropdown-content">
+                        <a href="vpn.html">VPN</a>
+                        <a href="vmess.html">Vmess</a>
+                        <a href="trojan.html">Trojan</a>
+                        <a href="udp.html">UDP</a>
+                        <a href="typing_assistant.html">Typing Assistant</a>
+                        <a href="school-materials.html">School Materials</a> <!-- New Link Added -->
+                    </div>
+                </li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="posts.html">Posts</a></li>
             </ul>
         </nav>
     </header>
-
-    <!-- UDP Content Section -->
-    <section id="udp-section">
-        <h2>What is UDP?</h2>
-        <p>The User Datagram Protocol (UDP) is a connectionless protocol used in networking for transmitting data. It is faster than other protocols, such as TCP, because it does not establish a connection before sending data, making it ideal for real-time applications like gaming and streaming.</p>
-
-        <h3>Features of UDP</h3>
-        <ul class="udp-features">
-            <li><strong>Faster than TCP:</strong> UDP doesn't establish a connection, making it faster for data transmission.</li>
-            <li><strong>Lower Latency:</strong> Ideal for applications requiring real-time data transmission (e.g., live streaming).</li>
-            <li><strong>No Acknowledgement:</strong> Unlike TCP, UDP doesn't require an acknowledgment for each sent packet, reducing overhead.</li>
-            <li><strong>Connectionless:</strong> UDP doesn't establish a session between sender and receiver, making it suitable for one-way communications.</li>
-            <li><strong>Ideal for Streaming:</strong> UDP is great for media streaming and online gaming due to its low-latency and real-time capabilities.</li>
-        </ul>
-
-        <p>UDP is a lightweight and high-performance protocol suitable for scenarios where speed is more important than reliability. It is commonly used for video calls, voice over IP (VoIP), and online gaming.</p>
+    <!-- Main content section -->
+    <section id="content-section">
+        <h2> Here you will be able to generate UDP configuration files</h2>
+        <p>The codes generated here will help you to connect your HTTP CUSTOM using UDP protocol to learn more about these services you can just click on the Youtube icon on the footer it will direct you to our Youtube channel for more guidance</p>
     </section>
-<div class="container">
-  <label for="serverAddress">Server Address</label>
-  <input type="text" id="serverAddress" placeholder="e.g., is1.sshudp.site" required>
+<!-- Subscription Form Section -->
+<section>
+    <h2>Subscribe to Our Newsletter</h2>
+    <!-- Form for subscription, now pointing to Formcarry -->
+    <form action="https://formcarry.com/s/zYwAovO5bOf" method="POST">
+        <label for="email">Your email:</label>
+        <input type="email" name="email" id="email" required> <!-- Updated field name for email -->
 
-  <label for="portRange">Port Range</label>
-  <input type="text" id="portRange" placeholder="e.g., 1-65535" required>
+        <label for="message">Your message:</label>
+        <textarea name="message" id="message" required></textarea> <!-- Updated field name for message -->
 
-  <label for="username">Username</label>
-  <input type="text" id="username" placeholder="e.g., sshmax-martootechwoorks" required>
+        <button type="submit">Send</button>
+    </form>
+</section>
 
-  <label for="password">Password</label>
-  <input type="text" id="password" placeholder="e.g., techworks" required>
-
-  <button onclick="generateConfig()">Generate Configuration</button>
-</div>
-    <!-- Footer -->
+ <!-- Footer with social links -->
     <footer>
         <div class="social-icons">
             <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
@@ -219,14 +256,14 @@
             <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
         </div>
         <div class="license">
-            <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+            <p>&copy; 2024 Martoo Tech Works. All rights reserved. Licensed under the Martoo Tech Works Terms of Service.</p>
         </div>
     </footer>
 
+    <!-- JavaScript for menu toggle -->
     <script>
         function toggleMenu() {
-            var menu = document.getElementById("menu");
-            menu.classList.toggle("show");
+            const menu = document.getElementById('menu');menu.classList.toggle('show');
         }
     </script>
 

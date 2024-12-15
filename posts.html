@@ -420,7 +420,22 @@ footer {
             } else {
                 alert("Incorrect password! Please try again.");
             }
-        }
+        }document.addEventListener("DOMContentLoaded", function () {
+  // Select all reaction elements
+  const reactions = document.querySelectorAll(".reaction");
+
+  // Add click event listener to each reaction
+  reactions.forEach((reaction) => {
+    reaction.addEventListener("click", function () {
+      // Get the count span inside the clicked reaction
+      const countSpan = this.querySelector(".count");
+      const currentCount = parseInt(countSpan.textContent, 10);
+
+      // Increment the count and update the DOM
+      countSpan.textContent = currentCount + 1;
+    });
+  });
+});
     </script>
 </body>
 </html> 

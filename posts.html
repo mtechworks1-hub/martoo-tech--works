@@ -235,16 +235,24 @@ footer {
             <h3>How to Set Up a VPN with Martoo Tech Works</h3>
             <p>Learn how to set up a VPN using our easy-to-follow guide. This post walks you through each step to ensure your privacy is always protected.</p>
         </div>
-        <!-- Generator Section -->
-<div id="generator-section">
-  <input id="fileNameInput" type="text" placeholder="Enter file name">
-  <button id="generateButton">Generate</button>
+         <!-- Generator Section -->
+<div id="generator-section" style="font-family: Arial, sans-serif; color: darkblue;">
+  <p style="font-weight: bold; font-size: 18px;">
+    <strong>VPN Configuration Generator</strong><br>
+    Generate your VPN configuration easily by entering the required details. Select the VPN type, provide the server info, and get your configuration ready in seconds.
+  </p>
+  
+  <input id="fileNameInput" type="text" placeholder="Enter file name" style="font-size: 20px; padding: 10px; width: 300px; border: 2px solid darkblue; border-radius: 5px;">
+  
+  <button id="generateButton" style="font-size: 20px; padding: 15px 30px; background-color: darkblue; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+    Generate
+  </button>
 </div>
 
-<div id="outputSection"></div>
+<div id="outputSection" style="margin-top: 20px; padding: 10px; background-color: #f4f4f9; border: 2px solid darkblue; border-radius: 5px;"></div>
 
 <!-- Donation Message -->
-<div id="donationMessage" style="margin-top: 20px; font-weight: bold; color: dark;">
+<div id="donationMessage" style="margin-top: 20px; font-weight: bold; color: orange; font-size: 18px;">
   Thank you for your visit, please donate to this number: +260774766077
 </div>
 
@@ -276,17 +284,25 @@ footer {
       // Create container for each configuration
       const configContainer = document.createElement("div");
       configContainer.style.marginBottom = "10px";
+      configContainer.style.fontWeight = "bold";
+      configContainer.style.color = "darkblue";
 
       // Add configuration text
       const configText = document.createElement("p");
       configText.textContent = `Configuration ${index + 1}: ${config}`;
       configText.style.fontWeight = "bold";
-      configText.style.color = "dark";
+      configText.style.color = "darkblue";
 
       // Add copy button
       const copyButton = document.createElement("button");
       copyButton.textContent = "Copy";
       copyButton.style.marginLeft = "10px";
+      copyButton.style.padding = "5px 10px";
+      copyButton.style.backgroundColor = "darkblue";
+      copyButton.style.color = "white";
+      copyButton.style.border = "none";
+      copyButton.style.borderRadius = "5px";
+      copyButton.style.cursor = "pointer";
 
       // Copy functionality
       copyButton.addEventListener("click", function () {
@@ -303,6 +319,7 @@ footer {
       outputSection.appendChild(configContainer);
     });
   });
+</script>
                            </script>
 
         <!-- Comment Form -->

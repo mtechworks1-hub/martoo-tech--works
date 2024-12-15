@@ -357,7 +357,16 @@ footer {
             <button onclick="showPasswordModal('Mental health notes.zip')">Mental health notes.zip</button><button onclick="showPasswordModal('Mental health notes.zip')">Download Mental health notes.zip</button>
         </div>
     </section>
-
+<div id="reaction-section">
+  <p>Tell us how you're feeling about the services!</p>
+  <div id="reactions">
+    <span class="reaction" data-reaction="angry">😠 <span class="count" id="angry-count">0</span></span>
+    <span class="reaction" data-reaction="sad">😣 <span class="count" id="sad-count">0</span></span>
+    <span class="reaction" data-reaction="happy">😁 <span class="count" id="happy-count">0</span></span>
+    <span class="reaction" data-reaction="love">🥰 <span class="count" id="love-count">0</span></span>
+    <span class="reaction" data-reaction="excited">🤩 <span class="count" id="excited-count">0</span></span>
+  </div>
+</div>
     <!-- Footer Section -->
     <footer>
         <div class="social-icons">
@@ -413,16 +422,5 @@ footer {
             }
         }
     </script>
-<div id="reaction-section">
-  <p>Tell us how you're feeling about the services!</p>
-  <div id="reactions">
-    <span class="reaction" data-reaction="angry">😠</span>
-    <span class="reaction" data-reaction="sad">😣</span>
-    <span class="reaction" data-reaction="happy">😁</span>
-    <span class="reaction" data-reaction="love">🥰</span>
-    <span class="reaction" data-reaction="excited">🤩</span>
-  </div>
-  <p id="reaction-result"></p>
-</div>
 </body>
 </html> 

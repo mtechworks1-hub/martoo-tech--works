@@ -237,82 +237,23 @@ footer {
         </div>
          <!-- Generator Section -->
 <div id="generator-section">
+  <p style="font-weight: bold; color: yellowgreen; font-size: 24px;">
+    VPN Configuration Generator
+  </p>
+  <p style="font-weight: bold; color: yellowgreen;">
+    Generate your VPN configuration easily by entering the required details. Select the VPN type, provide the server info, and get your configuration ready in seconds.
+  </p>
   <input id="fileNameInput" type="text" placeholder="Enter file name">
   <button id="generateButton">Generate</button>
 </div>
 
 <div id="outputSection"></div>
 
-<!-- VPN Configuration Generator Text -->
-<div id="vpnText" style="font-weight: bold; color: #FFD700; font-size: 20px; margin-bottom: 20px;">
-  VPN Configuration Generator
-</div>
-<div id="vpnDescription" style="font-weight: bold; color: #FFD700; font-size: 16px; margin-bottom: 20px;">
-  Generate your VPN configuration easily by entering the required details. Select the VPN type, provide the server info, and get your configuration ready in seconds.
-</div>
-
 <!-- Donation Message -->
 <div id="donationMessage" style="margin-top: 20px; font-weight: bold; color: orange;">
   Thank you for your visit, please donate to this number: +260774766077
 </div>
-
-<script>
-  // Configuration codes provided
-  const configurations = [
-    "nm-vmess://LqTYaPC/1aE3RDA9Kk1DkXdyT3ZZq/yCXWku4Pe6LR305EpBVI+AK71KtoclTsKyOZTokywl30KSaL6vgBXzEqBSEHdrdWs5XMAH1jqcWiTExsL17ah6KHdaVK6tWT/eQ03uMlDyWRrJqIc5L91OZ+HcVnGmTLZKKe51IOp4kMwNCz4LVFGm9Btm0npFHVJ3WBtkrd6HbStxcIO68KkgHPjYJfnPqOz5RJH+R3V1GE2v5kaKQm6C32pTsg3ygZxqqCS03Nsamwy+9xv5MoQ8NpzxTmSV/VjiegAw6Hlt3CCo4ZCgu2jLKyfF6ttfyFYSPoFBZXbyqzWPz71c17tD7SsqR/kVmC70fKLBm8XZi1fpMKAoBsF/cDqA/39EF7Rt1awOJ1y1OZFJyf+ehvFS+w==",
-    "nm-trojan://99Ap7yWi8oZkp1Jv3hzSBskdd3i2l+Vhx/NlLO6OVKJhx4U1wEcc/fMHORQWnsF+BqfrvdzFP9rHkfqJwX3k5cYqdroTUGpL9ZeLN3dJLD1fA7xBO+LmpBHEdrsQzBHB49bblLV3PA42QfH5XCmHW2jMlyVghr2bsrZ0EAjEmUjXwh8EvA/3iOu/zuQ68+45qlXxkB2kTKWx1Z05BVEGAQ==",
-    "nm-trojan://rrZmHBKeh74FSchsGG9KB9cXF3/4ARP1nHIgcYMa/7+jCeF9MzHHGevFYv+6NNfPBqfrvdzFP9rHkfqJwX3k5TxDYwXMuxwaqB6gPJ2WRHNfA7xBO+LmpBHEdrsQzBHB49bblLV3PA42QfH5XCmHW2jMlyVghr2bsrZ0EAjEmUjXwh8EvA/3iOu/zuQ68+45r+Qgr7yRFDQ62iwAaMJBo6SfPWKkiphYPc/M9P6CBgY=",
-    "nm-vmess://LqTYaPC/1aE3RDA9Kk1DkXdyT3ZZq/yCXWku4Pe6LR305EpBVI+AK71KtoclTsKyOZTokywl30KSaL6vgBXzEqBSEHdrdWs5XMAH1jqcWiTExsL17ah6KHdaVK6tWT/eQ03uMlDyWRrJqIc5L91OZ/XAOZceZ0NF3oxnUmi15W0xwjyb92Aj5eQp1WZG8sGnFYT5Z+B9eGX2WlhkNfkYeX1liwJXHhwAzAV/h/0sWT7DFZqVnzyhXxJCING2olKsSL0ODmwNXQwKwm2T1NygC67/AMGfOhHZUEiGfzasTtF9rpQHcBFyxwDAlFJB2n30ozpUS8kpoP0icOjE841HeQCcSh/E1w4KF0X4Dhodl2nsxvmdm/L/MGKxM4Ux0Atq",
-    "nm-vmess://LqTYaPC/1aE3RDA9Kk1DkXdyT3ZZq/yCXWku4Pe6LR305EpBVI+AK71KtoclTsKyOZTokywl30KSaL6vgBXzEqBSEHdrdWs5XMAH1jqcWiTExsL17ah6KHdaVK6tWT/eQ03uMlDyWRrJqIc5L91OZ+HcVnGmTLZKKe51IOp4kMwNCz4LVFGm9Btm0npFHVJ3WBtkrd6HbStxcIO68KkgHPjYJfnPqOz5RJH+R3V1GE2v5kaKQm6C32pTsg3ygZxqqCS03Nsamwy+9xv5MoQ8NpzxTmSV/VjiegAw6Hlt3CBtOcyaiUEZObLbXONOYSKE6dX6ZZM4AjV1f8conGBVAEg9DdIcS0h2GQpTj+QzViwvyHAvbH6JQgzbaiROv7PdhS9tmyD910xh+T2o/CCO/A=="
-  ];
-
-  // Generate button click handler
-  document.getElementById("generateButton").addEventListener("click", function () {
-    const outputSection = document.getElementById("outputSection");
-    const fileName = document.getElementById("fileNameInput").value.trim();
-
-    if (!fileName) {
-      alert("Please enter a file name.");
-      return;
-    }
-
-    // Clear previous output
-    outputSection.innerHTML = "";
-
-    // Dynamically generate and display configurations
-    configurations.forEach((config, index) => {
-      // Create container for each configuration
-      const configContainer = document.createElement("div");
-      configContainer.style.marginBottom = "10px";
-
-      // Add configuration text
-      const configText = document.createElement("p");
-      configText.textContent = `Configuration ${index + 1}: ${config}`;
-      configText.style.fontWeight = "bold";
-      configText.style.color = "dark";
-
-      // Add copy button
-      const copyButton = document.createElement("button");
-      copyButton.textContent = "Copy";
-      copyButton.style.marginLeft = "10px";
-
-      // Copy functionality
-      copyButton.addEventListener("click", function () {
-        navigator.clipboard.writeText(config).then(() => {
-          alert("Configuration copied to clipboard!");
-        });
-      });
-
-      // Append text and button to container
-      configContainer.appendChild(configText);
-      configContainer.appendChild(copyButton);
-
-      // Append container to output section
-      outputSection.appendChild(configContainer);
-    });
-  });
-</script>
-                           </script>
+    </script>
 
         <!-- Comment Form -->
 <div class="comment-form">

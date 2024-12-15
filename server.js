@@ -1,46 +1,20 @@
+// Import the required modules
 const express = require('express');
-const path = require('path');
 const bodyParser = require('body-parser');
+
+// Create an Express app
 const app = express();
 
-// In-memory database for demo purposes (replace with a real database)
-let reactions = {
-  angry: 0,
-  sad: 0,
-  happy: 0,
-  love: 0,
-  excited: 0,
-};
-
-// Middleware to parse JSON bodies
+// Use body-parser middleware
 app.use(bodyParser.json());
 
-// Serve static files (like HTML, CSS, JavaScript) from the 'public' folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// API endpoint to get all reactions
-app.get('/api/reactions', (req, res) => {
-  res.json(reactions);
+// Define a simple route
+app.get('/', (req, res) => {
+  res.send('Welcome to Martoo Tech Works!');
 });
 
-// API endpoint to update a reaction
-app.post('/api/reactions', (req, res) => {
-  const { reactionType, action } = req.body;
-
-  if (reactions[reactionType] !== undefined) {
-    if (action === 'add') {
-      reactions[reactionType]++;
-    } else if (action === 'remove') {
-      reactions[reactionType] = Math.max(0, reactions[reactionType] - 1);
-    }
-    return res.json({ success: true, reactions });
-  }
-
-  res.status(400).json({ success: false, message: 'Invalid reaction type' });
-});
-
-// Set the server to listen on a port
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Start the server
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

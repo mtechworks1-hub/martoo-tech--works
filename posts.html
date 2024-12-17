@@ -198,28 +198,36 @@ footer {
 </head>
 <body>
 
-    <!-- Header -->
     <header>
-    <!-- Logo -->
-    <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Update with correct logo path -->
-    
-    <!-- Title for the Posts Page -->
-    <h1>Martoo Tech Hub - Posts</h1>
-    
-    <!-- Hamburger Menu Icon -->
+    <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
+    <h1>MARTOO TECH WORKS POSTS</h1>
     <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-    
-    <!-- Navigation Menu -->
     <nav>
         <ul id="menu">
             <li><a href="index.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
+            <li class="dropdown">
+                <a href="services.html">Services</a>
+                <div class="dropdown-content">
+                    <a href="vpn.html">VPN</a>
+                    <a href="vmess.html">Vmess</a>
+                    <a href="trojan.html">Trojan</a>
+                    <a href="udp.html">UDP</a>
+                    <a href="typing_assistant.html">Typing Assistant</a>
+                    <a href="school-materials.html">School Materials</a> <!-- New Link Added -->
+                </div>
+            </li>
             <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
-            <li><a href="posts.html" class="active">Posts</a></li> <!-- Active class for Posts page -->
+            <li><a href="posts.html">Posts</a></li>
         </ul>
     </nav>
 </header>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('menu');
+        menu.classList.toggle('show');
+    }
+</script>
 
 <!-- Add your content for posts here -->
 

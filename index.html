@@ -249,27 +249,58 @@ footer {
   width: fit-content;
   margin: 20px auto;
 }
-
-/* Happy New Year Text */
-.new-year-text {
-  font-size: 3rem;
-  color: gold;
-  text-align: center;
-  margin-top: 5%;
-  animation: glow 1.5s infinite alternate;
+/* Rotating Wheel Animation */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a1a; /* Dark background */
+  overflow: hidden;
 }
-@keyframes glow {
+
+.rotating-wheel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+}
+
+.rotating-text {
+  font-size: 5rem; /* Large font size */
+  font-weight: bold;
+  color: gold;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  border: 5px solid gold;
+  border-radius: 50%;
+  padding: 50px;
+  text-align: center;
+  animation: rotate 10s linear infinite, glow 1.5s ease-in-out infinite alternate;
+  box-shadow: 0 0 30px gold, 0 0 60px orange;
+}
+
+@keyframes rotate {
   0% {
-    text-shadow: 0 0 5px gold, 0 0 10px gold, 0 0 20px orange;
+    transform: rotate(0deg);
   }
   100% {
-    text-shadow: 0 0 10px orange, 0 0 20px red, 0 0 30px crimson;
+    transform: rotate(360deg);
   }
-    }
-        form button:hover {
-            background-color: #ff7f00;
-        }
-    </style>
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 10px gold, 0 0 20px orange, 0 0 40px red;
+  }
+  100% {
+    text-shadow: 0 0 20px orange, 0 0 40px red, 0 0 60px crimson;
+  }
+}
 </head>
 <body>
 
@@ -298,9 +329,9 @@ footer {
             </ul>
         </nav>
     </header>
-    <div class="rotating-wheel">
+        <div class="rotating-wheel">
   <span class="rotating-text">MARTOO TECH WORKS</span>
-    </div>
+</div>
     <!-- Main content section -->
     <section id="content-section">
         <h2>Your Gateway to Technology</h2>

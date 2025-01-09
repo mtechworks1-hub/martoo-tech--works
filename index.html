@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +11,7 @@
     <title>Martoo Tech Works</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Full-site background */
+        /* Body Styling */
         body {
             background-image: url('full site background.jpg');
             background-size: cover;
@@ -22,24 +23,20 @@
             min-height: 100vh;
         }
 
-        /* Header styles */
+        /* Header Styling */
         header {
             position: relative;
             text-align: center;
             padding: 60px 20px;
-            background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+            background: rgba(0, 0, 0, 0.6);
         }
 
-        /* Header text styles */
         header h1 {
-            color: #ff9800; /* Nice color for header text */
+            color: #ff9800;
             font-size: 32px;
             margin: 0;
-            position: relative;
-            z-index: 2;
         }
 
-        /* Logo */
         .logo {
             position: absolute;
             top: 20px;
@@ -49,10 +46,8 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #ffcc00;
-            z-index: 1; /* Behind header text */
         }
 
-        /* Hamburger menu icon */
         .hamburger {
             position: absolute;
             top: 15px;
@@ -64,10 +59,9 @@
             padding: 8px;
             border-radius: 5px;
             border: 2px solid #ffcc00;
-            z-index: 3;
         }
 
-        /* Navigation menu styling */
+        /* Navigation Menu */
         nav ul {
             list-style-type: none;
             padding: 0;
@@ -82,16 +76,13 @@
             align-items: flex-start;
             border-radius: 5px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease-in-out;
-            z-index: 4; /* Ensure it's above the header text */
+            z-index: 4;
         }
 
-        /* Menu toggle */
         #menu.show {
             display: flex;
         }
 
-        /* Menu items */
         nav ul li {
             margin: 3px 0;
         }
@@ -99,9 +90,9 @@
         nav ul li a {
             color: white;
             text-decoration: none;
-            padding: 5px 10px; /* Reduced padding */
+            padding: 5px 10px;
             display: block;
-            font-weight: bold; /* Make the font bold */
+            font-weight: bold;
             border-radius: 5px;
             background-color: rgba(0, 0, 0, 0.8);
             transition: background-color 0.3s ease;
@@ -111,7 +102,7 @@
             background-color: #ff7f00;
         }
 
-        /* Dropdown content */
+        /* Dropdown Styling */
         .dropdown-content {
             display: none;
             position: absolute;
@@ -127,13 +118,13 @@
             flex-direction: column;
         }
 
-        /* Main content section */
-#content-section {
-    padding: 40px 20px;
-    text-align: center;
-    color: white;
-    padding-bottom: 60px; /* Added padding to push content up and avoid footer overlap */
-}
+        /* Main Section Styling */
+        #content-section {
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            padding-bottom: 60px;
+        }
 
         #content-section h2, #content-section p {
             background-color: rgba(0, 0, 0, 0.7);
@@ -144,17 +135,58 @@
             max-width: 800px;
         }
 
-        /* Footer */
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    position: relative; /* Changed from fixed to relative */
-    width: 100%;
-}
+        /* Rotating Text Animation */
+        .rotating-wheel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
 
-        /* Social icons */
+        .rotating-text {
+            font-size: 5rem;
+            font-weight: bold;
+            color: gold;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            border: 5px solid gold;
+            border-radius: 50%;
+            padding: 50px;
+            text-align: center;
+            animation: rotate 10s linear infinite, glow 1.5s ease-in-out infinite alternate;
+            box-shadow: 0 0 30px gold, 0 0 60px orange;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px gold, 0 0 20px orange, 0 0 40px red;
+            }
+            100% {
+                text-shadow: 0 0 20px orange, 0 0 40px red, 0 0 60px crimson;
+            }
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            width: 100%;
+        }
+
         .social-icons a {
             margin: 0 15px;
             color: white;
@@ -165,146 +197,14 @@ footer {
             color: #ff7f00;
         }
 
-        /* License text */
         .license {
             margin-top: 10px;
             font-size: 14px;
         }
-
-        /* Form styling */
-        form {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: 20px auto;
-            color: white;
-        }
-
-        form input, form textarea, form button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #ff9800;
-            border-radius: 5px;
-        }
-
-        form button {
-            background-color: #ff9800;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            display: block; /* Ensures button is a block element */
-            width: 100%; /* Makes the button take up full width */
-            margin-top: 10px; /* Adds space above the button */
-        }
-/* Fireworks Animation */
-#fireworks {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  overflow: hidden;
-  z-index: -1;
-}
-@keyframes explode {
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-#fireworks::before,
-#fireworks::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, red, transparent);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  animation: explode 2s infinite;
-}
-#fireworks::after {
-  background: radial-gradient(circle, yellow, transparent);
-  animation-delay: 1s;
-}
-
-/* Countdown Timer */
-.countdown {
-  font-size: 2rem;
-  color: #fff;
-  text-align: center;
-  margin-top: 10%;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 10px;
-  border-radius: 10px;
-  width: fit-content;
-  margin: 20px auto;
-}
-/* Rotating Wheel Animation */
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #1a1a1a; /* Dark background */
-  overflow: hidden;
-}
-
-.rotating-wheel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-}
-
-.rotating-text {
-  font-size: 5rem; /* Large font size */
-  font-weight: bold;
-  color: gold;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  border: 5px solid gold;
-  border-radius: 50%;
-  padding: 50px;
-  text-align: center;
-  animation: rotate 10s linear infinite, glow 1.5s ease-in-out infinite alternate;
-  box-shadow: 0 0 30px gold, 0 0 60px orange;
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes glow {
-  0% {
-    text-shadow: 0 0 10px gold, 0 0 20px orange, 0 0 40px red;
-  }
-  100% {
-    text-shadow: 0 0 20px orange, 0 0 40px red, 0 0 60px crimson;
-  }
-}
+    </style>
 </head>
 <body>
-
-    <!-- Header with logo and navigation -->
+    <!-- Header Section -->
     <header>
         <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
         <h1>Welcome to Martoo Tech Works</h1>
@@ -320,56 +220,43 @@ body {
                         <a href="trojan.html">Trojan</a>
                         <a href="udp.html">UDP</a>
                         <a href="typing_assistant.html">Typing Assistant</a>
-                        <a href="school-materials.html">School Materials</a> <!-- New Link Added -->
+                        <a href="school-materials.html">School Materials</a>
                     </div>
                 </li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="posts.html">Posts</a></li>
             </ul>
         </nav>
     </header>
-        <div class="rotating-wheel">
-  <span class="rotating-text">MARTOO TECH WORKS</span>
-</div>
-    <!-- Main content section -->
+
+    <!-- Rotating Wheel -->
+    <div class="rotating-wheel">
+        <span class="rotating-text">MARTOO TECH WORKS</span>
+    </div>
+
+    <!-- Main Content -->
     <section id="content-section">
         <h2>Your Gateway to Technology</h2>
-        <p>At Martoo Tech Works, we offer a range of tech services to help you navigate the digital world. From VPN configurations to educational materials, we're here to support your growth.</p>
+        <p>At Martoo Tech Works, we offer a range of tech services to help you navigate the digital world.</p>
     </section>
-<!-- Subscription Form Section -->
-<section>
-    <h2>Subscribe to Our Newsletter</h2>
-    <!-- Form for subscription, now pointing to Formcarry -->
-    <form action="https://formcarry.com/s/zYwAovO5bOf" method="POST">
-        <label for="email">Your email:</label>
-        <input type="email" name="email" id="email" required> <!-- Updated field name for email -->
 
-        <label for="message">Your message:</label>
-        <textarea name="message" id="message" required></textarea> <!-- Updated field name for message -->
-
-        <button type="submit">Send</button>
-    </form>
-</section>
-
- <!-- Footer with social links -->
+    <!-- Footer Section -->
     <footer>
         <div class="social-icons">
             <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
             <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
-            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
+            <a href="https://youtube.com/@martootechhub"><i class="fab fa-youtube"></i></a>
         </div>
         <div class="license">
-            <p>&copy; 2024 Martoo Tech Works. All rights reserved. Licensed under the Martoo Tech Works Terms of Service.</p>
+            <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript for menu toggle -->
     <script>
         function toggleMenu() {
-            const menu = document.getElementById('menu');menu.classList.toggle('show');
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('show');
         }
     </script>
-
 </body>
 </html>

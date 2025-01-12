@@ -58,7 +58,7 @@
             top: 15px; /* Move it down a bit for visibility */
             right: 20px; /* Adjust from the far-right edge */
             font-size: 30px;
-            color: white; /* White color for the hamburger icon */
+            color: #fff; /* White color for the hamburger icon */
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px;
@@ -72,6 +72,13 @@
             padding: 0;
             display: none;
             margin: 0;
+            background-color: rgba(0, 0, 0, 0.8); /* Dark background for the dropdown menu */
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 200px;
+            border-radius: 5px;
+            z-index: 10;
         }
 
         nav ul li {
@@ -79,7 +86,7 @@
         }
 
         nav ul li a {
-            color: white; /* White text color */
+            color: white; /* White color for text */
             text-decoration: none;
             padding: 10px;
             display: block;

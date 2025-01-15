@@ -117,6 +117,7 @@
             text-align: center;
             color: white;
             padding-bottom: 60px;
+            position: relative;
         }
 
         #content-section h2, #content-section p {
@@ -161,8 +162,8 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 20px;
             display: inline-block;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -194,12 +195,8 @@
         </nav>
     </header>
 
-    <!-- Main Content Section -->
+    <!-- Google Sign-In Button -->
     <section id="content-section">
-        <h2>Your Gateway to Technology</h2>
-        <p>At Martoo Tech Works, we offer a range of tech services to help you navigate the digital world.</p>
-        
-        <!-- Google Sign-In button -->
         <button class="g-signin2" id="googleSignInBtn">Sign In with Google</button>
     </section>
 
@@ -220,8 +217,8 @@
         // Initialize Google OAuth
         function initClient() {
             gapi.client.init({
-                apiKey: 'YOUR_API_KEY',  // Replace with your API key
-                clientId: 'YOUR_CLIENT_ID',  // Replace with your Client ID
+                apiKey: 'YOUR_API_KEY',  // Replace with your API key if needed
+                clientId: '479191280692-2q26tgum1ndpdm73gl5c054728bvpcec.apps.googleusercontent.com',  // Your OAuth 2.0 Client ID
                 scope: 'https://www.googleapis.com/auth/drive.file',
                 discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
             }).then(function () {
@@ -230,24 +227,22 @@
         }
 
         // Handle sign-in button click
-        function handleSignInClick(event) {
-            gapi.auth2.getAuthInstance().signIn().then(function () {
-                console.log("User signed in successfully.");
-                // You can now interact with Google APIs
+        function handleSignInClick() {
+            gapi.auth2.getAuthInstance().signIn().then(function (googleUser) {
+                console.log("User signed in:", googleUser.getBasicProfile().getName());
+                alert("User signed in successfully!");
+                // You can now handle authenticated user and interact with Google APIs
+            }).catch(function(error) {
+                console.error("Sign-in failed: ", error);
+                alert("Sign-in failed. Please try again.");
             });
         }
 
-        // Toggle the menu visibility
-        function toggleMenu() {
-            var menu = document.getElementById('menu');
-            menu.classList.toggle('show');
-        }
-
-        // Add event listener for the Google Sign-In button
-        document.getElementById('googleSignInBtn').addEventListener('click', handleSignInClick);
-
-        // Load the Google API client
+        // Load Google API client and initialize it
         gapi.load('client:auth2', initClient);
+
+        // Add event listener to the Google Sign-In button
+        document.getElementById('googleSignInBtn').addEventListener('click', handleSignInClick);
     </script>
 </body>
 </html>

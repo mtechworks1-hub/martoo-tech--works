@@ -161,6 +161,8 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            margin-top: 20px;
+            display: inline-block;
         }
     </style>
 </head>
@@ -192,20 +194,13 @@
         </nav>
     </header>
 
-    <!-- Rotating Wheel -->
-    <div class="rotating-wheel">
-        <span class="rotating-text">MARTOO TECH WORKS</span>
-    </div>
-
-    <!-- Google Sign-In -->
-    <section id="google-signin">
-        <button class="g-signin2" id="googleSignInBtn">Sign In with Google</button>
-    </section>
-
-    <!-- Main Content -->
+    <!-- Main Content Section -->
     <section id="content-section">
         <h2>Your Gateway to Technology</h2>
         <p>At Martoo Tech Works, we offer a range of tech services to help you navigate the digital world.</p>
+        
+        <!-- Google Sign-In button -->
+        <button class="g-signin2" id="googleSignInBtn">Sign In with Google</button>
     </section>
 
     <!-- Footer Section -->
@@ -230,7 +225,6 @@
                 scope: 'https://www.googleapis.com/auth/drive.file',
                 discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
             }).then(function () {
-                // Now the user is authenticated
                 console.log("Google API client initialized!");
             });
         }

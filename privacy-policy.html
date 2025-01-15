@@ -1,37 +1,176 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - MARTOO TECH WORKS</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Assuming you have a CSS file -->
+    <title>Privacy Policy - Martoo Tech Works</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Include the same styles as in index.html */
+        body {
+            background-image: url('full site background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            position: relative;
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        header h1 {
+            color: #ff9800;
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffcc00;
+        }
+
+        .hamburger {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 5px;
+            border: 2px solid #ffcc00;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+            z-index: 4;
+        }
+
+        #menu.show {
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 3px 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            display: block;
+            font-weight: bold;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.8);
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #ff7f00;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            width: 100%;
+        }
+
+        .social-icons a {
+            margin: 0 15px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .social-icons a:hover {
+            color: #ff7f00;
+        }
+
+        .license {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Header Section -->
     <header>
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
         <h1>Privacy Policy</h1>
-        <p>Last updated: January 15, 2025</p>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+        <nav>
+            <ul id="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="posts.html">Blog Posts</a></li>
+                <li class="dropdown">
+                    <a href="services.html">Services</a>
+                    <div class="dropdown-content">
+                        <a href="vpn.html">VPN</a>
+                        <a href="typing_assistant.html">Typing Assistant</a>
+                        <a href="school-materials.html">School Materials</a>
+                    </div>
+                </li>
+                <li><a href="about.html">About Martoo</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <section>
-        <p>This Privacy Policy describes Our policies and procedures on the collection, use, and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
-        <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the <a href="https://www.termsfeed.com/privacy-policy-generator/" target="_blank">Privacy Policy Generator</a>.</p>
+    <!-- Main Content -->
+    <main>
+        <section>
+            <p>This Privacy Policy describes Our policies and procedures on the collection, use, and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
+            <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy...</p>
+            <!-- Continue with the rest of your privacy policy content -->
+        </section>
+    </main>
 
-        <h2>Interpretation and Definitions</h2>
-        <h3>Interpretation</h3>
-        <p>The words of which the initial letter is capitalized have meanings defined under the following conditions...</p>
-
-        <h3>Definitions</h3>
-        <ul>
-            <li><strong>Account:</strong> means a unique account created for You to access our Service or parts of our Service.</li>
-            <li><strong>Affiliate:</strong> means an entity that controls, is controlled by or is under common control with a party...</li>
-            <!-- Include the rest of the content as needed -->
-        </ul>
-        <!-- Continue adding the rest of the Privacy Policy content here -->
-    </section>
-
+    <!-- Footer Section -->
     <footer>
-        <p>&copy; 2025 MARTOO TECH WORKS. All Rights Reserved.</p>
+        <div class="social-icons">
+            <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="license">
+            <p>&copy; 2025 Martoo Tech Works. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('show');
+        }
+    </script>
 </body>
 </html>

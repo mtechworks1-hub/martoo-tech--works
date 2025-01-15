@@ -270,4 +270,20 @@
 
         uploadBox.addEventListener('dragover', (e) => {
             e.preventDefault();
-            uploadBox.style.background
+            uploadBox.style.background-color = "#e0e0e0";
+        });
+
+        uploadBox.addEventListener('dragleave', () => {
+            uploadBox.style.backgroundColor = "#f9f9f9";
+        });
+
+        uploadBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileInput.files = e.dataTransfer.files;
+            if (fileInput.files.length > 0) {
+                uploadBox.querySelector('p').textContent = fileInput.files[0].name;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -237,8 +237,8 @@
         <p class="typing-info">Need help with your typing tasks? Upload your files and let us handle the rest!</p>
         <div class="upload-container">
             <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
-                <div class="upload-box">
-                    <p>Drag and drop your file here or click to select one</p>
+                <div class="upload-box" onclick="document.getElementById('fileInput').click();">
+                    <p>Click here to select your file</p>
                     <input type="file" id="fileInput" name="file" hidden>
                 </div>
                 <button type="submit" class="upload-button">Upload</button>

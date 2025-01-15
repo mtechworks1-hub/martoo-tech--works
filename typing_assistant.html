@@ -260,17 +260,22 @@
         const uploadBox = document.querySelector('.upload-box');
         const fileInput = document.getElementById('fileInput');
 
-        uploadBox.addEventListener('click', () => fileInput.click());
+        // Click event to trigger the file input click
+        uploadBox.addEventListener('click', () => {
+            fileInput.click();
+        });
 
+        // Change event to display the selected file name
         fileInput.addEventListener('change', () => {
             if (fileInput.files.length > 0) {
                 uploadBox.querySelector('p').textContent = fileInput.files[0].name;
             }
         });
 
+        // Drag and drop functionality
         uploadBox.addEventListener('dragover', (e) => {
             e.preventDefault();
-            uploadBox.style.background-color = "#e0e0e0";
+            uploadBox.style.backgroundColor = "#e0e0e0";
         });
 
         uploadBox.addEventListener('dragleave', () => {

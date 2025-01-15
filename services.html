@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9775836048486404"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9775836048486404" crossorigin="anonymous"></script>
     <title>Martoo Tech Works - Services</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -103,8 +102,8 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            top: 0;
-            left: 100%;
+            left: 0;
+            top: 100%;
             background-color: rgba(0, 0, 0, 0.9);
             border-radius: 5px;
             padding: 5px;
@@ -112,7 +111,7 @@
             z-index: 1;
         }
 
-        .dropdown:hover .dropdown-content {
+        .dropdown-content.show {
             display: block;
         }
 
@@ -218,7 +217,7 @@
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
                 <li class="dropdown">
-                    <a href="#">Services</a>
+                    <a href="#" onclick="toggleDropdown(event)">Services</a>
                     <div class="dropdown-content">
                         <a href="typing.html">Typing Assistant</a>
                         <a href="vpn.html">VPN</a>
@@ -236,30 +235,31 @@
         <h2>Welcome to Our Services</h2>
         <p>Explore our range of services, including Typing Assistance, VPN configurations, and access to essential materials. Each service is crafted to support your tech needs.</p>
 
-    <!-- Embedded YouTube Videos -->
-<div class="video-container">
-    <div>
-        <h3>Service Overview 1</h3>
-        <iframe src="https://www.youtube.com/embed/w0_sFwO1IR8" title="YouTube video 1" allowfullscreen></iframe>
-    </div>
-    <div>
-        <h3>Service Overview 2</h3>
-        <iframe src="https://www.youtube.com/embed/J-DNnARdB8E" title="YouTube video 2" allowfullscreen></iframe>
-    </div>
-    <div>
-        <h3>Service Overview 3</h3>
-        <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM" title="YouTube video 3" allowfullscreen></iframe>
-    </div>
-    <div>
-        <h3>Service Overview 4</h3>
-        <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs" title="YouTube video 4" allowfullscreen></iframe>
-    </div>
-    <div>
-        <h3>Service Overview 5</h3>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/53iT5sKyh9s?si=06rO1U9Cfw1U6E1D" title="YouTube video 5" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-</div>
+        <!-- Embedded YouTube Videos -->
+        <div class="video-container">
+            <div>
+                <h3>Service Overview 1</h3>
+                <iframe src="https://www.youtube.com/embed/w0_sFwO1IR8" title="YouTube video 1" allowfullscreen></iframe>
+            </div>
+            <div>
+                <h3>Service Overview 2</h3>
+                <iframe src="https://www.youtube.com/embed/J-DNnARdB8E" title="YouTube video 2" allowfullscreen></iframe>
+            </div>
+            <div>
+                <h3>Service Overview 3</h3>
+                <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM" title="YouTube video 3" allowfullscreen></iframe>
+            </div>
+            <div>
+                <h3>Service Overview 4</h3>
+                <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs" title="YouTube video 4" allowfullscreen></iframe>
+            </div>
+            <div>
+                <h3>Service Overview 5</h3>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/53iT5sKyh9s?si=06rO1U9Cfw1U6E1D" title="YouTube video 5" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
     </section>
+
     <!-- Footer with social icons and license -->
     <footer>
         <div class="social-icons">
@@ -278,13 +278,23 @@
             menu.classList.toggle("show");
         }
 
-        // Close menu if clicked outside
+        function toggleDropdown(event) {
+            event.preventDefault();
+            var dropdownContent = event.target.nextElementSibling;
+            dropdownContent.classList.toggle("show");
+        }
+
+        // Close menus if clicked outside
         document.addEventListener("click", function(event) {
             var menu = document.getElementById("menu");
             var hamburger = document.querySelector(".hamburger");
+            var dropdownContent = document.querySelectorAll(".dropdown-content");
 
             if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
                 menu.classList.remove("show");
+                dropdownContent.forEach(function(dropdown) {
+                    dropdown.classList.remove("show");
+                });
             }
         });
     </script>

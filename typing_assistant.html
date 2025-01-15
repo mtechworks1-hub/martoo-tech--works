@@ -189,18 +189,10 @@
     <section id="content-section">
         <h2>Typing Assistant</h2>
         <p class="typing-info">Need help with your typing tasks? Upload your files and let us handle the rest!</p>
-        <form id="typingAssistantForm">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="file">Upload File:</label>
-            <input type="file" id="file" name="file" required>
-
-            <button type="button" onclick="submitForm()">Submit</button>
-        </form>
+        <div class="upload-container">
+            <!-- Jotform Embed Code -->
+            <script type="text/javascript" src="https://form.jotform.com/jsform/250144557238053"></script>
+        </div>
     </section>
 
     <!-- Footer Section -->
@@ -219,24 +211,6 @@
         function toggleMenu() {
             var menu = document.getElementById('menu');
             menu.classList.toggle('show');
-        }
-
-        function submitForm() {
-            var formData = new FormData(document.getElementById('typingAssistantForm'));
-
-            fetch('https://your-backend-url', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                alert('Form submitted successfully!');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-            });
         }
     </script>
 </body>

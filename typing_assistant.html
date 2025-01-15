@@ -129,46 +129,50 @@
             max-width: 800px;
         }
 
-        /* Typing Assistant Styling */
-        .typing-container {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 40px;
-            border-radius: 10px;
-            max-width: 800px;
-            margin: 40px auto;
+        /* File Upload Styling */
+        .upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
         }
 
-        .typing-instructions {
-            font-size: 18px;
-            color: #ff9800;
-            margin-bottom: 20px;
+        .upload-box {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s;
         }
 
-        .typing-box {
-            width: 100%;
-            height: 200px;
-            background-color: #fff;
-            color: #000;
-            border: 2px solid #ff9800;
-            border-radius: 10px;
-            padding: 10px;
+        .upload-box p {
+            margin: 0;
             font-size: 16px;
-            box-sizing: border-box;
-            resize: none;
+            color: #666;
         }
 
-        .btn-submit {
-            background-color: #ff9800;
-            color: white;
+        .upload-box:hover {
+            background-color: #f1f1f1;
+        }
+
+        .upload-button {
+            margin-top: 20px;
             padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 20px;
+            transition: background-color 0.3s;
         }
 
-        .btn-submit:hover {
-            background-color: #ff7f00;
+        .upload-button:hover {
+            background-color: #0056b3;
         }
 
         /* Footer Styling */
@@ -224,10 +228,14 @@
     <!-- Typing Assistant Section -->
     <section id="content-section">
         <h2>Typing Assistant</h2>
-        <div class="typing-container">
-            <p class="typing-instructions">Type the text shown below into the box below as quickly and accurately as possible.</p>
-            <textarea class="typing-box" id="typing-box" placeholder="Start typing here..." oninput="countWords()"></textarea>
-            <button class="btn-submit" onclick="submitTyping()">Submit</button>
+        <div class="upload-container">
+            <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+                <div class="upload-box">
+                    <p>Drag and drop your file here or click to select one</p>
+                    <input type="file" id="fileInput" name="file" hidden>
+                </div>
+                <button type="submit" class="upload-button">Upload</button>
+            </form>
         </div>
     </section>
 
@@ -249,19 +257,17 @@
             menu.classList.toggle('show');
         }
 
-        // Function to count words typed
-        function countWords() {
-            let text = document.getElementById('typing-box').value;
-            let wordCount = text.trim().split(/\s+/).length;
-            if (text.trim() === "") wordCount = 0;
-            console.log("Words typed: " + wordCount);
-        }
+        const uploadBox = document.querySelector('.upload-box');
+        const fileInput = document.getElementById('fileInput');
 
-        // Function to submit typing test (can be enhanced later)
-        function submitTyping() {
-            alert("Typing submitted!");
-            // Logic for storing or processing typing data goes here
-        }
-    </script>
-</body>
-  </html>
+        uploadBox.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                uploadBox.querySelector('p').textContent = fileInput.files[0].name;
+            }
+        });
+
+        uploadBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadBox.style.background

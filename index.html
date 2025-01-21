@@ -133,32 +133,40 @@
             max-width: 800px;
         }
 
-        /* Sliding Services Section */
-        .services-slider {
-            display: flex;
-            overflow: hidden;
-            margin: 40px 0;
+        /* Cartoon Character Section */
+        .cartoon-character {
             position: relative;
+            text-align: center;
+            margin: 40px 0;
         }
 
-        .services-slider .slide {
-            min-width: 100%;
-            transition: transform 0.5s ease;
+        .cartoon-character img {
+            width: 150px;
+            height: auto;
         }
 
-        .services-slider .slide img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .services-slider .slide h3 {
+        .speech-bubble {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
+            top: 20px;
+            left: 170px;
+            background-color: #ff9800;
+            color: black;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 300px;
+            text-align: left;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            margin-top: -10px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent #ff9800 transparent transparent;
         }
 
         /* Footer Styling */
@@ -212,19 +220,16 @@
         </nav>
     </header>
 
-    <!-- Sliding Services Section -->
-    <div class="services-slider" id="slider">
-        <div class="slide">
-            <img src="service1.jpg" alt="VPN Services">
-            <h3>VPN Services</h3>
-        </div>
-        <div class="slide">
-            <img src="service2.jpg" alt="Typing Assistant">
-            <h3>Typing Assistance</h3>
-        </div>
-        <div class="slide">
-            <img src="service3.jpg" alt="School Materials">
-            <h3>School Materials</h3>
+    <!-- Cartoon Character Section -->
+    <div class="cartoon-character">
+        <img src="cartoon-character.png" alt="Cartoon Character">
+        <div class="speech-bubble">
+            <p>Welcome to Martoo Tech Works! We offer:</p>
+            <ul>
+                <li>VPN Services</li>
+                <li>Typing Assistance</li>
+                <li>School Materials</li>
+            </ul>
         </div>
     </div>
 
@@ -251,17 +256,6 @@
             const menu = document.getElementById('menu');
             menu.classList.toggle('show');
         }
-
-        // Automatic sliding for the services section
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.services-slider .slide');
-        const totalSlides = slides.length;
-
-        setInterval(() => {
-            slides[currentSlide].style.transform = `translateX(-${currentSlide * 100}%)`;
-            currentSlide = (currentSlide + 1) % totalSlides;
-            slides[currentSlide].style.transform = `translateX(0)`;
-        }, 3000);
     </script>
 </body>
 </html>

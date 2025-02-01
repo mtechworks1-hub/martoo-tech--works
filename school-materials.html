@@ -80,7 +80,26 @@
         nav ul li a:hover {
             background-color: #ff7f00;
         }
+.medicine-materials {
+    text-align: center;
+    margin: 20px auto;
+}
 
+.medicine-materials a {
+    background-color: orange; /* Same as Mental Health Notes */
+    color: white;
+    padding: 15px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.medicine-materials a:hover {
+    background-color: darkorange;
+}
         /* Main content section */
 #content-section {
     padding: 40px 20px;
@@ -197,8 +216,14 @@ footer {
         <p>Get detailed notes on mental health concepts. Password for extraction: <strong>MARTOO</strong>.</p>
         <button onclick="showPasswordModal('Mental health notes.zip')" class="download-button">Download Mental Health Notes</button>
     </div>
-            <a href="https://drive.google.com/drive/folders/1C3IdOlXofYJcUXuVRD8FHsLcPBjSTlEj" target="_blank" title="Access Medicine Study Materials">Medicine Materials</a>
         </section>
+        <div class="medicine-materials">
+    <a href="https://drive.google.com/drive/folders/1C3IdOlXofYJcUXuVRD8FHsLcPBjSTlEj" 
+       target="_blank" 
+       title="Access Medicine Study Materials">
+       Download Medicine Materials
+    </a>
+        </div>
 
     <!-- Footer with social links -->
     <footer>

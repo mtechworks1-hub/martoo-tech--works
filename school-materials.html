@@ -3,6 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Martoo Tech Works - Access school materials, medicine study resources, GIS data sets, and mental health notes for students and professionals.">
+    <meta name="keywords" content="Martoo Tech, School Materials, GIS Data, Medicine Notes, Public Health, Mental Health Notes, VPN, Tech Resources">
+    <meta name="author" content="Martin Ndoma">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="School Materials - Martoo Tech Works">
+    <meta property="og:description" content="Download school materials including medicine study guides, GIS datasets, mental health notes, and more.">
+    <meta property="og:image" content="full site background.jpg">
+    <meta property="og:url" content="https://martootechhub.github.io/MARTOOTECHHUB/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="School Materials - Martoo Tech Works">
+    <meta name="twitter:description" content="Get free access to study materials, GIS datasets, and more at Martoo Tech Works.">
+    <meta name="twitter:image" content="full site background.jpg">
+    
     <title>School Materials - Martoo Tech Works</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -80,33 +93,35 @@
         nav ul li a:hover {
             background-color: #ff7f00;
         }
-.medicine-materials {
-    text-align: center;
-    margin: 20px auto;
-}
 
-.medicine-materials a {
-    background-color: orange; /* Same as Mental Health Notes */
-    color: white;
-    padding: 15px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
+        .medicine-materials {
+            text-align: center;
+            margin: 20px auto;
+        }
 
-.medicine-materials a:hover {
-    background-color: darkorange;
-}
+        .medicine-materials a {
+            background-color: orange; /* Same as Mental Health Notes */
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .medicine-materials a:hover {
+            background-color: darkorange;
+        }
+
         /* Main content section */
-#content-section {
-    padding: 40px 20px;
-    text-align: center;
-    color: white;
-    padding-bottom: 60px; /* Added padding to push content up and avoid footer overlap */
-}
+        #content-section {
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            padding-bottom: 60px; /* Added padding to push content up and avoid footer overlap */
+        }
 
         #content-section h2, #content-section p {
             background-color: rgba(0, 0, 0, 0.7);
@@ -137,14 +152,15 @@
         }
 
         /* Footer */
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    position: relative; /* Changed from fixed to relative */
-    width: 100%;
-}
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            width: 100%;
+        }
+
         /* Social icons */
         .social-icons a {
             margin: 0 15px;
@@ -184,46 +200,13 @@ footer {
     <section id="content-section">
         <h2>Essential School Materials</h2>
         <p>Browse through our curated list of resources to aid your educational journey.</p>
-        
-        <section id="content-section">
-    <h2>Essential School Materials</h2>
-    <p>Browse through our curated list of resources to aid your educational journey.</p>
 
-    <!-- Community Health Nutrition Notes -->
-    <div class="post">
-        <h3>Community Health Nutrition Notes</h3>
-        <p>Download comprehensive Community Health Nutrition notes to enhance your understanding of public health nutrition.</p>
-        <a href="COMMUNITY HEALTH NUTRTION QUESTIONS AND ANSWERS.docx" class="download-button" download>Download Document</a>
-    </div>
-
-    <!-- GIS Data Set -->
-    <div class="post">
-        <h3>GIS Data Set</h3>
-        <p>Access the GIS data set to aid in mapping and spatial analysis for your projects.</p>
-        <a href="GIS SET.zip" class="download-button" download>Download GIS Data Set</a>
-    </div>
-
-    <!-- Mid-Semester GIS Data Set -->
-    <div class="post">
-        <h3>Mid-Semester GIS Data Set</h3>
-        <p>Download the mid-semester GIS data set for a practical learning experience in geographic information systems.</p>
-        <a href="Mid semester GIS data set.zip" class="download-button" download>Download Mid-Semester GIS Data Set</a>
-    </div>
-
-    <!-- Mental Health Notes -->
-    <div class="post">
-        <h3>Mental Health Notes</h3>
-        <p>Get detailed notes on mental health concepts. Password for extraction: <strong>MARTOO</strong>.</p>
-        <button onclick="showPasswordModal('Mental health notes.zip')" class="download-button">Download Mental Health Notes</button>
-    </div>
-        </section>
         <div class="medicine-materials">
-    <a href="https://drive.google.com/drive/folders/1C3IdOlXofYJcUXuVRD8FHsLcPBjSTlEj" 
-       target="_blank" 
-       title="Access Medicine Study Materials">
-       Download Medicine Materials
-    </a>
+            <a href="https://drive.google.com/drive/folders/1C3IdOlXofYJcUXuVRD8FHsLcPBjSTlEj" target="_blank" title="Access Medicine Study Materials">
+                Download Medicine Materials
+            </a>
         </div>
+    </section>
 
     <!-- Footer with social links -->
     <footer>
@@ -242,15 +225,6 @@ footer {
             var menu = document.getElementById("menu");
             menu.classList.toggle("show");
         }
-
-        document.addEventListener("click", function(event) {
-            var menu = document.getElementById("menu");
-            var hamburger = document.querySelector(".hamburger");
-
-            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
-                menu.classList.remove("show");
-            }
-        });
     </script>
 
 </body>

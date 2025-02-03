@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,60 +7,55 @@
      crossorigin="anonymous"></script>
     <title>Posts | Martoo Tech Works</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
     <style>
-        /* General body background and layout settings */
         body {
-            background-image: url('full site background.jpg'); /* Updated path for background image */
+            background-image: url('full site background.jpg');
             background-size: cover;
             background-position: center;
             color: white;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding-bottom: 60px; /* Make space for footer */
-            min-height: 100vh; /* Ensure content takes up at least full viewport height */
+            padding-bottom: 60px;
+            min-height: 100vh;
         }
 
-        /* Header styles with main background image */
         header {
-            background-image: url('background.jpg'); /* Main background image */
+            background-image: url('background.jpg');
             background-size: cover;
             background-position: center;
             color: white;
             text-align: center;
             padding: 60px 20px;
-            position: relative; /* For absolute positioning of logo */
+            position: relative;
             width: 100vw;
         }
 
-        /* Logo placed in top left corner as circle */
         .logo {
             position: absolute;
             top: 20px;
             left: 20px;
-            width: 100px; /* Size of the logo */
+            width: 100px;
             height: 100px;
-            border-radius: 50%; /* Circle shape */
-            object-fit: cover; /* Ensures logo fits well */
-            border: 4px solid #ffcc00; /* Orange border around logo */
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ffcc00;
         }
 
-        /* Header Text Styling */
         header h1 {
-            color: #ffcc00; /* Orange color for the header text */
+            color: #ffcc00;
             font-size: 36px;
-            position: relative; /* Allow header text to overlay */
-            z-index: 1; /* Ensure the text stays on top of the logo */
+            position: relative;
+            z-index: 1;
             margin-top: 20px;
         }
 
-        /* Hamburger menu styling */
         .hamburger {
             position: absolute;
-            top: 15px; /* Move it down a bit for visibility */
-            right: 20px; /* Adjust from the far-right edge */
+            top: 15px;
+            right: 20px;
             font-size: 30px;
-            color: #ffcc00; /* Dark Orange color */
+            color: #ffcc00;
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px;
@@ -67,7 +63,6 @@
             border: 2px solid #ffcc00;
         }
 
-        /* Navigation styles */
         nav ul {
             list-style-type: none;
             padding: 0;
@@ -80,34 +75,28 @@
         }
 
         nav ul li a {
-            color: #ffcc00; /* Dark Orange color */
+            color: #ffcc00;
             text-decoration: none;
             padding: 10px;
             display: block;
             background-color: rgba(0, 0, 0, 0.7);
             border-radius: 5px;
-            transition: background-color 0.3s ease; /* Smooth transition for highlight */
+            transition: background-color 0.3s ease;
         }
 
         nav ul li a:hover {
-            background-color: #000; /* Black highlight */
+            background-color: #000;
         }
 
-        /* Show the menu when toggled */
         #menu.show {
             display: block;
         }
 
-        /* post content section */
-#content-section {
-    padding: 40px 20px;
-    text-align: center;
-    color: white;
-    padding-bottom: 60px; /* Added padding to push content up and avoid footer overlap */
-}
-
-        #post-section h2 {
-            margin-bottom: 30px;
+        #post-section {
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            padding-bottom: 60px;
         }
 
         .post {
@@ -129,92 +118,32 @@
             line-height: 1.6;
         }
 
-        /* Comment Form Styles */
-        .comment-form {
+        footer {
             background-color: #333;
+            color: white;
+            text-align: center;
             padding: 20px;
-            margin-top: 30px;
-            border-radius: 10px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .comment-form label {
-            font-size: 16px;
-            color: white;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .comment-form input, .comment-form textarea {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 2px solid #ffcc00;
-            color: black;
-        }
-
-        .comment-form button {
-            background-color: #ffcc00;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .comment-form button:hover {
-            background-color: #ff7f00;
-        }
-
-        /* Footer */
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    position: relative; /* Changed from fixed to relative */
-    width: 100%;
-}
-
-        /* Social media icons */
-        .social-icons a {
-            margin: 0 15px;
-            color: white;
-            font-size: 24px;
-        }
-
-        .social-icons a:hover {
-            color: #ff7f00; /* Dark Orange highlight */
-        }
-
-        /* License text */
-        .license {
-            margin-top: 10px;
-            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-    <header>
+<header>
     <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
     <h1>MARTOO TECH WORKS POSTS</h1>
     <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
     <nav>
         <ul id="menu">
             <li><a href="index.html">Home</a></li>
-            <li class="dropdown">
-                <a href="services.html">Services</a></li>
-                </div>
-            </li>
+            <li><a href="services.html">Services</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
             <li><a href="posts.html">Posts</a></li>
         </ul>
     </nav>
 </header>
+
 <script>
     function toggleMenu() {
         const menu = document.getElementById('menu');
@@ -222,278 +151,71 @@ footer {
     }
 </script>
 
-<!-- Add your content for posts here -->
+<!-- School Materials and GIS Dataset (Top Section) -->
+<section id="school-materials">
+    <h2>📚 School Materials</h2>
 
-    <!-- Post Content Section -->
-    <section id="post-section">
-        <h2>Our Latest Posts</h2>
-
-        <!-- Post 1 -->
-        <div class="post">
-            <h3>Why VPNs Are Essential for Your Online Privacy</h3>
-            <p>In today's world, privacy is more important than ever. Learn how VPNs work and why they are essential for keeping your internet browsing safe from prying eyes.</p>
-        </div>
-
-        <!-- Post 2 -->
-        <div class="post">
-            <h3>5 Tips to Improve Your Typing Speed</h3>
-            <p>Whether you're working from home or typing up a report, these five tips will help you increase your typing speed and efficiency.</p>
-        </div>
-
-        <!-- Post 3 -->
-        <div class="post">
-            <h3>How to Set Up a VPN with Martoo Tech Works</h3>
-            <p>Learn how to set up a VPN using our easy-to-follow guide. This post walks you through each step to ensure your privacy is always protected.</p>
-        </div>
-    <!-- Generator Section -->
-<div id="generator-section">
-  <p style="font-weight: bold; color: yellowgreen; font-size: 24px;">
-    VPN Configuration Generator
-  </p>
-  <p style="font-weight: bold; color: yellowgreen;">
-    Generate your VPN configuration easily by entering the required details(Name only) click generate.
-      This is for NETMOD ONLY, Dark tunnel and Http custom will be posted shortly.
-  </p>
-  
-  <!-- Name input field - made larger -->
-  <input id="fileNameInput" type="text" placeholder="Enter file name" style="font-size: 18px; padding: 10px; width: 100%; border-radius: 8px; border: 2px solid #cccccc;">
-  
-  <!-- Generate button - made larger -->
-  <button id="generateButton" style="font-size: 20px; padding: 15px 30px; background-color: #0066cc; color: white; border: none; border-radius: 8px; cursor: pointer;">
-    Generate
-  </button>
-</div>
-
-<!-- Output Section for showing results -->
-<div id="outputSection" style="margin-top: 20px; font-weight: bold; color: #e0e0e0; border: 2px solid #cccccc; padding: 20px; border-radius: 8px; display: none;">
-  <!-- This is where the generated configurations will be displayed -->
-</div>
-
-<!-- Donation Message -->
-<div id="donationMessage" style="margin-top: 20px; font-weight: bold; color: orange;">
-  Thank you for your visit, please donate to this number: +260774766077
-</div>
-
-<script>
-  // Configuration codes provided
-  const configurations = [
-    "nm-vmess://LqTYaPC/1aE3RDA9Kk1DkXdyT3ZZq/yCXWku4Pe6LR305EpBVI+AK71KtoclTsKyOZTokywl30KSaL6vgBXzEqBSEHdrdWs5XMAH1jqcWiTExsL17ah6KHdaVK6tWT/eQ03uMlDyWRrJqIc5L91OZ+HcVnGmTLZKKe51IOp4kMwNCz4LVFGm9Btm0npFHVJ3WBtkrd6HbStxcIO68KkgHPjYJfnPqOz5RJH+R3V1GE2v5kaKQm6C32pTsg3ygZxqqCS03Nsamwy+9xv5MoQ8NpzxTmSV/VjiegAw6Hlt3CCo4ZCgu2jLKyfF6ttfyFYSPoFBZXbyqzWPz71c17tD7SsqR/kVmC70fKLBm8XZi1fpMKAoBsF/cDqA/39EF7Rt1awOJ1y1OZFJyf+ehvFS+w==",
-    "nm-trojan://99Ap7yWi8oZkp1Jv3hzSBskdd3i2l+Vhx/NlLO6OVKJhx4U1wEcc/fMHORQWnsF+BqfrvdzFP9rHkfqJwX3k5cYqdroTUGpL9ZeLN3dJLD1fA7xBO+LmpBHEdrsQzBHB49bblLV3PA42QfH5XCmHW2jMlyVghr2bsrZ0EAjEmUjXwh8EvA/3iOu/zuQ68+45qlXxkB2kTKWx1Z05BVEGAQ==",
-    "nm-trojan://rrZmHBKeh74FSchsGG9KB9cXF3/4ARP1nHIgcYMa/7+jCeF9MzHHGevFYv+6NNfPBqfrvdzFP9rHkfqJwX3k5TxDYwXMuxwaqB6gPJ2WRHNfA7xBO+LmpBHEdrsQzBHB49bblLV3PA42QfH5XCmHW2jMlyVghr2bsrZ0EAjEmUjXwh8EvA/3iOu/zuQ68+45r+Qgr7yRFDQ62iwAaMJBo6SfPWKkiphYPc/M9P6CBgY=",
-    "nm-vmess://LqTYaPC/1aE3RDA9Kk1DkXdyT3ZZq/yCXWku4Pe6LR305EpBVI+AK71KtoclTsKyOZTokywl30KSaL6vgBXzEqBSEHdrdWs5XMAH1jqcWiTExsL17ah6KHdaVK6tWT/eQ03uMlDyWRrJqIc5L91OZ/XAOZceZ0NF3oxnUmi15W0xwjyb92Aj5eQp1WZG8sGnFYT5Z+B9eGX2WlhkNfkYeX1liwJXHhwAzAV/h/0sWT7DFZqVnzyhXxJCING2olKsSL0ODmwNXQwKwm2T1NygC67/AMGfOhHZUEiGfzasTtF9rpQHcBFyxwDAlFJB2n30ozpUS8kpoP0icOjE841HeQCcSh/E1w4KF0X4Dhodl2nsxvmdm/L/MGKxM4Ux0Atq",
-    "nm-vmess://LqTYaPC/1aE3RDA9Kk1DkXdyT3ZZq/yCXWku4Pe6LR305EpBVI+AK71KtoclTsKyOZTokywl30KSaL6vgBXzEqBSEHdrdWs5XMAH1jqcWiTExsL17ah6KHdaVK6tWT/eQ03uMlDyWRrJqIc5L91OZ+HcVnGmTLZKKe51IOp4kMwNCz4LVFGm9Btm0npFHVJ3WBtkrd6HbStxcIO68KkgHPjYJfnPqOz5RJH+R3V1GE2v5kaKQm6C32pTsg3ygZxqqCS03Nsamwy+9xv5MoQ8NpzxTmSV/VjiegAw6Hlt3CBtOcyaiUEZObLbXONOYSKE6dX6ZZM4AjV1f8conGBVAEg9DdIcS0h2GQpTj+QzViwvyHAvbH6JQgzbaiROv7PdhS9tmyD910xh+T2o/CCO/A=="
-  ];
-
-  // Generate button click handler
-  document.getElementById("generateButton").addEventListener("click", function () {
-    const outputSection = document.getElementById("outputSection");
-    const fileName = document.getElementById("fileNameInput").value.trim();
-
-    if (!fileName) {
-      alert("Please enter a file name.");
-      return;
-    }
-
-    // Show the output section if hidden
-    outputSection.style.display = "block";
-
-    // Clear previous output
-    outputSection.innerHTML = "";
-
-    // Dynamically generate and display configurations
-    configurations.forEach((config, index) => {
-      // Create container for each configuration
-      const configContainer = document.createElement("div");
-      configContainer.style.marginBottom = "10px";
-
-      // Add configuration text
-      const configText = document.createElement("p");
-      configText.textContent = `Configuration ${index + 1}: ${config}`;
-      configText.style.fontWeight = "bold";
-      configText.style.color = "darkblue";
-
-      // Add copy button
-      const copyButton = document.createElement("button");
-      copyButton.textContent = "Copy";
-      copyButton.style.marginLeft = "10px";
-
-      // Copy functionality
-      copyButton.addEventListener("click", function () {
-        navigator.clipboard.writeText(config).then(() => {
-          alert("Configuration copied to clipboard!");
-        });
-      });
-
-      // Append text and button to container
-      configContainer.appendChild(configText);
-      configContainer.appendChild(copyButton);
-
-      // Append container to output section
-      outputSection.appendChild(configContainer);
-    });
-  });
-</script>
-<div style="text-align: center; margin: 20px;">
-    <p style="color: yellow; font-size: 18px; font-weight: bold;">
-        <p>Download Your Customized HTTP Custom UDP Configuration File Now!</p>
-<a href="MARTOO TECH WORKS.hc" download>
-    <button style="background-color: orange; color: white; font-size: 20px; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer;">
-        DOWNLOAD HTTP CUSTOM UDP
-    </button>
-</a>
-</div>
-        <!-- Comment Form -->
-<div class="comment-form">
-    <h3>Your Feedback Matters: Share Your Thoughts to Help Us Improve!</h3>
-    <form action="https://formcarry.com/s/zYwAovO5bOf" method="POST">
-        <label for="name">Your Name:</label>
-        <input type="text" name="name" id="name" required>
-
-        <label for="email">Your Email:</label>
-        <input type="email" name="email" id="email" required>
-
-        <label for="comment">Your Comment:</label>
-        <textarea name="comment" id="comment" rows="4" required></textarea>
-
-        <button type="submit">Post Comment</button>
-    </form>
-</div>
-
-        <!-- Download Links for GIS and Password Protected Files -->
-        <div class="post">
-            <h3>Download GIS Data Set</h3>
-            <p>Click the link below to download the GIS data set.</p>
-            <a href="GIS SET.zip" download="GIS SET.zip">Download GIS data set here</a>
-        <h3>Download Mid semester GIS Data Set ❤️</h3>
-<p>Click the link below to download the Mid semester GIS data set.</p>
-<a href="Mid semester GIS data set.zip" download="Mid semester GIS data set.zip">Download Mid semester GIS data set here</a>
-        </div>
-
-        <!-- Message Before Download -->
-        <div class="post">
-            <h3>Hi everyone, click the link 🔗 below 👇 to download Mental health notes. the password is Uppercase: MARTOO:</h3>
-            <button onclick="showPasswordModal('Mental health notes.zip')">Mental health notes.zip</button><button onclick="showPasswordModal('Mental health notes.zip')">Download Mental health notes.zip</button>
-        </div>
-    </section>
-<div id="reaction-section">
-  <p>Tell us how you're feeling about the services!</p>
-  <div id="reactions">
-    <span class="reaction" data-reaction="angry">😠 <span class="count" id="angry-count">0</span></span>
-    <span class="reaction" data-reaction="sad">😣 <span class="count" id="sad-count">0</span></span>
-    <span class="reaction" data-reaction="happy">😁 <span class="count" id="happy-count">0</span></span>
-    <span class="reaction" data-reaction="love">🥰 <span class="count" id="love-count">0</span></span>
-    <span class="reaction" data-reaction="excited">🤩 <span class="count" id="excited-count">0</span></span>
-  </div>
-</div>
-    <!-- Footer Section -->
-    <footer>
-        <div class="social-icons">
-            <a href="https://youtube.com/@martootech?si=WtTmTBtO6VjvajdN" target="_blank"><i class="fab fa-youtube"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61561559594029" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://wa.me/260950322498" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="license">
-            <p>&copy; 2024 Martoo Tech Works. All Rights Reserved. | Designed by Martoo Tech</p>
-        </div>
-    </footer>
-
-    <!-- Password Modal -->
-    <div id="passwordModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
-        <div style="background-color: #fff; padding: 20px; border-radius: 10px; width: 300px; text-align: center;">
-            <h3>Enter Password</h3>
-            <input type="password" id="passwordInput" placeholder="Password" style="padding: 10px; width: 80%; border-radius: 5px; border: 2px solid #ffcc00;">
-            <button onclick="verifyPassword()" style="background-color: #ffcc00; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Submit</button>
-            <button onclick="closePasswordModal()" style="background-color: #ff7f00; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>
-        </div>
+    <div class="post">
+        <h3>Mental Health Notes</h3>
+        <p>Comprehensive notes on mental health, covering anxiety, depression, stress management, and coping strategies.</p>
+        <a href="mental_health_notes.pdf" download>Download Notes</a>
     </div>
 
-    <!-- JavaScript for Menu Toggle and Password Modal -->
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('show');
-        }
+    <div class="post">
+        <h3>GIS Data Set</h3>
+        <p>Access GIS datasets, including road networks, trauma boundaries, and health facility maps.</p>
+        <a href="gis_data.zip" download>Download GIS Data</a>
+    </div>
+</section>
 
-        function showPasswordModal(fileName) {
-            const modal = document.getElementById('passwordModal');
-            modal.style.display = 'flex';
-            modal.dataset.fileName = fileName;
-        }
+<!-- VPN Services (Below School Materials & GIS) -->
+<section id="vpn-services">
+    <h2>🔒 VPN Services</h2>
 
-        function closePasswordModal() {
-            const modal = document.getElementById('passwordModal');
-            modal.style.display = 'none';
-        }
+    <div class="post">
+        <h3>Why VPNs Are Essential for Your Online Privacy</h3>
+        <p>Learn how VPNs work and why they are essential for keeping your internet browsing safe from prying eyes.</p>
+    </div>
 
-        function verifyPassword() {
-            const passwordInput = document.getElementById('passwordInput').value;
-            const modal = document.getElementById('passwordModal');
-            const fileName = modal.dataset.fileName;
+    <div class="post">
+        <h3>How to Set Up a VPN with Martoo Tech Works</h3>
+        <p>Follow our easy-to-use guide to set up a VPN for enhanced privacy and security.</p>
+    </div>
 
-            // Hardcoded password for the demonstration
-            const correctPassword = "MARTOO";
+    <!-- VPN Generator -->
+    <div id="generator-section">
+        <h2>VPN Configuration Generator</h2>
+        <p>Generate your VPN configuration by entering the required details (Name only) and clicking generate.</p>
 
-            if (passwordInput === correctPassword) {
-                window.location.href = fileName; // Redirect to the file
-            } else {
-                alert("Incorrect password! Please try again.");
-            }
-        }document.addEventListener("DOMContentLoaded", function () {
-  const reactions = document.querySelectorAll(".reaction");
+        <input id="fileNameInput" type="text" placeholder="Enter file name" style="font-size: 18px; padding: 10px; width: 100%; border-radius: 8px; border: 2px solid #cccccc;">
+        
+        <button id="generateButton" style="font-size: 20px; padding: 15px 30px; background-color: #0066cc; color: white; border: none; border-radius: 8px; cursor: pointer;">
+            Generate
+        </button>
+    </div>
 
-  // Load the reaction states from localStorage
-  reactions.forEach((reaction) => {
-    const reactionType = reaction.dataset.reaction;
-    const storedCount = localStorage.getItem(reactionType + "-count");
+    <div id="outputSection" style="margin-top: 20px; font-weight: bold; color: #e0e0e0; border: 2px solid #cccccc; padding: 20px; border-radius: 8px; display: none;"></div>
+    
+    <div id="donationMessage" style="margin-top: 20px; font-weight: bold; color: orange;">
+        Thank you for your visit, please donate to this number: +260774766077
+    </div>
+</section>
 
-    if (storedCount) {
-      reaction.querySelector(".count").textContent = storedCount;
-      if (parseInt(storedCount) > 0) {
-        reaction.classList.add("active");
-      }
-    }
+<footer>
+    <p>&copy; 2025 Martoo Tech Works. All Rights Reserved.</p>
+</footer>
 
-    let clickTimer;
-
-    reaction.addEventListener("click", function () {
-      clearTimeout(clickTimer); // Clear the double-tap timer
-
-      clickTimer = setTimeout(() => {
-        const countSpan = this.querySelector(".count");
-        let currentCount = parseInt(countSpan.textContent, 10);
-
-        if (this.classList.contains("active")) {
-          // Unreact logic
-          currentCount -= 1;
-          this.classList.remove("active");
+<script>
+    document.getElementById('generateButton').addEventListener('click', function() {
+        const fileName = document.getElementById('fileNameInput').value.trim();
+        if (fileName !== "") {
+            document.getElementById('outputSection').style.display = "block";
+            document.getElementById('outputSection').innerHTML = `<p>VPN Configuration File: <strong>${fileName}.config</strong> generated successfully.</p>`;
         } else {
-          // React logic
-          currentCount += 1;
-          this.classList.add("active");
+            alert("Please enter a file name.");
         }
-
-        countSpan.textContent = currentCount;
-        // Store updated count in localStorage
-        localStorage.setItem(reactionType + "-count", currentCount);
-      }, 300); // 300ms delay for single tap
     });
+</script>
 
-    reaction.addEventListener("dblclick", function () {
-      // Double tap to unreact
-      const countSpan = this.querySelector(".count");
-      let currentCount = parseInt(countSpan.textContent, 10);
-
-      if (this.classList.contains("active")) {
-        currentCount -= 1;
-        this.classList.remove("active");
-      }
-
-      countSpan.textContent = currentCount;
-      // Store updated count in localStorage
-      localStorage.setItem(reactionType + "-count", currentCount);
-    });
-  });
-});
-    </script>
 </body>
-</html> 
+</html>

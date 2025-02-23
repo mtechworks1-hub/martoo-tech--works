@@ -183,7 +183,7 @@
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
-    <style>
+<style>
     .download-btn {
         display: inline-block;
         padding: 12px 25px;
@@ -201,15 +201,24 @@
         box-shadow: 2px 2px 5px #2e6b30, -2px -2px 5px #3e8e41;
         transform: scale(1.05);
     }
-<p>Hi Martha ,This is your HMIS assignment , please click down button to proceed , and the password given to you.</p>
-</style><button class="download-btn" onclick="window.location.href='School materials/HMIS ASSIGNMENT MARTHA TEMBO.docx'">Download HMIS Assignment</button>
-
-<h3>Other Downloads</h3>
-<button class="download-btn" onclick="window.location.href='School materials/BBA100 S1 2025-1= FINAL.xlsx'">Download BBA100 S1 2025-1 FINAL</button>
+</style><h3>Hi Martha,</h3>
+<p>This is your HMIS ASSIGNMENT. Please click the download button to download your work. You will be prompted to enter the password, enter the password provided by MARTOO TECH WORKS.</p>
+<button class="download-btn" onclick="downloadFile('School materials/HMIS ASSIGNMENT MARTHA TEMBO.docx', 'MARTHA')">Download HMIS Assignment</button><h3>Other Downloads</h3>
+<button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1= FINAL.xlsx', '')">Download BBA100 S1 2025-1 FINAL</button>
 <br><br>
-<button class="download-btn" onclick="window.location.href='School materials/BBA100 S1 2025-1.xlsx'">Download BBA100 S1 2025-1</button>
-<p>This document is protected. If you want to have it, please contact MARTOO TECH WORKS on 0774766077.</p>
-        
+<button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1.xlsx', 'MARTOO TECH WORKS')">Download BBA100 S1 2025-1</button>
+<p>This document is protected. If you want to have it, please contact MARTOO TECH WORKS on 0774766077.</p><script>
+    function downloadFile(path, password) {
+        if (password) {
+            let userPass = prompt("Enter password:");
+            if (userPass !== password) {
+                alert("Incorrect password!");
+                return;
+            }
+        }
+        window.location.href = path;
+    }
+</script>
     <!-- Typing Assistant Section -->
     <section id="content-section">
         <h2>Typing Assistant</h2>

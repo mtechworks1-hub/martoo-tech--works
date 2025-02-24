@@ -209,7 +209,39 @@
             </ul>
         </nav>
     </header>
+<button class="download-btn" onclick="downloadGoogleDriveFile()">Download File</button>
 
+<script>
+    function downloadGoogleDriveFile() {
+        let password = "YOUR_PASSWORD_HERE"; // Replace with the actual password
+        let userPass = prompt("Enter password:");
+        if (userPass !== password) {
+            alert("Incorrect password!");
+            return;
+        }
+        window.location.href = "https://drive.google.com/uc?export=download&id=1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI";
+    }
+</script>
+
+<style>
+    .download-btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background: linear-gradient(145deg, #3e8e41, #2e6b30);
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 8px;
+        border: none;
+        box-shadow: 4px 4px 8px #2e6b30, -4px -4px 8px #3e8e41;
+        transition: all 0.3s ease-in-out;
+    }
+    .download-btn:hover {
+        background: linear-gradient(145deg, #2e6b30, #3e8e41);
+        box-shadow: 2px 2px 5px #2e6b30, -2px -2px 5px #3e8e41;
+        transform: scale(1.05);
+    }
+</style>
     <!-- Main Content -->
     <section id="content-section">
         <div class="welcome-message">

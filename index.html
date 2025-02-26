@@ -258,6 +258,52 @@
         box-shadow: 2px 2px 5px #2e6b30, -2px -2px 5px #3e8e41;
         transform: scale(1.05);
     }
+    <h3>Download Stata 14</h3>
+<p>
+    Below is the Stata 14 license information. Click the download button to get the software.  
+    You will be prompted to enter a password—use the one provided by MARTOO TECH WORKS.  
+</p>
+
+<ul>
+    <li><strong>LICENSED SOFTWARE:</strong> Stata/SE 14</li>
+    <li><strong>SERIAL NUMBER:</strong> 401406368398</li>
+    <li><strong>CODE:</strong> sj4n$46$L7tasar3hq$8iijLy</li>
+    <li><strong>AUTHORIZATION:</strong> d950</li>
+</ul>
+
+<button class="download-btn" onclick="downloadStata()">Download Stata 14</button>
+
+<script>
+    function downloadStata() {
+        let password = "MARTOO"; // Today's password
+        let userPass = prompt("Enter password:");
+        if (userPass !== password) {
+            alert("Incorrect password!");
+            return;
+        }
+        window.location.href = "https://drive.google.com/drive/folders/1E34q2ZV6Y1eAqIGabV3bIbr4Ni7W4H2S";
+    }
+</script>
+
+<style>
+    .download-btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background: linear-gradient(145deg, #007bff, #0056b3);
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 8px;
+        border: none;
+        box-shadow: 4px 4px 8px #0056b3, -4px -4px 8px #007bff;
+        transition: all 0.3s ease-in-out;
+    }
+    .download-btn:hover {
+        background: linear-gradient(145deg, #0056b3, #007bff);
+        box-shadow: 2px 2px 5px #0056b3, -2px -2px 5px #007bff;
+        transform: scale(1.05);
+    }
+</style>
 </style>
     <!-- Main Content -->
     <section id="content-section">

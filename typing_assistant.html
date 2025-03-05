@@ -99,6 +99,10 @@
             background: linear-gradient(145deg, #2e6b30, #3e8e41);
             transform: scale(1.05);
         }
+        .responsive-container {
+            max-width: 100%;
+            overflow-x: auto;
+        }
         footer {
             background-color: #333;
             color: white;
@@ -124,21 +128,24 @@
             </ul>
         </nav>
     </header>
+    <section id="content-section">
+        <h2>Typing Assistant</h2>
+        <p class="typing-info">Need help with your typing tasks? Upload your files and let us handle the rest!</p>
+        <div class="upload-container">
+            <script type="text/javascript" src="https://form.jotform.com/jsform/250152076105041"></script>
+        </div>
+    </section>
     <h3>Download BBA100 Assignment</h3>
-    <p>This document is protected (READ-ONLY). If you want to have it, it is just a draft.</p>
-    <button class="download-btn" onclick="downloadFile('School materials/BBA100-S1-2025-1-FINAL.xlsx', '')">
-        Download BBA100 S1 2025-1 FINAL
-    </button>
+    <p>This document is protected(READ-ONLY). If you want to have it, it is just a draft.</p>
+    <button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1= FINAL.xlsx', '')">Download BBA100 S1 2025-1 FINAL</button>
     <br><br>
-    <p>This document is protected. Contact Martoo Tech Works for access.</p>
-    <button class="download-btn" onclick="downloadFile('School materials/BBA100-S1-2025-1.xlsx', 'MARTOOTECH')">
-        Download BBA100 S1 2025-1
-    </button>
+    <p>This document below is protected and ready for submission for only one group. If you want to have it, please contact MARTOO TECH WORKS on 0774766077.</p>
+    <button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1.xlsx', 'MARTOOTECH')">Download BBA100 S1 2025-1</button>
     <script>
-        function downloadFile(path, requiredPassword) {
-            if (requiredPassword) {
+        function downloadFile(path, password) {
+            if (password) {
                 let userPass = prompt("Enter password:");
-                if (userPass !== requiredPassword) {
+                if (userPass !== "MARTOOTECH") {
                     alert("Incorrect password!");
                     return;
                 }
@@ -149,13 +156,6 @@
             var menu = document.getElementById('menu');
             menu.classList.toggle('show');
         }
-        document.addEventListener("click", function(event) {
-            var menu = document.getElementById('menu');
-            var hamburger = document.querySelector('.hamburger');
-            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
-                menu.classList.remove('show');
-            }
-        });
     </script>
     <footer>
         <p>Copyright 2024, All rights reserved.</p>

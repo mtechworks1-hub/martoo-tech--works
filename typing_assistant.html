@@ -70,19 +70,6 @@
         #menu.show {
             display: flex;
         }
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            display: block;
-            font-weight: bold;
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.8);
-            transition: background-color 0.3s ease;
-        }
-        nav ul li a:hover {
-            background-color: #ff7f00;
-        }
         .download-btn {
             display: inline-block;
             padding: 12px 25px;
@@ -91,24 +78,17 @@
             text-decoration: none;
             font-size: 16px;
             border-radius: 8px;
-            border: none;
-            box-shadow: 4px 4px 8px #2e6b30, -4px -4px 8px #3e8e41;
             transition: all 0.3s ease-in-out;
         }
         .download-btn:hover {
             background: linear-gradient(145deg, #2e6b30, #3e8e41);
             transform: scale(1.05);
         }
-        .responsive-container {
-            max-width: 100%;
-            overflow-x: auto;
-        }
         footer {
             background-color: #333;
             color: white;
             text-align: center;
             padding: 20px;
-            position: relative;
             width: 100%;
         }
     </style>
@@ -130,35 +110,36 @@
     </header>
     <section id="content-section">
         <h2>Typing Assistant</h2>
-        <p class="typing-info">Need help with your typing tasks? Upload your files and let us handle the rest!</p>
+        <p>Download BBA100 Assignment:</p>
+        <button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1= FINAL.xlsx', '')">Download BBA100 S1 2025-1 FINAL</button>
+        <br><br>
+        <p>This document is protected. Enter the password to download:</p>
+        <button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1.xlsx', 'MARTOOTECH')">Download BBA100 S1 2025-1</button>
+        <script>
+            function downloadFile(path, password) {
+                if (password) {
+                    let userPass = prompt("Enter password:");
+                    if (userPass !== password) {
+                        alert("Incorrect password!");
+                        return;
+                    }
+                }
+                window.location.href = path;
+            }
+        </script>
+        <p>Need help with typing? Upload your files below:</p>
         <div class="upload-container">
             <script type="text/javascript" src="https://form.jotform.com/jsform/250152076105041"></script>
         </div>
     </section>
-    <h3>Download BBA100 Assignment</h3>
-    <p>This document is protected(READ-ONLY). If you want to have it, it is just a draft.</p>
-    <button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1= FINAL.xlsx', '')">Download BBA100 S1 2025-1 FINAL</button>
-    <br><br>
-    <p>This document below is protected and ready for submission for only one group. If you want to have it, please contact MARTOO TECH WORKS on 0774766077.</p>
-    <button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1.xlsx', 'MARTOOTECH')">Download BBA100 S1 2025-1</button>
+    <footer>
+        <p>Copyright 2024, All rights reserved.</p>
+    </footer>
     <script>
-        function downloadFile(path, password) {
-            if (password) {
-                let userPass = prompt("Enter password:");
-                if (userPass !== "MARTOOTECH") {
-                    alert("Incorrect password!");
-                    return;
-                }
-            }
-            window.location.href = path;
-        }
         function toggleMenu() {
             var menu = document.getElementById('menu');
             menu.classList.toggle('show');
         }
     </script>
-    <footer>
-        <p>Copyright 2024, All rights reserved.</p>
-    </footer>
 </body>
 </html>

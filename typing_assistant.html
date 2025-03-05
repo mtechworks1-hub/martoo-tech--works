@@ -201,23 +201,32 @@
         box-shadow: 2px 2px 5px #2e6b30, -2px -2px 5px #3e8e41;
         transform: scale(1.05);
     }
-</style><h3>Download BBA100 Assignment</h3>
-        <p>This document is protected(READY-ONLY). If you want to have it, It is just a draft.</p>
-<button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1= FINAL.xlsx', '')">Download BBA100 S1 2025-1 FINAL</button>
-<br><br>
-        <p>This document below is protected and ready for submission for only one group. If you want to have it, please contact MARTOO TECH WORKS on 0774766077, and you can also request for a different version for different individuals to avoid using the same work .</p>
-<button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1.xlsx', 'MARTOO TECH WORKS')">Download BBA100 S1 2025-1</button>
 <script>
-    function downloadFile(path, password) {
-        if (password) {
+    function downloadFile(path, requiredPassword) {
+        if (requiredPassword) {
             let userPass = prompt("Enter password:");
-            if (userPass !== MARTOOTECH) {
+            if (userPass !== requiredPassword) {  // Corrected password validation
                 alert("Incorrect password!");
                 return;
             }
         }
-        window.location.href = path;
+        window.location.href = path;  // Redirect to file download
     }
+</script>
+
+<h3>Download BBA100 Assignment</h3>
+<p>This document is protected (READ-ONLY). If you want to have it, it is just a draft.</p>
+<button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1= FINAL.xlsx', '')">
+    Download BBA100 S1 2025-1 FINAL
+</button>
+<br><br>
+
+<p>This document below is protected and ready for submission for only one group. If you want to have it, please contact MARTOO TECH WORKS on 0774766077, and you can also request a different version for different individuals to avoid using the same work.</p>
+<button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1.xlsx', 'MARTOOTECH')">
+    Download BBA100 S1 2025-1
+</button>
+
+    
 </script>
     <!-- Typing Assistant Section -->
     <section id="content-section">

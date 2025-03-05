@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlagiarismShield - Martoo Tech Hub</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Your CSS -->
+    <script src="script.js" defer></script> <!-- JS for dynamic actions -->
+</head>
+<body>
+    <!-- Navigation (Hamburger Menu) -->
+    <nav class="navbar">
+        <div class="hamburger-menu">
+            <button class="hamburger-btn">☰</button>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PlagiarismShield Page Content -->
+    <header class="page-header">
+        <h1>Welcome to PlagiarismShield</h1>
+        <p>Your reliable solution for plagiarism detection and document verification.</p>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature-card">
+            <h2>Real-Time Plagiarism Check</h2>
+            <p>Instant analysis of your document's content for any potential plagiarism issues.</p>
+        </div>
+        <div class="feature-card">
+            <h2>Detailed Reports</h2>
+            <p>Receive in-depth reports with sources of detected plagiarism for easy referencing.</p>
+        </div>
+        <div class="feature-card">
+            <h2>Easy to Use</h2>
+            <p>Just upload your document and get results without any complex setup or steps.</p>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="upload-section">
+        <h2>Check Your Document Now</h2>
+        <p>Upload your document to get started with plagiarism detection.</p>
+        <form id="uploadForm" action="upload-server.php" method="POST" enctype="multipart/form-data">
+            <input type="file" id="fileInput" name="document" accept=".docx, .pdf, .txt" required>
+            <button type="submit" id="uploadBtn">Upload Document</button>
+        </form>
+        <p id="fileStatus" class="status-message"></p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Martoo Tech Hub. All rights reserved.</p>
+    </footer>
+</body>
+</html>

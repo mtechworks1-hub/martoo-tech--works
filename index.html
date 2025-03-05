@@ -256,10 +256,27 @@
             <ul>
                 <li><i class="fas fa-cogs"></i> Tech Services for Everyone</li>
                 <li><i class="fas fa-laptop"></i> Blogs and Latest Updates</li>
-                <li><i class="fas fa-download"></i> Download Useful Resources</li>
-            </ul>
-            <a href="https://drive.google.com/drive/folders/your_google_drive_link" class="download-btn">Download Resources</a>
-        </div>
+            <li><i class="fas fa-download"></i> Download Useful Resources</li> <!-- GIS Software Download with Password Protection --> 
+     <h3>GIS Software</h3> 
+     <p>To download GIS Software, click the button below:</p> <button class="download-btn" onclick="confirmPassword('gis')">Download GIS Software</button> <!-- Stata Software Download with Password Protection --> 
+     <h3>Stata Software</h3> 
+     <p>To download the Stata software, click the button below:</p> <button class="download-btn" onclick="confirmPassword('stata')">Download Stata Software</button> 
+     <script>
+    const gisPassword = "MARTOOGIS"; // Password for GIS
+    const stataPassword = "MARTOOSTATA"; // Password for Stata
+
+    function confirmPassword(software) {
+        let userPassword = prompt("Please enter the password to access the download:");
+
+        if (software === 'gis' && userPassword === gisPassword) {
+            window.location.href = "https://drive.google.com/file/d/1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI/view?usp=drivesdk";
+        } else if (software === 'stata' && userPassword === stataPassword) {
+            window.location.href = "https://drive.google.com/file/d/1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H/view?usp=drivesdk";
+        } else {
+            alert("Incorrect password. Access denied.");
+        }
+    }
+</script> 
     </div>
 
     <!-- Footer Section -->

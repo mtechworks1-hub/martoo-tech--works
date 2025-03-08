@@ -157,28 +157,26 @@
             menu.style.display = menu.style.display === "block" ? "none" : "block";
         }
 
-        function sendMessage() {
+        async function sendMessage() {
             var input = document.getElementById("userInput");
             var chatBox = document.getElementById("chatBox");
             if (input.value.trim() !== "") {
-                chatBox.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
-                setTimeout(() => {
-                    chatBox.innerHTML += `<p><strong>Martoo AI:</strong> ${generateResponse(input.value)}</p>`;
-                }, 1000);
+                let userMessage = input.value;
+                chatBox.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
                 input.value = "";
-            }
-        }
-
-        function generateResponse(userMessage) {
-            if (userMessage.toLowerCase().includes("hello")) {
-                return "Hello! How can I assist you today?";
-            } else if (userMessage.toLowerCase().includes("assignment")) {
-                return "I can help you format and structure your assignment. What topic is it on?";
-            } else {
-                return "I'm here to assist you. Please ask me anything!";
+                
+                let response = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ message: userMessage })
+                });
+                let data = await response.json();
+                let aiResponse = data.reply;
+                chatBox.innerHTML += `<p><strong>Martoo AI:</strong> ${aiResponse}</p>`;
             }
         }
     </script>
-    <script src="script.js"></script>
 </body>
 </html>

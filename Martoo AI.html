@@ -162,6 +162,9 @@
             var chatBox = document.getElementById("chatBox");
             if (input.value.trim() !== "") {
                 chatBox.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
+                setTimeout(() => {
+                    chatBox.innerHTML += `<p><strong>Martoo AI:</strong> I'm here to assist you. How can I help?</p>`;
+                }, 1000);
                 input.value = "";
             }
         }

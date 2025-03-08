@@ -1,37 +1,49 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw">
-    <meta name="google-adsense-account" content="ca-pub-9775836048486404">
     <title>Martoo Tech Works</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
+        /* General Styles */
         body {
-            background-image: url('full site background.jpg');
+            background-image: url('full-site-background.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: white;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Arial Black', sans-serif;
             margin: 0;
             min-height: 100vh;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
         }
+
+        /* Header Styling */
         header {
             position: relative;
             text-align: center;
-            padding: 60px 20px;
-            background: rgba(0, 0, 0, 0.7);
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 1s;
         }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         header h1 {
             color: #ffcc00;
             font-size: 40px;
+            margin: 0;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
+
         .hamburger {
             position: absolute;
             top: 20px;
@@ -39,7 +51,12 @@
             font-size: 28px;
             color: white;
             cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            border: 2px solid #ffcc00;
+            background: rgba(0, 0, 0, 0.5);
         }
+
         nav ul {
             list-style-type: none;
             padding: 0;
@@ -48,13 +65,80 @@
             top: 60px;
             right: 20px;
             width: 200px;
-            background-color: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.9);
             display: none;
             flex-direction: column;
+            align-items: flex-start;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
         }
+
         #menu.show {
             display: flex;
         }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #ff7f00;
+        }
+
+        /* Content Section */
+        #content-section {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #ffcc00;
+            margin-bottom: 20px;
+        }
+
+        /* Download Buttons */
+        .download-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background: linear-gradient(145deg, #1E90FF, #104E8B);
+            text-decoration: none;
+            border-radius: 10px;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.1);
+            background: linear-gradient(145deg, #104E8B, #1E90FF);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            width: 100%;
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+            color: white;
+            font-size: 24px;
+        }
+
     </style>
 </head>
 <body>
@@ -65,48 +149,44 @@
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="posts.html">Blog Posts</a></li>
-                <li class="dropdown">
-                    <a href="services.html">Services</a>
-                    <div class="dropdown-content">
-                        <a href="vpn.html">VPN</a>
-                        <a href="typing_assistant.html">Typing Assistant</a>
-                        <a href="school-materials.html">School Materials</a>
-                    </div>
-                </li>
-                <li><a href="about.html">About Martoo</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="plagiarismshield.html">Plagiarism Shield</a></li>
             </ul>
         </nav>
     </header>
-    <section>
-        <h2>About Martoo Tech</h2>
-        <p>Martoo Tech offers services related to:</p>
-        <ul>
-            <li>Typing Assistant – Helping with typing assignments and documents.</li>
-            <li>VPN Services – Providing configurations for Vmess, Trojan, and UDP.</li>
-            <li>Essential School Materials – Sharing important academic resources.</li>
-        </ul>
-    </section>
-    <section>
-        <h3>Software Downloads</h3>
-        <p>Download useful resources by entering the correct password.</p>
+
+    <div id="content-section">
+        <p class="description">Martoo Tech offers services related to:<br>
+            1. Typing Assistant – Helping with assignments and documents.<br>
+            2. VPN Services – Vmess, Trojan, and UDP configurations.<br>
+            3. Essential School Materials – Academic resources.</p>
+        
+        <h3>Download Software</h3>
         <button class="download-btn" onclick="confirmPassword('gis')">Download GIS Software</button>
         <button class="download-btn" onclick="confirmPassword('stata')">Download Stata Software</button>
-    </section>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="#" class="fab fa-facebook"></a>
+            <a href="#" class="fab fa-youtube"></a>
+            <a href="#" class="fab fa-whatsapp"></a>
+        </div>
+        <p>© 2025 Martoo Tech Works. All rights reserved.</p>
+    </footer>
+
     <script>
         function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('show');
+            document.getElementById('menu').classList.toggle('show');
         }
-        const gisPassword = "MARTOOGIS";
-        const stataPassword = "MARTOOSTATA";
+
         function confirmPassword(software) {
-            let userPassword = prompt("Please enter the password to access the download:");
-            if (software === 'gis' && userPassword === gisPassword) {
-                window.location.href = "https://drive.google.com/file/d/1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI/view?usp=drivesdk";
-            } else if (software === 'stata' && userPassword === stataPassword) {
-                window.location.href = "https://drive.google.com/file/d/1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H/view?usp=drivesdk";
+            let passwords = { 'gis': 'MARTOOGIS', 'stata': 'MARTOOSTATA' };
+            let userPassword = prompt("Enter password to download:");
+            if (userPassword === passwords[software]) {
+                alert("Download started!");
             } else {
                 alert("Incorrect password. Access denied.");
             }

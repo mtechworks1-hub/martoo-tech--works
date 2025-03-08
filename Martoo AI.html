@@ -163,9 +163,19 @@
             if (input.value.trim() !== "") {
                 chatBox.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
                 setTimeout(() => {
-                    chatBox.innerHTML += `<p><strong>Martoo AI:</strong> I'm here to assist you. How can I help?</p>`;
+                    chatBox.innerHTML += `<p><strong>Martoo AI:</strong> ${generateResponse(input.value)}</p>`;
                 }, 1000);
                 input.value = "";
+            }
+        }
+
+        function generateResponse(userMessage) {
+            if (userMessage.toLowerCase().includes("hello")) {
+                return "Hello! How can I assist you today?";
+            } else if (userMessage.toLowerCase().includes("assignment")) {
+                return "I can help you format and structure your assignment. What topic is it on?";
+            } else {
+                return "I'm here to assist you. Please ask me anything!";
             }
         }
     </script>

@@ -160,21 +160,34 @@
         async function sendMessage() {
             var input = document.getElementById("userInput");
             var chatBox = document.getElementById("chatBox");
+
             if (input.value.trim() !== "") {
                 let userMessage = input.value;
                 chatBox.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
                 input.value = "";
-                
-                let response = await fetch("/api/chat", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ message: userMessage })
-                });
-                let data = await response.json();
-                let aiResponse = data.reply;
-                chatBox.innerHTML += `<p><strong>Martoo AI:</strong> ${aiResponse}</p>`;
+
+                const apiKey = "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"; 
+                const url = "https://api.openai.com/v1/chat/completions";
+
+                try {
+                    let response = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${apiKey}`
+                        },
+                        body: JSON.stringify({
+                            model: "gpt-3.5-turbo",
+                            messages: [{ role: "user", content: userMessage }]
+                        })
+                    });
+
+                    let data = await response.json();
+                    let aiResponse = data.choices?.[0]?.message?.content || "No response";
+                    chatBox.innerHTML += `<p><strong>Martoo AI:</strong> ${aiResponse}</p>`;
+                } catch (error) {
+                    chatBox.innerHTML += `<p><strong>Martoo AI:</strong> Error: ${error.message}</p>`;
+                }
             }
         }
     </script>

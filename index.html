@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,22 +9,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        /* Body Styling */
+        /* CSS Styles */
         body {
             background-image: url('full site background.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: white;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             min-height: 100vh;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
         }
-
-        /* Header Styling */
         header {
             position: relative;
             text-align: center;
@@ -32,14 +30,6 @@
             background: rgba(0, 0, 0, 0.7);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
-
-        header h1 {
-            color: #ffcc00;
-            font-size: 40px;
-            margin: 0;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-        }
-
         .logo {
             position: absolute;
             top: 20px;
@@ -49,9 +39,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #ffcc00;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
-
         .hamburger {
             position: absolute;
             top: 20px;
@@ -63,12 +51,9 @@
             padding: 8px;
             border-radius: 5px;
             border: 2px solid #ffcc00;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
-
-        /* Navigation Menu */
         nav ul {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
             margin: 0;
             position: absolute;
@@ -78,131 +63,35 @@
             background-color: rgba(0, 0, 0, 0.9);
             display: none;
             flex-direction: column;
-            align-items: flex-start;
             border-radius: 5px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-            z-index: 4;
         }
-
         #menu.show {
             display: flex;
         }
-
-        nav ul li {
-            margin: 3px 0;
-        }
-
         nav ul li a {
             color: white;
             text-decoration: none;
             padding: 5px 10px;
             display: block;
             font-weight: bold;
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.8);
-            transition: background-color 0.3s ease;
         }
-
         nav ul li a:hover {
             background-color: #ff7f00;
         }
-
-        /* Main Section Styling */
         #content-section {
             display: flex;
             justify-content: center;
             align-items: flex-start;
             padding: 20px;
-            color: white;
             background-color: rgba(0, 0, 0, 0.7);
-            min-height: 100%;
             flex-grow: 1;
-            overflow-y: auto; /* Allow scrolling */
         }
-
         .welcome-message {
             max-width: 600px;
             padding: 20px;
             background-color: rgba(0, 0, 0, 0.8);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
-
-        .welcome-message h2 {
-            margin-bottom: 10px;
-            font-size: 28px;
-            color: #ffcc00;
-        }
-
-        .welcome-message p {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .welcome-message ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .welcome-message ul li {
-            display: flex;
-            align-items: center;
-            font-size: 18px;
-            margin: 10px 0;
-        }
-
-        .welcome-message ul li i {
-            margin-right: 10px;
-            font-size: 24px;
-            color: #ffcc00;
-        }
-
-        /* Footer Styling */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            position: relative;
-            width: 100%;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .social-icons a {
-            margin: 0 15px;
-            color: white;
-            font-size: 24px;
-        }
-
-        .social-icons a:hover {
-            color: #ff7f00;
-        }
-
-        .license {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        .download-btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background: linear-gradient(145deg, #1E90FF, #104E8B);
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .download-btn:hover {
-            background: linear-gradient(145deg, #104E8B, #1E90FF);
-            transform: scale(1.05);
-        }
-
         .download-btn {
             display: inline-block;
             padding: 12px 25px;
@@ -211,20 +100,26 @@
             text-decoration: none;
             font-size: 16px;
             border-radius: 8px;
-            border: none;
-            box-shadow: 4px 4px 8px #2e6b30, -4px -4px 8px #3e8e41;
-            transition: all 0.3s ease-in-out;
         }
-
         .download-btn:hover {
             background: linear-gradient(145deg, #2e6b30, #3e8e41);
-            box-shadow: 2px 2px 5px #2e6b30, -2px -2px 5px #3e8e41;
             transform: scale(1.05);
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
+        .social-icons a {
+            margin: 0 15px;
+            color: white;
+            font-size: 24px;
         }
     </style>
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
         <h1>Welcome to Martoo Tech Works</h1>
@@ -233,68 +128,47 @@
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="posts.html">Blog Posts</a></li>
-                <li class="dropdown">
-                    <a href="services.html">Services</a>
-                    <div class="dropdown-content">
-                        <a href="vpn.html">VPN</a>
-                        <a href="typing_assistant.html">Typing Assistant</a>
-                        <a href="school-materials.html">School Materials</a>
-                    </div>
-                </li>
+                <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">About Martoo</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="plagiarismshield.html">plagiarismshield</a></li>
+                <li><a href="plagiarismshield.html">Plagiarism Shield</a></li>
             </ul>
         </nav>
     </header>
-
-    <!-- Main Content Section -->
     <div id="content-section">
         <div class="welcome-message">
             <h2>Welcome to Martoo Tech Works</h2>
             <p>Your one-stop hub for tech services, tips, and resources.</p>
-            <ul>
-                <li><i class="fas fa-cogs"></i> Tech Services for Everyone</li>
-                <li><i class="fas fa-laptop"></i> Blogs and Latest Updates</li>
-            <li><i class="fas fa-download"></i> Download Useful Resources</li> <!-- GIS Software Download with Password Protection --> 
-     <h3>GIS Software</h3> 
-     <p>To download GIS Software, click the button below:</p> <button class="download-btn" onclick="confirmPassword('gis')">Download GIS Software</button> <!-- Stata Software Download with Password Protection --> 
-     <h3>Stata Software</h3> 
-     <p>To download the Stata software, click the button below:</p> <button class="download-btn" onclick="confirmPassword('stata')">Download Stata Software</button> 
-     <script>
-    const gisPassword = "MARTOOGIS"; // Password for GIS
-    const stataPassword = "MARTOOSTATA"; // Password for Stata
-
-    function confirmPassword(software) {
-        let userPassword = prompt("Please enter the password to access the download:");
-
-        if (software === 'gis' && userPassword === gisPassword) {
-            window.location.href = "https://drive.google.com/file/d/1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI/view?usp=drivesdk";
-        } else if (software === 'stata' && userPassword === stataPassword) {
-            window.location.href = "https://drive.google.com/file/d/1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H/view?usp=drivesdk";
-        } else {
-            alert("Incorrect password. Access denied.");
-        }
-    }
-</script> 
+            <h3>GIS Software</h3>
+            <p>To download GIS Software, click below:</p>
+            <button class="download-btn" onclick="confirmPassword('gis')">Download GIS Software</button>
+            <h3>Stata Software</h3>
+            <p>To download Stata, click below:</p>
+            <button class="download-btn" onclick="confirmPassword('stata')">Download Stata Software</button>
+        </div>
     </div>
-
-    <!-- Footer Section -->
     <footer>
         <div class="social-icons">
             <a href="https://www.facebook.com/profile.php?id=61561559594029" target="_blank" class="fab fa-facebook"></a>
             <a href="https://youtube.com/@martootech?si=WtTmTBtO6VjvajdN" target="_blank" class="fab fa-youtube"></a>
             <a href="https://wa.me/260950322498" target="_blank" class="fab fa-whatsapp"></a>
         </div>
-        <p class="license">© 2025 Martoo Tech Works. All rights reserved.</p>
+        <p>&copy; 2025 Martoo Tech Works. All rights reserved.</p>
     </footer>
-
-    <!-- JavaScript for Menu Toggle -->
     <script>
         function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('show');
+            document.getElementById('menu').classList.toggle('show');
+        }
+        function confirmPassword(software) {
+            let pass = software === 'gis' ? 'MARTOOGIS' : 'MARTOOSTATA';
+            if (prompt('Enter password:') === pass) {
+                window.location.href = software === 'gis' ? 
+                    'https://drive.google.com/file/d/1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI/view' : 
+                    'https://drive.google.com/file/d/1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H/view';
+            } else {
+                alert('Incorrect password. Access denied.');
+            }
         }
     </script>
-
-</body></html>
+</body>
+</html>

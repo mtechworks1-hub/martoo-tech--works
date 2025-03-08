@@ -52,6 +52,19 @@
             border: 3px solid #ffcc00;
         }
 
+        .hamburger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 5px;
+            border: 2px solid #ffcc00;
+        }
+
         /* Animated Welcome Message */
         .animated-text {
             font-size: 22px;
@@ -95,18 +108,17 @@
             color: #ddd;
         }
 
-        .welcome-message ul li {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            margin: 15px 0;
-        }
-
-        .welcome-message ul li i {
-            margin-right: 10px;
-            font-size: 24px;
-            color: #ffcc00;
+        .download-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(145deg, #1E90FF, #104E8B);
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
         }
 
         /* Footer Styling */
@@ -117,18 +129,6 @@
             text-align: center;
             border-top: 3px solid #ffcc00;
         }
-
-        .social-icons a {
-            margin: 0 15px;
-            color: white;
-            font-size: 24px;
-            transition: transform 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: #ff7f00;
-            transform: scale(1.1);
-        }
     </style>
 </head>
 <body>
@@ -136,26 +136,19 @@
         <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
         <h1>Welcome to Martoo Tech Works</h1>
         <p class="animated-text">Your One-Stop Hub for Technology, Services, and Resources</p>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
     </header>
 
     <div id="content-section">
         <div class="welcome-message">
             <h2>Who We Are</h2>
-            <p>Martoo Tech Works is a technology hub offering various tech services, insightful blog posts, and essential software downloads.</p>
-            <ul>
-                <li><i class="fas fa-cogs"></i> Reliable Tech Solutions</li>
-                <li><i class="fas fa-laptop"></i> Latest Tech Blogs</li>
-                <li><i class="fas fa-download"></i> Secure Software Downloads</li>
-            </ul>
+            <p>Martoo Tech Works offers essential tech services, insightful blogs, and secure software downloads.</p>
+            <a href="https://drive.google.com/file/d/1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI/view?usp=drivesdk" class="download-btn">Download GIS Software</a>
+            <a href="https://drive.google.com/file/d/1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H/view?usp=drivesdk" class="download-btn">Download Stata Software</a>
         </div>
     </div>
 
     <footer>
-        <div class="social-icons">
-            <a href="https://www.facebook.com/profile.php?id=61561559594029" target="_blank" class="fab fa-facebook"></a>
-            <a href="https://youtube.com/@martootech?si=WtTmTBtO6VjvajdN" target="_blank" class="fab fa-youtube"></a>
-            <a href="https://wa.me/260950322498" target="_blank" class="fab fa-whatsapp"></a>
-        </div>
         <p>© 2025 Martoo Tech Works. All rights reserved.</p>
     </footer>
 </body>

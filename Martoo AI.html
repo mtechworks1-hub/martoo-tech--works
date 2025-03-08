@@ -24,19 +24,20 @@
             padding: 20px;
             width: 100%;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
         }
         .hamburger {
             font-size: 30px;
             cursor: pointer;
             position: absolute;
-            left: 20px;
+            right: 20px;
             top: 15px;
         }
         nav {
             display: none;
             position: absolute;
-            top: 50px;
-            left: 20px;
+            top: 60px;
+            right: 20px;
             background: rgba(0, 0, 0, 0.9);
             padding: 10px;
             border-radius: 5px;
@@ -153,10 +154,15 @@
     <script>
         function toggleMenu() {
             var menu = document.getElementById("menu");
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-            } else {
-                menu.style.display = "block";
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        function sendMessage() {
+            var input = document.getElementById("userInput");
+            var chatBox = document.getElementById("chatBox");
+            if (input.value.trim() !== "") {
+                chatBox.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
+                input.value = "";
             }
         }
     </script>

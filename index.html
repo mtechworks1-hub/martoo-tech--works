@@ -166,24 +166,28 @@
         <h3>Download Software</h3>
         <button class="download-btn" onclick="confirmPassword('gis')">Download GIS Software</button>
         <button class="download-btn" onclick="confirmPassword('stata')">Download Stata Software</button>
-  <p style="font-size: 18px; margin-bottom: 20px;">To download SPSS software, please click the download button below.</p>
+  <p style="font-size: 18px; margin-bottom: 20px;">To download SPSS software, please enter the password and click the download button below.</p>
 
-<a href="https://drive.google.com/uc?export=download&id=1-0T0omxeFigW_ct_xxoPxMS3-_hIc6Wl" 
+<input type="password" id="passwordInput" placeholder="Enter Password" 
+       style="padding: 10px; font-size: 16px; margin-bottom: 10px; display: block;">
+
+<a href="#" onclick="checkPassword()" id="downloadButton"
    style="display: inline-block; padding: 15px 30px; font-size: 20px; color: orange; background-color: #007bff; 
           text-decoration: none; border-radius: 8px; box-shadow: 0 6px 0 #0056b3; transition: 0.2s ease; 
           font-weight: bold;">
    Download SPSS
 </a>
 
-<style>
-  a:hover {
-    background-color: #0056b3;
+<script>
+  function checkPassword() {
+    var password = document.getElementById("passwordInput").value;
+    if (password === "MARTOO") {
+      window.location.href = "https://drive.google.com/uc?export=download&id=1-0T0omxeFigW_ct_xxoPxMS3-_hIc6Wl";
+    } else {
+      alert("Incorrect password! Please try again.");
+    }
   }
-  a:active {
-    box-shadow: 0 2px 0 #003d80;
-    transform: translateY(4px);
-  }
-</style>
+</script>
     </div>
     
     <footer>

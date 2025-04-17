@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Martoo Video Downloader</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <title>Video Downloader - Martoo Tech Works</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <style>
     body {
@@ -16,12 +16,13 @@
       font-family: 'Arial Black', sans-serif;
       margin: 0;
       min-height: 100vh;
-      overflow-x: hidden;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
     }
 
     header {
+      position: relative;
       text-align: center;
       padding: 40px 20px;
       background: rgba(0, 0, 0, 0.8);
@@ -32,6 +33,7 @@
       color: #ffcc00;
       font-size: 36px;
       margin: 0;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     }
 
     .hamburger {
@@ -58,7 +60,6 @@
       background: rgba(0, 0, 0, 0.9);
       display: none;
       flex-direction: column;
-      align-items: flex-start;
       border-radius: 5px;
     }
 
@@ -78,38 +79,47 @@
       background-color: #ff7f00;
     }
 
-    #content-section {
-      padding: 40px;
-      background: rgba(0, 0, 0, 0.7);
+    main {
       flex-grow: 1;
+      padding: 30px 20px;
       text-align: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      max-width: 1000px;  /* Limit the width */
+      margin: 0 auto;  /* Center the content */
+      border-radius: 10px;
     }
 
-    input, button {
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 5px;
-      margin: 10px;
+    input[type="text"] {
+      padding: 10px;
+      width: 70%;
+      font-size: 18px;
+      border-radius: 10px;
       border: none;
+      outline: none;
+      margin-bottom: 20px;
     }
 
     button {
-      background-color: #1E90FF;
+      padding: 12px 25px;
+      font-size: 18px;
+      background: linear-gradient(145deg, #1E90FF, #104E8B);
       color: white;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
-      font-weight: bold;
+      transition: all 0.3s ease;
     }
 
     button:hover {
-      background-color: #104E8B;
+      transform: scale(1.1);
     }
 
     iframe {
-      margin-top: 20px;
+      margin-top: 30px;
       width: 100%;
-      max-width: 720px;
-      height: 400px;
+      height: 500px;
       border: none;
+      border-radius: 15px;
     }
 
     footer {
@@ -117,12 +127,19 @@
       color: white;
       text-align: center;
       padding: 20px;
+      width: 100%;
+    }
+
+    .social-icons a {
+      margin: 0 10px;
+      color: white;
+      font-size: 24px;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Martoo Video Downloader</h1>
+    <h1>Video Downloader</h1>
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <nav>
       <ul id="menu">
@@ -137,29 +154,24 @@
     </nav>
   </header>
 
-  <div id="content-section">
-    <h2>Paste the video URL below:</h2>
-    <input type="text" id="videoURL" placeholder="Paste video link here (YouTube, TikTok, Instagram, etc.)" size="50">
-    <button onclick="loadDownloader()">Download</button>
-    <iframe id="downloaderFrame"></iframe>
-  </div>
+  <main>
+    <h2>Download Facebook, Instagram, TikTok, and YouTube Videos</h2>
+    <p>Paste your video link below and click download:</p>
+    <iframe src="https://www.expertsphp.com/facebook-video-downloader.php" allowfullscreen></iframe>
+  </main>
 
   <footer>
+    <div class="social-icons">
+      <a href="#" class="fab fa-facebook"></a>
+      <a href="#" class="fab fa-youtube"></a>
+      <a href="#" class="fab fa-whatsapp"></a>
+    </div>
     <p>© 2025 Martoo Tech Works. All rights reserved.</p>
   </footer>
 
   <script>
     function toggleMenu() {
-      document.getElementById('menu').classList.toggle('show');
-    }
-
-    function loadDownloader() {
-      var url = document.getElementById('videoURL').value;
-      if (url) {
-        document.getElementById('downloaderFrame').src = "https://www.y2mate.ltd/?url=" + encodeURIComponent(url);
-      } else {
-        alert("Please paste a valid video link.");
-      }
+      document.getElementById("menu").classList.toggle("show");
     }
   </script>
 </body>

@@ -265,35 +265,30 @@
             } else {
                 alert("Incorrect password. Access denied.");
             }
-        }function downloadVideo() {
-  const url = document.getElementById("videoURL").value;
-  if (!url) {
-    alert("Please paste a video link.");
-    return;
-  }
-
-  // Use 3rd-party API endpoint (ytgram.io for demo)
-  const downloadLink = `https://ytgram.io/api/?url=${encodeURIComponent(url)}`;
-
-  // Open the link in a new tab
-  window.open(downloadLink, '_blank');
-        }
-    </script>
-    <script>
+        <script>
   function downloadVideo() {
-    const url = document.getElementById("videoURL").value.trim();
+    const url = document.getElementById("videoURL").value.trim(); // Get the video URL from input
 
     if (!url) {
-      alert("Please paste a video link.");
+      alert("Please paste a video link."); // Show alert if the URL is empty
       return;
     }
 
-    // Load the external downloader service in a new tab (clean UI, no ads)
+    // Encode the URL to handle special characters
     const encodedURL = encodeURIComponent(url);
-    const finalURL = `https://loader.to/api/button/?url=${encodedURL}`;
+    
+    // Direct link to video download service (update with your service's URL)
+    const downloadURL = `https://loader.to/api/button/?url=${encodedURL}`;
 
-    window.open(finalURL, "_blank");
+    // Create a temporary anchor element to trigger the download
+    const anchor = document.createElement('a');
+    anchor.href = downloadURL; // Set the href to the download link
+    anchor.download = ''; // This tells the browser to start downloading
+    document.body.appendChild(anchor);
+    anchor.click(); // Simulate a click to start the download
+    document.body.removeChild(anchor); // Remove the anchor element from the page after the click
   }
+</script>
     </script>
 </body>
 </html>

@@ -266,29 +266,29 @@
                 alert("Incorrect password. Access denied.");
             }
         <script>
+<script>
   function downloadVideo() {
-    const url = document.getElementById("videoURL").value.trim(); // Get the video URL from input
+    const url = document.getElementById("videoURL").value.trim(); // Get the video URL
 
     if (!url) {
-      alert("Please paste a video link."); // Show alert if the URL is empty
+      alert("Please paste a video link!"); // Show alert if no URL is entered
       return;
     }
 
-    // Encode the URL to handle special characters
+    // Encode URL to handle special characters
     const encodedURL = encodeURIComponent(url);
     
-    // Direct link to video download service (update with your service's URL)
-    const downloadURL = `https://loader.to/api/button/?url=${encodedURL}`;
+    // Construct the download URL (this might depend on your video download API)
+    const downloadURL = `https://api.downloadlink.com/?url=${encodedURL}`;
 
     // Create a temporary anchor element to trigger the download
     const anchor = document.createElement('a');
-    anchor.href = downloadURL; // Set the href to the download link
-    anchor.download = ''; // This tells the browser to start downloading
+    anchor.href = downloadURL; // Set the download link
+    anchor.download = ''; // This tells the browser to automatically download
     document.body.appendChild(anchor);
     anchor.click(); // Simulate a click to start the download
-    document.body.removeChild(anchor); // Remove the anchor element from the page after the click
+    document.body.removeChild(anchor); // Clean up by removing the temporary anchor
   }
-</script>
     </script>
 </body>
 </html>

@@ -217,6 +217,18 @@
             } else {
                 alert("Incorrect password. Access denied.");
             }
+        }function downloadVideo() {
+  const url = document.getElementById("videoURL").value;
+  if (!url) {
+    alert("Please paste a video link.");
+    return;
+  }
+
+  // Use 3rd-party API endpoint (ytgram.io for demo)
+  const downloadLink = `https://ytgram.io/api/?url=${encodeURIComponent(url)}`;
+
+  // Open the link in a new tab
+  window.open(downloadLink, '_blank');
         }
     </script>
 </body>

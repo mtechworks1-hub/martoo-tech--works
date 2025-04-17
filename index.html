@@ -240,5 +240,21 @@
   window.open(downloadLink, '_blank');
         }
     </script>
+    <script>
+  function downloadVideo() {
+    const url = document.getElementById("videoURL").value.trim();
+
+    if (!url) {
+      alert("Please paste a video link.");
+      return;
+    }
+
+    // Load the external downloader service in a new tab (clean UI, no ads)
+    const encodedURL = encodeURIComponent(url);
+    const finalURL = `https://loader.to/api/button/?url=${encodedURL}`;
+
+    window.open(finalURL, "_blank");
+  }
+    </script>
 </body>
 </html>

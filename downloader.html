@@ -1,1 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Martoo Video Downloader</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <style>
+    body {
+      background-image: url('full-site-background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      font-family: 'Arial Black', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
 
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    header h1 {
+      color: #ffcc00;
+      font-size: 36px;
+      margin: 0;
+    }
+
+    .hamburger {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 5px;
+      border: 2px solid #ffcc00;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      width: 200px;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      border-radius: 5px;
+    }
+
+    #menu.show {
+      display: flex;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+      font-weight: bold;
+    }
+
+    nav ul li a:hover {
+      background-color: #ff7f00;
+    }
+
+    #content-section {
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.7);
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    input, button {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      margin: 10px;
+      border: none;
+    }
+
+    button {
+      background-color: #1E90FF;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #104E8B;
+    }
+
+    iframe {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 720px;
+      height: 400px;
+      border: none;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Martoo Video Downloader</h1>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <nav>
+      <ul id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="posts.html">Blog Posts</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="Martoo AI.html">Martoo AI</a></li>
+        <li><a href="downloader.html">Video Downloader</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="content-section">
+    <h2>Paste the video URL below:</h2>
+    <input type="text" id="videoURL" placeholder="Paste video link here (YouTube, TikTok, Instagram, etc.)" size="50">
+    <button onclick="loadDownloader()">Download</button>
+    <iframe id="downloaderFrame"></iframe>
+  </div>
+
+  <footer>
+    <p>© 2025 Martoo Tech Works. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('menu').classList.toggle('show');
+    }
+
+    function loadDownloader() {
+      var url = document.getElementById('videoURL').value;
+      if (url) {
+        document.getElementById('downloaderFrame').src = "https://www.y2mate.ltd/?url=" + encodeURIComponent(url);
+      } else {
+        alert("Please paste a valid video link.");
+      }
+    }
+  </script>
+</body>
+</html>

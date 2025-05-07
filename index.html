@@ -1,15 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Martoo Tech Works</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
-    /* [Same CSS - No change made to your styling] */
-    /* Your full CSS remains untouched for theme consistency */
-    /* ... (CSS omitted here for brevity, already provided above) ... */
+    body {
+      background-image: url('full-site-background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      font-family: 'Arial Black', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: relative;
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      animation: fadeInDown 1s;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 {
+      color: #ffcc00;
+      font-size: 40px;
+      margin: 0;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .hamburger {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 5px;
+      border: 2px solid #ffcc00;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      width: 200px;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      border-radius: 5px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    #menu.show {
+      display: flex;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      background-color: #ff7f00;
+    }
+
+    #content-section {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #ffcc00;
+      margin-bottom: 20px;
+    }
+
+    .download-btn {
+      display: inline-block;
+      padding: 15px 30px;
+      font-size: 18px;
+      color: white;
+      background: linear-gradient(145deg, #1E90FF, #104E8B);
+      text-decoration: none;
+      border-radius: 10px;
+      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      margin: 10px;
+    }
+
+    .download-btn:hover {
+      transform: scale(1.1);
+      background: linear-gradient(145deg, #104E8B, #1E90FF);
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      width: 100%;
+    }
+
+    .social-icons a {
+      margin: 0 10px;
+      color: white;
+      font-size: 24px;
+    }
+
+    #passwordInput {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px auto;
+      display: block;
+      border-radius: 6px;
+      border: none;
+    }
   </style>
 </head>
 <body>
@@ -36,72 +169,42 @@
       3. Essential School Materials – Academic resources.
     </p>
 
-    <h3>Download Software</h3>
-
-    <input type="password" id="gisPass" placeholder="Enter GIS Password" style="padding: 10px; font-size: 16px; margin-bottom: 10px;">
-    <button class="download-btn" onclick="downloadGIS()">Download GIS Software</button>
-
-    <input type="password" id="stataPass" placeholder="Enter Stata Password" style="padding: 10px; font-size: 16px; margin: 15px 0 10px;">
-    <button class="download-btn" onclick="downloadStata()">Download Stata Software</button>
-
-    <p style="font-size: 18px; margin-bottom: 10px;">To download SPSS software, please enter the password and click the download button below.</p>
-    <input type="password" id="spssPass" placeholder="Enter SPSS Password" style="padding: 10px; font-size: 16px; margin-bottom: 10px;">
-    <a href="#" onclick="downloadSPSS()" class="download-btn">Download SPSS</a>
-
-    <h3>Download Videos (Facebook, Instagram, TikTok, YouTube)</h3>
-    <input type="text" id="videoURL" placeholder="Paste video link here" style="padding: 10px; font-size: 16px; width: 80%; max-width: 400px; margin-bottom: 10px;">
+    <h3 style="color: #ffcc00;">Download Software (Password: <code>MARTOO</code>)</h3>
+    <input type="password" id="passwordInput" placeholder="Enter Password">
     <br>
-    <button class="download-btn" onclick="downloadVideo()">Download Video</button>
+    <button class="download-btn" onclick="checkDownload('SPSS')">Download SPSS</button>
+    <button class="download-btn" onclick="checkDownload('GIS')">Download GIS</button>
+    <button class="download-btn" onclick="checkDownload('STATA')">Download Stata</button>
   </div>
 
   <footer>
+    <p>Copyright 2024, All rights reserved.</p>
     <div class="social-icons">
-      <a href="#" class="fab fa-facebook"></a>
-      <a href="#" class="fab fa-whatsapp"></a>
-      <a href="#" class="fab fa-youtube"></a>
+      <a href="https://facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
+      <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
     </div>
-    <p>&copy; 2025 Martoo Tech Works. All rights reserved.</p>
   </footer>
 
   <script>
     function toggleMenu() {
-      document.getElementById("menu").classList.toggle("show");
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('show');
     }
 
-    function downloadSPSS() {
-      var pass = document.getElementById("spssPass").value;
-      if (pass === "MARTOO") {
-        window.location.href = "https://drive.google.com/uc?export=download&id=1-0T0omxeFigW_ct_xxoPxMS3-_hIc6Wl";
+    function checkDownload(software) {
+      const password = document.getElementById("passwordInput").value;
+      const links = {
+        SPSS: "https://drive.google.com/uc?export=download&id=1-0T0omxeFigW_ct_xxoPxMS3-_hIc6Wl",
+        GIS: "https://drive.google.com/uc?export=download&id=1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI",
+        STATA: "https://drive.google.com/uc?export=download&id=1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H"
+      };
+
+      if (password === "MARTOO") {
+        window.location.href = links[software];
       } else {
-        alert("Incorrect SPSS password!");
+        alert("Incorrect password! Please try again.");
       }
-    }
-
-    function downloadGIS() {
-      var pass = document.getElementById("gisPass").value;
-      if (pass === "MARTOO GIS") {
-        window.location.href = "https://drive.google.com/uc?export=download&id=1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI";
-      } else {
-        alert("Incorrect GIS password!");
-      }
-    }
-
-    function downloadStata() {
-      var pass = document.getElementById("stataPass").value;
-      if (pass === "MARTOO STATA") {
-        window.location.href = "https://drive.google.com/uc?export=download&id=1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H";
-      } else {
-        alert("Incorrect Stata password!");
-      }
-    }
-
-    function downloadVideo() {
-      var url = document.getElementById("videoURL").value;
-      if (url.trim() === "") {
-        alert("Please paste a video URL.");
-        return;
-      }
-      window.open("https://www.y2mate.com/youtube/" + encodeURIComponent(url), "_blank");
     }
   </script>
 </body>

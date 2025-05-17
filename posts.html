@@ -1,262 +1,234 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posts | Martoo Tech Works</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            background-image: url('full site background.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding-bottom: 60px;
-            min-height: 100vh;
-        }
-
-        header {
-            background-image: url('background.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-            position: relative;
-            width: 100vw;
-        }
-
-        .logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #ffcc00;
-        }
-
-        header h1 {
-            color: #ffcc00;
-            font-size: 36px;
-            margin-top: 20px;
-        }
-
-        .hamburger {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 30px;
-            color: #ffcc00;
-            cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            border: 2px solid #ffcc00;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: none;
-            margin: 0;
-        }
-
-        nav ul li {
-            margin: 10px 0;
-        }
-
-        nav ul li a {
-            color: #ffcc00;
-            text-decoration: none;
-            padding: 10px;
-            display: block;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        nav ul li a:hover {
-            background-color: #000;
-        }
-
-        #menu.show {
-            display: block;
-        }
-
-        section {
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .post {
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            margin: 20px auto;
-            max-width: 800px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .post h3 {
-            font-size: 28px;
-            color: #ffcc00;
-        }
-
-        .post p {
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .download-btn {
-            display: inline-block;
-            background-color: #ffcc00;
-            color: #000;
-            font-weight: bold;
-            padding: 10px 15px;
-            margin-top: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
-
-        .download-btn:hover {
-            background-color: #e6b800;
-        }
-
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
-    <h1>MARTOO TECH WORKS POSTS</h1>
-    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-    <nav>
-        <ul id="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="posts.html">Posts</a></li>
-        </ul>
-    </nav>
-</header>
-
-<script>
-    function toggleMenu() {
-        const menu = document.getElementById('menu');
-        menu.classList.toggle('show');
-    }
-</script>
-
-<!-- School Services Section -->
-<section id="school-services">
-    <h2>🎓 School Services Offered 📚</h2>
-    <ul>
-        <li>✅ <strong>Typing Assignments</strong> 📝</li>
-        <li>✅ <strong>GIS Projects</strong> 🗺️</li>
-        <li>✅ <strong>Report Writing & Formatting</strong> 📄</li>
-        <li>✅ <strong>PowerPoint Presentations</strong> 🎤💻</li>
-        <li>✅ <strong>Data Analysis & Interpretation</strong> 📊</li>
-    </ul>
-    <p>📌 <strong>Make your academic work easier and more professional!</strong> Contact me now. 🚀</p>
-</section>
-
-<!-- School Materials Section -->
-<section id="school-materials">
-    <h2>📚 School Materials</h2>
-
-    <div class="post">
-        <h3>Mid-Semester GIS Data Set</h3>
-        <p>Comprehensive GIS dataset for analysis and mapping projects.</p>
-        <a href="Mid semester GIS data set.zip" download class="download-btn">Download</a>
-    </div>
-    <h3>Download Stata 14</h3>
-<p>
-    Below is the Stata 14 license information. Click the download button to get the software.  
-    You will be prompted to enter a password—use the one provided by MARTOO TECH WORKS.  
-</p>
-
-<ul>
-    <li><strong>LICENSED SOFTWARE:</strong> Stata/SE 14</li>
-    <li><strong>SERIAL NUMBER:</strong> 401406368398</li>
-    <li><strong>CODE:</strong> sj4n$46$L7tasar3hq$8iijLy</li>
-    <li><strong>AUTHORIZATION:</strong> d950</li>
-</ul>
-
-<button class="download-btn" onclick="downloadStata()">Download Stata 14</button>
-
-<script>
-    function downloadStata() {
-        let password = "MARTOO"; // Today's password
-        let userPass = prompt("Enter password:");
-        if (userPass !== password) {
-            alert("Incorrect password!");
-            return;
-        }
-        window.location.href = "https://drive.google.com/drive/folders/1E34q2ZV6Y1eAqIGabV3bIbr4Ni7W4H2S";
-    }
-</script>
-
-<style>
-    .download-btn {
-        display: inline-block;
-        padding: 12px 25px;
-        background: linear-gradient(145deg, #007bff, #0056b3);
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        border-radius: 8px;
-        border: none;
-        box-shadow: 4px 4px 8px #0056b3, -4px -4px 8px #007bff;
-        transition: all 0.3s ease-in-out;
-    }
-    .download-btn:hover {
-        background: linear-gradient(145deg, #0056b3, #007bff);
-        box-shadow: 2px 2px 5px #0056b3, -2px -2px 5px #007bff;
-        transform: scale(1.05);
-    }
-</style>
-
-    <div class="post">
-        <h3>Mental Health Notes</h3>
-        <p>Detailed notes covering key mental health topics, including anxiety, stress management, and coping strategies.</p>
-        <a href="all mental health notes.zip" download class="download-btn">Download</a>
-    </div>
-
-    <div class="post">
-        <h3>GIS Set</h3>
-        <p>Additional GIS resources and mapping data for research and academic use.</p>
-        <a href="GIS SET.zip" download class="download-btn">Download</a>
-    </div>
-
-    <div class="post">
-        <h3>Community Health Nutrition Questions & Answers</h3>
-        <p>A document containing important questions and answers related to community health and nutrition.</p>
-        <a href="COMMUNITY HEALTH NUTRTION QUESTIONS AND ANSWERS.docx" download class="download-btn">Download</a>
-    </div>
-</section>
-    <div class="post">
-    <h3>All Mental Health Notes</h3>
-    <p>Download a complete set of mental health notes covering essential topics.</p>
-    <a href="School materials/all mental health notes.zip" download class="download-btn">Download</a>
-</div>
-
-<footer>
-    <p>&copy; 2025 Martoo Tech Works. All Rights Reserved.</p>
-</footer>
-
-</body>
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Posts | Martoo Tech Works</title>  
+    <link rel="stylesheet" href="styles.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <style>  
+        body {  
+            background-image: url('full site background.jpg');  
+            background-size: cover;  
+            background-position: center;  
+            color: white;  
+            font-family: Arial, sans-serif;  
+            margin: 0;  
+            padding-bottom: 60px;  
+            min-height: 100vh;  
+        }  
+  
+        header {  
+            background-image: url('background.jpg');  
+            background-size: cover;  
+            background-position: center;  
+            color: white;  
+            text-align: center;  
+            padding: 60px 20px;  
+            position: relative;  
+            width: 100vw;  
+        }  
+  
+        .logo {  
+            position: absolute;  
+            top: 20px;  
+            left: 20px;  
+            width: 100px;  
+            height: 100px;  
+            border-radius: 50%;  
+            object-fit: cover;  
+            border: 4px solid #ffcc00;  
+        }  
+  
+        header h1 {  
+            color: #ffcc00;  
+            font-size: 36px;  
+            margin-top: 20px;  
+        }  
+  
+        .hamburger {  
+            position: absolute;  
+            top: 15px;  
+            right: 20px;  
+            font-size: 30px;  
+            color: #ffcc00;  
+            cursor: pointer;  
+            background-color: rgba(0, 0, 0, 0.5);  
+            padding: 10px;  
+            border-radius: 5px;  
+            border: 2px solid #ffcc00;  
+        }  
+  
+        nav ul {  
+            list-style-type: none;  
+            padding: 0;  
+            display: none;  
+            margin: 0;  
+        }  
+  
+        nav ul li {  
+            margin: 10px 0;  
+        }  
+  
+        nav ul li a {  
+            color: #ffcc00;  
+            text-decoration: none;  
+            padding: 10px;  
+            display: block;  
+            background-color: rgba(0, 0, 0, 0.7);  
+            border-radius: 5px;  
+            transition: background-color 0.3s ease;  
+        }  
+  
+        nav ul li a:hover {  
+            background-color: #000;  
+        }  
+  
+        #menu.show {  
+            display: block;  
+        }  
+  
+        section {  
+            padding: 40px 20px;  
+            text-align: center;  
+        }  
+  
+        .post {  
+            background-color: rgba(0, 0, 0, 0.7);  
+            border-radius: 10px;  
+            margin: 20px auto;  
+            max-width: 800px;  
+            padding: 20px;  
+            text-align: center;  
+        }  
+  
+        .post h3 {  
+            font-size: 28px;  
+            color: #ffcc00;  
+        }  
+  
+        .post p {  
+            font-size: 16px;  
+            line-height: 1.6;  
+        }  
+  
+        .download-btn {  
+            display: inline-block;  
+            background-color: #ffcc00;  
+            color: #000;  
+            font-weight: bold;  
+            padding: 10px 15px;  
+            margin-top: 10px;  
+            border-radius: 5px;  
+            text-decoration: none;  
+            transition: background 0.3s ease;  
+        }  
+  
+        .download-btn:hover {  
+            background-color: #e6b800;  
+        }  
+  
+        footer {  
+            background-color: #333;  
+            color: white;  
+            text-align: center;  
+            padding: 20px;  
+            width: 100%;  
+        }  
+    </style>  
+</head>  
+<body>  
+  
+<header>  
+    <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">  
+    <h1>MARTOO TECH WORKS POSTS</h1>  
+    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>  
+    <nav>  
+        <ul id="menu">  
+            <li><a href="index.html">Home</a></li>  
+            <li><a href="services.html">Services</a></li>  
+            <li><a href="about.html">About</a></li>  
+            <li><a href="contact.html">Contact</a></li>  
+            <li><a href="posts.html">Posts</a></li>  
+        </ul>  
+    </nav>  
+</header>  
+  
+<script>  
+    function toggleMenu() {  
+        const menu = document.getElementById('menu');  
+        menu.classList.toggle('show');  
+    }  
+</script>  
+  
+<!-- School Services Section -->  
+<section id="school-services">  
+    <h2>🎓 School Services Offered 📚</h2>  
+    <ul>  
+        <li>✅ <strong>Typing Assignments</strong> 📝</li>  
+        <li>✅ <strong>GIS Projects</strong> 🗺️</li>  
+        <li>✅ <strong>Report Writing & Formatting</strong> 📄</li>  
+        <li>✅ <strong>PowerPoint Presentations</strong> 🎤💻</li>  
+        <li>✅ <strong>Data Analysis & Interpretation</strong> 📊</li>  
+    </ul>  
+    <p>📌 <strong>Make your academic work easier and more professional!</strong> Contact me now. 🚀</p>  
+</section>  
+  
+<!-- School Materials Section -->  
+<section id="school-materials">  
+    <h2>📚 School Materials</h2>  
+  
+    <div class="post">  
+        <h3>Mid-Semester GIS Data Set</h3>  
+        <p>Comprehensive GIS dataset for analysis and mapping projects.</p>  
+        <a href="Mid semester GIS data set.zip" download class="download-btn">Download</a>  
+    </div>  
+  
+    <div class="post">  
+        <h3>Download Stata License</h3>  
+        <p>This download is protected. Please contact Martoo Tech Works for the password.</p>  
+        <button class="download-btn" onclick="downloadStata()">Download Stata License</button>  
+    </div>  
+  
+    <script>  
+        function downloadStata() {  
+            let password = prompt("Enter password:");  
+            if (password !== "STATA LC") {  
+                alert("Incorrect password!");  
+                return;  
+            }  
+            window.location.href = "https://docs.google.com/document/d/1S_8yM6vcwSGnCZYgXr5QX6gdsDy_AXrk/edit?usp=drivesdk&ouid=114317916572560528977&rtpof=true&sd=true";  
+        }  
+    </script>  
+  
+    <div class="post">  
+        <h3>Mental Health Notes</h3>  
+        <p>Detailed notes covering key mental health topics, including anxiety, stress management, and coping strategies.</p>  
+        <a href="all mental health notes.zip" download class="download-btn">Download</a>  
+    </div>  
+  
+    <div class="post">  
+        <h3>GIS Set</h3>  
+        <p>Additional GIS resources and mapping data for research and academic use.</p>  
+        <a href="GIS SET.zip" download class="download-btn">Download</a>  
+    </div>  
+  
+    <div class="post">  
+        <h3>Community Health Nutrition Questions & Answers</h3>  
+        <p>A document containing important questions and answers related to community health and nutrition.</p>  
+        <a href="COMMUNITY HEALTH NUTRTION QUESTIONS AND ANSWERS.docx" download class="download-btn">Download</a>  
+    </div>  
+  
+    <div class="post">  
+        <h3>All Mental Health Notes</h3>  
+        <p>Download a complete set of mental health notes covering essential topics.</p>  
+        <a href="School materials/all mental health notes.zip" download class="download-btn">Download</a>  
+    </div>  
+</section>  
+  
+<footer>  
+    <p>&copy; 2025 Martoo Tech Works. All Rights Reserved.</p>  
+</footer>  
+  
+</body>  
 </html>

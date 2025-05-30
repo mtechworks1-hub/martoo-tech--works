@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="msvalidate.01" content="514AD9838126FB4D80A209D8AD4DD0D2" />
-  <title>Martoo Tech Works</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9775836048486404"
-     crossorigin="anonymous"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact - Martoo Tech Works</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
+        /* Full-site background */
         body {
             background-image: url('full site background.jpg');
             background-size: cover;
@@ -23,15 +16,20 @@
             font-family: Arial, sans-serif;
             margin: 0;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
+        /* Header styles */
         header {
             position: relative;
             text-align: center;
             padding: 60px 20px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+            flex-shrink: 0;
         }
 
+        /* Header text styles */
         header h1 {
             color: #ff9800;
             font-size: 32px;
@@ -40,6 +38,7 @@
             z-index: 2;
         }
 
+        /* Logo */
         .logo {
             position: absolute;
             top: 20px;
@@ -52,6 +51,7 @@
             z-index: 1;
         }
 
+        /* Hamburger menu icon */
         .hamburger {
             position: absolute;
             top: 15px;
@@ -66,6 +66,7 @@
             z-index: 3;
         }
 
+        /* Navigation menu styling */
         nav ul {
             list-style-type: none;
             padding: 0;
@@ -84,10 +85,12 @@
             z-index: 4;
         }
 
+        /* Menu toggle */
         #menu.show {
             display: flex;
         }
 
+        /* Menu items */
         nav ul li {
             margin: 3px 0;
         }
@@ -107,61 +110,41 @@
             background-color: #ff7f00;
         }
 
+        /* Main content section */
         #content-section {
             padding: 40px 20px;
             text-align: center;
             color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 20px auto 40px auto; /* Added bottom margin for footer */
+            flex-shrink: 0;
         }
 
         #content-section h2, #content-section p {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            margin: 20px auto;
-            max-width: 800px;
+            margin: 10px 0;
         }
 
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .social-icons a {
-            margin: 0 15px;
-            color: white;
-            font-size: 28px;
-        }
-
-        .social-icons a:hover {
-            color: #ff7f00;
-        }
-
-        .license {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        form {
+        /* Subscription Form Section */
+        .form-section {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
             max-width: 600px;
-            margin: 20px auto;
+            margin: 20px auto 40px auto;
             color: white;
+            flex-shrink: 0;
         }
 
+        /* Form styling */
         form input, form textarea, form button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
             border: 2px solid #ff9800;
             border-radius: 5px;
+            font-size: 16px;
         }
 
         form button {
@@ -173,20 +156,67 @@
             width: auto;
             margin-top: 10px;
             padding: 10px 20px;
+            border: none;
         }
 
         form button:hover {
             background-color: #ff7f00;
         }
 
-        .form-section {
-            margin-top: 20px;
+        /* Contact Information Section */
+        section.contact-info {
+            max-width: 600px;
+            margin: 0 auto 80px auto; /* Added big bottom margin */
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            flex-shrink: 0;
         }
+
+        section.contact-info h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        section.contact-info p {
+            margin: 5px 0 15px 0;
+            font-size: 18px;
+        }
+
+        /* Social icons bigger and spaced */
+        .social-icons {
+            font-size: 36px; /* Bigger icons */
+        }
+
+        .social-icons a {
+            margin: 0 20px;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #ff7f00;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            /* Removed position: fixed to avoid overlap */
+            flex-shrink: 0;
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- Header with logo and navigation -->
     <header>
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo" />
         <h1>Contact Us - Martoo Tech Works</h1>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
         <nav>
@@ -210,40 +240,48 @@
         </nav>
     </header>
 
+    <!-- Main content section -->
     <section id="content-section">
         <h2>Get in Touch</h2>
         <p>If you have any questions, concerns, or suggestions, feel free to reach out to us. We’re happy to help!</p>
     </section>
 
+    <!-- Subscription Form Section -->
     <section class="form-section">
         <h2>Subscribe to Our Newsletter</h2>
         <form action="https://formspree.io/f/xnnqvkpd" method="POST">
             <label for="email">Your email:</label>
-            <input type="email" name="email" id="email" required>
+            <input type="email" name="email" id="email" required />
+
             <label for="message">Your message:</label>
             <textarea name="message" id="message" required></textarea>
+
             <button type="submit">Send</button>
         </form>
     </section>
 
-    <section>
+    <!-- Contact Information -->
+    <section class="contact-info">
         <h3>Our Contact Information</h3>
+        <p>Email us at <a href="mailto:info@martootech.com">info@martootech.com</a></p>
+        <p>Follow us on social media:</p>
         <div class="social-icons">
-            <a href="mailto:martootechworks@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-            <a href="https://wa.me/260950322498" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61568599103956" title="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/260950322498" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="license">
             <p>&copy; 2024 Martoo Tech Works. All rights reserved. Licensed under the Martoo Tech Works Terms of Service.</p>
         </div>
     </footer>
 
+    <!-- JavaScript for menu toggle -->
     <script>
-        function toggleMenu(){
+        function toggleMenu() {
             var menu = document.getElementById('menu');
             menu.classList.toggle('show');
         }

@@ -5,21 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Martoo AI - Typing Assistant</title>
 
-  <!-- Favicon -->
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-
-  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #1E1E1E, #333);
@@ -58,12 +49,8 @@
       z-index: 1000;
       min-width: 150px;
     }
-    nav ul {
-      list-style: none;
-    }
-    nav ul li {
-      margin: 10px 0;
-    }
+    nav ul { list-style: none; }
+    nav ul li { margin: 10px 0; }
     nav ul li a {
       color: white;
       text-decoration: none;
@@ -133,12 +120,8 @@
       line-height: 1.4;
       user-select: text;
     }
-    .chat-box p {
-      margin: 8px 0;
-    }
-    .chat-box p strong {
-      color: #ffcc00;
-    }
+    .chat-box p { margin: 8px 0; }
+    .chat-box p strong { color: #ffcc00; }
     footer {
       background: #222;
       text-align: center;
@@ -147,12 +130,8 @@
       user-select: none;
     }
     @media (max-width: 600px) {
-      header h1 {
-        font-size: 24px;
-      }
-      .hamburger {
-        font-size: 26px;
-      }
+      header h1 { font-size: 24px; }
+      .hamburger { font-size: 26px; }
     }
   </style>
 </head>
@@ -204,14 +183,9 @@
     const menu = document.getElementById('menu');
 
     hamburger.addEventListener('click', () => {
-      if (menu.style.display === 'block') {
-        menu.style.display = 'none';
-      } else {
-        menu.style.display = 'block';
-      }
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
     });
 
-    // Hide menu if clicked outside
     document.addEventListener('click', (e) => {
       if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
         menu.style.display = 'none';
@@ -225,7 +199,6 @@
         alert('Please select a file to upload.');
         return;
       }
-      // Placeholder for real upload logic
       alert(`File "${file.name}" ready for upload (functionality not implemented).`);
     }
 
@@ -240,23 +213,15 @@
       input.disabled = true;
 
       try {
-        const response = await fetch('https://martootechworks.great-site.net/martooai.php', {
+        const response = await fetch('https://your-render-backend.onrender.com/api/message', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: userMessage })
         });
 
-        if (!response.ok) {
-          throw new Error(`Server error: ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
         const data = await response.json();
-
-        if (!data.reply) {
-          throw new Error('No reply from server.');
-        }
+        if (!data.reply) throw new Error('No reply from server.');
 
         appendMessage('Martoo AI', data.reply);
       } catch (error) {
@@ -275,18 +240,14 @@
       chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // Simple function to prevent XSS in displayed messages
     function escapeHtml(text) {
       const div = document.createElement('div');
       div.textContent = text;
       return div.innerHTML;
     }
 
-    // Optional: send message on Enter key
     document.getElementById('userInput').addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') {
-        sendMessage();
-      }
+      if (event.key === 'Enter') sendMessage();
     });
   </script>
 </body>

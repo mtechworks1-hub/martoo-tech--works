@@ -10,17 +10,13 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
     body {
-      background-image: url('full-site-background.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      color: white;
-      font-family: 'Arial Black', sans-serif;
       margin: 0;
-      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)),
+                  url('full-site-background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
       overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
     }
 
     header {
@@ -38,10 +34,10 @@
     }
 
     header h1 {
-      color: #ffcc00;
-      font-size: 40px;
+      color: #00ffcc;
+      font-size: 42px;
       margin: 0;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      text-shadow: 2px 2px 10px #000;
     }
 
     .hamburger {
@@ -53,8 +49,8 @@
       cursor: pointer;
       padding: 8px;
       border-radius: 5px;
-      border: 2px solid #ffcc00;
-      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #00ffcc;
+      background: rgba(0, 0, 0, 0.6);
       z-index: 1001;
     }
 
@@ -65,13 +61,12 @@
       position: absolute;
       top: 60px;
       right: 20px;
-      width: 200px;
+      width: 220px;
       background: rgba(0, 0, 0, 0.95);
       display: none;
       flex-direction: column;
-      align-items: flex-start;
-      border-radius: 8px;
-      box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+      box-shadow: 0 6px 16px rgba(0, 255, 255, 0.2);
       animation: slideDown 0.3s ease;
       z-index: 1000;
     }
@@ -88,48 +83,57 @@
     nav ul li a {
       color: white;
       text-decoration: none;
-      padding: 12px 16px;
-      width: 100%;
+      padding: 14px 20px;
       display: block;
       font-weight: bold;
       transition: 0.3s;
+      border-bottom: 1px solid #333;
     }
 
     nav ul li a:hover {
-      background-color: #ff7f00;
-      color: black;
+      background-color: #00ffcc;
+      color: #000;
     }
 
     #content-section {
-      text-align: center;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.7);
-      flex-grow: 1;
-      overflow-y: auto;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.6);
+      margin: 30px auto;
+      max-width: 900px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
     }
 
     .description {
-      font-size: 14px;
+      font-size: 16px;
       color: #ffcc00;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    h3 {
+      color: #00ffcc;
+      font-size: 22px;
     }
 
     .download-btn {
       display: inline-block;
-      padding: 15px 30px;
-      font-size: 18px;
-      color: white;
-      background: linear-gradient(145deg, #1E90FF, #104E8B);
-      text-decoration: none;
-      border-radius: 10px;
-      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
+      padding: 14px 28px;
       margin: 10px;
+      font-size: 17px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(145deg, #007BFF, #00bfff);
+      text-decoration: none;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,255,255,0.3);
+      transition: all 0.3s ease-in-out;
     }
 
     .download-btn:hover {
-      transform: scale(1.1);
-      background: linear-gradient(145deg, #104E8B, #1E90FF);
+      transform: scale(1.08);
+      background: linear-gradient(145deg, #00bfff, #007BFF);
     }
 
     .password-box {
@@ -143,33 +147,38 @@
       margin: 10px auto;
       border-radius: 6px;
       border: none;
-      width: 250px;
+      width: 260px;
       display: block;
+      text-align: center;
     }
 
     .password-box button {
-      padding: 10px 20px;
+      padding: 10px 22px;
       font-size: 16px;
       background: #28a745;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      margin-top: 5px;
     }
 
     footer {
-      background: #333;
+      background: #111;
       color: white;
       text-align: center;
-      padding: 20px;
-      position: relative;
-      width: 100%;
+      padding: 25px 10px;
     }
 
     .social-icons a {
-      margin: 0 10px;
+      margin: 0 12px;
       color: white;
       font-size: 24px;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #00ffcc;
     }
   </style>
 </head>
@@ -198,7 +207,7 @@
       3. Essential School Materials – Academic resources.
     </p>
 
-    <h3 style="color: #ffcc00;">Download Software (Password required)</h3>
+    <h3>Download Software (Password required)</h3>
 
     <button class="download-btn" onclick="showPasswordBox('SPSS')">Download SPSS</button>
     <div id="SPSS-box" class="password-box">
@@ -220,7 +229,7 @@
   </div>
 
   <footer>
-    <p>Copyright 2024–2025,Licensed under the Martoo Tech Works Terms of Service.</p>
+    <p>&copy; 2024–2025 | Licensed under Martoo Tech Works Terms of Service.</p>
     <div class="social-icons">
       <a href="https://facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
       <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
@@ -243,8 +252,7 @@
     });
 
     function showPasswordBox(software) {
-      const boxes = document.querySelectorAll('.password-box');
-      boxes.forEach(box => box.style.display = 'none');
+      document.querySelectorAll('.password-box').forEach(box => box.style.display = 'none');
       document.getElementById(`${software}-box`).style.display = 'block';
     }
 

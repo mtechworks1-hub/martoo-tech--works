@@ -61,6 +61,8 @@
       padding: 10px;
       border-radius: 5px;
       border: 2px solid #ffcc00;
+      user-select: none;
+      z-index: 11;
     }
 
     nav ul {
@@ -107,14 +109,24 @@
       color: white;
       text-align: center;
       padding: 60px 20px;
+      max-width: 900px;
+      margin: 0 auto 80px auto;
     }
 
-    #about-content-section h2, #about-content-section p {
+    #about-content-section h2, 
+    #about-content-section p {
       background-color: rgba(0, 0, 0, 0.7);
       padding: 20px;
       border-radius: 10px;
       display: inline-block;
       margin: 20px auto;
+      max-width: 700px;
+      text-align: left;
+    }
+
+    #about-content-section p {
+      font-size: 1.1rem;
+      line-height: 1.6;
     }
 
     footer {
@@ -126,12 +138,15 @@
       bottom: 0;
       width: 100%;
       box-sizing: border-box;
+      z-index: 10;
     }
 
     .social-icons a {
       margin: 0 15px;
       color: white;
       font-size: 24px;
+      transition: color 0.3s ease;
+      text-decoration: none;
     }
 
     .social-icons a:hover {
@@ -142,16 +157,44 @@
       margin-top: 10px;
       font-size: 14px;
     }
+
+    /* Responsive tweaks */
+    @media (min-width: 768px) {
+      nav ul {
+        display: flex !important;
+        position: static;
+        width: auto;
+        background: none;
+        margin-top: 10px;
+        border-radius: 0;
+      }
+      nav ul li {
+        margin: 0 15px;
+      }
+      nav ul li a {
+        background: none;
+        padding: 0;
+        color: #ffcc00;
+        font-weight: bold;
+      }
+      nav ul li a:hover {
+        background: none;
+        color: #fff;
+      }
+      .hamburger {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
+    <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo" />
     <h1>About Martoo Tech Works</h1>
     <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
     <nav>
-      <ul id="menu">
+      <ul id="menu" aria-label="Primary navigation menu">
         <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="about.html">About</a></li>
@@ -161,35 +204,43 @@
     </nav>
   </header>
 
-  <section id="about-content-section">
+  <section id="about-content-section" role="main">
     <h2>Our Mission and Vision</h2>
-    <p>Martoo Tech Works is dedicated to delivering innovative digital solutions, empowering both learners and creators through technology. We envision a world where smart, open, and accessible tools unlock everyone’s full potential—especially in education, development, and tech empowerment.</p>
+    <p>
+      Martoo Tech Works is dedicated to delivering innovative digital solutions, empowering both learners and creators through technology.
+      We envision a world where smart, open, and accessible tools unlock everyone’s full potential—especially in education, development, and tech empowerment.
+    </p>
     
     <h2>What We Do</h2>
-    <p>We develop tech tools like M-Learning STM, MARTOO AI, VPN solutions, education platforms, and websites. We serve students, institutions, and startups with practical, no-cost or low-cost tools that solve real-world problems.</p>
+    <p>
+      We develop tech tools like M-Learning STM, MARTOO AI, VPN solutions, education platforms, and websites. We serve students, institutions, and startups with practical,
+      no-cost or low-cost tools that solve real-world problems.
+    </p>
     
     <h2>Our Identity</h2>
-    <p>🧠 <strong>Founder:</strong> Martin Ndoma<br>
-    💡 <strong>Tech Tagline:</strong> “Smart, Simple, Powerful.”<br>
-    🏷️ <strong>Brand:</strong> Martoo Tech Works / Martoo Tech Enterprise</p>
+    <p>
+      🧠 <strong>Founder:</strong> Martin Ndoma<br />
+      💡 <strong>Tech Tagline:</strong> “Smart, Simple, Powerful.”<br />
+      🏷️ <strong>Brand:</strong> Martoo Tech Works / Martoo Tech Enterprise
+    </p>
     
     <h2>Contact Us</h2>
     <p>
-      📧 Emails: <br>
-      martootechworks@gmail.com <br>
-      martinndoma15@gmail.com <br>
-      martootechhub@gmail.com<br>
-      📱 WhatsApp: +260 973495316<br>
-      🌐 Facebook: <a href="https://www.facebook.com/profile.php?id=61568599103956" style="color: #ffcc00;">Visit</a><br>
+      📧 Emails: <br />
+      martootechworks@gmail.com <br />
+      martinndoma15@gmail.com <br />
+      martootechhub@gmail.com<br />
+      📱 WhatsApp: +260 973495316<br />
+      🌐 Facebook: <a href="https://www.facebook.com/profile.php?id=61568599103956" style="color: #ffcc00;">Visit</a><br />
       📺 YouTube: <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" style="color: #ffcc00;">Watch</a>
     </p>
   </section>
 
   <footer>
-    <div class="social-icons">
-      <a href="https://wa.me/260973495316"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
-      <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
+    <div class="social-icons" role="contentinfo" aria-label="Social media links">
+      <a href="https://wa.me/260973495316" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=61568599103956" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
     </div>
     <div class="license">
       <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>

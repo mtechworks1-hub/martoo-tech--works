@@ -3,309 +3,353 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Discover Martoo Tech Works services including Typing Assistant, VPN setup, and access to study materials. Tech solutions made simple." />
+  <title>Martoo Tech Works - Services</title>
+  <meta name="description" content="Explore Martoo Tech Works services including Typing Assistant, VPN setup, and Study Materials." />
   <meta name="author" content="Martoo Tech Works" />
   <meta name="robots" content="index, follow" />
-  <title>Martoo Tech Works - Services</title>
-
-  <!-- FontAwesome for social icons -->
+  
+  <!-- Font Awesome for icons -->
   <link
-    rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    integrity="sha512-Fo3rlrZj/k7ujTTXRLr5c4EqK4p8vVZb5oGQYq9U4TP9u9k2nGpFJTb8PQBl0mXDhqqQAv6RVaGrn/U9c58vqw=="
+    rel="stylesheet"
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
-
+  
   <style>
-    /* Reset & base styles */
-    *, *::before, *::after {
+    /* Reset some default styling */
+    * {
       box-sizing: border-box;
     }
+
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Arial, sans-serif;
       background: url('services-background.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
-      line-height: 1.6;
-    }
-    a {
-      color: #ff9800;
-      text-decoration: none;
-    }
-    a:hover, a:focus {
-      text-decoration: underline;
-      outline: none;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Header */
     header {
-      position: relative;
-      background-color: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.75);
       padding: 1rem 2rem;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
     }
-    header .logo {
+
+    /* Logo */
+    .logo {
       height: 60px;
+      width: 60px;
       border-radius: 50%;
+      object-fit: cover;
       border: 2px solid #ffcc00;
+      flex-shrink: 0;
     }
-    header h1 {
+
+    /* Site title */
+    .site-title {
       font-size: 1.8rem;
+      color: #ff9800;
       margin-left: 1rem;
       flex-grow: 1;
-      color: #ff9800;
+      font-weight: 700;
     }
 
-    /* Navigation */
+    /* Navigation styles */
     nav {
       position: relative;
-    }
-    nav ul {
-      display: flex;
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-    nav li {
-      position: relative;
-    }
-    nav li + li {
-      margin-left: 1.5rem;
-    }
-    nav a {
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 0.5rem 0;
-      display: inline-block;
+      flex-basis: 100%;
+      margin-top: 1rem;
     }
 
-    /* Dropdown Menu */
-    nav .dropdown > a::after {
-      content: ' ▼';
-      font-size: 0.7rem;
-    }
-    nav .dropdown-content {
-      position: absolute;
-      top: 2.8rem;
-      left: 0;
-      background: rgba(0,0,0,0.9);
-      border-radius: 6px;
-      min-width: 180px;
-      display: none;
-      flex-direction: column;
-      z-index: 10;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-    nav .dropdown-content a {
-      padding: 0.75rem 1rem;
-      color: #fff;
-      font-weight: 400;
-      border-bottom: 1px solid #444;
-    }
-    nav .dropdown-content a:last-child {
-      border-bottom: none;
-    }
-    nav .dropdown-content a:hover {
-      background-color: #ff7f00;
-      color: #fff;
-    }
-    nav .dropdown:hover .dropdown-content,
-    nav .dropdown:focus-within .dropdown-content {
-      display: flex;
-    }
-
-    /* Hamburger Menu (for small screens) */
+    /* Hamburger button */
     .hamburger {
-      display: none;
       font-size: 2rem;
       cursor: pointer;
+      display: none;
       color: #ff9800;
-      background: rgba(0,0,0,0.5);
-      border-radius: 5px;
-      padding: 0.25rem 0.5rem;
+      background: transparent;
+      border: none;
+      padding: 0;
       user-select: none;
     }
 
-    /* Main content */
-    main {
-      max-width: 960px;
-      margin: 2rem auto;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 2rem;
-      border-radius: 10px;
-    }
-    main h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      color: #ff9800;
-    }
-    main p {
-      font-size: 1.1rem;
-      text-align: center;
-      margin-bottom: 2rem;
+    /* Menu list */
+    ul.menu {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
     }
 
-    /* Videos grid */
-    .videos-grid {
+    ul.menu li {
+      position: relative;
+    }
+
+    ul.menu li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 0.75rem;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+      border-radius: 4px;
+    }
+
+    ul.menu li a:hover,
+    ul.menu li a:focus {
+      background-color: #ff7f00;
+      outline: none;
+    }
+
+    /* Dropdown arrow */
+    ul.menu li.has-dropdown > a::after {
+      content: " ▼";
+      font-size: 0.6rem;
+      margin-left: 5px;
+    }
+
+    /* Dropdown menu */
+    ul.menu li ul.dropdown {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      background: rgba(0,0,0,0.9);
+      border-radius: 5px;
+      display: none;
+      min-width: 180px;
+      flex-direction: column;
+      padding: 0.5rem 0;
+      z-index: 1000;
+    }
+
+    ul.menu li ul.dropdown li a {
+      padding: 0.5rem 1rem;
+      font-weight: 400;
+      display: block;
+    }
+
+    ul.menu li ul.dropdown li a:hover,
+    ul.menu li ul.dropdown li a:focus {
+      background-color: #ff7f00;
+      color: #000;
+    }
+
+    /* Show dropdown on hover for desktops */
+    @media (hover: hover) and (pointer: fine) {
+      ul.menu li.has-dropdown:hover > ul.dropdown {
+        display: flex;
+      }
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      /* Show hamburger */
+      .hamburger {
+        display: block;
+      }
+
+      nav {
+        flex-basis: 100%;
+      }
+
+      ul.menu {
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        background: rgba(0,0,0,0.85);
+        border-radius: 5px;
+      }
+
+      ul.menu.expanded {
+        max-height: 500px; /* enough to show full menu */
+      }
+
+      ul.menu li {
+        width: 100%;
+      }
+
+      ul.menu li ul.dropdown {
+        position: static;
+        display: none;
+        padding-left: 1rem;
+        background: none;
+      }
+
+      ul.menu li.expanded > ul.dropdown {
+        display: flex;
+        flex-direction: column;
+      }
+
+      ul.menu li.has-dropdown > a::after {
+        content: " ▶";
+        float: right;
+        margin-left: 0;
+      }
+
+      ul.menu li.expanded > a::after {
+        content: " ▼";
+      }
+    }
+
+    main {
+      flex-grow: 1;
+      padding: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: rgba(0,0,0,0.6);
+      border-radius: 10px;
+    }
+
+    main h2 {
+      color: #ff9800;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    main p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+    }
+
+    .video-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
     }
-    .video-item h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      text-align: center;
-      color: #ffa726;
-    }
-    .video-item iframe {
+
+    .video-grid iframe {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 16/9;
       border-radius: 10px;
       border: none;
     }
 
-    /* Footer */
     footer {
-      background-color: rgba(0,0,0,0.7);
-      color: #ddd;
-      text-align: center;
+      background: rgba(0,0,0,0.8);
       padding: 1rem 2rem;
-      margin-top: 3rem;
+      text-align: center;
+      color: white;
+      font-size: 0.9rem;
     }
+
     footer .social-icons a {
       margin: 0 10px;
-      font-size: 1.8rem;
-      color: #ddd;
+      color: white;
+      font-size: 1.6rem;
       transition: color 0.3s ease;
     }
+
     footer .social-icons a:hover,
     footer .social-icons a:focus {
       color: #ff9800;
       outline: none;
     }
-    footer small {
-      display: block;
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-      color: #bbb;
-    }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      header {
-        flex-wrap: wrap;
-      }
-      header h1 {
-        margin: 1rem 0 0 0;
-        text-align: center;
-        flex-basis: 100%;
-      }
-      nav ul {
-        flex-direction: column;
-        display: none;
-        width: 100%;
-        background: rgba(0,0,0,0.8);
-        border-radius: 8px;
-        margin-top: 1rem;
-      }
-      nav ul.show {
-        display: flex;
-      }
-      nav li + li {
-        margin-left: 0;
-      }
-      nav .dropdown-content {
-        position: static;
-        box-shadow: none;
-        border-radius: 0;
-      }
-      .hamburger {
-        display: block;
-      }
-    }
   </style>
 </head>
 <body>
   <header>
-    <a href="index.html" aria-label="Homepage">
-      <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo" />
-    </a>
-    <h1>Martoo Tech Works - Services</h1>
+    <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo" />
+    <div class="site-title">Martoo Tech Works - Services</div>
 
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav" id="hamburger-btn">&#9776;</button>
+    <!-- Hamburger for mobile -->
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
+      <i class="fas fa-bars"></i>
+    </button>
 
-    <nav id="main-nav" aria-label="Primary navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li class="dropdown" tabindex="0">
-          <a href="#" aria-haspopup="true" aria-expanded="false">Services</a>
-          <div class="dropdown-content" role="menu" aria-label="Services submenu">
-            <a href="typing.html" role="menuitem">Typing Assistant</a>
-            <a href="vpn.html" role="menuitem">VPN</a>
-            <a href="materials.html" role="menuitem">Materials</a>
-          </div>
+    <!-- Navigation menu -->
+    <nav>
+      <ul class="menu" id="primary-menu" role="menu">
+        <li role="none"><a href="index.html" role="menuitem" tabindex="0">Home</a></li>
+        <li class="has-dropdown" role="none">
+          <a href="#" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">Services</a>
+          <ul class="dropdown" role="menu" aria-label="Services submenu">
+            <li role="none"><a href="typing.html" role="menuitem" tabindex="-1">Typing Assistant</a></li>
+            <li role="none"><a href="vpn.html" role="menuitem" tabindex="-1">VPN</a></li>
+            <li role="none"><a href="materials.html" role="menuitem" tabindex="-1">Materials</a></li>
+          </ul>
         </li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li role="none"><a href="about.html" role="menuitem" tabindex="0">About</a></li>
+        <li role="none"><a href="contact.html" role="menuitem" tabindex="0">Contact</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <section aria-labelledby="services-title">
-      <h2 id="services-title">Our Services</h2>
-      <p>
-        Explore our range of services, including Typing Assistance, VPN configurations, and access to essential materials. Each service is crafted to support your tech needs.
-      </p>
-    </section>
+    <h2>Welcome to Martoo Tech Works Services</h2>
+    <p>Explore our range of services, including Typing Assistance, VPN configurations, and access to essential study materials. All designed to simplify your tech experience.</p>
 
-    <section aria-label="Service overview videos" class="videos-grid">
-      <article class="video-item">
-        <h3>Typing Assistant Overview</h3>
-        <iframe src="https://www.youtube.com/embed/w0_sFwO1IR8" title="Typing Assistant service overview video" allowfullscreen></iframe>
-      </article>
-      <article class="video-item">
-        <h3>VPN Setup Guide</h3>
-        <iframe src="https://www.youtube.com/embed/J-DNnARdB8E" title="VPN Setup Guide video" allowfullscreen></iframe>
-      </article>
-      <article class="video-item">
-        <h3>Materials Access Tutorial</h3>
-        <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM" title="Materials Access tutorial video" allowfullscreen></iframe>
-      </article>
-      <article class="video-item">
-        <h3>Advanced Tech Solutions</h3>
-        <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs" title="Advanced tech solutions video" allowfullscreen></iframe>
-      </article>
-      <article class="video-item">
-        <h3>Martoo Tech Hub Channel</h3>
-        <iframe src="https://www.youtube.com/embed/53iT5sKyh9s?si=06rO1U9Cfw1U6E1D" title="Martoo Tech Hub YouTube channel video" allowfullscreen></iframe>
-      </article>
+    <section class="video-grid" aria-label="Service overview videos">
+      <iframe src="https://www.youtube.com/embed/w0_sFwO1IR8" title="Typing Assistant Video" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/J-DNnARdB8E" title="VPN Setup Video" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM" title="Study Materials Overview" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs" title="Additional Services Video" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/53iT5sKyh9s?si=06rO1U9Cfw1U6E1D" title="Bonus Tutorial Video" allowfullscreen></iframe>
     </section>
   </main>
 
   <footer>
-    <div class="social-icons" role="contentinfo" aria-label="Social media links">
+    <div class="social-icons" aria-label="Social media links">
       <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
       <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
       <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
     </div>
-    <small>&copy; 2024 Martoo Tech Works. All rights reserved.</small>
+    <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
   </footer>
 
   <script>
-    // Hamburger toggle menu for small screens
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const navMenu = document.querySelector('#main-nav ul');
+    // Hamburger menu toggle
+    const hamburger = document.querySelector(".hamburger");
+    const menu = document.querySelector("ul.menu");
 
-    hamburgerBtn.addEventListener('click', () => {
-      const isExpanded = hamburgerBtn.getAttribute('aria-expanded') === 'true' || false;
-      hamburgerBtn.setAttribute('aria-expanded', !isExpanded);
-      navMenu.classList.toggle('show');
+    hamburger.addEventListener("click", () => {
+      const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
+      hamburger.setAttribute("aria-expanded", !expanded);
+      menu.classList.toggle("expanded");
+    });
+
+    // Dropdown toggles for mobile
+    const dropdownParents = document.querySelectorAll("li.has-dropdown > a");
+
+    dropdownParents.forEach(parentLink => {
+      parentLink.addEventListener("click", e => {
+        e.preventDefault();
+        const expanded = parentLink.getAttribute("aria-expanded") === "true" || false;
+        parentLink.setAttribute("aria-expanded", !expanded);
+        parentLink.parentElement.classList.toggle("expanded");
+      });
+    });
+
+    // Keyboard accessibility: close menu on Escape
+    document.addEventListener('keydown', e => {
+      if(e.key === "Escape") {
+        if(menu.classList.contains("expanded")) {
+          menu.classList.remove("expanded");
+          hamburger.setAttribute("aria-expanded", false);
+          // close any open dropdowns
+          dropdownParents.forEach(link => {
+            link.setAttribute("aria-expanded", false);
+            link.parentElement.classList.remove("expanded");
+          });
+          hamburger.focus();
+        }
+      }
     });
   </script>
 </body>

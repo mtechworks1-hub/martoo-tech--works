@@ -1,238 +1,413 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-     <meta name="msvalidate.01" content="514AD9838126FB4D80A209D8AD4DD0D2" />
-    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9775836048486404"
-     crossorigin="anonymous"></script>
-    <title>Posts | Martoo Tech Works</title>  
-    <link rel="stylesheet" href="styles.css">  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
-    <style>  
-        body {  
-            background-image: url('full site background.jpg');  
-            background-size: cover;  
-            background-position: center;  
-            color: white;  
-            font-family: Arial, sans-serif;  
-            margin: 0;  
-            padding-bottom: 60px;  
-            min-height: 100vh;  
-        }  
-  
-        header {  
-            background-image: url('background.jpg');  
-            background-size: cover;  
-            background-position: center;  
-            color: white;  
-            text-align: center;  
-            padding: 60px 20px;  
-            position: relative;  
-            width: 100vw;  
-        }  
-  
-        .logo {  
-            position: absolute;  
-            top: 20px;  
-            left: 20px;  
-            width: 100px;  
-            height: 100px;  
-            border-radius: 50%;  
-            object-fit: cover;  
-            border: 4px solid #ffcc00;  
-        }  
-  
-        header h1 {  
-            color: #ffcc00;  
-            font-size: 36px;  
-            margin-top: 20px;  
-        }  
-  
-        .hamburger {  
-            position: absolute;  
-            top: 15px;  
-            right: 20px;  
-            font-size: 30px;  
-            color: #ffcc00;  
-            cursor: pointer;  
-            background-color: rgba(0, 0, 0, 0.5);  
-            padding: 10px;  
-            border-radius: 5px;  
-            border: 2px solid #ffcc00;  
-        }  
-  
-        nav ul {  
-            list-style-type: none;  
-            padding: 0;  
-            display: none;  
-            margin: 0;  
-        }  
-  
-        nav ul li {  
-            margin: 10px 0;  
-        }  
-  
-        nav ul li a {  
-            color: #ffcc00;  
-            text-decoration: none;  
-            padding: 10px;  
-            display: block;  
-            background-color: rgba(0, 0, 0, 0.7);  
-            border-radius: 5px;  
-            transition: background-color 0.3s ease;  
-        }  
-  
-        nav ul li a:hover {  
-            background-color: #000;  
-        }  
-  
-        #menu.show {  
-            display: block;  
-        }  
-  
-        section {  
-            padding: 40px 20px;  
-            text-align: center;  
-        }  
-  
-        .post {  
-            background-color: rgba(0, 0, 0, 0.7);  
-            border-radius: 10px;  
-            margin: 20px auto;  
-            max-width: 800px;  
-            padding: 20px;  
-            text-align: center;  
-        }  
-  
-        .post h3 {  
-            font-size: 28px;  
-            color: #ffcc00;  
-        }  
-  
-        .post p {  
-            font-size: 16px;  
-            line-height: 1.6;  
-        }  
-  
-        .download-btn {  
-            display: inline-block;  
-            background-color: #ffcc00;  
-            color: #000;  
-            font-weight: bold;  
-            padding: 10px 15px;  
-            margin-top: 10px;  
-            border-radius: 5px;  
-            text-decoration: none;  
-            transition: background 0.3s ease;  
-        }  
-  
-        .download-btn:hover {  
-            background-color: #e6b800;  
-        }  
-  
-        footer {  
-            background-color: #333;  
-            color: white;  
-            text-align: center;  
-            padding: 20px;  
-            width: 100%;  
-        }  
-    </style>  
-</head>  
-<body>  
-  
-<header>  
-    <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">  
-    <h1>MARTOO TECH WORKS POSTS</h1>  
-    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>  
-    <nav>  
-        <ul id="menu">  
-            <li><a href="index.html">Home</a></li>  
-            <li><a href="services.html">Services</a></li>  
-            <li><a href="about.html">About</a></li>  
-            <li><a href="contact.html">Contact</a></li>  
-            <li><a href="posts.html">Posts</a></li>  
-        </ul>  
-    </nav>  
-</header>  
-  
-<script>  
-    function toggleMenu() {  
-        const menu = document.getElementById('menu');  
-        menu.classList.toggle('show');  
-    }  
-</script>  
-  
-<!-- School Services Section -->  
-<section id="school-services">  
-    <h2>🎓 School Services Offered 📚</h2>  
-    <ul>  
-        <li>✅ <strong>Typing Assignments</strong> 📝</li>  
-        <li>✅ <strong>GIS Projects</strong> 🗺️</li>  
-        <li>✅ <strong>Report Writing & Formatting</strong> 📄</li>  
-        <li>✅ <strong>PowerPoint Presentations</strong> 🎤💻</li>  
-        <li>✅ <strong>Data Analysis & Interpretation</strong> 📊</li>  
-    </ul>  
-    <p>📌 <strong>Make your academic work easier and more professional!</strong> Contact me now. 🚀</p>  
-</section>  
-  
-<!-- School Materials Section -->  
-<section id="school-materials">  
-    <h2>📚 School Materials</h2>  
-  
-    <div class="post">  
-        <h3>Mid-Semester GIS Data Set</h3>  
-        <p>Comprehensive GIS dataset for analysis and mapping projects.</p>  
-        <a href="Mid semester GIS data set.zip" download class="download-btn">Download</a>  
-    </div>  
-  
-    <div class="post">  
-        <h3>Download Stata License</h3>  
-        <p>This download is protected. Please contact Martoo Tech Works for the password.</p>  
-        <button class="download-btn" onclick="downloadStata()">Download Stata License</button>  
-    </div>  
-  
-    <script>  
-        function downloadStata() {  
-            let password = prompt("Enter password:");  
-            if (password !== "STATA LC") {  
-                alert("Incorrect password!");  
-                return;  
-            }  
-            window.location.href = "https://docs.google.com/document/d/1S_8yM6vcwSGnCZYgXr5QX6gdsDy_AXrk/edit?usp=drivesdk&ouid=114317916572560528977&rtpof=true&sd=true";  
-        }  
-    </script>  
-  
-    <div class="post">  
-        <h3>Mental Health Notes</h3>  
-        <p>Detailed notes covering key mental health topics, including anxiety, stress management, and coping strategies.</p>  
-        <a href="all mental health notes.zip" download class="download-btn">Download</a>  
-    </div>  
-  
-    <div class="post">  
-        <h3>GIS Set</h3>  
-        <p>Additional GIS resources and mapping data for research and academic use.</p>  
-        <a href="GIS SET.zip" download class="download-btn">Download</a>  
-    </div>  
-  
-    <div class="post">  
-        <h3>Community Health Nutrition Questions & Answers</h3>  
-        <p>A document containing important questions and answers related to community health and nutrition.</p>  
-        <a href="COMMUNITY HEALTH NUTRTION QUESTIONS AND ANSWERS.docx" download class="download-btn">Download</a>  
-    </div>  
-  
-    <div class="post">  
-        <h3>All Mental Health Notes</h3>  
-        <p>Download a complete set of mental health notes covering essential topics.</p>  
-        <a href="School materials/all mental health notes.zip" download class="download-btn">Download</a>  
-    </div>  
-</section>  
-  
-<footer>  
-    <p>&copy; 2025 Martoo Tech Works. All Rights Reserved.</p>  
-</footer>  
-  
-</body>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Site Verification -->
+<meta name="msvalidate.01" content="514AD9838126FB4D80A209D8AD4DD0D2" />
+<meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
+<meta name="google-site-verification" content="7d61c0c52dffa401" />
+
+<!-- SEO Meta -->
+<meta name="description" content="Download free academic resources, GIS projects, mental health notes, and more from Martoo Tech Works." />
+<meta name="keywords" content="academic resources, GIS projects, mental health notes, typing assignments, data analysis, Martoo Tech Works" />
+<meta name="author" content="Martoo Tech Works" />
+
+<!-- Favicon -->
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9775836048486404" crossorigin="anonymous"></script>
+
+<title>Posts | Martoo Tech Works - Free Academic Downloads & Services</title>
+
+<style>
+  /* Reset & Base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0 1rem 3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('full site background.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  a {
+    color: #ffcc00;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover,
+  a:focus {
+    text-decoration: underline;
+    color: #e6b800;
+  }
+  h1, h2, h3 {
+    color: #ffcc00;
+    margin-bottom: 0.5rem;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  li + li {
+    margin-top: 0.5rem;
+  }
+
+  /* Fade-in animation on load */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Bounce animation for buttons */
+  @keyframes bounceIn {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-8px);
+    }
+    60% {
+      transform: translateY(-4px);
+    }
+  }
+
+  /* Slide-in for nav menu */
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Header */
+  header {
+    position: relative;
+    padding: 3rem 1rem 4rem;
+    background: url('background.jpg') no-repeat center/cover;
+    text-align: center;
+    border-bottom: 3px solid #ffcc00;
+    animation: fadeInUp 1s ease forwards;
+  }
+  .logo {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #ffcc00;
+    object-fit: cover;
+  }
+  header h1 {
+    font-size: 2.5rem;
+  }
+
+  /* Navigation */
+  nav {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+  .hamburger-btn {
+    font-size: 2rem;
+    background: transparent;
+    border: 2px solid #ffcc00;
+    color: #ffcc00;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .hamburger-btn:hover,
+  .hamburger-btn:focus {
+    background-color: #ffcc00;
+    color: #000;
+    outline: none;
+  }
+  .hamburger-btn:focus-visible {
+    outline: 3px solid #ffcc00;
+    outline-offset: 2px;
+  }
+  #nav-menu {
+    margin-top: 0.5rem;
+    background: rgba(0,0,0,0.9);
+    border-radius: 8px;
+    display: none;
+    min-width: 150px;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+  }
+  #nav-menu.show {
+    display: block;
+    animation-name: slideInRight;
+  }
+  #nav-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #ffcc00;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  #nav-menu a:last-child {
+    border-bottom: none;
+  }
+  #nav-menu a:hover,
+  #nav-menu a:focus {
+    background: #ffcc00;
+    color: #000;
+    outline: none;
+  }
+
+  /* Main Sections */
+  main {
+    max-width: 900px;
+    margin: 2rem auto 0;
+    background: rgba(0,0,0,0.75);
+    border-radius: 12px;
+    padding: 2rem;
+    animation: fadeInUp 1s ease 0.3s forwards;
+    opacity: 0;
+  }
+  section {
+    margin-bottom: 2.5rem;
+  }
+  .service-list li::before {
+    content: "✅ ";
+  }
+
+  /* Posts */
+  .post {
+    background: rgba(255,204,0,0.15);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 1s ease forwards;
+    opacity: 0;
+  }
+  /* Stagger fadeInUp delays on posts */
+  .post:nth-child(1) {
+    animation-delay: 0.4s;
+  }
+  .post:nth-child(2) {
+    animation-delay: 0.55s;
+  }
+  .post:nth-child(3) {
+    animation-delay: 0.7s;
+  }
+  .post:nth-child(4) {
+    animation-delay: 0.85s;
+  }
+  .post:nth-child(5) {
+    animation-delay: 1s;
+  }
+  .post:nth-child(6) {
+    animation-delay: 1.15s;
+  }
+
+  .post h3 {
+    margin-top: 0;
+  }
+  .download-btn {
+    background-color: #ffcc00;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    color: #000;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    display: inline-block;
+    text-decoration: none;
+    animation: bounceIn 1.5s ease forwards;
+  }
+  .download-btn:hover,
+  .download-btn:focus {
+    background-color: #e6b800;
+    outline: none;
+    transform: scale(1.05);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #222;
+    color: #aaa;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+  /* Responsive */
+  @media (min-width: 600px) {
+    nav {
+      position: static;
+      margin-bottom: 1.5rem;
+      text-align: right;
+    }
+    .hamburger-btn {
+      display: none;
+    }
+    #nav-menu {
+      display: block !important;
+      background: transparent;
+      padding: 0;
+      animation: none;
+    }
+    #nav-menu a {
+      display: inline-block;
+      padding: 0 1rem 0 0;
+      border: none;
+      color: #ffcc00;
+      transition: color 0.3s ease;
+    }
+    #nav-menu a:hover,
+    #nav-menu a:focus {
+      background: transparent;
+      color: #e6b800;
+      text-decoration: underline;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo" />
+  <h1>MARTOO TECH WORKS POSTS</h1>
+  <nav aria-label="Primary Navigation">
+    <button class="hamburger-btn" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle menu" id="hamburger">
+      ☰
+    </button>
+    <div id="nav-menu" role="menu">
+      <a href="index.html" role="menuitem" tabindex="-1">Home</a>
+      <a href="posts.html" role="menuitem" tabindex="-1" aria-current="page">Posts</a>
+      <a href="contact.html" role="menuitem" tabindex="-1">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section aria-labelledby="about-title">
+    <h2 id="about-title">About Martoo Tech Works</h2>
+    <p>We provide free academic downloads and services focused on health sciences, technology, and data analysis.</p>
+    <ul class="service-list">
+      <li>Free academic downloads</li>
+      <li>Typing assignments and projects</li>
+      <li>GIS projects and tutorials</li>
+      <li>Mental health notes and support resources</li>
+      <li>Study guides and exam tips</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="posts-title">
+    <h2 id="posts-title">Latest Posts & Resources</h2>
+
+    <article class="post" tabindex="0" aria-label="Typing assignments post">
+      <h3>Typing Assignments</h3>
+      <p>Get help with your typing assignments and projects free of charge.</p>
+      <a href="typing-assignment.html" class="download-btn" aria-label="Download Typing Assignments">Download</a>
+    </article>
+
+    <article class="post" tabindex="0" aria-label="GIS Projects post">
+      <h3>GIS Projects</h3>
+      <p>Explore our collection of GIS projects for academic and research purposes.</p>
+      <a href="gis-projects.html" class="download-btn" aria-label="Download GIS Projects">Download</a>
+    </article>
+
+    <article class="post" tabindex="0" aria-label="Mental Health Notes post">
+      <h3>Mental Health Notes</h3>
+      <p>Access notes and resources aimed at improving mental health awareness and support.</p>
+      <a href="mental-health-notes.html" class="download-btn" aria-label="Download Mental Health Notes">Download</a>
+    </article>
+
+    <article class="post" tabindex="0" aria-label="Data Analysis Resources post">
+      <h3>Data Analysis Resources</h3>
+      <p>Download tutorials and datasets for health statistics and data analysis.</p>
+      <a href="data-analysis.html" class="download-btn" aria-label="Download Data Analysis Resources">Download</a>
+    </article>
+
+    <article class="post" tabindex="0" aria-label="Study Guides post">
+      <h3>Study Guides</h3>
+      <p>Comprehensive study guides to help you excel in your exams.</p>
+      <a href="study-guides.html" class="download-btn" aria-label="Download Study Guides">Download</a>
+    </article>
+
+    <article class="post" tabindex="0" aria-label="Exam Tips post">
+      <h3>Exam Tips</h3>
+      <p>Effective exam preparation strategies and tips from top students.</p>
+      <a href="exam-tips.html" class="download-btn" aria-label="Download Exam Tips">Download</a>
+    </article>
+
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 Martoo Tech Works. All rights reserved.
+</footer>
+
+<script>
+  // Hamburger menu toggle with accessibility attributes
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+    navMenu.classList.toggle('show');
+
+    // Manage tabindex for keyboard nav
+    if (navMenu.classList.contains('show')) {
+      [...navMenu.querySelectorAll('a')].forEach(link => link.setAttribute('tabindex', '0'));
+      navMenu.querySelector('a').focus();
+    } else {
+      [...navMenu.querySelectorAll('a')].forEach(link => link.setAttribute('tabindex', '-1'));
+      hamburger.focus();
+    }
+  });
+
+  // Initialize nav menu links tabindex offscreen for mobile
+  if (window.innerWidth < 600) {
+    [...navMenu.querySelectorAll('a')].forEach(link => link.setAttribute('tabindex', '-1'));
+  }
+
+  // Optional: Close menu when clicking outside or on link
+  document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && e.target !== hamburger && navMenu.classList.contains('show')) {
+      navMenu.classList.remove('show');
+      hamburger.setAttribute('aria-expanded', false);
+      [...navMenu.querySelectorAll('a')].forEach(link => link.setAttribute('tabindex', '-1'));
+    }
+  });
+
+  // Keyboard support: close menu on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navMenu.classList.contains('show')) {
+      navMenu.classList.remove('show');
+      hamburger.setAttribute('aria-expanded', false);
+      [...navMenu.querySelectorAll('a')].forEach(link => link.setAttribute('tabindex', '-1'));
+      hamburger.focus();
+    }
+  });
+</script>
+
+</body>
 </html>

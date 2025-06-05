@@ -1,38 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <!-- Homepage -->
-    <url>
-        <loc>https://www.martootechworks.wuaze.com/</loc>
-        <lastmod>2024-11-13</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>1.00</priority>
-    </url>
-    <!-- Posts Page -->
-    <url>
-        <loc>https://www.martootechworks.wuaze.com/posts.html</loc>
-        <lastmod>2024-11-13</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.80</priority>
-    </url>
-    <!-- Contact Page -->
-    <url>
-        <loc>https://www.martootechworks.wuaze.com/contact.html</loc>
-        <lastmod>2024-11-13</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.80</priority>
-    </url>
-    <!-- About Page -->
-    <url>
-        <loc>https://www.martootechworks.wuaze.com/about.html</loc>
-        <lastmod>2024-11-13</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.80</priority>
-    </url>
-    <!-- Services Page -->
-    <url>
-        <loc>https://www.martootechworks.wuaze.com/services.html</loc>
-        <lastmod>2024-11-13</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.80</priority>
-    </url>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.martootechworks.great-site.net/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.martootechworks.great-site.net/index.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.martootechworks.great-site.net/about.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.martootechworks.great-site.net/services.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.martootechworks.great-site.net/posts.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.martootechworks.great-site.net/contact.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

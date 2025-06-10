@@ -5,19 +5,22 @@
   <title>Martoo AI Chatbot</title>
   <style>
     body { font-family: Arial, sans-serif; background: #f4f6f8; padding: 20px; }
-    #chatbox { max-width: 600px; margin: auto; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    #chatbox { max-width: 600px; margin: auto; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); height: 400px; overflow-y: auto; }
     .msg { margin: 10px 0; }
     .user { text-align: right; color: blue; }
     .bot { text-align: left; color: green; }
+    #controls { text-align: center; margin-top: 10px; }
     input[type="text"] { width: 70%; padding: 10px; }
     button { padding: 10px 15px; background: blue; color: white; border: none; border-radius: 5px; }
   </style>
 </head>
 <body>
-  <h2>🤖 Martoo AI Chatbot</h2>
+  <h2 style="text-align:center;">🤖 Martoo AI Chatbot</h2>
   <div id="chatbox"></div>
-  <input type="text" id="userInput" placeholder="Type your question...">
-  <button onclick="sendMessage()">Send</button>
+  <div id="controls">
+    <input type="text" id="userInput" placeholder="Type your question...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
 
   <script>
     async function sendMessage() {
@@ -31,7 +34,7 @@
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': 'Bearer YOUR_OPENAI_API_KEY_HERE',
+          'Authorization': 'Bearer sk-4ddb611ac2244ab0a58feea5a47a6d5c', // 
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({

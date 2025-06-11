@@ -137,7 +137,6 @@
       background: #111;
     }
 
-    /* Responsive styles */
     @media (max-width: 480px) {
       nav ul {
         width: 150px;
@@ -192,11 +191,15 @@
       menu.classList.toggle('show');
     }
 
-    // Send on Enter key
+    // Close menu when link clicked
+    document.querySelectorAll("nav ul li a").forEach(link => {
+      link.addEventListener("click", () => {
+        document.getElementById("menu").classList.remove("show");
+      });
+    });
+
     document.getElementById("user-input").addEventListener("keydown", function(event) {
-      if(event.key === "Enter") {
-        sendMessage();
-      }
+      if(event.key === "Enter") sendMessage();
     });
 
     async function sendMessage() {
@@ -205,8 +208,13 @@
       if (!message) return;
 
       const chatBox = document.getElementById("chat-box");
-      chatBox.innerHTML += `<p><span class="user">You:</span> ${message}</p>`;
-      input.value = "";
+      const userMessage = document.createElement("p");
+      userMessage.innerHTML = `<span class="user">You:</span> ${message}`;
+      chatBox.appendChild(userMessage);
+
+      const loading = document.createElement("p");
+      loading.innerHTML = `<span class="ai">Martoo AI:</span> <em>Typing...</em>`;
+      chatBox.appendChild(loading);
       chatBox.scrollTop = chatBox.scrollHeight;
 
       try {
@@ -221,11 +229,11 @@
         if (!response.ok) throw new Error("Network response was not ok");
 
         const data = await response.json();
-        const reply = data.reply || "⚠️ No response.";
-        chatBox.innerHTML += `<p><span class="ai">Martoo AI:</span> ${reply}</p>`;
+        loading.innerHTML = `<span class="ai">Martoo AI:</span> ${data.reply || "⚠️ No response."}`;
+        input.value = "";
       } catch (err) {
         console.error("Fetch error:", err);
-        chatBox.innerHTML += `<p><span class="ai">Martoo AI:</span> ⚠️ Error connecting to the server.</p>`;
+        loading.innerHTML = `<span class="ai">Martoo AI:</span> ⚠️ Error connecting to the server.`;
       }
 
       chatBox.scrollTop = chatBox.scrollHeight;

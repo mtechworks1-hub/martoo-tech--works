@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,177 +12,176 @@
       background-size: cover;
       color: white;
       overflow-x: hidden;
-    }
+    }header {
+  position: relative;
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.15);
+}
 
-    header {
-      position: relative;
-      text-align: center;
-      padding: 40px 20px;
-      background: rgba(0, 0, 0, 0.85);
-      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.15);
-    }
+header h1 {
+  color: #00ffcc;
+  font-size: 36px;
+  margin: 0;
+}
 
-    header h1 {
-      color: #00ffcc;
-      font-size: 36px;
-      margin: 0;
-    }
+.hamburger {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  border: 2px solid #00ffcc;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.6);
+  user-select: none;
+  z-index: 1000;
+}
 
-    .hamburger {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 28px;
-      color: white;
-      cursor: pointer;
-      padding: 8px;
-      border: 2px solid #00ffcc;
-      border-radius: 5px;
-      background: rgba(0, 0, 0, 0.6);
-      user-select: none;
-      z-index: 1000;
-    }
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  width: 200px;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 255, 255, 0.2);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 999;
+}
 
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      position: absolute;
-      top: 70px;
-      right: 20px;
-      width: 200px;
-      background: rgba(0, 0, 0, 0.95);
-      display: none;
-      flex-direction: column;
-      border-radius: 10px;
-      box-shadow: 0 6px 16px rgba(0, 255, 255, 0.2);
-      max-height: 300px;
-      overflow-y: auto;
-      z-index: 999;
-    }
+nav ul.show {
+  display: flex;
+}
 
-    nav ul.show {
-      display: flex;
-    }
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 14px;
+  display: block;
+  border-bottom: 1px solid #333;
+}
 
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      padding: 14px;
-      display: block;
-      border-bottom: 1px solid #333;
-    }
+nav ul li a:hover {
+  background-color: #00ffcc;
+  color: #000;
+}
 
-    nav ul li a:hover {
-      background-color: #00ffcc;
-      color: #000;
-    }
+.chat-container {
+  max-width: 700px;
+  margin: 50px auto;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
 
-    .chat-container {
-      max-width: 700px;
-      margin: 50px auto;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-    }
+.chat-box {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #00ffcc;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #111;
+}
 
-    .chat-box {
-      height: 300px;
-      overflow-y: auto;
-      border: 1px solid #00ffcc;
-      border-radius: 8px;
-      padding: 15px;
-      background-color: #111;
-    }
+.chat-box p {
+  margin: 10px 0;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
 
-    .chat-box p {
-      margin: 10px 0;
-      line-height: 1.5;
-      word-wrap: break-word;
-    }
+.user { color: #ffcc00; }
+.ai { color: #00ffcc; font-weight: bold; }
 
-    .user { color: #ffcc00; }
-    .ai { color: #00ffcc; font-weight: bold; }
+.chat-input {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
 
-    .chat-input {
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-    }
+input[type="text"] {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+}
 
-    input[type="text"] {
-      flex: 1;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: none;
-    }
+button {
+  padding: 12px 20px;
+  background-color: #00bfff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+}
 
-    button {
-      padding: 12px 20px;
-      background-color: #00bfff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      user-select: none;
-    }
+#login-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
 
-    #login-popup {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
+#login-popup .modal {
+  background: #222;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #00ffcc;
+  text-align: center;
+  width: 300px;
+}
 
-    #login-popup .modal {
-      background: #222;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px #00ffcc;
-      text-align: center;
-      width: 300px;
-    }
+#login-popup input[type="email"], #login-popup input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: none;
+}
 
-    #login-popup input[type="email"], #login-popup input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: none;
-    }
+#login-popup .google-btn {
+  margin-top: 10px;
+  background-color: #db4437;
+}
 
-    #login-popup .google-btn {
-      margin-top: 10px;
-      background-color: #db4437;
-    }
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  background: #111;
+}
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      background: #111;
-    }
+@media (max-width: 480px) {
+  nav ul {
+    width: 150px;
+    right: 10px;
+  }
 
-    @media (max-width: 480px) {
-      nav ul {
-        width: 150px;
-        right: 10px;
-      }
+  header h1 {
+    font-size: 28px;
+  }
 
-      header h1 {
-        font-size: 28px;
-      }
+  .chat-container {
+    margin: 20px 10px;
+    padding: 20px;
+  }
+}
 
-      .chat-container {
-        margin: 20px 10px;
-        padding: 20px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -197,17 +195,13 @@
         <li><a href="#">Contact</a></li>
       </ul>
     </nav>
-  </header>
-
-  <div class="chat-container">
+  </header>  <div class="chat-container">
     <div class="chat-box" id="chat-box"></div>
     <div class="chat-input">
       <input type="text" id="user-input" placeholder="Type your message...">
       <button onclick="sendMessage()">Send</button>
     </div>
-  </div>
-
-  <div id="login-popup">
+  </div>  <div id="login-popup">
     <div class="modal">
       <p>You’ve reached the free chat limit. Please log in to continue.</p>
       <input type="email" placeholder="Email" id="email" />
@@ -216,13 +210,9 @@
       <p>or</p>
       <button class="google-btn" onclick="startGoogleLogin()">Continue with Google</button>
     </div>
-  </div>
-
-  <footer>
+  </div>  <footer>
     <p>© 2025 Martoo Tech Works. All rights reserved.</p>
-  </footer>
-
-  <script>
+  </footer>  <script>
     let messageCount = 0;
 
     function toggleMenu() {
@@ -293,6 +283,5 @@
       document.getElementById("login-popup").style.display = "none";
       alert("You are now logged in with Google.");
     }
-  </script>
-</body>
+  </script></body>
 </html>

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,176 +13,131 @@
       background-size: cover;
       color: white;
       overflow-x: hidden;
-    }header {
-  position: relative;
-  text-align: center;
-  padding: 40px 20px;
-  background: rgba(0, 0, 0, 0.85);
-  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.15);
-}
+    }
+    header {
+      position: relative;
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.85);
+      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.15);
+    }
+    header h1 {
+      color: #00ffcc;
+      font-size: 36px;
+      margin: 0;
+    }
+    .hamburger {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+      padding: 8px;
+      border: 2px solid #00ffcc;
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.6);
+      user-select: none;
+      z-index: 1000;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      width: 200px;
+      background: rgba(0, 0, 0, 0.95);
+      display: none;
+      flex-direction: column;
+      border-radius: 10px;
+      box-shadow: 0 6px 16px rgba(0, 255, 255, 0.2);
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 999;
+    }
+    nav ul.show {
+      display: flex;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 14px;
+      display: block;
+      border-bottom: 1px solid #333;
+    }
+    nav ul li a:hover {
+      background-color: #00ffcc;
+      color: #000;
+    }
 
-header h1 {
-  color: #00ffcc;
-  font-size: 36px;
-  margin: 0;
-}
+    .chat-container {
+      max-width: 700px;
+      margin: 50px auto;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+    .chat-box {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #00ffcc;
+      border-radius: 8px;
+      padding: 15px;
+      background-color: #111;
+    }
+    .chat-box p {
+      margin: 10px 0;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+    .user { color: #ffcc00; }
+    .ai { color: #00ffcc; font-weight: bold; }
 
-.hamburger {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 28px;
-  color: white;
-  cursor: pointer;
-  padding: 8px;
-  border: 2px solid #00ffcc;
-  border-radius: 5px;
-  background: rgba(0, 0, 0, 0.6);
-  user-select: none;
-  z-index: 1000;
-}
+    .chat-input {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  top: 70px;
-  right: 20px;
-  width: 200px;
-  background: rgba(0, 0, 0, 0.95);
-  display: none;
-  flex-direction: column;
-  border-radius: 10px;
-  box-shadow: 0 6px 16px rgba(0, 255, 255, 0.2);
-  max-height: 300px;
-  overflow-y: auto;
-  z-index: 999;
-}
+    input[type="text"], input[type="file"] {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+    }
 
-nav ul.show {
-  display: flex;
-}
+    button {
+      padding: 12px 20px;
+      background-color: #00bfff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
 
-nav ul li a {
-  color: white;
-  text-decoration: none;
-  padding: 14px;
-  display: block;
-  border-bottom: 1px solid #333;
-}
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      background: #111;
+    }
 
-nav ul li a:hover {
-  background-color: #00ffcc;
-  color: #000;
-}
+    @media (max-width: 480px) {
+      nav ul { width: 150px; right: 10px; }
+      header h1 { font-size: 28px; }
+      .chat-container { margin: 20px 10px; padding: 20px; }
+    }
 
-.chat-container {
-  max-width: 700px;
-  margin: 50px auto;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-}
-
-.chat-box {
-  height: 300px;
-  overflow-y: auto;
-  border: 1px solid #00ffcc;
-  border-radius: 8px;
-  padding: 15px;
-  background-color: #111;
-}
-
-.chat-box p {
-  margin: 10px 0;
-  line-height: 1.5;
-  word-wrap: break-word;
-}
-
-.user { color: #ffcc00; }
-.ai { color: #00ffcc; font-weight: bold; }
-
-.chat-input {
-  margin-top: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-input[type="text"] {
-  flex: 1;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: none;
-}
-
-button {
-  padding: 12px 20px;
-  background-color: #00bfff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  user-select: none;
-}
-
-#login-popup {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-}
-
-#login-popup .modal {
-  background: #222;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px #00ffcc;
-  text-align: center;
-  width: 300px;
-}
-
-#login-popup input[type="email"], #login-popup input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 6px;
-  border: none;
-}
-
-#login-popup .google-btn {
-  margin-top: 10px;
-  background-color: #db4437;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  background: #111;
-}
-
-@media (max-width: 480px) {
-  nav ul {
-    width: 150px;
-    right: 10px;
-  }
-
-  header h1 {
-    font-size: 28px;
-  }
-
-  .chat-container {
-    margin: 20px 10px;
-    padding: 20px;
-  }
-}
-
+    #preview-img {
+      margin-top: 10px;
+      max-width: 100%;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
@@ -189,99 +145,107 @@ footer {
     <h1>Martoo AI Assistant</h1>
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <nav>
-      <ul id="menu-list">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
+      <ul id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="posts.html">Blog</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="typing_assistant.html">Typing Assistant</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="downloader.html">Downloader</a></li>
       </ul>
     </nav>
-  </header>  <div class="chat-container">
+  </header>
+
+  <div class="chat-container">
     <div class="chat-box" id="chat-box"></div>
     <div class="chat-input">
-      <input type="text" id="user-input" placeholder="Type your message...">
+      <input type="text" id="user-input" placeholder="Ask Martoo AI anything..." autocomplete="off"/>
+      <input type="file" id="file-input" accept="image/*" />
       <button onclick="sendMessage()">Send</button>
+      <button onclick="startDictation()"><i class="fas fa-microphone"></i></button>
     </div>
-  </div>  <div id="login-popup">
-    <div class="modal">
-      <p>You’ve reached the free chat limit. Please log in to continue.</p>
-      <input type="email" placeholder="Email" id="email" />
-      <input type="password" placeholder="Password" id="password" />
-      <button onclick="startEmailLogin()">Login</button>
-      <p>or</p>
-      <button class="google-btn" onclick="startGoogleLogin()">Continue with Google</button>
-    </div>
-  </div>  <footer>
-    <p>© 2025 Martoo Tech Works. All rights reserved.</p>
-  </footer>  <script>
-    let messageCount = 0;
+    <img id="preview-img" />
+  </div>
+
+  <footer>&copy; 2024–2025 | Martoo Tech Works. All rights reserved.</footer>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
 
     function toggleMenu() {
-      document.getElementById("menu-list").classList.toggle("show");
+      document.getElementById("menu").classList.toggle("show");
     }
 
-    function showLoginPopup() {
-      document.getElementById("login-popup").style.display = "flex";
-    }
+    // Restore old messages
+    window.onload = () => {
+      const saved = localStorage.getItem("martooChat");
+      if (saved) chatBox.innerHTML = saved;
+      else chatBox.innerHTML = `<p><span class="ai">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
+    };
 
-    document.getElementById("user-input").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") sendMessage();
+    document.querySelectorAll("nav ul li a").forEach(link => {
+      link.addEventListener("click", () => document.getElementById("menu").classList.remove("show"));
     });
 
-    function appendMessage(sender, message) {
-      const chatBox = document.getElementById("chat-box");
-      const msg = document.createElement("p");
-      msg.innerHTML = `<span class="${sender}">${sender === 'user' ? 'You' : 'MARTOO AI'}:</span> ${message}`;
-      chatBox.appendChild(msg);
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
+    document.getElementById("user-input").addEventListener("keydown", e => {
+      if (e.key === "Enter") sendMessage();
+    });
 
-    function sendMessage() {
+    document.getElementById("file-input").addEventListener("change", e => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => document.getElementById("preview-img").src = e.target.result;
+        reader.readAsDataURL(file);
+      }
+    });
+
+    async function sendMessage() {
       const input = document.getElementById("user-input");
-      const userMessage = input.value.trim();
-      if (!userMessage) return;
+      const message = input.value.trim();
+      if (!message) return;
 
-      appendMessage("user", userMessage);
-      input.value = "";
+      const userMessage = document.createElement("p");
+      userMessage.innerHTML = `<span class="user">You:</span> ${message}`;
+      chatBox.appendChild(userMessage);
 
-      if (messageCount >= 5 && !localStorage.getItem("loggedIn")) {
-        showLoginPopup();
-        return;
+      const loading = document.createElement("p");
+      loading.innerHTML = `<span class="ai">Martoo AI:</span> <em>Typing...</em>`;
+      chatBox.appendChild(loading);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      try {
+        const res = await fetch("https://martoo-tech-backend.vercel.app/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+        const data = await res.json();
+        loading.innerHTML = `<span class="ai">Martoo AI:</span> ***${data.reply || "⚠️ No response."}***`;
+        input.value = "";
+      } catch (err) {
+        console.error(err);
+        loading.innerHTML = `<span class="ai">Martoo AI:</span> ⚠️ Error connecting to server.`;
       }
 
-      fetch("https://martoo-tech-backend.vercel.app/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: userMessage })
-      })
-      .then(res => res.json())
-      .then(data => {
-        appendMessage("ai", data.reply || "[No response received]");
-      })
-      .catch(err => {
-        appendMessage("ai", "Error contacting AI server.");
-      });
-
-      messageCount++;
+      chatBox.scrollTop = chatBox.scrollHeight;
+      localStorage.setItem("martooChat", chatBox.innerHTML);
     }
 
-    function startEmailLogin() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      if (email && password) {
-        localStorage.setItem("loggedIn", true);
-        document.getElementById("login-popup").style.display = "none";
-        alert(`Welcome ${email}, you are now logged in.`);
-      } else {
-        alert("Please enter both email and password.");
-      }
+    function startDictation() {
+      if (!('webkitSpeechRecognition' in window)) return alert("Speech recognition not supported.");
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.onresult = e => {
+        document.getElementById("user-input").value = e.results[0][0].transcript;
+        sendMessage();
+      };
+      recognition.onerror = e => alert("Speech error: " + e.error);
+      recognition.start();
     }
-
-    function startGoogleLogin() {
-      localStorage.setItem("loggedIn", true);
-      document.getElementById("login-popup").style.display = "none";
-      alert("You are now logged in with Google.");
-    }
-  </script></body>
+  </script>
+</body>
 </html>

@@ -56,7 +56,7 @@
       ? __firebase_config
       : JSON.stringify({
           // Default config for local testing if __firebase_config is not available
-          apiKey: "AIzaSyAPbeCzUCL1ocLrdrySK0FXdqmympqCFw", // <<-- VERIFY THIS API KEY IN FIREBASE CONSOLE
+          apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", // <--- REPLACE THIS WITH YOUR ACTUAL, VALID FIREBASE WEB API KEY FROM CONSOLE!
           authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
           projectId: "martoo-ai-assistant-72d32",
           storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -75,7 +75,7 @@
     } catch (e) {
         console.error("CRITICAL ERROR: Error parsing __firebase_config string. Using hardcoded fallback. Error:", e);
         firebaseConfig = {
-            apiKey: "AIzaSyAPbeCzUCL1ocLrdrySK0FXdqmympqCFw", // Fallback API Key
+            apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", // Fallback API Key - REPLACE THIS TOO WITH YOUR ACTUAL, VALID API KEY!
             authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
             projectId: appId,
             storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -737,7 +737,9 @@
       const sendButton = document.getElementById("send-button");
       const fileInput = document.getElementById("file-input");
       const dictationButton = document.getElementById("dictation-button");
-      const emailLoginBtn = document.getElementById("email-login-btn");
+      const emailLoginBtn = document.getElementById("login-email"); // Fixed ID
+      const passwordLoginBtn = document.getElementById("login-password"); // Fixed ID
+      const loginBtn = document.getElementById("email-login-btn"); // Button to trigger email/password login
       const googleSignInBtn = document.getElementById("google-sign-in-btn");
       const newChatBtn = document.getElementById("new-chat-btn");
       const anonContinueBtn = document.getElementById("anon-continue-btn"); // Get anonymous continue button
@@ -754,7 +756,7 @@
         if (e.key === "Enter") window.sendMessage();
       });
       dictationButton.addEventListener('click', window.startDictation);
-      emailLoginBtn.addEventListener('click', window.loginUser);
+      loginBtn.addEventListener('click', window.loginUser); // Attach listener to the correct button
       googleSignInBtn.addEventListener('click', window.googleSignIn);
       newChatBtn.addEventListener('click', () => window.startNewChatSession());
       anonContinueBtn.addEventListener('click', async () => {

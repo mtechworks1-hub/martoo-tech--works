@@ -56,7 +56,7 @@
       ? __firebase_config
       : JSON.stringify({
           // Default config for local testing if __firebase_config is not available
-          apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", // <<-- VERIFY THIS API KEY IN FIREBASE CONSOLE
+          apiKey: "AIzaSyAPbeCzUCL1ocLrdrySK0FXdqmympqCFw", // <<-- VERIFY THIS API KEY IN FIREBASE CONSOLE
           authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
           projectId: "martoo-ai-assistant-72d32",
           storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -75,7 +75,7 @@
     } catch (e) {
         console.error("CRITICAL ERROR: Error parsing __firebase_config string. Using hardcoded fallback. Error:", e);
         firebaseConfig = {
-            apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", // Fallback API Key
+            apiKey: "AIzaSyAPbeCzUCL1ocLrdrySK0FXdqmympqCFw", // Fallback API Key
             authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
             projectId: appId,
             storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",

@@ -1055,11 +1055,25 @@
         return;
       }
 
+      // Check the loggedIn state and auth.currentUser right before the popup check
+      console.log(`sendMessage pre-check: loggedIn=${loggedIn}, auth.currentUser=${auth.currentUser ? 'exists' : 'null'}`);
+
+      // If not logged in AND chatCount exceeds the limit, show login popup
+      // The popup shows on the 6th message attempt (when chatCount becomes 5)
+      if (auth.currentUser === null && chatCount >= 5) { // Changed to >= 5 to trigger on the 5th attempt
+        console.log("Triggering login popup because chatCount is 5 or more and not logged in.");
+        loginPopup.classList.add("show");
+        isSendingMessage = false;
+        sendButton.disabled = false;
+        return; // Stop message sending if login is required
+      }
+
       if (!currentUserId || !currentChatId) {
         showMessage("Please log in and select/create a chat to send messages.", true);
-        loginPopup.classList.add("show");
+        loginPopup.classList.add("show"); // Ensure popup is shown if no user/chat
         return;
       }
+
 
       const input = document.getElementById("user-input");
       const message = input.value.trim();
@@ -1068,19 +1082,12 @@
       isSendingMessage = true;
       sendButton.disabled = true;
 
-      // Increment chatCount immediately, before the popup check
-      // This chatCount is for the free-tier limit, not for general messages.
-      chatCount++;
-      console.log(`sendMessage called: loggedIn=${auth.currentUser !== null}, chatCount=${chatCount}`);
-
-      // If not logged in AND chatCount exceeds the limit, show login popup
-      if (auth.currentUser === null && chatCount > 5) {
-        console.log("Triggering login popup because chatCount is over 5 and not logged in.");
-        loginPopup.classList.add("show");
-        isSendingMessage = false;
-        sendButton.disabled = false;
-        return; // Stop message sending if login is required
+      // Increment chatCount here if not logged in
+      if (auth.currentUser === null) {
+          chatCount++;
       }
+      console.log(`sendMessage post-increment: loggedIn=${loggedIn}, chatCount=${chatCount}`);
+
 
       // Add user message to current chat messages array
       const userMessageObj = { role: 'user', text: message, timestamp: new Date().toISOString() };
@@ -1149,20 +1156,23 @@
       authListenerUnsubscribe = auth.onAuthStateChanged(async user => {
         if (user) {
           currentUserId = user.uid;
+          loggedIn = true; // Explicitly set to true
           // Display user's name or email, fallback to UID
           userDisplayName.textContent = user.displayName || user.email || "User"; // Prefer displayName, then email, then 'User'
           userIdDisplay.textContent = currentUserId; // Always show UID in parentheses for clarity
-          console.log("User logged in, UID:", currentUserId);
-          // Log display name and email for debugging
-          console.log("User display name:", user.displayName);
-          console.log("User email:", user.email);
-
+          console.log("Firebase Auth State Changed: User IS logged in.");
+          console.log("  UID:", user.uid);
+          console.log("  DisplayName:", user.displayName);
+          console.log("  Email:", user.email);
+          console.log("  loggedIn variable is now:", loggedIn);
+          console.log("  loginPopup is now hidden:", !loginPopup.classList.contains('show'));
 
           // Try to sign in with custom token if available (for Canvas environment)
-          if (initialAuthToken) {
+          // This should only happen for authenticated users from Canvas, not after a regular Google login
+          if (initialAuthToken && !user.isAnonymous) {
               try {
                   await auth.signInWithCustomToken(initialAuthToken);
-                  console.log("Signed in with custom token (Canvas environment).");
+                  console.log("Signed in with custom token (Canvas environment) if applicable.");
               } catch (error) {
                   console.error("Error signing in with custom token:", error);
                   showMessage("Canvas auth error: " + error.message, true);
@@ -1173,7 +1183,7 @@
           loadChatSessions(); // Load user's chat sessions
         } else {
           currentUserId = null;
-          loggedIn = false; // Ensure loggedIn is false
+          loggedIn = false; // Explicitly set to false
           userDisplayName.textContent = "N/A"; // Clear display name
           userIdDisplay.textContent = "N/A";
           currentChatId = null;
@@ -1181,7 +1191,9 @@
           chatBox.innerHTML = `<p><span class="ai">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
           chatList.innerHTML = ''; // Clear chat list on logout
           loginPopup.classList.add("show"); // Show login popup
-          console.log("User not logged in. Showing login popup.");
+          console.log("Firebase Auth State Changed: User IS NOT logged in.");
+          console.log("  loggedIn variable is now:", loggedIn);
+          console.log("  loginPopup is now visible:", loginPopup.classList.contains('show'));
         }
       });
 
@@ -1238,4 +1250,5 @@
   </script>
 </body>
 </html>
+
 

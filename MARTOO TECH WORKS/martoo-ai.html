@@ -1233,9 +1233,8 @@
       chatBox.scrollTop = chatBox.scrollHeight;
 
       try {
-        // ⭐ IMPORTANT: REPLACE THIS URL WITH YOUR ACTUAL VERCEL DEPLOYED SERVICE URL + /api/chat
-        // Example: https://your-service-name.vercel.app/api/chat
-        const backendApiUrl = "https://martoo-tech-backend.vercel.app/api/chat"; // <<< THIS IS YOUR VERIFIED VERCEL URL
+        // ⭐ IMPORTANT: THIS IS YOUR VERIFIED VERCEL URL
+        const backendApiUrl = "https://martoo-tech-backend.vercel.app/api/chat";
         console.log("Sending message to backend API:", backendApiUrl);
         console.log("Sending messages array to backend:", JSON.stringify(currentChatMessages));
 

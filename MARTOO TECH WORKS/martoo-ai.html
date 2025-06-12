@@ -643,13 +643,13 @@
       </div>
   </div>
 
-  <footer>© 2024–2025 | Martoo Tech Works. All rights reserved.</footer>
+  <footer>&copy; 2024–2025 | Martoo Tech Works. All rights reserved.</footer>
 
   <script>
     // Global variables from Canvas environment for Firestore access
     // If not defined (e.g., outside Canvas), provide defaults for local testing
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'martoo-ai-assistant-72d32'; // Default app ID
-    const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : JSON.stringify({
+    const rawFirebaseConfig = typeof __firebase_config !== 'undefined' ? __firebase_config : JSON.stringify({
         apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw",
         authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
         projectId: "martoo-ai-assistant-72d32",
@@ -657,8 +657,17 @@
         messagingSenderId: "8645131201",
         appId: "1:8645131201:web:2602e81ae10c3857ce8d40",
         measurementId: "G-6V02113XPX"
-    }));
+    });
+    const firebaseConfig = JSON.parse(rawFirebaseConfig);
     const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+    // --- DEEP DEBUGGING LOGS FOR FIREBASE CONFIG ---
+    console.log("--- Firebase Config Debugging ---");
+    console.log("Raw __firebase_config string:", rawFirebaseConfig);
+    console.log("Parsed firebaseConfig object:", firebaseConfig);
+    console.log("Ensuring projectId is present in parsed config:", firebaseConfig.projectId);
+    console.log("Ensuring apiKey is present in parsed config:", firebaseConfig.apiKey);
+    console.log("--- End Firebase Config Debugging ---");
 
     // Initialize Firebase
     const app = firebase.initializeApp(firebaseConfig);
@@ -753,6 +762,7 @@
       googleSignInBtn.disabled = true;
 
       try {
+        console.log("Attempting Email/Password login for:", email); // Debugging log
         await auth.signInWithEmailAndPassword(email, password);
         showMessage("Login successful!", false);
       } catch (err) {
@@ -765,6 +775,8 @@
             errorMessage = "Login error: Invalid email format.";
         } else if (err.code === 'auth/user-disabled') {
             errorMessage = "Login error: This user account has been disabled.";
+        } else if (err.code === 'auth/missing-project-id') {
+            errorMessage = "Login error: Firebase project ID is missing from configuration.";
         }
         showMessage(errorMessage, true);
         console.error("Email/Password login error:", err);
@@ -782,6 +794,7 @@
 
       const provider = new firebase.auth.GoogleAuthProvider();
       try {
+        console.log("Attempting Google Sign-In..."); // Debugging log
         await auth.signInWithPopup(provider);
         showMessage("Google login successful!", false);
       } catch (err) {
@@ -797,6 +810,8 @@
           errorMessage = "Login error: This domain is not authorized. Check Firebase/Google Cloud settings.";
         } else if (err.code === 'auth/api-key-not-valid') {
             errorMessage = "Google login error: API Key is invalid or restricted. Check Google Cloud Console API Key settings.";
+        } else if (err.code === 'auth/missing-project-id') {
+            errorMessage = "Google login error: Firebase project ID is missing from configuration. Check firebaseConfig.";
         }
         showMessage(errorMessage, true);
       } finally {
@@ -1120,6 +1135,7 @@
         return;
       }
 
+
       const input = document.getElementById("user-input");
       const message = input.value.trim();
       if (!message) return;
@@ -1132,7 +1148,7 @@
       }
       console.log(`sendMessage post-increment: loggedIn=${loggedIn}, chatCount=${chatCount}`);
 
-      // Add user message to current chat messages array
+
       const userMessageObj = { role: 'user', text: message, timestamp: new Date().toISOString() };
       currentChatMessages.push(userMessageObj);
       renderMessages();
@@ -1146,15 +1162,13 @@
 
       try {
         console.log("Sending message to backend. currentChatId:", currentChatId);
-        // NEW: Send the entire chat history (currentChatMessages) to the backend
+        console.log("Sending messages array to backend:", JSON.stringify(currentChatMessages)); // NEW: Log the array being sent
         const res = await fetch("https://martoo-tech-backend.vercel.app/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-              // This is the new crucial part: sending the full chat history
-              // The backend needs to read 'messages' and use it as `contents` for the LLM
-              messages: currentChatMessages,
-              chatId: currentChatId // Still sending chatId, though it might not be directly used for context by LLM
+              messages: currentChatMessages, // Send the full chat history
+              chatId: currentChatId
           })
         });
         const data = await res.json();

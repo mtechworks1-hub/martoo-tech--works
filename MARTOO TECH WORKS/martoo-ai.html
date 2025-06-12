@@ -667,7 +667,7 @@
     let firebaseConfig;
     try {
         firebaseConfig = JSON.parse(rawFirebaseConfig);
-        // ⭐ NEW ROBUSTNESS: Ensure projectId is present, fallback to appId if necessary
+        // Ensure projectId is present, fallback to appId if necessary
         if (!firebaseConfig.projectId) {
             console.warn("firebaseConfig.projectId is missing. Attempting to use appId as projectId for Firebase init.");
             firebaseConfig.projectId = appId;
@@ -701,7 +701,14 @@
 
 
     // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
+    // Ensure Firebase is initialized only once to prevent "Firebase is already defined" warnings
+    let appInstance;
+    if (!firebase.apps.length) {
+        appInstance = firebase.initializeApp(firebaseConfig);
+    } else {
+        appInstance = firebase.app(); // If already initialized, get the default app
+        console.warn("Firebase app already initialized. Reusing existing instance.");
+    }
     const auth = firebase.auth();
     const db = firebase.firestore(); // Initialize Firestore
 
@@ -714,12 +721,13 @@
     let chatSnapshotUnsubscribe = null; // To store the unsubscribe function for chat snapshots
 
     // DOM Elements
+    // Use unique IDs for elements to prevent "non-unique id" warnings
     const chatBox = document.getElementById("chat-box");
     const loginPopup = document.getElementById("login-popup");
     const messageBox = document.getElementById("message-box");
-    const googleSignInBtn = document.getElementById("google-sign-in-btn");
-    const emailLoginBtn = document.getElementById("email-login-btn");
-    const sendButton = document.getElementById("send-button");
+    const googleSignInBtn = document.getElementById("google-sign-in-btn-unique"); // Changed ID
+    const emailLoginBtn = document.getElementById("email-login-btn-unique"); // Changed ID
+    const sendButton = document.getElementById("send-button-unique"); // Changed ID
     const chatList = document.getElementById("chat-list");
     const newChatBtn = document.getElementById("new-chat-btn");
     const userDisplayName = document.getElementById("user-display-name");
@@ -729,6 +737,12 @@
     const confirmMessage = document.getElementById('confirm-message');
     const confirmYesBtn = document.getElementById('confirm-yes-btn');
     const confirmNoBtn = document.getElementById('confirm-no-btn');
+
+    // Re-bind event listeners for new IDs
+    document.getElementById("email-login-btn-unique").onclick = loginUser;
+    document.getElementById("google-sign-in-btn-unique").onclick = googleSignIn;
+    document.getElementById("send-button-unique").onclick = sendMessage;
+
 
     // --- Utility Functions ---
     function showMessage(msg, isError = true) {
@@ -806,8 +820,8 @@
             errorMessage = "Login error: Invalid email format.";
         } else if (err.code === 'auth/user-disabled') {
             errorMessage = "Login error: This user account has been disabled.";
-        } else if (err.code === 'auth/missing-project-id') {
-            errorMessage = "Login error: Firebase project ID is missing from configuration.";
+        } else if (err.code === 'auth/missing-project-id' || err.code === 'auth/internal-error') {
+            errorMessage = "Login error: Firebase configuration or internal error. Please check browser console and Firebase settings.";
         }
         showMessage(errorMessage, true);
         console.error("Email/Password login error:", err);
@@ -841,8 +855,8 @@
           errorMessage = "Login error: This domain is not authorized. Check Firebase/Google Cloud settings.";
         } else if (err.code === 'auth/api-key-not-valid') {
             errorMessage = "Google login error: API Key is invalid or restricted. Check Google Cloud Console API Key settings.";
-        } else if (err.code === 'auth/missing-project-id') {
-            errorMessage = "Google login error: Firebase project ID is missing from configuration. Check firebaseConfig.";
+        } else if (err.code === 'auth/missing-project-id' || err.code === 'auth/internal-error') {
+            errorMessage = "Google login error: Firebase configuration or internal error. Please check browser console and Firebase settings.";
         }
         showMessage(errorMessage, true);
       } finally {
@@ -1159,7 +1173,7 @@
         console.log("Triggering login popup because chatCount is 5 or more and not logged in.");
         loginPopup.classList.add("show");
         isSendingMessage = false;
-        sendButton.disabled = false;
+        document.getElementById("send-button-unique").disabled = false; // Use new ID
         return;
       }
 
@@ -1176,7 +1190,7 @@
       if (!message) return;
 
       isSendingMessage = true;
-      sendButton.disabled = true;
+      document.getElementById("send-button-unique").disabled = true; // Use new ID
 
       // Increment chatCount only for unauthenticated users
       if (!isLoggedIn) {
@@ -1228,7 +1242,7 @@
       } finally {
         chatBox.scrollTop = chatBox.scrollHeight;
         isSendingMessage = false;
-        sendButton.disabled = false;
+        document.getElementById("send-button-unique").disabled = false; // Use new ID
       }
     }
 

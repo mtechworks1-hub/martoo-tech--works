@@ -1233,16 +1233,36 @@
       chatBox.scrollTop = chatBox.scrollHeight;
 
       try {
-        console.log("Sending message to backend. currentChatId:", currentChatId);
+        // ⭐ IMPORTANT: REPLACE THIS URL WITH YOUR ACTUAL VERCEL DEPLOYED SERVICE URL + /api/chat
+        // Example: https://your-service-name.vercel.app/api/chat
+        const backendApiUrl = "https://martoo-tech-backend.vercel.app/api/chat"; // <<< THIS IS YOUR VERIFIED VERCEL URL
+        console.log("Sending message to backend API:", backendApiUrl);
         console.log("Sending messages array to backend:", JSON.stringify(currentChatMessages));
-        const res = await fetch("https://martoo-tech-backend.vercel.app/api/chat", {
+
+        const res = await fetch(backendApiUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
               messages: currentChatMessages, // Send the full chat history
-              chatId: currentChatId
+              chatId: currentChatId // Still sending chatId, though it might not be directly used for context by LLM
           })
         });
+
+        // Check if the response is OK (status 200)
+        if (!res.ok) {
+            const errorText = await res.text(); // Get raw error text
+            console.error("Backend response not OK:", res.status, errorText);
+            let errorMsg = `Backend error: ${res.status}`;
+            try {
+                const errorJson = JSON.parse(errorText);
+                errorMsg = `Backend error: ${res.status} - ${errorJson.error || errorText}`;
+            } catch (jsonErr) {
+                // If parsing fails, use the raw text
+                errorMsg = `Backend error: ${res.status} - ${errorText}`;
+            }
+            throw new Error(errorMsg);
+        }
+
         const data = await res.json();
         const aiReply = data.reply || "⚠️ No response from AI.";
 
@@ -1258,8 +1278,8 @@
         console.log("Chat messages updated in Firestore.");
 
       } catch (err) {
-        console.error("Fetch error:", err);
-        loading.innerHTML = `<span class="ai">Martoo AI:</span> ⚠️ Error connecting to server or generating response.`;
+        console.error("Fetch error to backend:", err);
+        loading.innerHTML = `<span class="ai">Martoo AI:</span> ⚠️ Error connecting to AI service.`;
         showMessage("Error sending message: " + err.message, true);
       } finally {
         chatBox.scrollTop = chatBox.scrollHeight;
@@ -1286,10 +1306,10 @@
       confirmMessage = document.getElementById('confirm-message');
       confirmYesBtn = document.getElementById('confirm-yes-btn');
       confirmNoBtn = document.getElementById('confirm-no-btn');
-      userInput = document.getElementById("user-input"); // Assign user input
-      fileInput = document.getElementById("file-input"); // Assign file input
-      previewImg = document.getElementById("preview-img"); // Assign preview image
-      dictationButton = document.getElementById("dictation-button"); // Assign dictation button
+      userInput = document.getElementById("user-input");
+      fileInput = document.getElementById("file-input");
+      previewImg = document.getElementById("preview-img");
+      dictationButton = document.getElementById("dictation-button");
 
 
       // Bind event listeners using JavaScript (no inline onclicks in HTML)
@@ -1297,14 +1317,14 @@
       googleSignInBtn.addEventListener('click', googleSignIn);
       sendButton.addEventListener('click', sendMessage);
       newChatBtn.addEventListener('click', () => startNewChatSession());
-      userInput.addEventListener("keydown", e => { // Bind to userInput
+      userInput.addEventListener("keydown", e => {
         if (e.key === "Enter") sendMessage();
       });
-      fileInput.addEventListener("change", e => { // Bind to fileInput
+      fileInput.addEventListener("change", e => {
         const file = e.target.files[0];
         if (file) {
           const reader = new FileReader();
-          reader.onload = e => previewImg.src = e.target.result; // Use previewImg
+          reader.onload = e => previewImg.src = e.target.result;
           reader.readAsDataURL(file);
         }
       });

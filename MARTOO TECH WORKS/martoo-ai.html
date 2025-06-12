@@ -197,6 +197,23 @@
       margin-right: 10px;
     }
 
+    #chat-list li .edit-chat-btn {
+        background: none;
+        border: none;
+        color: #00ffcc;
+        cursor: pointer;
+        font-size: 0.9rem;
+        margin-right: 5px;
+        transition: color 0.2s ease;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    #chat-list li .edit-chat-btn:hover {
+        color: #00e6b8;
+        background: rgba(0, 255, 204, 0.1);
+    }
+
+
     #chat-list li .delete-chat-btn {
       background: none;
       border: none;
@@ -745,7 +762,19 @@
         // auth.onAuthStateChanged will handle UI update
         showMessage("Login successful!", false);
       } catch (err) {
-        showMessage("Login error: " + err.message, true);
+        let errorMessage = "Login error: " + err.message;
+        // Specific error messages for email/password login
+        if (err.code === 'auth/user-not-found') {
+            errorMessage = "Login error: No user found with this email.";
+        } else if (err.code === 'auth/wrong-password') {
+            errorMessage = "Login error: Incorrect password.";
+        } else if (err.code === 'auth/invalid-email') {
+            errorMessage = "Login error: Invalid email format.";
+        } else if (err.code === 'auth/user-disabled') {
+            errorMessage = "Login error: This user account has been disabled.";
+        }
+        showMessage(errorMessage, true);
+        console.error("Email/Password login error:", err);
       } finally {
         emailLoginBtn.disabled = false;
         googleSignInBtn.disabled = false;
@@ -941,6 +970,7 @@
       chatSnapshotUnsubscribe = chatSessionsRef.onSnapshot(snapshot => {
         chatList.innerHTML = ''; // Clear current list
         let firstChatLoaded = false;
+        console.log(`loadChatSessions: Found ${snapshot.size} chat documents.`); // NEW LOG
         if (snapshot.empty) {
           console.log("No chat sessions found for this user. Creating a new one.");
           startNewChatSession("My First Chat"); // Automatically create a first chat
@@ -949,14 +979,23 @@
 
         snapshot.forEach(doc => {
           const chatData = doc.data();
+          console.log(`  Chat Doc: ID=${doc.id}, Title="${chatData.title}"`); // NEW LOG
           const li = document.createElement('li');
           li.dataset.chatId = doc.id;
-          li.innerHTML = `<span class="chat-title">${chatData.title || 'Untitled Chat'}</span><button class="delete-chat-btn" title="Delete Chat"><i class="fas fa-trash"></i></button>`;
+          li.innerHTML = `
+              <span class="chat-title">${chatData.title || 'Untitled Chat'}</span>
+              <button class="edit-chat-btn" title="Edit Chat Title"><i class="fas fa-edit"></i></button>
+              <button class="delete-chat-btn" title="Delete Chat"><i class="fas fa-trash"></i></button>
+          `;
           li.addEventListener('click', (event) => {
-              // Only load chat if click is not on delete button
-              if (!event.target.closest('.delete-chat-btn')) {
+              // Only load chat if click is not on edit/delete button
+              if (!event.target.closest('.delete-chat-btn') && !event.target.closest('.edit-chat-btn')) {
                   loadChat(doc.id);
               }
+          });
+          li.querySelector('.edit-chat-btn').addEventListener('click', (event) => {
+              event.stopPropagation(); // Prevent li click event from firing
+              editChatTitle(doc.id, chatData.title || 'Untitled Chat');
           });
           li.querySelector('.delete-chat-btn').addEventListener('click', (event) => {
               event.stopPropagation(); // Prevent li click event from firing
@@ -988,6 +1027,34 @@
         console.error("Error listening to chat sessions:", error);
         showMessage("Error loading chat list: " + error.message, true);
       });
+    }
+
+    /**
+     * Prompts user for a new title and updates it in Firestore.
+     * @param {string} chatId - The ID of the chat to update.
+     * @param {string} currentTitle - The current title for the prompt.
+     */
+    async function editChatTitle(chatId, currentTitle) {
+        const newTitle = prompt("Edit chat title:", currentTitle);
+        if (newTitle === null || newTitle.trim() === currentTitle.trim()) {
+            return; // User cancelled or didn't change title
+        }
+        if (newTitle.trim() === '') {
+            showMessage("Chat title cannot be empty.", true);
+            return;
+        }
+
+        try {
+            await db.collection(`artifacts/${appId}/users/${currentUserId}/chat_sessions`).doc(chatId).update({
+                title: newTitle.trim(),
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            showMessage("Chat title updated successfully!", false);
+            // loadChatSessions() will automatically re-render the list due to onSnapshot
+        } catch (error) {
+            console.error("Error updating chat title:", error);
+            showMessage("Error updating chat title: " + error.message, true);
+        }
     }
 
     /**
@@ -1059,8 +1126,8 @@
       console.log(`sendMessage pre-check: loggedIn=${loggedIn}, auth.currentUser=${auth.currentUser ? 'exists' : 'null'}`);
 
       // If not logged in AND chatCount exceeds the limit, show login popup
-      // The popup shows on the 6th message attempt (when chatCount becomes 5)
-      if (auth.currentUser === null && chatCount >= 5) { // Changed to >= 5 to trigger on the 5th attempt
+      // The popup shows on the 5th message attempt (when chatCount becomes 5)
+      if (auth.currentUser === null && chatCount >= 5) {
         console.log("Triggering login popup because chatCount is 5 or more and not logged in.");
         loginPopup.classList.add("show");
         isSendingMessage = false;
@@ -1191,9 +1258,7 @@
           chatBox.innerHTML = `<p><span class="ai">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
           chatList.innerHTML = ''; // Clear chat list on logout
           loginPopup.classList.add("show"); // Show login popup
-          console.log("Firebase Auth State Changed: User IS NOT logged in.");
-          console.log("  loggedIn variable is now:", loggedIn);
-          console.log("  loginPopup is now visible:", loginPopup.classList.contains('show'));
+          console.log("User not logged in. Showing login popup.");
         }
       });
 
@@ -1250,5 +1315,3 @@
   </script>
 </body>
 </html>
-
-

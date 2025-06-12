@@ -379,14 +379,17 @@
   <footer>&copy; 2024–2025 | Martoo Tech Works. All rights reserved.</footer>
 
   <script>
+    // NEW Firebase Configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyCeAWDcPLubp8a8D6uqUwwXeMR6ZlRN3Hc",
-      authDomain: "martoo-ai-assistant.firebaseapp.com",
-      projectId: "martoo-ai-assistant",
-      storageBucket: "martoo-ai-assistant.firebasestorage.app",
-      messagingSenderId: "833564475751",
-      appId: "1:833564475751:web:6b9318c39264f4f78f2fc2"
+      apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw",
+      authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
+      projectId: "martoo-ai-assistant-72d32",
+      storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
+      messagingSenderId: "8645131201",
+      appId: "1:8645131201:web:2602e81ae10c3857ce8d40",
+      measurementId: "G-6V02113XPX"
     };
+
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
@@ -417,18 +420,24 @@
 
     window.onload = () => {
       const saved = localStorage.getItem("martooChat");
-      if (saved) chatBox.innerHTML = saved;
-      else chatBox.innerHTML = `<p><span class="ai">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
+      if (saved) {
+        chatBox.innerHTML = saved;
+        console.log("Chat history loaded from localStorage.");
+      } else {
+        chatBox.innerHTML = `<p><span class="ai">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
+        console.log("No chat history found, displaying initial message.");
+      }
 
       auth.onAuthStateChanged(user => {
         if (user) {
           loggedIn = true;
-          chatCount = 0;
-          loginPopup.classList.remove("show"); // Hide popup if user is logged in
+          chatCount = 0; // Reset chat count when user logs in
+          console.log("User is logged in:", user.uid, "chatCount reset to 0.");
+          loginPopup.classList.remove("show"); // Ensure popup is hidden if user is already logged in on load
         } else {
           loggedIn = false;
-          // Optionally show popup if not logged in and chatCount is high, or directly after page load
-          // For now, let's keep it triggered by chatCount for existing logic
+          console.log("User is NOT logged in. chatCount will increment for popup trigger.");
+          // IMPORTANT: Do NOT reset chatCount here. It should increment until login is forced.
         }
       });
     };
@@ -451,15 +460,22 @@
     });
 
     async function sendMessage() {
+      // Log current state to debug popup issue
+      console.log(`sendMessage called: loggedIn=${loggedIn}, chatCount=${chatCount}`);
+
+      // Check login status before sending message
       if (!loggedIn && chatCount >= 5) {
+        console.log("Triggering login popup because chatCount is 5 or more and not logged in.");
         loginPopup.classList.add("show");
-        return;
+        return; // Stop message sending if login is required
       }
 
       const input = document.getElementById("user-input");
       const message = input.value.trim();
       if (!message) return;
 
+      // Increment chatCount *after* the check, but *before* sending,
+      // so the next message attempt triggers the popup.
       chatCount++;
 
       const userMessage = document.createElement("p");
@@ -486,7 +502,9 @@
       }
 
       chatBox.scrollTop = chatBox.scrollHeight;
+      // Save chat history after each message
       localStorage.setItem("martooChat", chatBox.innerHTML);
+      console.log("Chat history saved to localStorage.");
     }
 
     function startDictation() {
@@ -549,7 +567,7 @@
       } catch (err) {
         console.error("Google login error:", err);
         let errorMessage = "Google login error: " + err.message;
-        // Specific handling for "auth/cancelled-popup-request" or "auth/operation-not-allowed"
+        // Specific handling for "auth/cancelled-popup-request" or "auth/popup-closed-by-user"
         if (err.code === 'auth/cancelled-popup-request') {
           errorMessage = "Login cancelled: A previous login attempt was ongoing. Please try again.";
         } else if (err.code === 'auth/popup-closed-by-user') {

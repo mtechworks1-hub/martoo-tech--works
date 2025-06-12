@@ -379,7 +379,7 @@
   <footer>&copy; 2024–2025 | Martoo Tech Works. All rights reserved.</footer>
 
   <script>
-    // NEW Firebase Configuration
+    // NEW Firebase Configuration (Updated with your provided values)
     const firebaseConfig = {
       apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw",
       authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
@@ -576,6 +576,8 @@
           errorMessage = "Google sign-in is not enabled. Please enable it in Firebase console.";
         } else if (err.code === 'auth/unauthorized-domain') {
           errorMessage = "Login error: This domain is not authorized. Check Firebase/Google Cloud settings.";
+        } else if (err.code === 'auth/api-key-not-valid') {
+            errorMessage = "Google login error: API Key is invalid or restricted. Check Google Cloud Console API Key settings.";
         }
         showMessage(errorMessage, true);
       } finally {

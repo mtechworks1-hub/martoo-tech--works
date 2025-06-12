@@ -42,7 +42,7 @@
       orderBy,
       addDoc, 
       onSnapshot, 
-      serverTimestamp,
+      serverTimestamp, 
       doc,
       deleteDoc,
       updateDoc
@@ -198,7 +198,7 @@
         const messageObj = {
             text: text,
             role: role,
-            timestamp: serverTimestamp() // Use Firestore serverTimestamp
+            timestamp: new Date().toISOString() // FIX: Use ISO string for timestamp in array
         };
 
         try {
@@ -208,7 +208,7 @@
             // Atomically add the message to the array and update timestamp
             await updateDoc(chatDocRef, {
                 messages: [...window.currentChatMessages, messageObj], // Append to existing array
-                updatedAt: serverTimestamp()
+                updatedAt: serverTimestamp() // This can still be serverTimestamp() as it's top-level
             });
             
             console.log(`Message (${role}) saved to chat ${chatId}.`);
@@ -237,7 +237,11 @@
         const chatRef = collection(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`);
         const newChatDocRef = await addDoc(chatRef, {
           title: title,
-          messages: initialMessages,
+          messages: initialMessages.map(msg => ({ // Ensure initial messages also use ISO string for timestamp
+            text: msg.text,
+            role: msg.role,
+            timestamp: msg.timestamp || new Date().toISOString()
+          })),
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
           userId: window.currentUserId
@@ -570,7 +574,7 @@
       // Display user message in chat box
       window.displayMessage(message, "user");
       // Add user message to currentChatMessages for sending to backend and saving
-      window.currentChatMessages.push({ role: 'user', text: message, timestamp: new Date().toISOString() });
+      window.currentChatMessages.push({ role: 'user', text: message, timestamp: new Date().toISOString() }); // FIX: Use ISO string here too
       window.saveChatMessage(message, "user", window.currentChatId); // Save to Firestore
 
       userInput.value = ""; // Clear input
@@ -641,7 +645,7 @@
 
           loadingElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> ${aiResponseText}`;
           // Add AI response to currentChatMessages and save to Firestore
-          window.currentChatMessages.push({ role: 'ai', text: aiResponseText, timestamp: new Date().toISOString() });
+          window.currentChatMessages.push({ role: 'ai', text: aiResponseText, timestamp: new Date().toISOString() }); // FIX: Use ISO string here too
           window.saveChatMessage(aiResponseText, "ai", window.currentChatId);
 
       } catch (e) {
@@ -736,10 +740,10 @@
       const emailLoginBtn = document.getElementById("email-login-btn");
       const googleSignInBtn = document.getElementById("google-sign-in-btn");
       const newChatBtn = document.getElementById("new-chat-btn");
-      const logoutBtn = document.getElementById("logout-btn"); // Get logout button
+      const anonContinueBtn = document.getElementById("anon-continue-btn"); // Get anonymous continue button
 
       // Initial display setup for chat box and user ID
-      document.getElementById("display-user-id").textContent = window.userId || "Loading...";
+      document.getElementById("display-user-id").textContent = window.currentUserId || "Loading...";
       if (document.getElementById("chat-box").children.length === 0) {
         window.displayMessage("Hello 👋 I’m here to help. Ask me anything!", "ai");
       }
@@ -753,6 +757,20 @@
       emailLoginBtn.addEventListener('click', window.loginUser);
       googleSignInBtn.addEventListener('click', window.googleSignIn);
       newChatBtn.addEventListener('click', () => window.startNewChatSession());
+      anonContinueBtn.addEventListener('click', async () => {
+        // Attempt anonymous sign-in if not already authenticated
+        if (!window.loggedIn) {
+            try {
+                await signInAnonymously(window.auth);
+                window.showMessage("Continuing as anonymous user.", 'info');
+            } catch (error) {
+                console.error("Anonymous sign-in on 'Maybe Later' click failed:", error);
+                window.showMessage("Failed to continue anonymously.", 'error');
+            }
+        }
+        document.getElementById("login-popup").classList.add('hidden'); // Hide popup
+        document.getElementById("login-popup").classList.remove('flex');
+      });
       
       // Logout button listener (if it exists)
       const headerLogoutBtn = document.getElementById("header-logout-btn");

@@ -668,7 +668,7 @@
     let currentUserId = null;
     let currentChatId = null;
     let currentChatMessages = []; // Stores messages for the currently active chat
-    let chatCount = 0; // For free-tier message limit
+    let chatCount = 0; // For free-tier message limit (only for unauthenticated users)
     let isSendingMessage = false; // Flag to prevent multiple message submissions
     let authListenerUnsubscribe = null; // To store the unsubscribe function for auth state changes
     let chatSnapshotUnsubscribe = null; // To store the unsubscribe function for chat snapshots
@@ -682,7 +682,7 @@
     const sendButton = document.getElementById("send-button");
     const chatList = document.getElementById("chat-list");
     const newChatBtn = document.getElementById("new-chat-btn");
-    const userDisplayName = document.getElementById("user-display-name"); // New element for display name
+    const userDisplayName = document.getElementById("user-display-name");
     const userIdDisplay = document.getElementById("user-id-display");
     const sidebar = document.getElementById("sidebar");
     const confirmModal = document.getElementById('confirm-modal');
@@ -726,25 +726,20 @@
 
     // --- UI Toggles ---
     function toggleSidebar() {
-      // For mobile: toggles the sidebar visibility
       sidebar.classList.toggle('show');
     }
 
-    // For desktop, ensure sidebar is always visible if screen wide enough
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
-            sidebar.classList.remove('hidden'); // Ensure it's not hidden if desktop
+            sidebar.classList.remove('hidden');
         } else {
-            // On mobile, if initially loaded, hide it.
-            // If it was already shown via hamburger, keep 'show' class.
-            // This prevents it from being 'show' by default on mobile refresh.
             if (!sidebar.classList.contains('show')) {
                  sidebar.classList.add('hidden');
             }
         }
     });
 
-    function toggleMenu() { // Kept for header menu, separate from sidebar
+    function toggleMenu() {
       document.getElementById("menu").classList.toggle("show");
     }
 
@@ -759,11 +754,9 @@
 
       try {
         await auth.signInWithEmailAndPassword(email, password);
-        // auth.onAuthStateChanged will handle UI update
         showMessage("Login successful!", false);
       } catch (err) {
         let errorMessage = "Login error: " + err.message;
-        // Specific error messages for email/password login
         if (err.code === 'auth/user-not-found') {
             errorMessage = "Login error: No user found with this email.";
         } else if (err.code === 'auth/wrong-password') {
@@ -790,7 +783,6 @@
       const provider = new firebase.auth.GoogleAuthProvider();
       try {
         await auth.signInWithPopup(provider);
-        // auth.onAuthStateChanged will handle UI update
         showMessage("Google login successful!", false);
       } catch (err) {
         console.error("Google login error:", err);
@@ -817,20 +809,20 @@
         showConfirmModal("Are you sure you want to log out?", async () => {
             try {
                 if (authListenerUnsubscribe) {
-                    authListenerUnsubscribe(); // Unsubscribe to prevent memory leaks
+                    authListenerUnsubscribe();
                 }
                 if (chatSnapshotUnsubscribe) {
-                    chatSnapshotUnsubscribe(); // Unsubscribe from chat history listener
+                    chatSnapshotUnsubscribe();
                 }
                 await auth.signOut();
                 currentUserId = null;
                 currentChatId = null;
                 currentChatMessages = [];
                 chatBox.innerHTML = `<p><span class="ai">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
-                userDisplayName.textContent = "N/A"; // Clear display name
+                userDisplayName.textContent = "N/A";
                 userIdDisplay.textContent = "N/A";
-                chatList.innerHTML = ''; // Clear chat list
-                loginPopup.classList.add("show"); // Show login popup after logout
+                chatList.innerHTML = '';
+                loginPopup.classList.add("show");
                 console.log("User logged out successfully.");
             } catch (error) {
                 console.error("Error logging out:", error);
@@ -861,7 +853,7 @@
           messages: initialMessages,
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          userId: currentUserId // Explicitly store userId
+          userId: currentUserId
         });
         console.log("New chat created with ID:", newChatDoc.id);
         return newChatDoc.id;
@@ -885,7 +877,7 @@
       console.log("Loading chat with ID:", chatId);
       try {
         if (chatSnapshotUnsubscribe) {
-            chatSnapshotUnsubscribe(); // Unsubscribe from previous chat's listener
+            chatSnapshotUnsubscribe();
         }
 
         const chatDocRef = db.collection(`artifacts/${appId}/users/${currentUserId}/chat_sessions`).doc(chatId);
@@ -893,9 +885,8 @@
             if (docSnapshot.exists) {
                 const chatData = docSnapshot.data();
                 currentChatId = docSnapshot.id;
-                currentChatMessages = chatData.messages || []; // Update local messages array
+                currentChatMessages = chatData.messages || [];
 
-                // Update active class for selected chat in sidebar
                 document.querySelectorAll('#chat-list li').forEach(li => {
                     li.classList.remove('active');
                     if (li.dataset.chatId === currentChatId) {
@@ -903,22 +894,19 @@
                     }
                 });
 
-                renderMessages(); // Re-render chat box
-                chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+                renderMessages();
+                chatBox.scrollTop = chatBox.scrollHeight;
                 console.log("Chat loaded/updated:", currentChatId, chatData);
 
-                // Hide sidebar on mobile after selecting a chat
                 if (window.innerWidth <= 768) {
                     sidebar.classList.remove('show');
                 }
             } else {
                 console.warn("Selected chat does not exist:", chatId);
-                // If the chat was deleted externally, handle it
                 currentChatId = null;
                 currentChatMessages = [];
                 renderMessages();
                 showMessage("The selected chat no longer exists. Starting a new one.", false);
-                // Optionally create a new chat if the loaded one disappears
                 startNewChatSession('New Chat');
             }
         }, error => {
@@ -928,7 +916,7 @@
 
       } catch (error) {
         console.error("Error fetching chat:", error);
-        showMessage("Error loading chat: " + error.message, true);
+        showMessage("Error fetching chat: " + error.message, true);
       }
     }
 
@@ -936,7 +924,7 @@
      * Renders the messages from currentChatMessages array into the chat box.
      */
     function renderMessages() {
-      chatBox.innerHTML = ''; // Clear existing messages
+      chatBox.innerHTML = '';
       if (currentChatMessages.length === 0) {
         chatBox.innerHTML = `<p><span class="ai">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
       } else {
@@ -955,7 +943,7 @@
      */
     function loadChatSessions() {
       if (!currentUserId) {
-        chatList.innerHTML = ''; // Clear list if not logged in
+        chatList.innerHTML = '';
         console.log("No user logged in, chat sessions not loaded.");
         return;
       }
@@ -964,22 +952,22 @@
       const chatSessionsRef = db.collection(`artifacts/${appId}/users/${currentUserId}/chat_sessions`).orderBy('updatedAt', 'desc');
 
       if (chatSnapshotUnsubscribe) {
-          chatSnapshotUnsubscribe(); // Unsubscribe from existing chat list listener
+          chatSnapshotUnsubscribe();
       }
 
       chatSnapshotUnsubscribe = chatSessionsRef.onSnapshot(snapshot => {
-        chatList.innerHTML = ''; // Clear current list
+        chatList.innerHTML = '';
         let firstChatLoaded = false;
-        console.log(`loadChatSessions: Found ${snapshot.size} chat documents.`); // NEW LOG
+        console.log(`loadChatSessions: Found ${snapshot.size} chat documents.`);
         if (snapshot.empty) {
           console.log("No chat sessions found for this user. Creating a new one.");
-          startNewChatSession("My First Chat"); // Automatically create a first chat
-          return; // Exit as new chat will trigger loadChat
+          startNewChatSession("My First Chat");
+          return;
         }
 
         snapshot.forEach(doc => {
           const chatData = doc.data();
-          console.log(`  Chat Doc: ID=${doc.id}, Title="${chatData.title}"`); // NEW LOG
+          console.log(`  Chat Doc: ID=${doc.id}, Title="${chatData.title}"`);
           const li = document.createElement('li');
           li.dataset.chatId = doc.id;
           li.innerHTML = `
@@ -988,37 +976,33 @@
               <button class="delete-chat-btn" title="Delete Chat"><i class="fas fa-trash"></i></button>
           `;
           li.addEventListener('click', (event) => {
-              // Only load chat if click is not on edit/delete button
               if (!event.target.closest('.delete-chat-btn') && !event.target.closest('.edit-chat-btn')) {
                   loadChat(doc.id);
               }
           });
           li.querySelector('.edit-chat-btn').addEventListener('click', (event) => {
-              event.stopPropagation(); // Prevent li click event from firing
+              event.stopPropagation();
               editChatTitle(doc.id, chatData.title || 'Untitled Chat');
           });
           li.querySelector('.delete-chat-btn').addEventListener('click', (event) => {
-              event.stopPropagation(); // Prevent li click event from firing
+              event.stopPropagation();
               deleteChat(doc.id, chatData.title || 'Untitled Chat');
           });
           chatList.appendChild(li);
 
-          // Auto-load the most recent chat if no chat is currently selected
           if (!firstChatLoaded && !currentChatId) {
             loadChat(doc.id);
             firstChatLoaded = true;
           } else if (currentChatId === doc.id) {
-            li.classList.add('active'); // Ensure active class is set for current chat
+            li.classList.add('active');
           }
         });
 
-        // If a chat was open but became unavailable (e.g., deleted), load the first one
         if (currentChatId && !document.querySelector(`#chat-list li[data-chat-id="${currentChatId}"]`)) {
             const firstListedChat = chatList.querySelector('li');
             if (firstListedChat) {
                 loadChat(firstListedChat.dataset.chatId);
             } else {
-                // If no chats left, start a new one
                 startNewChatSession("New Chat");
             }
         }
@@ -1037,7 +1021,7 @@
     async function editChatTitle(chatId, currentTitle) {
         const newTitle = prompt("Edit chat title:", currentTitle);
         if (newTitle === null || newTitle.trim() === currentTitle.trim()) {
-            return; // User cancelled or didn't change title
+            return;
         }
         if (newTitle.trim() === '') {
             showMessage("Chat title cannot be empty.", true);
@@ -1050,7 +1034,6 @@
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
             showMessage("Chat title updated successfully!", false);
-            // loadChatSessions() will automatically re-render the list due to onSnapshot
         } catch (error) {
             console.error("Error updating chat title:", error);
             showMessage("Error updating chat title: " + error.message, true);
@@ -1063,15 +1046,15 @@
      */
     async function startNewChatSession(defaultTitle = 'New Chat') {
         let title = prompt("Enter a title for your new chat:", defaultTitle);
-        if (title === null) return; // User cancelled
+        if (title === null) return;
 
         if (title.trim() === '') {
             title = defaultTitle;
         }
 
-        const newId = await createNewChat(title, []); // Create with empty messages
+        const newId = await createNewChat(title, []);
         if (newId) {
-            await loadChat(newId); // Load the new chat
+            await loadChat(newId);
         }
     }
 
@@ -1094,23 +1077,22 @@
           console.log("Attempting to delete chat:", chatId);
           try {
               if (chatSnapshotUnsubscribe) {
-                  chatSnapshotUnsubscribe(); // Temporarily unsubscribe to prevent re-rendering issues
+                  chatSnapshotUnsubscribe();
               }
               await db.collection(`artifacts/${appId}/users/${currentUserId}/chat_sessions`).doc(chatId).delete();
               console.log("Chat deleted successfully:", chatId);
               showMessage(`Chat "${chatTitle}" deleted.`, false);
 
-              // If the deleted chat was the currently active one, clear its display
               if (currentChatId === chatId) {
                   currentChatId = null;
                   currentChatMessages = [];
                   renderMessages();
               }
-              loadChatSessions(); // Reload list to update UI and potentially load a new default chat
+              loadChatSessions();
           } catch (error) {
               console.error("Error deleting chat:", error);
               showMessage("Error deleting chat: " + error.message, true);
-              loadChatSessions(); // Reload even on error to ensure consistency
+              loadChatSessions();
           }
       });
     }
@@ -1122,25 +1104,21 @@
         return;
       }
 
-      // Check the loggedIn state and auth.currentUser right before the popup check
       console.log(`sendMessage pre-check: loggedIn=${loggedIn}, auth.currentUser=${auth.currentUser ? 'exists' : 'null'}`);
 
-      // If not logged in AND chatCount exceeds the limit, show login popup
-      // The popup shows on the 5th message attempt (when chatCount becomes 5)
       if (auth.currentUser === null && chatCount >= 5) {
         console.log("Triggering login popup because chatCount is 5 or more and not logged in.");
         loginPopup.classList.add("show");
         isSendingMessage = false;
         sendButton.disabled = false;
-        return; // Stop message sending if login is required
+        return;
       }
 
       if (!currentUserId || !currentChatId) {
         showMessage("Please log in and select/create a chat to send messages.", true);
-        loginPopup.classList.add("show"); // Ensure popup is shown if no user/chat
+        loginPopup.classList.add("show");
         return;
       }
-
 
       const input = document.getElementById("user-input");
       const message = input.value.trim();
@@ -1149,19 +1127,17 @@
       isSendingMessage = true;
       sendButton.disabled = true;
 
-      // Increment chatCount here if not logged in
       if (auth.currentUser === null) {
           chatCount++;
       }
       console.log(`sendMessage post-increment: loggedIn=${loggedIn}, chatCount=${chatCount}`);
 
-
       // Add user message to current chat messages array
       const userMessageObj = { role: 'user', text: message, timestamp: new Date().toISOString() };
       currentChatMessages.push(userMessageObj);
-      renderMessages(); // Optimistically render user message
+      renderMessages();
 
-      input.value = ""; // Clear input immediately
+      input.value = "";
 
       const loading = document.createElement("p");
       loading.innerHTML = `<span class="ai">Martoo AI:</span> <em>Typing...</em>`;
@@ -1169,21 +1145,26 @@
       chatBox.scrollTop = chatBox.scrollHeight;
 
       try {
+        console.log("Sending message to backend. currentChatId:", currentChatId);
+        // NEW: Send the entire chat history (currentChatMessages) to the backend
         const res = await fetch("https://martoo-tech-backend.vercel.app/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message })
+          body: JSON.stringify({
+              // This is the new crucial part: sending the full chat history
+              // The backend needs to read 'messages' and use it as `contents` for the LLM
+              messages: currentChatMessages,
+              chatId: currentChatId // Still sending chatId, though it might not be directly used for context by LLM
+          })
         });
         const data = await res.json();
         const aiReply = data.reply || "⚠️ No response from AI.";
 
-        // Replace loading message with AI reply and add to current chat messages
-        loading.remove(); // Remove the "Typing..." message
+        loading.remove();
         const aiMessageObj = { role: 'ai', text: aiReply, timestamp: new Date().toISOString() };
         currentChatMessages.push(aiMessageObj);
-        renderMessages(); // Re-render with AI message
+        renderMessages();
 
-        // Save updated messages to Firestore for the current chat
         await db.collection(`artifacts/${appId}/users/${currentUserId}/chat_sessions`).doc(currentChatId).update({
           messages: currentChatMessages,
           updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1219,14 +1200,12 @@
 
     // --- Initializations on Window Load ---
     window.onload = () => {
-      // Set up authentication state listener
       authListenerUnsubscribe = auth.onAuthStateChanged(async user => {
         if (user) {
           currentUserId = user.uid;
-          loggedIn = true; // Explicitly set to true
-          // Display user's name or email, fallback to UID
-          userDisplayName.textContent = user.displayName || user.email || "User"; // Prefer displayName, then email, then 'User'
-          userIdDisplay.textContent = currentUserId; // Always show UID in parentheses for clarity
+          loggedIn = true;
+          userDisplayName.textContent = user.displayName || user.email || "User";
+          userIdDisplay.textContent = currentUserId;
           console.log("Firebase Auth State Changed: User IS logged in.");
           console.log("  UID:", user.uid);
           console.log("  DisplayName:", user.displayName);
@@ -1234,8 +1213,6 @@
           console.log("  loggedIn variable is now:", loggedIn);
           console.log("  loginPopup is now hidden:", !loginPopup.classList.contains('show'));
 
-          // Try to sign in with custom token if available (for Canvas environment)
-          // This should only happen for authenticated users from Canvas, not after a regular Google login
           if (initialAuthToken && !user.isAnonymous) {
               try {
                   await auth.signInWithCustomToken(initialAuthToken);
@@ -1246,33 +1223,32 @@
               }
           }
 
-          loginPopup.classList.remove("show"); // Hide login popup
-          loadChatSessions(); // Load user's chat sessions
+          loginPopup.classList.remove("show");
+          loadChatSessions();
         } else {
           currentUserId = null;
-          loggedIn = false; // Explicitly set to false
-          userDisplayName.textContent = "N/A"; // Clear display name
+          loggedIn = false;
+          userDisplayName.textContent = "N/A";
           userIdDisplay.textContent = "N/A";
           currentChatId = null;
           currentChatMessages = [];
           chatBox.innerHTML = `<p><span class="ai">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
-          chatList.innerHTML = ''; // Clear chat list on logout
-          loginPopup.classList.add("show"); // Show login popup
-          console.log("User not logged in. Showing login popup.");
+          chatList.innerHTML = '';
+          loginPopup.classList.add("show");
+          console.log("Firebase Auth State Changed: User IS NOT logged in.");
+          console.log("  loggedIn variable is now:", loggedIn);
+          console.log("  loginPopup is now visible:", loginPopup.classList.contains('show'));
         }
       });
 
-      // Handle initial sidebar visibility on desktop
       if (window.innerWidth > 768) {
           sidebar.classList.remove('hidden');
       } else {
-          sidebar.classList.add('hidden'); // Hide by default on mobile
+          sidebar.classList.add('hidden');
       }
-      // Ensure menu also closes on load
       document.getElementById("menu").classList.remove("show");
     };
 
-    // Initialize custom element to adapt arrow keys to touch for mobile users
     class MobileFriendlyInput extends HTMLElement {
         constructor() {
             super();
@@ -1298,16 +1274,14 @@
         }
 
         handleTouchStart(event) {
-            // Prevent default touch behavior to avoid click emulation delays
             event.preventDefault();
-            this.buttonElement.classList.add('active-touch'); // Add a visual active state
-            // Simulate button click action immediately
+            this.buttonElement.classList.add('active-touch');
             this.buttonElement.click();
         }
 
         handleTouchEnd(event) {
             event.preventDefault();
-            this.buttonElement.classList.remove('active-touch'); // Remove active state
+            this.buttonElement.classList.remove('active-touch');
         }
     }
 

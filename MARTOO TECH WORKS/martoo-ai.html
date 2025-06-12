@@ -616,8 +616,8 @@
       <div class="chat-input">
         <input type="text" id="user-input" placeholder="Ask Martoo AI anything..." autocomplete="off"/>
         <input type="file" id="file-input" accept="image/*" />
-        <button id="send-button" onclick="sendMessage()">Send</button>
-        <button onclick="startDictation()"><i class="fas fa-microphone"></i></button>
+        <button id="send-button" type="button"><i class="fas fa-paper-plane"></i> Send</button> <!-- Added type="button" and icon -->
+        <button id="dictation-button" type="button"><i class="fas fa-microphone"></i></button> <!-- Changed to id and type -->
       </div>
       <img id="preview-img" />
     </div>
@@ -628,8 +628,8 @@
       <h3>Login to continue</h3>
       <input type="email" id="login-email" placeholder="Email" />
       <input type="password" id="login-password" placeholder="Password" />
-      <button id="email-login-btn" onclick="loginUser()">Login</button>
-      <button id="google-sign-in-btn" class="google-btn" onclick="googleSignIn()"><i class="fab fa-google"></i> Login with Google</button>
+      <button id="email-login-btn" type="button">Login</button> <!-- Removed inline onclick -->
+      <button id="google-sign-in-btn" class="google-btn" type="button"><i class="fab fa-google"></i> Login with Google</button> <!-- Removed inline onclick -->
       <div id="message-box"></div> <!-- Message box for errors -->
     </div>
   </div>
@@ -720,28 +720,8 @@
     let authListenerUnsubscribe = null; // To store the unsubscribe function for auth state changes
     let chatSnapshotUnsubscribe = null; // To store the unsubscribe function for chat snapshots
 
-    // DOM Elements
-    // Use unique IDs for elements to prevent "non-unique id" warnings
-    const chatBox = document.getElementById("chat-box");
-    const loginPopup = document.getElementById("login-popup");
-    const messageBox = document.getElementById("message-box");
-    const googleSignInBtn = document.getElementById("google-sign-in-btn-unique"); // Changed ID
-    const emailLoginBtn = document.getElementById("email-login-btn-unique"); // Changed ID
-    const sendButton = document.getElementById("send-button-unique"); // Changed ID
-    const chatList = document.getElementById("chat-list");
-    const newChatBtn = document.getElementById("new-chat-btn");
-    const userDisplayName = document.getElementById("user-display-name");
-    const userIdDisplay = document.getElementById("user-id-display");
-    const sidebar = document.getElementById("sidebar");
-    const confirmModal = document.getElementById('confirm-modal');
-    const confirmMessage = document.getElementById('confirm-message');
-    const confirmYesBtn = document.getElementById('confirm-yes-btn');
-    const confirmNoBtn = document.getElementById('confirm-no-btn');
-
-    // Re-bind event listeners for new IDs
-    document.getElementById("email-login-btn-unique").onclick = loginUser;
-    document.getElementById("google-sign-in-btn-unique").onclick = googleSignIn;
-    document.getElementById("send-button-unique").onclick = sendMessage;
+    // DOM Elements - Declared here, assigned in window.onload
+    let chatBox, loginPopup, messageBox, googleSignInBtn, emailLoginBtn, sendButton, chatList, newChatBtn, userDisplayName, userIdDisplay, sidebar, confirmModal, confirmMessage, confirmYesBtn, confirmNoBtn, userInput, fileInput, previewImg, dictationButton;
 
 
     // --- Utility Functions ---
@@ -800,8 +780,8 @@
     // --- Firebase Auth Functions ---
     async function loginUser() {
       hideMessage();
-      const email = document.getElementById("login-email").value;
-      const password = document.getElementById("login-password").value;
+      const email = document.getElementById("login-email").value; // These IDs are within login-box, should be fine
+      const password = document.getElementById("login-password").value; // These IDs are within login-box, should be fine
 
       emailLoginBtn.disabled = true;
       googleSignInBtn.disabled = true;
@@ -890,6 +870,49 @@
             }
         });
     }
+
+    // --- Speech Recognition ---
+    let recognition;
+    function startDictation() {
+        if (!('webkitSpeechRecognition' in window)) {
+            showMessage("Speech recognition not supported in this browser.", true);
+            return;
+        }
+
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = false; // Only get one result at a time
+        recognition.interimResults = false; // Don't show partial results
+        recognition.lang = 'en-US';
+
+        recognition.onstart = function() {
+            console.log('Speech recognition started');
+            dictationButton.innerHTML = '<i class="fas fa-microphone-slash"></i> Listening...';
+            dictationButton.disabled = true;
+        };
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            userInput.value = transcript; // Put transcript in the input field
+            console.log('Speech recognition result:', transcript);
+            sendMessage(); // Send the message after transcription
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+            showMessage('Speech recognition error: ' + event.error, true);
+            dictationButton.innerHTML = '<i class="fas fa-microphone"></i>';
+            dictationButton.disabled = false;
+        };
+
+        recognition.onend = function() {
+            console.log('Speech recognition ended');
+            dictationButton.innerHTML = '<i class="fas fa-microphone"></i>';
+            dictationButton.disabled = false;
+        };
+
+        recognition.start();
+    }
+
 
     // --- Firestore Chat Functions ---
 
@@ -1173,7 +1196,7 @@
         console.log("Triggering login popup because chatCount is 5 or more and not logged in.");
         loginPopup.classList.add("show");
         isSendingMessage = false;
-        document.getElementById("send-button-unique").disabled = false; // Use new ID
+        sendButton.disabled = false;
         return;
       }
 
@@ -1185,12 +1208,11 @@
       }
 
 
-      const input = document.getElementById("user-input");
-      const message = input.value.trim();
+      const message = userInput.value.trim(); // Use userInput variable
       if (!message) return;
 
       isSendingMessage = true;
-      document.getElementById("send-button-unique").disabled = true; // Use new ID
+      sendButton.disabled = true;
 
       // Increment chatCount only for unauthenticated users
       if (!isLoggedIn) {
@@ -1203,7 +1225,7 @@
       currentChatMessages.push(userMessageObj);
       renderMessages();
 
-      input.value = "";
+      userInput.value = ""; // Clear input using userInput variable
 
       const loading = document.createElement("p");
       loading.innerHTML = `<span class="ai">Martoo AI:</span> <em>Typing...</em>`;
@@ -1242,28 +1264,53 @@
       } finally {
         chatBox.scrollTop = chatBox.scrollHeight;
         isSendingMessage = false;
-        document.getElementById("send-button-unique").disabled = false; // Use new ID
+        sendButton.disabled = false;
       }
     }
 
-    // --- Event Listeners ---
-    document.getElementById("user-input").addEventListener("keydown", e => {
-      if (e.key === "Enter") sendMessage();
-    });
-
-    document.getElementById("file-input").addEventListener("change", e => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = e => document.getElementById("preview-img").src = e.target.result;
-        reader.readAsDataURL(file);
-      }
-    });
-
-    newChatBtn.addEventListener('click', () => startNewChatSession());
-
     // --- Initializations on Window Load ---
     window.onload = () => {
+      // Assign DOM elements AFTER the DOM is fully loaded
+      chatBox = document.getElementById("chat-box");
+      loginPopup = document.getElementById("login-popup");
+      messageBox = document.getElementById("message-box");
+      googleSignInBtn = document.getElementById("google-sign-in-btn");
+      emailLoginBtn = document.getElementById("email-login-btn");
+      sendButton = document.getElementById("send-button");
+      chatList = document.getElementById("chat-list");
+      newChatBtn = document.getElementById("new-chat-btn");
+      userDisplayName = document.getElementById("user-display-name");
+      userIdDisplay = document.getElementById("user-id-display");
+      sidebar = document.getElementById("sidebar");
+      confirmModal = document.getElementById('confirm-modal');
+      confirmMessage = document.getElementById('confirm-message');
+      confirmYesBtn = document.getElementById('confirm-yes-btn');
+      confirmNoBtn = document.getElementById('confirm-no-btn');
+      userInput = document.getElementById("user-input"); // Assign user input
+      fileInput = document.getElementById("file-input"); // Assign file input
+      previewImg = document.getElementById("preview-img"); // Assign preview image
+      dictationButton = document.getElementById("dictation-button"); // Assign dictation button
+
+
+      // Bind event listeners using JavaScript (no inline onclicks in HTML)
+      emailLoginBtn.addEventListener('click', loginUser);
+      googleSignInBtn.addEventListener('click', googleSignIn);
+      sendButton.addEventListener('click', sendMessage);
+      newChatBtn.addEventListener('click', () => startNewChatSession());
+      userInput.addEventListener("keydown", e => { // Bind to userInput
+        if (e.key === "Enter") sendMessage();
+      });
+      fileInput.addEventListener("change", e => { // Bind to fileInput
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = e => previewImg.src = e.target.result; // Use previewImg
+          reader.readAsDataURL(file);
+        }
+      });
+      dictationButton.addEventListener('click', startDictation);
+
+
       authListenerUnsubscribe = auth.onAuthStateChanged(async user => {
         if (user) {
           currentUserId = user.uid;

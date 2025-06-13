@@ -56,7 +56,7 @@
       ? __firebase_config
       : JSON.stringify({
           // Default config for local testing if __firebase_config is not available
-          apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", // <--- REPLACE THIS WITH YOUR ACTUAL, VALID FIREBASE WEB API KEY FROM CONSOLE!
+          apiKey: "YOUR_CORRECT_FIREBASE_API_KEY_HERE", // <--- REPLACE THIS WITH YOUR ACTUAL, VALID FIREBASE WEB API KEY FROM CONSOLE!
           authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
           projectId: "martoo-ai-assistant-72d32",
           storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -75,7 +75,7 @@
     } catch (e) {
         console.error("CRITICAL ERROR: Error parsing __firebase_config string. Using hardcoded fallback. Error:", e);
         firebaseConfig = {
-            apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", // Fallback API Key - REPLACE THIS TOO WITH YOUR ACTUAL, VALID API KEY!
+            apiKey: "YOUR_CORRECT_FIREBASE_API_KEY_HERE", // Fallback API Key - REPLACE THIS TOO WITH YOUR ACTUAL, VALID API KEY!
             authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
             projectId: appId,
             storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -737,12 +737,12 @@
       const sendButton = document.getElementById("send-button");
       const fileInput = document.getElementById("file-input");
       const dictationButton = document.getElementById("dictation-button");
-      const emailLoginBtn = document.getElementById("login-email"); // Fixed ID
-      const passwordLoginBtn = document.getElementById("login-password"); // Fixed ID
-      const loginBtn = document.getElementById("email-login-btn"); // Button to trigger email/password login
+      const emailLoginBtn = document.getElementById("login-email"); 
+      const passwordLoginBtn = document.getElementById("login-password"); 
+      const loginBtn = document.getElementById("email-login-btn"); 
       const googleSignInBtn = document.getElementById("google-sign-in-btn");
       const newChatBtn = document.getElementById("new-chat-btn");
-      const anonContinueBtn = document.getElementById("anon-continue-btn"); // Get anonymous continue button
+      const anonContinueBtn = document.getElementById("anon-continue-btn"); 
 
       // Initial display setup for chat box and user ID
       document.getElementById("display-user-id").textContent = window.currentUserId || "Loading...";
@@ -756,7 +756,7 @@
         if (e.key === "Enter") window.sendMessage();
       });
       dictationButton.addEventListener('click', window.startDictation);
-      loginBtn.addEventListener('click', window.loginUser); // Attach listener to the correct button
+      loginBtn.addEventListener('click', window.loginUser); 
       googleSignInBtn.addEventListener('click', window.googleSignIn);
       newChatBtn.addEventListener('click', () => window.startNewChatSession());
       anonContinueBtn.addEventListener('click', async () => {
@@ -787,7 +787,7 @@
 
 
       // Hamburger menu for mobile
-      const hamburger = document.getElementById('hamburger-button'); // Ensure this ID exists in HTML
+      const hamburger = document.getElementById('hamburger-button'); 
       if (hamburger) {
           hamburger.addEventListener('click', window.toggleMenu);
       }
@@ -798,22 +798,22 @@
 
       // Handle sidebar visibility on resize and initial load
       const sidebar = document.getElementById('sidebar');
-      const headerNav = document.querySelector('header nav'); // Select the nav element in header
+      const headerNav = document.querySelector('header nav'); 
       const menuUl = document.getElementById('menu');
 
       if (window.innerWidth > 768) {
           sidebar.classList.remove('hidden');
           sidebar.classList.add('flex');
-          headerNav.classList.remove('hidden'); // Ensure header nav is visible on desktop
+          headerNav.classList.remove('hidden'); 
           headerNav.classList.add('block');
-          menuUl.classList.remove('hidden'); // Ensure menu items are visible
+          menuUl.classList.remove('hidden'); 
           menuUl.classList.add('flex');
       } else {
-          sidebar.classList.add('hidden'); // Hide sidebar by default on mobile
+          sidebar.classList.add('hidden'); 
           sidebar.classList.remove('flex');
-          headerNav.classList.add('hidden'); // Hide header nav by default on mobile
+          headerNav.classList.add('hidden'); 
           headerNav.classList.remove('block');
-          menuUl.classList.add('hidden'); // Hide menu items by default
+          menuUl.classList.add('hidden'); 
           menuUl.classList.remove('flex');
       }
 
@@ -826,13 +826,13 @@
               menuUl.classList.remove('hidden');
               menuUl.classList.add('flex');
           } else {
-              if (!sidebar.classList.contains('show')) { // Only hide if not explicitly shown by hamburger
+              if (!sidebar.classList.contains('show')) { 
                  sidebar.classList.add('hidden');
                  sidebar.classList.remove('flex');
               }
               headerNav.classList.add('hidden');
               headerNav.classList.remove('block');
-              if (!menuUl.classList.contains('show')) { // Only hide if not explicitly shown by toggleMenu
+              if (!menuUl.classList.contains('show')) { 
                   menuUl.classList.add('hidden');
                   menuUl.classList.remove('flex');
               }
@@ -846,13 +846,13 @@
     // Firebase Auth State Changed Listener
     onAuthStateChanged(auth, async (user) => {
       const loginPopup = document.getElementById('login-popup');
-      const userDisplayNameElement = document.getElementById("user-display-name"); // Get sidebar display
-      const displayUserIdElement = document.getElementById("display-user-id"); // Get main chat area display
+      const userDisplayNameElement = document.getElementById("user-display-name"); 
+      const displayUserIdElement = document.getElementById("display-user-id"); 
 
       if (user) {
         window.currentUserId = user.uid;
         window.loggedIn = true;
-        window.chatCount = 0; // Reset chat count for logged-in users
+        window.chatCount = 0; 
 
         userDisplayNameElement.textContent = user.displayName || user.email || "User";
         displayUserIdElement.textContent = window.currentUserId;
@@ -877,7 +877,7 @@
         console.log("  loginPopup is now hidden:", loginPopup.classList.contains('hidden'));
 
         // Load chat sessions for the authenticated user
-        window.loadChatSessions(); // This will also handle loading the active chat
+        window.loadChatSessions(); 
 
       } else {
         // User is logged out or not authenticated
@@ -885,15 +885,15 @@
         window.loggedIn = false;
         window.currentChatId = null;
         window.currentChatMessages = [];
-        window.chatCount = 0; // Reset for anonymous users too
+        window.chatCount = 0; 
 
         userDisplayNameElement.textContent = "N/A";
         displayUserIdElement.textContent = "N/A";
         document.getElementById("chat-box").innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
-        document.getElementById("chat-list").innerHTML = ''; // Clear sidebar chat list
+        document.getElementById("chat-list").innerHTML = ''; 
 
         loginPopup.classList.remove('hidden');
-        loginPopup.classList.add('flex'); // Show login popup
+        loginPopup.classList.add('flex'); 
         console.log("Firebase Auth State Changed: User IS NOT logged in.");
         console.log("  loginPopup is now visible:", loginPopup.classList.contains('flex'));
 

@@ -579,6 +579,7 @@
               return;
           }
           // Give Firestore a moment to update and load the new chat via onSnapshot
+          // Small delay to ensure onSnapshot has a chance to update window.currentChatMessages
           await new Promise(resolve => setTimeout(resolve, 100)); 
       }
 
@@ -589,7 +590,8 @@
           timestamp: new Date().toISOString()
       };
       
-      // 2. Save user message to Firestore. This will trigger onSnapshot and re-render.
+      // 2. Save user message to Firestore. This will trigger onSnapshot and re-render display.
+      // Awaiting here ensures window.currentChatMessages is updated before callGemini uses it.
       await window.saveChatMessage(userMessageObj, window.currentChatId); 
 
       // 3. Clear input and files immediately
@@ -610,12 +612,19 @@
       }
 
       try {
-          // Build chat history for Gemini. It's crucial this reflects the state *after* user message is saved.
-          // window.currentChatMessages is updated by the onSnapshot listener for the active chat.
-          // To ensure the latest user message is included for Gemini, we should use the state
-          // that *will be* in Firestore. Given that saveChatMessage is awaited, 
-          // window.currentChatMessages should be up-to-date from the onSnapshot.
+          // Build chat history for Gemini.
+          // window.currentChatMessages is now correctly updated by the onSnapshot listener after saveChatMessage.
           let chatHistoryForGemini = [...window.currentChatMessages]; 
+
+          // Filter out the initial AI greeting from history sent to Gemini if it's the *very first* message in chat.
+          // This prevents the 'First content should be with role user, got model' error.
+          if (chatHistoryForGemini.length > 0 && chatHistoryForGemini[0].role === 'ai' && chatHistoryForGemini[0].text.includes("Hello 👋 I’m here to help")) {
+              // Only remove if it's the specific initial greeting and it's the first message
+              if (chatHistoryForGemini.filter(m => m.role === 'user').length === 1 && chatHistoryForGemini[0].role === 'ai') {
+                  chatHistoryForGemini = chatHistoryForGemini.slice(1); // Remove the initial AI greeting
+                  console.log("Filtered out initial AI greeting from Gemini history.");
+              }
+          }
 
           // Handle image if present (image understanding)
           if (fileInput && fileInput.files && fileInput.files[0]) { 
@@ -965,6 +974,7 @@
         if (chatListElement) chatListElement.innerHTML = ''; 
 
         // Only show the login popup if we're not currently in the process of logging out
+        // This prevents the popup from flashing after logout if the user is immediately redirected/reloaded.
         if (loginPopup && !window.isLoggingOut) {
           loginPopup.classList.remove('hidden');
           loginPopup.classList.add('flex'); 
@@ -974,7 +984,7 @@
         }
 
         // Automatic anonymous sign-in ONLY for Canvas environment with initialAuthToken,
-        // otherwise the login popup waits for user interaction.
+        // otherwise the login popup waits for user interaction (Email/Google/Anon button click).
         if (initialAuthToken && !user && !window.isLoggingOut) {
             try {
                 await signInWithCustomToken(auth, initialAuthToken);

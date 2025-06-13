@@ -55,8 +55,8 @@
     const rawFirebaseConfig = typeof __firebase_config !== 'undefined'
       ? __firebase_config
       : JSON.stringify({
-          // API key provided by the user: AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw
-          apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", 
+          // !!! IMPORTANT: REPLACE "PASTE_YOUR_ACTUAL_UNIQUE_FIREBASE_API_KEY_HERE" BELOW WITH THE UNIQUE KEY FROM FIREBASE CONSOLE -> PROJECT SETTINGS -> YOUR WEB APP !!!
+          apiKey: "PASTE_YOUR_ACTUAL_UNIQUE_FIREBASE_API_KEY_HERE", 
           authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
           projectId: "martoo-ai-assistant-72d32",
           storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -75,8 +75,8 @@
     } catch (e) {
         console.error("CRITICAL ERROR: Error parsing __firebase_config string. Using hardcoded fallback. Error:", e);
         firebaseConfig = {
-            // API key provided by the user: AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw
-            apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", 
+            // !!! IMPORTANT: REPLACE "PASTE_YOUR_ACTUAL_UNIQUE_FIREBASE_API_KEY_HERE" BELOW WITH THE UNIQUE KEY YOU COPIED FROM FIREBASE CONSOLE -> PROJECT SETTINGS -> YOUR WEB APP !!!
+            apiKey: "PASTE_YOUR_ACTUAL_UNIQUE_FIREBASE_API_KEY_HERE", 
             authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
             projectId: appId,
             storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -96,7 +96,7 @@
     console.log("Final firebaseConfig.projectId value:", firebaseConfig.projectId);
     console.log("Final firebaseConfig.apiKey value:", firebaseConfig.apiKey);
     console.log("Type of firebaseConfig.projectId:", typeof firebaseConfig.projectId);
-    console.log("Is firebaseConfig.apiKey still the placeholder?", firebaseConfig.apiKey === "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw"); // Check against the specific key
+    console.log("Is firebaseConfig.apiKey still the placeholder?", firebaseConfig.apiKey === "PASTE_YOUR_ACTUAL_UNIQUE_FIREBASE_API_KEY_HERE"); // Specific check for placeholder string
     console.log("--- End Firebase Config Debugging ---");
 
 

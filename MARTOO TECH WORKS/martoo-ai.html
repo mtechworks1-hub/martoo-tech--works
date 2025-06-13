@@ -22,6 +22,101 @@
       }
     }
   </script>
+  <style>
+    /* Custom scrollbar styles */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #374151; /* bg-gray-700 */
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #4B5563; /* bg-gray-600 */
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #6B7280; /* bg-gray-500 */
+    }
+
+    /* Active chat styling */
+    #chat-list li.active {
+        background-color: #1F2937; /* A darker gray for active chat */
+        border-left: 4px solid #20c997; /* Teal border for active chat */
+        padding-left: calc(0.75rem - 4px); /* Adjust padding due to border */
+    }
+
+    /* Typing indicator animation */
+    .typing-indicator::after {
+      content: '...';
+      animation: dots 1s steps(3, end) infinite;
+    }
+
+    @keyframes dots {
+      0%, 20% {
+        color: rgba(0,0,0,0);
+        text-shadow:
+          .25em 0 0 rgba(0,0,0,0),
+          .5em 0 0 rgba(0,0,0,0);
+      }
+      40% {
+        color: white;
+        text-shadow:
+          .25em 0 0 rgba(0,0,0,0),
+          .5em 0 0 rgba(0,0,0,0);
+      }
+      60% {
+        text-shadow:
+          .25em 0 0 white,
+          .5em 0 0 rgba(0,0,0,0);
+      }
+      80%, 100% {
+        text-shadow:
+          .25em 0 0 white,
+          .5em 0 0 white;
+      }
+    }
+
+    /* Specific styling for message hover and edit button */
+    .message-wrapper {
+        position: relative;
+        display: flex; /* Ensures edit button is positioned correctly */
+        align-items: center; /* Vertically aligns text and button */
+        gap: 0.5rem; /* Space between message and button */
+    }
+    .message-wrapper .edit-button {
+        display: none; /* Hidden by default */
+        position: absolute;
+        right: -30px; /* Adjust as needed */
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.4); /* Slightly transparent background */
+        color: #fff;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: background-color 0.2s;
+    }
+    .message-wrapper:hover .edit-button,
+    .message-wrapper.editing .edit-button { /* Show when editing or hovering */
+        display: flex;
+    }
+    .message-wrapper .edit-button:hover {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    /* Ensure contenteditable looks good */
+    .chat-message-text[contenteditable="true"] {
+        border: 1px dashed #20c997; /* Teal dashed border for editing */
+        padding: 4px;
+        border-radius: 4px;
+        outline: none; /* Remove default outline */
+    }
+  </style>
   <!-- Firebase Modular SDK imports -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -46,7 +141,7 @@
       doc,
       deleteDoc,
       updateDoc,
-      getDoc // <<-- ADDED THIS IMPORT FOR getDoc FUNCTION
+      getDoc 
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // Global variables from the Canvas environment
@@ -121,6 +216,12 @@
     window.currentChatId = null; 
     window.currentChatMessages = []; 
     window.isLoggingOut = false; // Flag to control anonymous sign-in after explicit logout
+    window.isSendingMessage = false; // Prevents double-send
+
+    // Dictation variables
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    window.recognition = null;
+    window.isDictating = false;
 
     // Custom message display function (replaces alert() and confirm())
     window.showMessage = (message, type = 'info') => {
@@ -179,23 +280,44 @@
 
     // Function to add a message to the chat box display
     // This is now ONLY called by renderMessages to ensure single source of truth for display
-    window.displayMessage = (text, sender) => {
+    window.displayMessage = (text, sender, index) => {
       const chatBox = document.getElementById("chat-box");
       if (!chatBox) {
         console.error("Chat box element not found!");
         return;
       }
+
+      const messageWrapper = document.createElement("div");
+      messageWrapper.classList.add('message-wrapper', 'flex', 'items-start', 'my-2', 'relative'); // Added flex for positioning edit button
+
       const messageElement = document.createElement("p");
-      messageElement.classList.add('p-2', 'my-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md'); 
+      messageElement.classList.add('p-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md', 'chat-message-text'); // Added chat-message-text class
+      messageElement.dataset.messageIndex = index; // Store index for editing
 
       if (sender === "user") {
         messageElement.innerHTML = `<span class="font-semibold text-blue-400">You:</span> ${text}`;
         messageElement.classList.add('bg-blue-600', 'text-white', 'ml-auto'); 
+        messageWrapper.classList.add('flex-row-reverse'); // Align user message to the right
+        
+        // Add Edit Button for user messages
+        const editButton = document.createElement('button');
+        editButton.classList.add('edit-button', 'ml-2'); // Margin-left to separate from text
+        editButton.innerHTML = '<i class="fas fa-edit"></i>';
+        editButton.title = 'Edit Message';
+        editButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent message bubble click if any
+            window.editMessage(window.currentChatId, index, messageElement, editButton);
+        });
+        messageWrapper.appendChild(editButton);
+
       } else { // sender === "ai" or "model"
         messageElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> ${text}`;
         messageElement.classList.add('bg-gray-700', 'text-white', 'mr-auto'); 
+        messageWrapper.classList.add('flex-row'); // Align AI message to the left
       }
-      chatBox.appendChild(messageElement);
+      
+      messageWrapper.appendChild(messageElement);
+      chatBox.appendChild(messageWrapper);
       chatBox.scrollTop = chatBox.scrollHeight;
     };
 
@@ -345,8 +467,8 @@
         // Only show initial AI message if no actual messages are present
         window.displayMessage("Hello 👋 I’m here to help. Ask me anything!", "ai");
       } else {
-        window.currentChatMessages.forEach(msg => {
-            window.displayMessage(msg.text, msg.role);
+        window.currentChatMessages.forEach((msg, index) => { // Pass index for editing
+            window.displayMessage(msg.text, msg.role, index);
         });
       }
       chatBox.scrollTop = chatBox.scrollHeight;
@@ -536,6 +658,124 @@
       });
     };
 
+    /**
+     * Allows editing of a user message.
+     * @param {string} chatId - The ID of the current chat.
+     * @param {number} messageIndex - The index of the message in currentChatMessages to edit.
+     * @param {HTMLElement} messageElement - The P tag displaying the message.
+     * @param {HTMLElement} editButton - The edit button element.
+     */
+    window.editMessage = (chatId, messageIndex, messageElement, editButton) => {
+        if (!window.currentUserId || !chatId || messageIndex === undefined) {
+            window.showMessage("Cannot edit message: authentication or chat issue.", 'error');
+            return;
+        }
+        if (messageElement.contentEditable === 'true') {
+            // Already editing, so this click means "Resend"
+            window.saveEditedMessage(chatId, messageIndex, messageElement.textContent.replace('You: ', '').trim(), messageElement, editButton);
+            return;
+        }
+
+        // Enter edit mode
+        messageElement.contentEditable = 'true';
+        messageElement.classList.add('bg-gray-600'); // Indicate editing state
+        messageElement.classList.add('editing'); // Add class for CSS styling
+        editButton.innerHTML = '<i class="fas fa-paper-plane"></i>'; // Change icon to resend
+        editButton.title = 'Resend Edited Message';
+
+        // Set focus and put cursor at end of text
+        messageElement.focus();
+        const range = document.createRange();
+        range.selectNodeContents(messageElement);
+        range.collapse(false);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        // Add event listener for Enter key to resend
+        const handleKeyPress = (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent new line
+                window.saveEditedMessage(chatId, messageIndex, messageElement.textContent.replace('You: ', '').trim(), messageElement, editButton);
+                messageElement.removeEventListener('keydown', handleKeyPress); // Clean up
+            }
+        };
+        messageElement.addEventListener('keydown', handleKeyPress);
+    };
+
+    /**
+     * Saves the edited message and truncates history, then resends.
+     * @param {string} chatId - The ID of the current chat.
+     * @param {number} messageIndex - The index of the message that was edited.
+     * @param {string} newText - The new text for the message.
+     * @param {HTMLElement} messageElement - The P tag displaying the message.
+     * @param {HTMLElement} editButton - The edit button element.
+     */
+    window.saveEditedMessage = async (chatId, messageIndex, newText, messageElement, editButton) => {
+        if (newText.trim() === '') {
+            window.showMessage("Message cannot be empty.", 'error');
+            // Revert edit state
+            messageElement.contentEditable = 'false';
+            messageElement.classList.remove('bg-gray-600', 'editing');
+            editButton.innerHTML = '<i class="fas fa-edit"></i>';
+            editButton.title = 'Edit Message';
+            window.renderMessages(); // Re-render from current state
+            return;
+        }
+
+        window.isSendingMessage = true; // Prevent new messages during this process
+        const sendButton = document.getElementById("send-button");
+        if(sendButton) sendButton.disabled = true;
+
+        try {
+            // 1. Update the message text in our local state
+            window.currentChatMessages[messageIndex].text = newText;
+            window.currentChatMessages[messageIndex].timestamp = new Date().toISOString(); // Update timestamp
+
+            // 2. Truncate the chat history from the edited message onwards
+            const newMessagesArray = window.currentChatMessages.slice(0, messageIndex + 1);
+
+            // 3. Update Firestore with the truncated history
+            const chatDocRef = doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId);
+            await updateDoc(chatDocRef, {
+                messages: newMessagesArray,
+                updatedAt: serverTimestamp() // Update chat's last updated time
+            });
+            console.log(`Chat ${chatId} history truncated and message ${messageIndex} updated.`);
+            window.showMessage("Message updated, regenerating AI response...", 'info');
+
+            // Reset edit mode UI
+            messageElement.contentEditable = 'false';
+            messageElement.classList.remove('bg-gray-600', 'editing');
+            editButton.innerHTML = '<i class="fas fa-edit"></i>';
+            editButton.title = 'Edit Message';
+
+            // IMPORTANT: onSnapshot will re-render messages after updateDoc.
+            // We need to wait for that render and then trigger sendMessage.
+            // The `sendMessage` function will use the *updated* `window.currentChatMessages`
+            // which will have been synced by onSnapshot.
+            await new Promise(resolve => setTimeout(resolve, 300)); // Small delay for UI sync
+
+            // 4. Trigger sendMessage with the newly updated (and truncated) history.
+            // The last message in window.currentChatMessages is now the edited user message.
+            await window.sendMessage(); // sendMessage will handle the loading indicator and AI call
+
+        } catch (error) {
+            console.error("Error saving edited message or regenerating AI response:", error);
+            window.showMessage("Failed to update message or get AI response. Please try again.", 'error');
+            // Revert UI changes on error
+            messageElement.contentEditable = 'false';
+            messageElement.classList.remove('bg-gray-600', 'editing');
+            editButton.innerHTML = '<i class="fas fa-edit"></i>';
+            editButton.title = 'Edit Message';
+            window.renderMessages(); // Re-render to original state
+        } finally {
+            window.isSendingMessage = false;
+            if(sendButton) sendButton.disabled = false;
+        }
+    };
+
+
     // --- Main Message Sending Logic ---
     window.sendMessage = async () => {
       const userInput = document.getElementById("user-input");
@@ -560,9 +800,11 @@
         return;
       }
 
-      if (!message && (!fileInput || !fileInput.files || !fileInput.files[0])) { 
-        window.showMessage("Please enter a message or select an image.", 'info');
-        return;
+      // If both message and file are empty, prevent sending
+      // This condition now also checks if the message comes from an edit, in which case message might be empty initially
+      if (!message && (!fileInput || !fileInput.files || !fileInput.files[0]) && !window.currentChatMessages[window.currentChatMessages.length - 1]?.isEdited) { 
+          window.showMessage("Please enter a message or select an image.", 'info');
+          return;
       }
 
       window.isSendingMessage = true; 
@@ -578,23 +820,30 @@
               if(sendButton) sendButton.disabled = false;
               return;
           }
-          // Give Firestore a moment to update and load the new chat via onSnapshot
           // Small delay to ensure onSnapshot has a chance to update window.currentChatMessages
           await new Promise(resolve => setTimeout(resolve, 100)); 
       }
 
-      // 1. Create user message object
-      const userMessageObj = {
-          text: message,
-          role: "user",
-          timestamp: new Date().toISOString()
-      };
-      
-      // 2. Save user message to Firestore. This will trigger onSnapshot and re-render display.
-      // Awaiting here ensures window.currentChatMessages is updated before callGemini uses it.
-      await window.saveChatMessage(userMessageObj, window.currentChatId); 
+      // If this is a *new* message (not an edited one triggering a resend from saveEditedMessage)
+      // then we create and save the user message.
+      // If it's a resend from an edit, the message is already in window.currentChatMessages
+      // and has already been saved/updated in saveEditedMessage.
+      const isResendFromEdit = window.currentChatMessages[window.currentChatMessages.length - 1]?.text === message && 
+                               window.currentChatMessages[window.currentChatMessages.length - 1]?.role === 'user' &&
+                               (fileInput && fileInput.files && fileInput.files[0] ? window.currentChatMessages[window.currentChatMessages.length - 1]?.parts?.length > 1 : true); // Check if image parts match
+                               
+      if (!isResendFromEdit) {
+        // 1. Create user message object
+        const userMessageObj = {
+            text: message,
+            role: "user",
+            timestamp: new Date().toISOString()
+        };
+        // 2. Save user message to Firestore. This will trigger onSnapshot and re-render display.
+        await window.saveChatMessage(userMessageObj, window.currentChatId); 
+      }
 
-      // 3. Clear input and files immediately
+      // 3. Clear input and files immediately (even if it's a resend, clear the current input box)
       if(userInput) userInput.value = "";
       if(fileInput) fileInput.value = '';
       if(previewImg) { previewImg.src = ''; previewImg.classList.add('hidden'); }
@@ -617,16 +866,17 @@
           let chatHistoryForGemini = [...window.currentChatMessages]; 
 
           // Filter out the initial AI greeting from history sent to Gemini if it's the *very first* message in chat.
-          // This prevents the 'First content should be with role user, got model' error.
           if (chatHistoryForGemini.length > 0 && chatHistoryForGemini[0].role === 'ai' && chatHistoryForGemini[0].text.includes("Hello 👋 I’m here to help")) {
-              // Only remove if it's the specific initial greeting and it's the first message
-              if (chatHistoryForGemini.filter(m => m.role === 'user').length === 1 && chatHistoryForGemini[0].role === 'ai') {
+              const firstUserMsgIndex = chatHistoryForGemini.findIndex(msg => msg.role === 'user');
+              // If there's a user message and it's the second message in history, the first AI is likely the greeting.
+              // Or if no user messages yet, and it's the only AI message, remove it.
+              if ((firstUserMsgIndex === 1 && chatHistoryForGemini[0].role === 'ai') || (firstUserMsgIndex === -1 && chatHistoryForGemini.length === 1 && chatHistoryForGemini[0].role === 'ai')) {
                   chatHistoryForGemini = chatHistoryForGemini.slice(1); // Remove the initial AI greeting
                   console.log("Filtered out initial AI greeting from Gemini history.");
               }
           }
 
-          // Handle image if present (image understanding)
+          // Handle image if present (image understanding) - this logic should apply to the *last* user message in history
           if (fileInput && fileInput.files && fileInput.files[0]) { 
             const reader = new FileReader();
             reader.onload = async (e) => {
@@ -634,8 +884,8 @@
               // Find the user message object just added to chatHistoryForGemini (it should be the last one)
               // and add image parts to it for the Gemini call.
               const lastMessageForGemini = chatHistoryForGemini[chatHistoryForGemini.length - 1];
-              if (lastMessageForGemini && lastMessageForGemini.role === 'user' && lastMessageForGemini.text === message) {
-                  lastMessageForGemini.parts = [{ text: message }, { inlineData: { mimeType: fileInput.files[0].type, data: base64ImageData } }];
+              if (lastMessageForGemini && lastMessageForGemini.role === 'user') {
+                  lastMessageForGemini.parts = [{ text: lastMessageForGemini.text }, { inlineData: { mimeType: fileInput.files[0].type, data: base64ImageData } }];
               } else {
                   console.warn("Could not find the last user message to attach image data for Gemini API call.");
               }
@@ -689,8 +939,9 @@
           const aiResponseText = result.reply || "⚠️ No valid response from AI.";
 
           // Remove the loading indicator. This is crucial before saving the actual AI message.
-          if (loadingElement && loadingElement.parentNode) {
-              loadingElement.parentNode.removeChild(loadingElement);
+          const currentLoadingIndicator = document.querySelector('.typing-indicator-placeholder');
+          if (currentLoadingIndicator && currentLoadingIndicator.parentNode) {
+              currentLoadingIndicator.parentNode.removeChild(currentLoadingIndicator);
           }
           
           // Create AI message object and save to Firestore. This will trigger onSnapshot to render.
@@ -700,8 +951,9 @@
       } catch (e) {
           console.error("Fetch error to backend or processing response:", e);
           // Remove the loading indicator on error
-          if (loadingElement && loadingElement.parentNode) {
-              loadingElement.parentNode.removeChild(loadingElement); 
+          const currentLoadingIndicator = document.querySelector('.typing-indicator-placeholder');
+          if (currentLoadingIndicator && currentLoadingIndicator.parentNode) {
+              currentLoadingIndicator.parentNode.removeChild(currentLoadingIndicator); 
           }
           // Re-throw the error to be caught by sendMessage's catch block, which handles saving the friendly error message
           throw e; 
@@ -819,6 +1071,71 @@
       }
     };
 
+    // --- Dictation (Speech Recognition) Functions ---
+    window.startDictation = () => {
+        const dictationButton = document.getElementById("dictation-button");
+        const userInput = document.getElementById("user-input");
+
+        if (!window.SpeechRecognition) {
+            window.showMessage("Speech recognition not supported in your browser.", 'error');
+            console.error("SpeechRecognition API not available.");
+            return;
+        }
+
+        if (!window.recognition) {
+            window.recognition = new window.SpeechRecognition();
+            window.recognition.continuous = false; // Only get one result per dictation
+            window.recognition.lang = 'en-US'; // Set language
+            window.recognition.interimResults = false; // Only return final results
+        }
+
+        window.recognition.onstart = () => {
+            window.isDictating = true;
+            if (dictationButton) dictationButton.innerHTML = '<i class="fas fa-microphone-alt animate-pulse"></i>';
+            if (dictationButton) dictationButton.title = 'Listening... Click to Stop';
+            if (userInput) userInput.placeholder = "Listening...";
+            if (userInput) userInput.disabled = true; // Disable input while dictating
+            console.log("Speech recognition started.");
+        };
+
+        window.recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            if (userInput) {
+                userInput.value = transcript;
+            }
+            console.log("Speech recognized:", transcript);
+        };
+
+        window.recognition.onerror = (event) => {
+            window.isDictating = false;
+            if (dictationButton) dictationButton.innerHTML = '<i class="fas fa-microphone"></i>';
+            if (dictationButton) dictationButton.title = 'Start Dictation';
+            if (userInput) {
+                userInput.placeholder = "Ask Martoo AI anything...";
+                userInput.disabled = false; // Re-enable input
+            }
+            window.showMessage(`Speech recognition error: ${event.error}`, 'error');
+            console.error("Speech recognition error:", event.error);
+        };
+
+        window.recognition.onend = () => {
+            window.isDictating = false;
+            if (dictationButton) dictationButton.innerHTML = '<i class="fas fa-microphone"></i>';
+            if (dictationButton) dictationButton.title = 'Start Dictation';
+            if (userInput) {
+                userInput.placeholder = "Ask Martoo AI anything...";
+                userInput.disabled = false; // Re-enable input
+            }
+            console.log("Speech recognition ended.");
+        };
+
+        if (window.isDictating) {
+            window.recognition.stop();
+        } else {
+            window.recognition.start();
+        }
+    };
+
 
     // --- Initializations on Window Load ---
     window.onload = () => {
@@ -848,12 +1165,12 @@
         window.displayMessage("Hello 👋 I’m here to help. Ask me anything!", "ai");
       }
 
+      // Event Listeners
       if (sendButton) sendButton.addEventListener('click', window.sendMessage);
       if (userInput) userInput.addEventListener("keydown", e => {
         if (e.key === "Enter") window.sendMessage();
       });
-      // Dictation feature not implemented, commenting out for now
-      // if (dictationButton) dictationButton.addEventListener('click', window.startDictation); 
+      if (dictationButton) dictationButton.addEventListener('click', window.startDictation); 
       if (loginBtn) loginBtn.addEventListener('click', window.loginUser); 
       if (googleSignInBtn) googleSignInBtn.addEventListener('click', window.googleSignIn);
       if (newChatBtn) newChatBtn.addEventListener('click', () => window.startNewChatSession());
@@ -887,6 +1204,23 @@
       }
       if (sidebarLogoutBtn) {
           sidebarLogoutBtn.addEventListener('click', window.logoutUser);
+      }
+      if (fileInput) {
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            const previewImgElement = document.getElementById('preview-img');
+            if (file && previewImgElement) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImgElement.src = e.target.result;
+                    previewImgElement.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else if (previewImgElement) {
+                previewImgElement.src = '';
+                previewImgElement.classList.add('hidden');
+            }
+        });
       }
 
       if (hamburger) {

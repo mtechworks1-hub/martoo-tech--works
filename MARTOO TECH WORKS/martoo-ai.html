@@ -45,7 +45,8 @@
       serverTimestamp, 
       doc,
       deleteDoc,
-      updateDoc
+      updateDoc,
+      getDoc // <<-- ADDED THIS IMPORT FOR getDoc FUNCTION
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // Global variables from the Canvas environment
@@ -119,7 +120,7 @@
     window.currentUserId = null; 
     window.currentChatId = null; 
     window.currentChatMessages = []; 
-    window.isLoggingOut = false; // New flag to control anonymous sign-in after explicit logout
+    window.isLoggingOut = false; // Flag to control anonymous sign-in after explicit logout
 
     // Custom message display function (replaces alert() and confirm())
     window.showMessage = (message, type = 'info') => {
@@ -177,6 +178,7 @@
     // --- Core Chat UI Functions ---
 
     // Function to add a message to the chat box display
+    // This is now only called by renderMessages to ensure single source of truth for display
     window.displayMessage = (text, sender) => {
       const chatBox = document.getElementById("chat-box");
       if (!chatBox) {
@@ -189,7 +191,7 @@
       if (sender === "user") {
         messageElement.innerHTML = `<span class="font-semibold text-blue-400">You:</span> ${text}`;
         messageElement.classList.add('bg-blue-600', 'text-white', 'ml-auto'); 
-      } else {
+      } else { // sender === "ai" or "model"
         messageElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> ${text}`;
         messageElement.classList.add('bg-gray-700', 'text-white', 'mr-auto'); 
       }
@@ -198,23 +200,16 @@
     };
 
     // Save chat message to Firestore (handles adding new messages to current chat)
-    window.saveChatMessage = async (text, role, chatId = window.currentChatId) => {
+    window.saveChatMessage = async (messageObj, chatId = window.currentChatId) => { // Now accepts messageObj directly
         if (!window.currentUserId || !chatId) {
             console.warn("Cannot save message: User not authenticated or no active chat.");
             return;
         }
 
-        const messageObj = {
-            text: text,
-            role: role,
-            timestamp: new Date().toISOString() 
-        };
-
         try {
             const chatDocRef = doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId);
             
-            // Atomically add the message to the array and then update the main document's timestamp
-            // Retrieve current messages first to append, as onSnapshot might not have updated window.currentChatMessages yet
+            // Retrieve current messages first to append
             const currentChatData = (await getDoc(chatDocRef)).data();
             const messagesToSave = [...(currentChatData?.messages || []), messageObj];
 
@@ -223,7 +218,7 @@
                 updatedAt: serverTimestamp() 
             });
             
-            console.log(`Message (${role}) saved to chat ${chatId}.`);
+            console.log(`Message (${messageObj.role}) saved to chat ${chatId}.`);
         } catch (e) {
             console.error("Error saving message to Firestore:", e);
             window.showMessage("Failed to save message to history.", 'error');
@@ -551,6 +546,17 @@
         return;
       }
 
+      // Check login state and anonymous limit (only if not logged in)
+      if (!window.loggedIn && window.chatCount >= 5) {
+        const loginPopup = document.getElementById("login-popup");
+        if(loginPopup) {
+          loginPopup.classList.remove('hidden');
+          loginPopup.classList.add('flex');
+        }
+        window.showMessage("Please log in to send more messages.", 'info');
+        return;
+      }
+
       if (!message && (!fileInput || !fileInput.files || !fileInput.files[0])) { 
         window.showMessage("Please enter a message or select an image.", 'info');
         return;
@@ -573,19 +579,23 @@
           }
       }
 
-      // Display user message in chat box immediately
-      window.displayMessage(message, "user");
-      // Save user message to Firestore (this will trigger onSnapshot to re-render)
-      window.saveChatMessage(message, "user", window.currentChatId); 
+      // Create user message object
+      const userMessageObj = {
+          text: message,
+          role: "user",
+          timestamp: new Date().toISOString()
+      };
+      
+      // Add user message to local state immediately for display and API call
+      window.currentChatMessages.push(userMessageObj); 
+      window.renderMessages(); // Render all messages including the new user message
 
-      if(userInput) userInput.value = ""; 
-      if(fileInput) fileInput.value = ''; 
-      if(previewImg) {
-        previewImg.src = ''; 
-        previewImg.classList.add('hidden'); 
-      }
+      // Clear input and files
+      if(userInput) userInput.value = "";
+      if(fileInput) fileInput.value = '';
+      if(previewImg) { previewImg.src = ''; previewImg.classList.add('hidden'); }
 
-      // Display loading indicator for AI response
+      // Append loading indicator *after* user message is rendered
       const loadingElement = document.createElement("p");
       loadingElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> <em class="typing-indicator">Typing...</em>`;
       loadingElement.classList.add('p-2', 'my-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md', 'bg-gray-700', 'text-white', 'mr-auto');
@@ -598,36 +608,39 @@
       }
 
       try {
-        let chatHistoryForGemini = [...window.currentChatMessages]; 
+          // Build chat history for Gemini. This now includes the latest user message.
+          let chatHistoryForGemini = [...window.currentChatMessages]; 
 
-        // Handle image if present (image understanding)
-        if (fileInput && fileInput.files && fileInput.files[0]) { 
-          const reader = new FileReader();
-          reader.onload = async (e) => {
-            const base64ImageData = e.target.result.split(',')[1]; 
-            chatHistoryForGemini.push({
-                role: 'user', // Add new user message with image parts
-                parts: [{ text: message }, { inlineData: { mimeType: fileInput.files[0].type, data: base64ImageData } }],
-                timestamp: new Date().toISOString()
-            });
+          // Handle image if present (image understanding)
+          if (fileInput && fileInput.files && fileInput.files[0]) { 
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+              const base64ImageData = e.target.result.split(',')[1]; 
+              // Update the parts of the *last* message (the one just added) to include image data
+              chatHistoryForGemini[chatHistoryForGemini.length - 1].parts = [
+                  { text: message },
+                  { inlineData: { mimeType: fileInput.files[0].type, data: base64ImageData } }
+              ];
+              await window.callGemini(chatHistoryForGemini, loadingElement);
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+          } else {
             await window.callGemini(chatHistoryForGemini, loadingElement);
-          };
-          reader.readAsDataURL(fileInput.files[0]);
-        } else {
-          await window.callGemini(chatHistoryForGemini, loadingElement);
-        }
+          }
 
       } catch (err) {
-        console.error("Error during AI communication (frontend catch):", err);
-        if(loadingElement && loadingElement.parentNode) { // Check if element still in DOM before removing
-            loadingElement.parentNode.removeChild(loadingElement); // Remove loading indicator on error
-        }
-        window.showMessage("AI Response Error: " + (err.message || "Failed to get response."), 'error');
-        // Do NOT save error message here, let onSnapshot handle if backend returns an error message
+          console.error("Error during AI communication (frontend catch):", err);
+          if(loadingElement && loadingElement.parentNode) { 
+              loadingElement.parentNode.removeChild(loadingElement); 
+          }
+          // Add error to local state and save it
+          const errorAiMessage = { role: 'ai', text: `⚠️ Error contacting AI: ${err.message || 'Unknown error'}.`, timestamp: new Date().toISOString() };
+          window.currentChatMessages.push(errorAiMessage); 
+          window.saveChatMessage(errorAiMessage, window.currentChatId); // Save error message object
       } finally {
-        window.isSendingMessage = false; 
-        if(sendButton) sendButton.disabled = false; 
-        if(chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+          window.isSendingMessage = false;
+          if(sendButton) sendButton.disabled = false;
+          if(chatBox) chatBox.scrollTop = chatBox.scrollHeight;
       }
     };
 
@@ -653,21 +666,25 @@
           const result = await response.json();
           const aiResponseText = result.reply || "⚠️ No valid response from AI.";
 
-          // Remove the loading indicator after receiving a response
+          // Remove the loading indicator
           if(loadingElement && loadingElement.parentNode) {
             loadingElement.parentNode.removeChild(loadingElement);
           }
           
-          // Save AI response to Firestore. This will trigger onSnapshot, which in turn calls renderMessages.
-          window.saveChatMessage(aiResponseText, "ai", window.currentChatId);
+          // Add AI response to local state. This will trigger onSnapshot, which in turn calls renderMessages.
+          const aiMessageObj = { role: 'ai', text: aiResponseText, timestamp: new Date().toISOString() };
+          window.currentChatMessages.push(aiMessageObj);
+          window.saveChatMessage(aiMessageObj, window.currentChatId); // Save AI message object
 
       } catch (e) {
           console.error("Fetch error to backend or processing response:", e);
           if(loadingElement && loadingElement.parentNode) {
-            loadingElement.parentNode.removeChild(loadingElement); // Remove loading indicator on error
+            loadingElement.parentNode.removeChild(loadingElement); 
           }
-          // Display the error as an AI message. It will also be saved by saveChatMessage
-          window.saveChatMessage(`⚠️ Error contacting AI: ${e.message || 'Unknown error'}.`, "ai", window.currentChatId);
+          // Display error as an AI message via local state and then save
+          const errorAiMessage = { role: 'ai', text: `⚠️ Error contacting AI: ${e.message || 'Unknown error'}.`, timestamp: new Date().toISOString() };
+          window.currentChatMessages.push(errorAiMessage);
+          window.saveChatMessage(errorAiMessage, window.currentChatId);
       }
     };
 
@@ -720,11 +737,13 @@
                     window.chatSnapshotUnsubscribe = null;
                 }
                 await signOut(auth); 
+                // Reset states immediately after logout
                 window.currentUserId = null;
                 window.loggedIn = false;
                 window.currentChatId = null;
                 window.currentChatMessages = [];
 
+                // Safely update DOM elements with null checks
                 const chatBox = document.getElementById("chat-box");
                 if (chatBox) {
                     chatBox.innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
@@ -750,11 +769,12 @@
                   loginPopup.classList.add('flex');
                 }
                 console.log("User logged out successfully.");
-                setTimeout(() => window.isLoggingOut = false, 1000); // Reset flag after a short delay
+                // Reset flag after a short delay, to allow login popup to stay
+                setTimeout(() => window.isLoggingOut = false, 1000); 
             } catch (error) {
                 console.error("Error logging out:", error);
                 window.showMessage("Error logging out: " + error.message, 'error');
-                setTimeout(() => window.isLoggingOut = false, 1000); // Also reset flag on error
+                setTimeout(() => window.isLoggingOut = false, 1000); 
             }
         });
     };
@@ -817,19 +837,27 @@
       if (googleSignInBtn) googleSignInBtn.addEventListener('click', window.googleSignIn);
       if (newChatBtn) newChatBtn.addEventListener('click', () => window.startNewChatSession());
       if (anonContinueBtn) anonContinueBtn.addEventListener('click', async () => {
+        // Only allow anonymous sign-in via this button
         if (!window.loggedIn) {
             try {
                 await signInAnonymously(window.auth);
                 window.showMessage("Continuing as anonymous user.", 'info');
+                const loginPopup = document.getElementById("login-popup");
+                if (loginPopup) {
+                  loginPopup.classList.add('hidden');
+                  loginPopup.classList.remove('flex');
+                }
             } catch (error) {
                 console.error("Anonymous sign-in on 'Maybe Later' click failed:", error);
-                window.showMessage("Failed to continue anonymously.", 'error');
+                window.showMessage("Failed to continue anonymously: " + error.message, 'error');
             }
-        }
-        const loginPopup = document.getElementById("login-popup");
-        if (loginPopup) {
-          loginPopup.classList.add('hidden');
-          loginPopup.classList.remove('flex');
+        } else {
+            // Already logged in (e.g. user previously logged in, now clicks anon button)
+            const loginPopup = document.getElementById("login-popup");
+            if (loginPopup) {
+              loginPopup.classList.add('hidden');
+              loginPopup.classList.remove('flex');
+            }
         }
       });
       
@@ -928,27 +956,22 @@
         if (loginPopup && !window.isLoggingOut) {
           loginPopup.classList.remove('hidden');
           loginPopup.classList.add('flex'); 
+          console.log("Firebase Auth State Changed: User IS NOT logged in. Login popup visible.");
+        } else {
+          console.log("Firebase Auth State Changed: User IS NOT logged in. Login popup suppressed (isLoggingOut: " + window.isLoggingOut + ").");
         }
-        console.log("Firebase Auth State Changed: User IS NOT logged in.");
-        console.log("  loginPopup is now visible:", loginPopup ? loginPopup.classList.contains('flex') : 'N/A');
 
-        // Handle initial anonymous login ONLY if no user is present AND no explicit login attempt was made
-        // If there's no initial token (Canvas specific) and no user, show login popup.
-        // Anonymous sign-in will now only happen on "Maybe Later" click or if specifically handled by custom token for Canvas.
-        if (!initialAuthToken && !user && loginPopup && loginPopup.classList.contains('flex')) {
-            // User needs to explicitly click login/google/anon
-            // No auto anonymous sign-in here on state change.
-            console.log("Waiting for user to choose login method.");
-        } else if (initialAuthToken && !user) {
-            // If Canvas provided an initial token, try to sign in with it.
-            // This is primarily for the Canvas environment to auto-login.
+        // Automatic anonymous sign-in ONLY for Canvas environment with initialAuthToken,
+        // or if the user explicitly clicks "Maybe Later".
+        // Otherwise, the login popup waits for user interaction.
+        if (initialAuthToken && !user && !window.isLoggingOut) {
             try {
                 await signInWithCustomToken(auth, initialAuthToken);
-                console.log("Signed in with custom token successfully on initial load.");
+                console.log("Signed in with custom token successfully on initial load (Canvas).");
             } catch (error) {
                 console.error("Error signing in with custom token on initial load:", error);
                 window.showMessage("Canvas auth error: " + error.message, 'error');
-                // If custom token fails, then user will need to manually log in
+                // If custom token fails, ensure manual login is still possible
                 if (loginPopup) {
                     loginPopup.classList.remove('hidden');
                     loginPopup.classList.add('flex');

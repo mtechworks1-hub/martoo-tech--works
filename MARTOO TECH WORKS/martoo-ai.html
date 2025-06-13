@@ -826,7 +826,7 @@
 
       // If this is a *new* message (not an edited one triggering a resend from saveEditedMessage)
       // then we create and save the user message.
-      // If it's a resend from an edit, the message is already in window.currentChatMessages
+      // If it's a resend from an an edit, the message is already in window.currentChatMessages
       // and has already been saved/updated in saveEditedMessage.
       const isResendFromEdit = window.currentChatMessages[window.currentChatMessages.length - 1]?.text === message && 
                                window.currentChatMessages[window.currentChatMessages.length - 1]?.role === 'user' &&
@@ -1321,7 +1321,7 @@
         // otherwise the login popup waits for user interaction (Email/Google/Anon button click).
         if (initialAuthToken && !user && !window.isLoggingOut) {
             try {
-                await signInWithCustomToken(auth, initialAuthToken);
+                await signInAnonymously(window.auth);
                 console.log("Signed in with custom token successfully on initial load (Canvas).");
             } catch (error) {
                 console.error("Error signing in with custom token on initial load:", error);

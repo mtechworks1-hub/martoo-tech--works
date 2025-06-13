@@ -55,8 +55,8 @@
     const rawFirebaseConfig = typeof __firebase_config !== 'undefined'
       ? __firebase_config
       : JSON.stringify({
-          // !!! IMPORTANT: REPLACE "PASTE_YOUR_ACTUAL_UNIQUE_FIREBASE_API_KEY_HERE" BELOW WITH THE UNIQUE KEY FROM FIREBASE CONSOLE -> PROJECT SETTINGS -> YOUR WEB APP !!!
-          apiKey: "PASTE_YOUR_ACTUAL_UNIQUE_FIREBASE_API_KEY_HERE", 
+          // User-provided API key: AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw
+          apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", 
           authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
           projectId: "martoo-ai-assistant-72d32",
           storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -75,8 +75,8 @@
     } catch (e) {
         console.error("CRITICAL ERROR: Error parsing __firebase_config string. Using hardcoded fallback. Error:", e);
         firebaseConfig = {
-            // !!! IMPORTANT: REPLACE "PASTE_YOUR_ACTUAL_UNIQUE_FIREBASE_API_KEY_HERE" BELOW WITH THE UNIQUE KEY YOU COPIED FROM FIREBASE CONSOLE -> PROJECT SETTINGS -> YOUR WEB APP !!!
-            apiKey: "PASTE_YOUR_ACTUAL_UNIQUE_FIREBASE_API_KEY_HERE", 
+            // User-provided API key: AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw
+            apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", 
             authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
             projectId: appId,
             storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -96,7 +96,7 @@
     console.log("Final firebaseConfig.projectId value:", firebaseConfig.projectId);
     console.log("Final firebaseConfig.apiKey value:", firebaseConfig.apiKey);
     console.log("Type of firebaseConfig.projectId:", typeof firebaseConfig.projectId);
-    console.log("Is firebaseConfig.apiKey still the placeholder?", firebaseConfig.apiKey === "PASTE_YOUR_ACTUAL_UNIQUE_FIREBASE_API_KEY_HERE"); // Specific check for placeholder string
+    console.log("Is firebaseConfig.apiKey the key you provided?", firebaseConfig.apiKey === "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw"); // Check against the specific key
     console.log("--- End Firebase Config Debugging ---");
 
 
@@ -543,7 +543,6 @@
         document.getElementById("login-popup").classList.remove('hidden');
         document.getElementById("login-popup").classList.add('flex');
         window.showMessage("Please log in to send more messages.", 'info');
-        return;
       }
 
       if (!message && !fileInput.files[0]) {
@@ -967,7 +966,7 @@
       <!-- Chat Input -->
       <div class="chat-input flex flex-col md:flex-row gap-2">
         <input type="text" id="user-input" placeholder="Ask Martoo AI anything..." autocomplete="off"
-               class="flex-grow p-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"/>
+               class="flex-grow p-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-2 focus:ring-teal-500"/>
         
         <input type="file" id="file-input" accept="image/*" class="hidden" />
         <label for="file-input" class="cursor-pointer bg-gray-600 hover:bg-gray-500 text-white p-3 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center">

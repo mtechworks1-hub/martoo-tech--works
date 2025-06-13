@@ -33,7 +33,7 @@
       signInWithEmailAndPassword, 
       GoogleAuthProvider, 
       signInWithPopup,
-      signOut // Added signOut for logout function
+      signOut 
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { 
       getFirestore, 
@@ -49,13 +49,12 @@
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // Global variables from the Canvas environment
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'martoo-ai-assistant-72d32'; // Default app ID
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'martoo-ai-assistant-72d32'; 
     
     // Ensure rawFirebaseConfig is always a string for JSON.parse
     const rawFirebaseConfig = typeof __firebase_config !== 'undefined'
       ? __firebase_config
       : JSON.stringify({
-          // User-provided API key: AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw
           apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", 
           authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
           projectId: "martoo-ai-assistant-72d32",
@@ -75,7 +74,6 @@
     } catch (e) {
         console.error("CRITICAL ERROR: Error parsing __firebase_config string. Using hardcoded fallback. Error:", e);
         firebaseConfig = {
-            // User-provided API key: AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw
             apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", 
             authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
             projectId: appId,
@@ -96,13 +94,13 @@
     console.log("Final firebaseConfig.projectId value:", firebaseConfig.projectId);
     console.log("Final firebaseConfig.apiKey value:", firebaseConfig.apiKey);
     console.log("Type of firebaseConfig.projectId:", typeof firebaseConfig.projectId);
-    console.log("Is firebaseConfig.apiKey the key you provided?", firebaseConfig.apiKey === "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw"); // Check against the specific key
+    console.log("Is firebaseConfig.apiKey the key you provided?", firebaseConfig.apiKey === "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw"); 
     console.log("--- End Firebase Config Debugging ---");
 
 
     // Initialize Firebase
     let appInstance;
-    if (!appInstance) { // Check if appInstance is null or undefined to avoid re-init
+    if (!appInstance) { 
         appInstance = initializeApp(firebaseConfig);
     }
     const auth = getAuth(appInstance);
@@ -117,17 +115,17 @@
 
     // State variables
     window.loggedIn = false;
-    window.chatCount = 0; // For anonymous message limit
-    window.currentUserId = null; // Will be set after authentication
-    window.currentChatId = null; // ID of the currently active chat session
-    window.currentChatMessages = []; // Array of messages for the current session
+    window.chatCount = 0; 
+    window.currentUserId = null; 
+    window.currentChatId = null; 
+    window.currentChatMessages = []; 
+    window.isLoggingOut = false; // New flag to control anonymous sign-in after explicit logout
 
     // Custom message display function (replaces alert() and confirm())
     window.showMessage = (message, type = 'info') => {
       const messageBox = document.getElementById('message-box');
       if (messageBox) {
         messageBox.textContent = message;
-        // Tailwind classes for styling based on type
         messageBox.className = `fixed bottom-4 right-4 p-4 rounded-lg shadow-lg z-50 transition-transform duration-300 transform`;
         if (type === 'error') {
           messageBox.classList.add('bg-red-600', 'text-white');
@@ -136,9 +134,9 @@
         } else { // info or default
           messageBox.classList.add('bg-blue-600', 'text-white');
         }
-        messageBox.classList.remove('translate-x-full'); // Show the message by moving it in
+        messageBox.classList.remove('translate-x-full'); 
         setTimeout(() => {
-          messageBox.classList.add('translate-x-full'); // Hide after 3 seconds by moving it out
+          messageBox.classList.add('translate-x-full'); 
         }, 3000);
       }
     };
@@ -156,7 +154,7 @@
         }
 
         confirmMessageElement.textContent = message;
-        confirmModal.style.display = 'flex'; // Show modal
+        confirmModal.style.display = 'flex'; 
 
         const handleYes = () => {
             confirmModal.style.display = 'none';
@@ -186,14 +184,14 @@
         return;
       }
       const messageElement = document.createElement("p");
-      messageElement.classList.add('p-2', 'my-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md'); // Tailwind classes for chat bubbles
+      messageElement.classList.add('p-2', 'my-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md'); 
 
       if (sender === "user") {
         messageElement.innerHTML = `<span class="font-semibold text-blue-400">You:</span> ${text}`;
-        messageElement.classList.add('bg-blue-600', 'text-white', 'ml-auto'); // User messages align right
+        messageElement.classList.add('bg-blue-600', 'text-white', 'ml-auto'); 
       } else {
         messageElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> ${text}`;
-        messageElement.classList.add('bg-gray-700', 'text-white', 'mr-auto'); // AI messages align left
+        messageElement.classList.add('bg-gray-700', 'text-white', 'mr-auto'); 
       }
       chatBox.appendChild(messageElement);
       chatBox.scrollTop = chatBox.scrollHeight;
@@ -209,17 +207,20 @@
         const messageObj = {
             text: text,
             role: role,
-            timestamp: new Date().toISOString() // FIX: Use ISO string for timestamp in array
+            timestamp: new Date().toISOString() 
         };
 
         try {
-            // Update the existing chat document with the new message
             const chatDocRef = doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId);
             
             // Atomically add the message to the array and then update the main document's timestamp
+            // Retrieve current messages first to append, as onSnapshot might not have updated window.currentChatMessages yet
+            const currentChatData = (await getDoc(chatDocRef)).data();
+            const messagesToSave = [...(currentChatData?.messages || []), messageObj];
+
             await updateDoc(chatDocRef, {
-                messages: [...window.currentChatMessages, messageObj], // Append to existing array
-                updatedAt: serverTimestamp() // This updates the top-level 'updatedAt' field
+                messages: messagesToSave,
+                updatedAt: serverTimestamp() 
             });
             
             console.log(`Message (${role}) saved to chat ${chatId}.`);
@@ -248,7 +249,7 @@
         const chatRef = collection(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`);
         const newChatDocRef = await addDoc(chatRef, {
           title: title,
-          messages: initialMessages.map(msg => ({ // Ensure initial messages also use ISO string for timestamp
+          messages: initialMessages.map(msg => ({ 
             text: msg.text,
             role: msg.role,
             timestamp: msg.timestamp || new Date().toISOString()
@@ -278,21 +279,18 @@
 
       console.log("Loading chat with ID:", chatId);
       try {
-        // Unsubscribe from previous chat listener if any
         if (window.chatSnapshotUnsubscribe) {
             window.chatSnapshotUnsubscribe();
         }
 
         const chatDocRef = doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId);
         
-        // Listen for real-time updates to the specific chat document
         window.chatSnapshotUnsubscribe = onSnapshot(chatDocRef, docSnapshot => {
             if (docSnapshot.exists()) {
                 const chatData = docSnapshot.data();
                 window.currentChatId = docSnapshot.id;
                 window.currentChatMessages = chatData.messages || [];
 
-                // Update active state in sidebar
                 document.querySelectorAll('#chat-list li').forEach(li => {
                     li.classList.remove('active');
                     if (li.dataset.chatId === window.currentChatId) {
@@ -300,16 +298,22 @@
                     }
                 });
 
-                window.renderMessages(); // Re-render chat box with new messages
+                window.renderMessages(); 
                 const chatBox = document.getElementById('chat-box');
                 if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+                console.log("Chat loaded/updated:", window.currentChatId, chatData);
+
+                if (window.innerWidth <= 768) {
+                    const sidebar = document.getElementById('sidebar');
+                    if(sidebar) sidebar.classList.remove('show');
+                }
             } else {
                 console.warn("Selected chat does not exist:", chatId);
                 window.currentChatId = null;
                 window.currentChatMessages = [];
                 window.renderMessages();
                 window.showMessage("The selected chat no longer exists. Starting a new one.", 'info');
-                window.startNewChatSession('New Chat'); // Automatically start new chat
+                window.startNewChatSession('New Chat'); 
             }
         }, error => {
             console.error("Error listening to chat snapshot:", error);
@@ -331,9 +335,9 @@
         console.error("Chat box element not found during renderMessages!");
         return;
       }
-      chatBox.innerHTML = ''; // Clear existing messages
-      const userIdDisplay = document.getElementById("display-user-id");
-      if(userIdDisplay) { // Re-add user ID display within chatbox for consistent display
+      chatBox.innerHTML = ''; 
+      const chatBoxUserIdDisplay = document.getElementById("display-user-id");
+      if(chatBoxUserIdDisplay) { 
         const userIdP = document.createElement("p");
         userIdP.classList.add('text-xs', 'text-gray-400', 'text-right', 'mb-2', 'self-end');
         userIdP.innerHTML = `Your User ID: <span id="display-user-id" class="font-mono break-all">${window.currentUserId || "Loading..."}</span>`;
@@ -357,18 +361,15 @@
     window.loadChatSessions = () => {
       if (!window.currentUserId) {
         const chatListElement = document.getElementById('chat-list');
-        if(chatListElement) chatListElement.innerHTML = ''; // Clear only if element exists
+        if(chatListElement) chatListElement.innerHTML = ''; 
         console.log("No user logged in, chat sessions not loaded.");
         return;
       }
 
       console.log("Loading chat sessions for user:", window.currentUserId);
-      // Query the collection of chat sessions for the current user
       const chatSessionsRef = collection(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`);
-      // Order by updatedAt (or createdAt) to show most recent first
       const q = query(chatSessionsRef, orderBy('updatedAt', 'desc'));
 
-      // Unsubscribe from previous chat sessions listener if any
       if (window.allChatsSnapshotUnsubscribe) {
           window.allChatsSnapshotUnsubscribe();
       }
@@ -379,19 +380,19 @@
           console.error("Chat list element not found!");
           return;
         }
-        chatListElement.innerHTML = ''; // Clear current list
+        chatListElement.innerHTML = ''; 
         let firstChatFound = false;
 
         if (snapshot.empty) {
           console.log("No chat sessions found for this user. Creating a new one automatically.");
-          window.startNewChatSession("My First Chat"); // Automatically create a new chat
-          return; // Exit as new session creation will trigger loadChat
+          window.startNewChatSession("My First Chat"); 
+          return; 
         }
 
         snapshot.forEach(docSnapshot => {
           const chatData = docSnapshot.data();
           const chatId = docSnapshot.id;
-          const chatTitle = chatData.title || `Chat ${chatId.substring(0, 5)}...`; // Fallback title
+          const chatTitle = chatData.title || `Chat ${chatId.substring(0, 5)}...`; 
 
           const li = document.createElement('li');
           li.dataset.chatId = chatId;
@@ -407,45 +408,40 @@
               </button>
           `;
           
-          // Add event listeners using addEventListener
           li.addEventListener('click', (event) => {
-              // Only load chat if not clicking on edit/delete buttons
               if (!event.target.closest('.edit-chat-btn') && !event.target.closest('.delete-chat-btn')) {
                   window.loadChat(chatId);
               }
           });
 
           li.querySelector('.edit-chat-btn').addEventListener('click', (event) => {
-              event.stopPropagation(); // Prevent li click event from firing
+              event.stopPropagation(); 
               window.editChatTitle(chatId, chatTitle);
           });
 
           li.querySelector('.delete-chat-btn').addEventListener('click', (event) => {
-              event.stopPropagation(); // Prevent li click event from firing
+              event.stopPropagation(); 
               window.deleteChat(chatId, chatTitle);
           });
 
           chatListElement.appendChild(li);
 
-          // Auto-load the first chat or previously active chat
           if (!firstChatFound) {
               if (window.currentChatId === chatId) {
-                  li.classList.add('active'); // Mark as active if it's the current one
+                  li.classList.add('active'); 
               } else if (!window.currentChatId) {
-                  // If no chat is currently loaded, load the first one from the list
                   window.loadChat(chatId);
                   firstChatFound = true;
               }
           }
         });
 
-        // If currentChatId is set but not found in the new snapshot (e.g., deleted by another user)
         if (window.currentChatId && !document.querySelector(`#chat-list li[data-chat-id="${window.currentChatId}"]`)) {
             const firstListedChat = chatListElement.querySelector('li');
             if (firstListedChat) {
                 window.loadChat(firstListedChat.dataset.chatId);
             } else {
-                window.startNewChatSession("New Chat"); // No chats left, create a new one
+                window.startNewChatSession("New Chat"); 
             }
         }
         console.log("Chat sessions loaded and list updated in sidebar.");
@@ -492,7 +488,7 @@
             return;
         }
         let title = prompt("Enter a title for your new chat:", defaultTitle);
-        if (title === null) return; // User cancelled
+        if (title === null) return; 
 
         if (title.trim() === '') {
             title = defaultTitle;
@@ -522,7 +518,6 @@
       window.showConfirmModal(`Are you sure you want to delete "${chatTitle}"? This cannot be undone.`, async () => {
           console.log("Attempting to delete chat:", chatId);
           try {
-              // Unsubscribe from this specific chat listener if it's the current one
               if (window.chatSnapshotUnsubscribe && window.currentChatId === chatId) {
                   window.chatSnapshotUnsubscribe();
                   window.chatSnapshotUnsubscribe = null;
@@ -531,13 +526,11 @@
               console.log("Chat deleted successfully:", chatId);
               window.showMessage(`Chat "${chatTitle}" deleted.`, 'success');
 
-              // If the deleted chat was the current one, reset currentChatId and messages
               if (window.currentChatId === chatId) {
                   window.currentChatId = null;
                   window.currentChatMessages = [];
-                  window.renderMessages(); // Clear display
+                  window.renderMessages(); 
               }
-              // The loadChatSessions listener will automatically update the list
           } catch (error) {
               console.error("Error deleting chat:", error);
               window.showMessage("Error deleting chat: " + error.message, 'error');
@@ -551,42 +544,27 @@
       const message = userInput.value.trim();
       const previewImg = document.getElementById('preview-img');
       const fileInput = document.getElementById("file-input");
-      const sendButton = document.getElementById("send-button"); // Get button for disabling
+      const sendButton = document.getElementById("send-button"); 
 
-      if (window.isSendingMessage) { // Prevent multiple clicks
+      if (window.isSendingMessage) { 
         console.log("sendMessage: Already sending a message, preventing duplicate.");
         return;
       }
 
-      // Check login state and anonymous limit
-      if (!window.loggedIn && window.chatCount >= 5) {
-        const loginPopup = document.getElementById("login-popup");
-        if(loginPopup) {
-          loginPopup.classList.remove('hidden');
-          loginPopup.classList.add('flex');
-        }
-        window.showMessage("Please log in to send more messages.", 'info');
-        return;
-      }
-
-      if (!message && (!fileInput || !fileInput.files[0])) { // Added null check for fileInput
+      if (!message && (!fileInput || !fileInput.files || !fileInput.files[0])) { 
         window.showMessage("Please enter a message or select an image.", 'info');
         return;
       }
 
-      window.isSendingMessage = true; // Set flag
-      if(sendButton) sendButton.disabled = true; // Disable send button
-
-      if (!window.loggedIn) {
-          window.chatCount++; // Increment for anonymous users
-      }
+      window.isSendingMessage = true; 
+      if(sendButton) sendButton.disabled = true; 
 
       // If no current chat is selected/loaded, create a new one automatically
       if (!window.currentChatId) {
           window.showMessage("No chat session found. Creating a new one...", 'info');
           const newChatId = await window.createNewChat("New Chat", []);
           if (newChatId) {
-              await window.loadChat(newChatId); // Load the new chat
+              await window.loadChat(newChatId); 
           } else {
               window.showMessage("Could not create a new chat session. Please try again.", 'error');
               window.isSendingMessage = false;
@@ -595,17 +573,16 @@
           }
       }
 
-      // Display user message in chat box
+      // Display user message in chat box immediately
       window.displayMessage(message, "user");
-      // Add user message to currentChatMessages for sending to backend and saving
-      window.currentChatMessages.push({ role: 'user', text: message, timestamp: new Date().toISOString() }); // FIX: Use ISO string here too
-      window.saveChatMessage(message, "user", window.currentChatId); // Save to Firestore
+      // Save user message to Firestore (this will trigger onSnapshot to re-render)
+      window.saveChatMessage(message, "user", window.currentChatId); 
 
-      if(userInput) userInput.value = ""; // Clear input
-      if(fileInput) fileInput.value = ''; // Clear file input
+      if(userInput) userInput.value = ""; 
+      if(fileInput) fileInput.value = ''; 
       if(previewImg) {
-        previewImg.src = ''; // Clear image preview
-        previewImg.classList.add('hidden'); // Hide preview
+        previewImg.src = ''; 
+        previewImg.classList.add('hidden'); 
       }
 
       // Display loading indicator for AI response
@@ -621,18 +598,18 @@
       }
 
       try {
-        let chatHistoryForGemini = [...window.currentChatMessages]; // Clone for sending to Gemini
+        let chatHistoryForGemini = [...window.currentChatMessages]; 
 
         // Handle image if present (image understanding)
-        if (fileInput && fileInput.files && fileInput.files[0]) { // Added more robust null/undefined checks
+        if (fileInput && fileInput.files && fileInput.files[0]) { 
           const reader = new FileReader();
           reader.onload = async (e) => {
-            const base64ImageData = e.target.result.split(',')[1]; // Get base64 part
-            // Add image as inline data to the last user message in the history for Gemini
-            chatHistoryForGemini[chatHistoryForGemini.length - 1].parts = [
-                { text: message },
-                { inlineData: { mimeType: fileInput.files[0].type, data: base64ImageData } }
-            ];
+            const base64ImageData = e.target.result.split(',')[1]; 
+            chatHistoryForGemini.push({
+                role: 'user', // Add new user message with image parts
+                parts: [{ text: message }, { inlineData: { mimeType: fileInput.files[0].type, data: base64ImageData } }],
+                timestamp: new Date().toISOString()
+            });
             await window.callGemini(chatHistoryForGemini, loadingElement);
           };
           reader.readAsDataURL(fileInput.files[0]);
@@ -642,19 +619,21 @@
 
       } catch (err) {
         console.error("Error during AI communication (frontend catch):", err);
-        loadingElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> ⚠️ Error: ${err.message || "Failed to get response."}`;
-        window.saveChatMessage(loadingElement.textContent, "ai", window.currentChatId); // Save error message
+        if(loadingElement && loadingElement.parentNode) { // Check if element still in DOM before removing
+            loadingElement.parentNode.removeChild(loadingElement); // Remove loading indicator on error
+        }
+        window.showMessage("AI Response Error: " + (err.message || "Failed to get response."), 'error');
+        // Do NOT save error message here, let onSnapshot handle if backend returns an error message
       } finally {
-        window.isSendingMessage = false; // Reset flag
-        if(sendButton) sendButton.disabled = false; // Re-enable send button
+        window.isSendingMessage = false; 
+        if(sendButton) sendButton.disabled = false; 
         if(chatBox) chatBox.scrollTop = chatBox.scrollHeight;
       }
     };
 
     // Helper function to make the Gemini API call
     window.callGemini = async (chatHistory, loadingElement) => {
-      const payload = { messages: chatHistory }; // Send the full history as 'messages'
-      // This URL MUST point to your Vercel backend deployment
+      const payload = { messages: chatHistory }; 
       const backendApiUrl = "https://martoo-tech-backend.vercel.app/api/chat";
       console.log("Sending payload to backend API:", backendApiUrl, payload);
 
@@ -674,15 +653,21 @@
           const result = await response.json();
           const aiResponseText = result.reply || "⚠️ No valid response from AI.";
 
-          loadingElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> ${aiResponseText}`;
-          // Add AI response to currentChatMessages and save to Firestore
-          window.currentChatMessages.push({ role: 'ai', text: aiResponseText, timestamp: new Date().toISOString() }); // FIX: Use ISO string here too
+          // Remove the loading indicator after receiving a response
+          if(loadingElement && loadingElement.parentNode) {
+            loadingElement.parentNode.removeChild(loadingElement);
+          }
+          
+          // Save AI response to Firestore. This will trigger onSnapshot, which in turn calls renderMessages.
           window.saveChatMessage(aiResponseText, "ai", window.currentChatId);
 
       } catch (e) {
           console.error("Fetch error to backend or processing response:", e);
-          loadingElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> ⚠️ Error contacting AI: ${e.message || 'Unknown error'}.`;
-          window.saveChatMessage(loadingElement.textContent, "ai", window.currentChatId);
+          if(loadingElement && loadingElement.parentNode) {
+            loadingElement.parentNode.removeChild(loadingElement); // Remove loading indicator on error
+          }
+          // Display the error as an AI message. It will also be saved by saveChatMessage
+          window.saveChatMessage(`⚠️ Error contacting AI: ${e.message || 'Unknown error'}.`, "ai", window.currentChatId);
       }
     };
 
@@ -691,8 +676,8 @@
     window.loginUser = async () => {
       const emailInput = document.getElementById("login-email");
       const passwordInput = document.getElementById("login-password");
-      const email = emailInput?.value; // Use optional chaining
-      const password = passwordInput?.value; // Use optional chaining
+      const email = emailInput?.value; 
+      const password = passwordInput?.value; 
       
       if (!email || !password) {
         window.showMessage("Please enter both email and password.", 'error');
@@ -702,7 +687,6 @@
       try {
         await signInWithEmailAndPassword(auth, email, password);
         window.showMessage("Logged in successfully!", 'success');
-        // onAuthStateChanged listener will handle hiding the popup and loading chats
       } catch (error) {
         console.error("Email/Password login error:", error);
         let errorMessage = "Login failed: " + error.message;
@@ -717,7 +701,6 @@
       try {
         await signInWithPopup(auth, provider);
         window.showMessage("Signed in with Google successfully!", 'success');
-        // onAuthStateChanged listener will handle hiding the popup and loading chats
       } catch (error) {
         console.error("Google login error:", error);
         window.showMessage("Google login failed: " + error.message, 'error');
@@ -727,21 +710,21 @@
     window.logoutUser = async () => {
         window.showConfirmModal("Are you sure you want to log out?", async () => {
             try {
+                window.isLoggingOut = true; // Set flag to prevent immediate anonymous sign-in
                 if (window.allChatsSnapshotUnsubscribe) {
-                    window.allChatsSnapshotUnsubscribe(); // Unsubscribe from all chat sessions
+                    window.allChatsSnapshotUnsubscribe(); 
                     window.allChatsSnapshotUnsubscribe = null;
                 }
                 if (window.chatSnapshotUnsubscribe) {
-                    window.chatSnapshotUnsubscribe(); // Unsubscribe from current chat
+                    window.chatSnapshotUnsubscribe(); 
                     window.chatSnapshotUnsubscribe = null;
                 }
-                await signOut(auth); // Use modular signOut
+                await signOut(auth); 
                 window.currentUserId = null;
                 window.loggedIn = false;
                 window.currentChatId = null;
                 window.currentChatMessages = [];
 
-                // Safely update DOM elements with null checks
                 const chatBox = document.getElementById("chat-box");
                 if (chatBox) {
                     chatBox.innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
@@ -752,8 +735,11 @@
                 const userDisplayNameElement = document.getElementById("user-display-name"); 
                 if (userDisplayNameElement) userDisplayNameElement.textContent = "N/A"; 
                 
-                const displayUserIdElement = document.getElementById("user-id-display"); 
-                if (displayUserIdElement) displayUserIdElement.textContent = "N/A"; 
+                const sidebarUserIdDisplayElement = document.getElementById("user-id-display"); 
+                if (sidebarUserIdDisplayElement) sidebarUserIdDisplayElement.textContent = "N/A"; 
+
+                const chatBoxUserIdDisplay = document.getElementById("display-user-id");
+                if (chatBoxUserIdDisplay) chatBoxUserIdDisplay.textContent = "N/A";
                 
                 const chatListElement = document.getElementById("chat-list");
                 if (chatListElement) chatListElement.innerHTML = ''; 
@@ -764,9 +750,11 @@
                   loginPopup.classList.add('flex');
                 }
                 console.log("User logged out successfully.");
+                setTimeout(() => window.isLoggingOut = false, 1000); // Reset flag after a short delay
             } catch (error) {
                 console.error("Error logging out:", error);
                 window.showMessage("Error logging out: " + error.message, 'error');
+                setTimeout(() => window.isLoggingOut = false, 1000); // Also reset flag on error
             }
         });
     };
@@ -775,8 +763,8 @@
     window.toggleSidebar = () => {
       const sidebar = document.getElementById('sidebar');
       if(sidebar) {
-        sidebar.classList.toggle('hidden'); // Toggle hidden class
-        sidebar.classList.toggle('flex'); // Toggle flex class
+        sidebar.classList.toggle('hidden'); 
+        sidebar.classList.toggle('flex'); 
       } else {
         console.error("Sidebar element not found!");
       }
@@ -794,25 +782,23 @@
 
     // --- Initializations on Window Load ---
     window.onload = () => {
-      // Get DOM elements on load, performing null checks for safety
       const userInput = document.getElementById("user-input");
       const sendButton = document.getElementById("send-button");
       const fileInput = document.getElementById("file-input");
-      const dictationButton = document.getElementById("dictation-button"); // Dictation not yet implemented
+      const dictationButton = document.getElementById("dictation-button"); 
       const loginBtn = document.getElementById("email-login-btn"); 
       const googleSignInBtn = document.getElementById("google-sign-in-btn");
       const newChatBtn = document.getElementById("new-chat-btn");
       const anonContinueBtn = document.getElementById("anon-continue-btn"); 
       const headerLogoutBtn = document.getElementById("header-logout-btn");
-      const sidebarLogoutBtn = document.querySelector('#user-info button'); // Selector for sidebar logout button
+      const sidebarLogoutBtn = document.querySelector('#user-info button'); 
       const hamburger = document.getElementById('hamburger-button'); 
       const menuLinks = document.querySelectorAll("nav ul li a");
       const sidebar = document.getElementById('sidebar');
       const headerNav = document.querySelector('header nav'); 
       const menuUl = document.getElementById('menu');
 
-      // Initial display setup for chat box and user ID
-      const chatBoxUserIdDisplay = document.getElementById("display-user-id"); // In chat box
+      const chatBoxUserIdDisplay = document.getElementById("display-user-id"); 
       if (chatBoxUserIdDisplay) {
         chatBoxUserIdDisplay.textContent = window.currentUserId || "Loading...";
       }
@@ -821,12 +807,11 @@
         window.displayMessage("Hello 👋 I’m here to help. Ask me anything!", "ai");
       }
 
-      // Event Listeners for buttons and input fields (with null checks)
       if (sendButton) sendButton.addEventListener('click', window.sendMessage);
       if (userInput) userInput.addEventListener("keydown", e => {
         if (e.key === "Enter") window.sendMessage();
       });
-      // Dictation feature is not yet implemented, commenting out to avoid potential errors
+      // Dictation feature not implemented, commenting out for now
       // if (dictationButton) dictationButton.addEventListener('click', window.startDictation); 
       if (loginBtn) loginBtn.addEventListener('click', window.loginUser); 
       if (googleSignInBtn) googleSignInBtn.addEventListener('click', window.googleSignIn);
@@ -855,18 +840,15 @@
           sidebarLogoutBtn.addEventListener('click', window.logoutUser);
       }
 
-      // Hamburger menu for mobile
       if (hamburger) {
           hamburger.addEventListener('click', window.toggleMenu);
       }
-      // Hide menu on navigation link click (for mobile)
       menuLinks.forEach(link => {
         link.addEventListener("click", () => {
           if (menuUl) menuUl.classList.add("hidden");
         });
       });
 
-      // Handle sidebar visibility on resize and initial load
       if (window.innerWidth > 768) {
           if (sidebar) { sidebar.classList.remove('hidden'); sidebar.classList.add('flex'); }
           if (headerNav) { headerNav.classList.remove('hidden'); headerNav.classList.add('block'); }
@@ -894,8 +876,6 @@
               }
           }
       });
-      // Initial call to load chat sessions (will trigger onAuthStateChanged)
-      // The onAuthStateChanged listener will handle initial loading of chats after user is authenticated.
     };
 
 
@@ -903,11 +883,10 @@
     onAuthStateChanged(auth, async (user) => {
       const loginPopup = document.getElementById('login-popup');
       const userDisplayNameElement = document.getElementById("user-display-name"); 
-      const sidebarUserIdDisplayElement = document.getElementById("user-id-display"); // Corrected ID for sidebar
+      const sidebarUserIdDisplayElement = document.getElementById("user-id-display"); 
       const chatListElement = document.getElementById('chat-list');
       const chatBox = document.getElementById("chat-box");
-      const chatBoxUserIdDisplay = document.getElementById("display-user-id"); // In chat box header
-
+      const chatBoxUserIdDisplay = document.getElementById("display-user-id"); 
 
       if (user) {
         window.currentUserId = user.uid;
@@ -916,23 +895,11 @@
 
         if (userDisplayNameElement) userDisplayNameElement.textContent = user.displayName || user.email || "User";
         if (sidebarUserIdDisplayElement) sidebarUserIdDisplayElement.textContent = window.currentUserId;
-        if (chatBoxUserIdDisplay) chatBoxUserIdDisplay.textContent = window.currentUserId; // Update the user ID in the chat box if it exists
+        if (chatBoxUserIdDisplay) chatBoxUserIdDisplay.textContent = window.currentUserId; 
 
         console.log("Firebase Auth State Changed: User IS logged in. UID:", window.currentUserId);
         console.log("  DisplayName:", user.displayName);
         console.log("  Email:", user.email);
-
-        // Attempt to sign in with custom token if available (Canvas environment)
-        if (initialAuthToken && user.isAnonymous) {
-            try {
-                console.log("Attempting to sign in with custom token (Canvas environment).");
-                await signInWithCustomToken(auth, initialAuthToken);
-                console.log("Signed in with custom token successfully.");
-            } catch (error) {
-                console.error("Error signing in with custom token:", error);
-                window.showMessage("Canvas auth error: " + error.message, 'error');
-            }
-        }
 
         if (loginPopup) {
           loginPopup.classList.remove('flex');
@@ -940,7 +907,6 @@
         }
         console.log("  loginPopup is now hidden:", loginPopup ? loginPopup.classList.contains('hidden') : 'N/A');
 
-        // Load chat sessions for the authenticated user
         window.loadChatSessions(); 
 
       } else {
@@ -958,20 +924,36 @@
         if (chatBox) chatBox.innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
         if (chatListElement) chatListElement.innerHTML = ''; 
 
-        if (loginPopup) {
+        // Only show the login popup if we're not currently in the process of logging out
+        if (loginPopup && !window.isLoggingOut) {
           loginPopup.classList.remove('hidden');
           loginPopup.classList.add('flex'); 
         }
         console.log("Firebase Auth State Changed: User IS NOT logged in.");
         console.log("  loginPopup is now visible:", loginPopup ? loginPopup.classList.contains('flex') : 'N/A');
 
-        // If no user, attempt anonymous sign-in
-        try {
-            await signInAnonymously(auth);
-            console.log("Signed in anonymously during auth state change.");
-        } catch (error) {
-            console.error("Anonymous sign-in error:", error);
-            window.showMessage("Failed to sign in anonymously. Some features may be limited.", 'error');
+        // Handle initial anonymous login ONLY if no user is present AND no explicit login attempt was made
+        // If there's no initial token (Canvas specific) and no user, show login popup.
+        // Anonymous sign-in will now only happen on "Maybe Later" click or if specifically handled by custom token for Canvas.
+        if (!initialAuthToken && !user && loginPopup && loginPopup.classList.contains('flex')) {
+            // User needs to explicitly click login/google/anon
+            // No auto anonymous sign-in here on state change.
+            console.log("Waiting for user to choose login method.");
+        } else if (initialAuthToken && !user) {
+            // If Canvas provided an initial token, try to sign in with it.
+            // This is primarily for the Canvas environment to auto-login.
+            try {
+                await signInWithCustomToken(auth, initialAuthToken);
+                console.log("Signed in with custom token successfully on initial load.");
+            } catch (error) {
+                console.error("Error signing in with custom token on initial load:", error);
+                window.showMessage("Canvas auth error: " + error.message, 'error');
+                // If custom token fails, then user will need to manually log in
+                if (loginPopup) {
+                    loginPopup.classList.remove('hidden');
+                    loginPopup.classList.add('flex');
+                }
+            }
         }
       }
     });

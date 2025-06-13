@@ -149,6 +149,12 @@
         const confirmYesBtn = document.getElementById('confirm-yes-btn');
         const confirmNoBtn = document.getElementById('confirm-no-btn');
 
+        if (!confirmModal || !confirmMessageElement || !confirmYesBtn || !confirmNoBtn) {
+            console.error('Confirm modal elements not found!');
+            window.showMessage('Confirmation feature is not available.', 'error');
+            return;
+        }
+
         confirmMessageElement.textContent = message;
         confirmModal.style.display = 'flex'; // Show modal
 
@@ -175,6 +181,10 @@
     // Function to add a message to the chat box display
     window.displayMessage = (text, sender) => {
       const chatBox = document.getElementById("chat-box");
+      if (!chatBox) {
+        console.error("Chat box element not found!");
+        return;
+      }
       const messageElement = document.createElement("p");
       messageElement.classList.add('p-2', 'my-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md'); // Tailwind classes for chat bubbles
 
@@ -322,13 +332,23 @@
      */
     window.renderMessages = () => {
       const chatBox = document.getElementById("chat-box");
+      if (!chatBox) {
+        console.error("Chat box element not found during renderMessages!");
+        return;
+      }
       chatBox.innerHTML = ''; // Clear existing messages
+      const userIdDisplay = document.getElementById("display-user-id");
+      if(userIdDisplay) { // Re-add user ID display
+        const userIdP = document.createElement("p");
+        userIdP.classList.add('text-xs', 'text-gray-400', 'text-right', 'mb-2', 'self-end');
+        userIdP.innerHTML = `Your User ID: <span id="display-user-id" class="font-mono break-all">${window.currentUserId || "Loading..."}</span>`;
+        chatBox.appendChild(userIdP);
+      }
+
       if (window.currentChatMessages.length === 0) {
-        chatBox.innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
+        window.displayMessage("Hello 👋 I’m here to help. Ask me anything!", "ai");
       } else {
         window.currentChatMessages.forEach(msg => {
-            // Ensure message timestamp is handled correctly for display order if needed,
-            // though Firestore's orderBy handles it for loading.
             window.displayMessage(msg.text, msg.role);
         });
       }
@@ -341,7 +361,8 @@
      */
     window.loadChatSessions = () => {
       if (!window.currentUserId) {
-        document.getElementById('chat-list').innerHTML = '';
+        const chatListElement = document.getElementById('chat-list');
+        if(chatListElement) chatListElement.innerHTML = ''; // Clear only if element exists
         console.log("No user logged in, chat sessions not loaded.");
         return;
       }
@@ -359,6 +380,10 @@
 
       window.allChatsSnapshotUnsubscribe = onSnapshot(q, snapshot => {
         const chatListElement = document.getElementById('chat-list');
+        if (!chatListElement) {
+          console.error("Chat list element not found!");
+          return;
+        }
         chatListElement.innerHTML = ''; // Clear current list
         let firstChatFound = false;
 
@@ -540,9 +565,13 @@
 
       // Check login state and anonymous limit
       if (!window.loggedIn && window.chatCount >= 5) {
-        document.getElementById("login-popup").classList.remove('hidden');
-        document.getElementById("login-popup").classList.add('flex');
+        const loginPopup = document.getElementById("login-popup");
+        if(loginPopup) {
+          loginPopup.classList.remove('hidden');
+          loginPopup.classList.add('flex');
+        }
         window.showMessage("Please log in to send more messages.", 'info');
+        return;
       }
 
       if (!message && !fileInput.files[0]) {
@@ -551,7 +580,7 @@
       }
 
       window.isSendingMessage = true; // Set flag
-      sendButton.disabled = true; // Disable send button
+      if(sendButton) sendButton.disabled = true; // Disable send button
 
       if (!window.loggedIn) {
           window.chatCount++; // Increment for anonymous users
@@ -566,7 +595,7 @@
           } else {
               window.showMessage("Could not create a new chat session. Please try again.", 'error');
               window.isSendingMessage = false;
-              sendButton.disabled = false;
+              if(sendButton) sendButton.disabled = false;
               return;
           }
       }
@@ -577,23 +606,30 @@
       window.currentChatMessages.push({ role: 'user', text: message, timestamp: new Date().toISOString() }); // FIX: Use ISO string here too
       window.saveChatMessage(message, "user", window.currentChatId); // Save to Firestore
 
-      userInput.value = ""; // Clear input
-      fileInput.value = ''; // Clear file input
-      previewImg.src = ''; // Clear image preview
-      previewImg.classList.add('hidden'); // Hide preview
+      if(userInput) userInput.value = ""; // Clear input
+      if(fileInput) fileInput.value = ''; // Clear file input
+      if(previewImg) {
+        previewImg.src = ''; // Clear image preview
+        previewImg.classList.add('hidden'); // Hide preview
+      }
 
       // Display loading indicator for AI response
       const loadingElement = document.createElement("p");
       loadingElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> <em class="typing-indicator">Typing...</em>`;
       loadingElement.classList.add('p-2', 'my-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md', 'bg-gray-700', 'text-white', 'mr-auto');
-      document.getElementById("chat-box").appendChild(loadingElement);
-      document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+      const chatBox = document.getElementById("chat-box");
+      if(chatBox) {
+        chatBox.appendChild(loadingElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } else {
+        console.error("Chat box element not found when trying to append loading indicator.");
+      }
 
       try {
         let chatHistoryForGemini = [...window.currentChatMessages]; // Clone for sending to Gemini
 
         // Handle image if present (image understanding)
-        if (fileInput.files[0]) {
+        if (fileInput && fileInput.files[0]) {
           const reader = new FileReader();
           reader.onload = async (e) => {
             const base64ImageData = e.target.result.split(',')[1]; // Get base64 part
@@ -615,8 +651,8 @@
         window.saveChatMessage(loadingElement.textContent, "ai", window.currentChatId); // Save error message
       } finally {
         window.isSendingMessage = false; // Reset flag
-        sendButton.disabled = false; // Re-enable send button
-        document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+        if(sendButton) sendButton.disabled = false; // Re-enable send button
+        if(chatBox) chatBox.scrollTop = chatBox.scrollHeight;
       }
     };
 
@@ -660,9 +696,14 @@
     window.loginUser = async () => {
       const emailInput = document.getElementById("login-email");
       const passwordInput = document.getElementById("login-password");
-      const email = emailInput.value;
-      const password = passwordInput.value;
+      const email = emailInput?.value; // Use optional chaining
+      const password = passwordInput?.value; // Use optional chaining
       
+      if (!email || !password) {
+        window.showMessage("Please enter both email and password.", 'error');
+        return;
+      }
+
       try {
         await signInWithEmailAndPassword(auth, email, password);
         window.showMessage("Logged in successfully!", 'success');
@@ -670,8 +711,7 @@
       } catch (error) {
         console.error("Email/Password login error:", error);
         let errorMessage = "Login failed: " + error.message;
-        if (error.code === 'auth/user-not-found') errorMessage = "Login failed: No user found with this email.";
-        else if (error.code === 'auth/wrong-password') errorMessage = "Login failed: Incorrect password.";
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') errorMessage = "Login failed: Incorrect email or password.";
         else if (error.code === 'auth/invalid-email') errorMessage = "Login failed: Invalid email format.";
         window.showMessage(errorMessage, 'error');
       }
@@ -702,14 +742,32 @@
                 }
                 await signOut(auth); // Use modular signOut
                 window.currentUserId = null;
+                window.loggedIn = false;
                 window.currentChatId = null;
                 window.currentChatMessages = [];
-                document.getElementById("chat-box").innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
-                document.getElementById("user-display-name").textContent = "N/A"; // Update display
-                document.getElementById("display-user-id").textContent = "N/A"; // Update display
-                document.getElementById("chat-list").innerHTML = ''; // Clear chat list in sidebar
-                document.getElementById("login-popup").classList.remove('hidden'); // Show login popup
-                document.getElementById("login-popup").classList.add('flex');
+
+                // Safely update DOM elements
+                const chatBox = document.getElementById("chat-box");
+                if (chatBox) {
+                    chatBox.innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
+                } else {
+                    console.error("Chat box element not found during logout!");
+                }
+                
+                const userDisplayNameElement = document.getElementById("user-display-name"); 
+                if (userDisplayNameElement) userDisplayNameElement.textContent = "N/A"; 
+                
+                const displayUserIdElement = document.getElementById("user-id-display"); // Note: it's "user-id-display" not "display-user-id" for the specific element mentioned in HTML
+                if (displayUserIdElement) displayUserIdElement.textContent = "N/A"; 
+                
+                const chatListElement = document.getElementById("chat-list");
+                if (chatListElement) chatListElement.innerHTML = ''; 
+
+                const loginPopup = document.getElementById("login-popup");
+                if (loginPopup) {
+                  loginPopup.classList.remove('hidden');
+                  loginPopup.classList.add('flex');
+                }
                 console.log("User logged out successfully.");
             } catch (error) {
                 console.error("Error logging out:", error);
@@ -721,46 +779,64 @@
     // --- UI Toggles (Made global for programmatic access) ---
     window.toggleSidebar = () => {
       const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('hidden'); // Toggle hidden class
-      sidebar.classList.toggle('flex'); // Toggle flex class
+      if(sidebar) {
+        sidebar.classList.toggle('hidden'); // Toggle hidden class
+        sidebar.classList.toggle('flex'); // Toggle flex class
+      } else {
+        console.error("Sidebar element not found!");
+      }
     };
 
     window.toggleMenu = () => {
-      document.getElementById("menu").classList.toggle("hidden");
+      const menu = document.getElementById("menu");
+      if(menu) {
+        menu.classList.toggle("hidden");
+      } else {
+        console.error("Menu element not found!");
+      }
     };
 
 
     // --- Initializations on Window Load ---
     window.onload = () => {
-      // Get DOM elements on load
+      // Get DOM elements on load, performing null checks for safety
       const userInput = document.getElementById("user-input");
       const sendButton = document.getElementById("send-button");
       const fileInput = document.getElementById("file-input");
       const dictationButton = document.getElementById("dictation-button");
-      const emailLoginBtn = document.getElementById("login-email"); 
-      const passwordLoginBtn = document.getElementById("login-password"); 
       const loginBtn = document.getElementById("email-login-btn"); 
       const googleSignInBtn = document.getElementById("google-sign-in-btn");
       const newChatBtn = document.getElementById("new-chat-btn");
       const anonContinueBtn = document.getElementById("anon-continue-btn"); 
+      const headerLogoutBtn = document.getElementById("header-logout-btn");
+      const sidebarLogoutBtn = document.querySelector('#user-info button'); // Selector for sidebar logout button
+      const hamburger = document.getElementById('hamburger-button'); 
+      const menuLinks = document.querySelectorAll("nav ul li a");
+      const sidebar = document.getElementById('sidebar');
+      const headerNav = document.querySelector('header nav'); 
+      const menuUl = document.getElementById('menu');
 
       // Initial display setup for chat box and user ID
-      document.getElementById("display-user-id").textContent = window.currentUserId || "Loading...";
-      if (document.getElementById("chat-box").children.length === 0) {
+      const displayUserIdElement = document.getElementById("display-user-id"); // In chat box
+      if (displayUserIdElement) {
+        displayUserIdElement.textContent = window.currentUserId || "Loading...";
+      }
+      const chatBox = document.getElementById("chat-box");
+      if (chatBox && chatBox.children.length === 0) {
         window.displayMessage("Hello 👋 I’m here to help. Ask me anything!", "ai");
       }
 
-      // Event Listeners for buttons and input fields
-      sendButton.addEventListener('click', window.sendMessage);
-      userInput.addEventListener("keydown", e => {
+      // Event Listeners for buttons and input fields (with null checks)
+      if (sendButton) sendButton.addEventListener('click', window.sendMessage);
+      if (userInput) userInput.addEventListener("keydown", e => {
         if (e.key === "Enter") window.sendMessage();
       });
-      dictationButton.addEventListener('click', window.startDictation);
-      loginBtn.addEventListener('click', window.loginUser); 
-      googleSignInBtn.addEventListener('click', window.googleSignIn);
-      newChatBtn.addEventListener('click', () => window.startNewChatSession());
-      anonContinueBtn.addEventListener('click', async () => {
-        // Attempt anonymous sign-in if not already authenticated
+      // Dictation feature is not yet implemented, so commenting out for now to avoid errors
+      // if (dictationButton) dictationButton.addEventListener('click', window.startDictation); 
+      if (loginBtn) loginBtn.addEventListener('click', window.loginUser); 
+      if (googleSignInBtn) googleSignInBtn.addEventListener('click', window.googleSignIn);
+      if (newChatBtn) newChatBtn.addEventListener('click', () => window.startNewChatSession());
+      if (anonContinueBtn) anonContinueBtn.addEventListener('click', async () => {
         if (!window.loggedIn) {
             try {
                 await signInAnonymously(window.auth);
@@ -770,69 +846,54 @@
                 window.showMessage("Failed to continue anonymously.", 'error');
             }
         }
-        document.getElementById("login-popup").classList.add('hidden'); // Hide popup
-        document.getElementById("login-popup").classList.remove('flex');
+        const loginPopup = document.getElementById("login-popup");
+        if (loginPopup) {
+          loginPopup.classList.add('hidden');
+          loginPopup.classList.remove('flex');
+        }
       });
       
-      // Logout button listener (if it exists)
-      const headerLogoutBtn = document.getElementById("header-logout-btn");
       if (headerLogoutBtn) {
           headerLogoutBtn.addEventListener('click', window.logoutUser);
       }
-      // Assuming a logout button within the user-info section in sidebar too
-      const sidebarLogoutBtn = document.querySelector('#user-info button');
       if (sidebarLogoutBtn) {
           sidebarLogoutBtn.addEventListener('click', window.logoutUser);
       }
 
-
       // Hamburger menu for mobile
-      const hamburger = document.getElementById('hamburger-button'); 
       if (hamburger) {
           hamburger.addEventListener('click', window.toggleMenu);
       }
       // Hide menu on navigation link click (for mobile)
-      document.querySelectorAll("nav ul li a").forEach(link => {
-        link.addEventListener("click", () => document.getElementById("menu").classList.add("hidden"));
+      menuLinks.forEach(link => {
+        link.addEventListener("click", () => {
+          if (menuUl) menuUl.classList.add("hidden");
+        });
       });
 
       // Handle sidebar visibility on resize and initial load
-      const sidebar = document.getElementById('sidebar');
-      const headerNav = document.querySelector('header nav'); 
-      const menuUl = document.getElementById('menu');
-
       if (window.innerWidth > 768) {
-          sidebar.classList.remove('hidden');
-          sidebar.classList.add('flex');
-          headerNav.classList.remove('hidden'); 
-          headerNav.classList.add('block');
-          menuUl.classList.remove('hidden'); 
-          menuUl.classList.add('flex');
+          if (sidebar) { sidebar.classList.remove('hidden'); sidebar.classList.add('flex'); }
+          if (headerNav) { headerNav.classList.remove('hidden'); headerNav.classList.add('block'); }
+          if (menuUl) { menuUl.classList.remove('hidden'); menuUl.classList.add('flex'); }
       } else {
-          sidebar.classList.add('hidden'); 
-          sidebar.classList.remove('flex');
-          headerNav.classList.add('hidden'); 
-          headerNav.classList.remove('block');
-          menuUl.classList.add('hidden'); 
-          menuUl.classList.remove('flex');
+          if (sidebar) { sidebar.classList.add('hidden'); sidebar.classList.remove('flex'); }
+          if (headerNav) { headerNav.classList.add('hidden'); headerNav.classList.remove('block'); }
+          if (menuUl) { menuUl.classList.add('hidden'); menuUl.classList.remove('flex'); }
       }
 
       window.addEventListener('resize', () => {
           if (window.innerWidth > 768) {
-              sidebar.classList.remove('hidden');
-              sidebar.classList.add('flex');
-              headerNav.classList.remove('hidden');
-              headerNav.classList.add('block');
-              menuUl.classList.remove('hidden');
-              menuUl.classList.add('flex');
+              if (sidebar) { sidebar.classList.remove('hidden'); sidebar.classList.add('flex'); }
+              if (headerNav) { headerNav.classList.remove('hidden'); headerNav.classList.add('block'); }
+              if (menuUl) { menuUl.classList.remove('hidden'); menuUl.classList.add('flex'); }
           } else {
-              if (!sidebar.classList.contains('show')) { 
+              if (sidebar && !sidebar.classList.contains('show')) { 
                  sidebar.classList.add('hidden');
                  sidebar.classList.remove('flex');
               }
-              headerNav.classList.add('hidden');
-              headerNav.classList.remove('block');
-              if (!menuUl.classList.contains('show')) { 
+              if (headerNav) { headerNav.classList.add('hidden'); headerNav.classList.remove('block'); }
+              if (menuUl && !menuUl.classList.contains('show')) { 
                   menuUl.classList.add('hidden');
                   menuUl.classList.remove('flex');
               }
@@ -847,15 +908,22 @@
     onAuthStateChanged(auth, async (user) => {
       const loginPopup = document.getElementById('login-popup');
       const userDisplayNameElement = document.getElementById("user-display-name"); 
-      const displayUserIdElement = document.getElementById("display-user-id"); 
+      const displayUserIdElement = document.getElementById("user-id-display"); // Corrected ID from 'display-user-id' in chat box to 'user-id-display' in sidebar
+      const chatListElement = document.getElementById('chat-list');
+      const chatBox = document.getElementById("chat-box");
+
 
       if (user) {
         window.currentUserId = user.uid;
         window.loggedIn = true;
         window.chatCount = 0; 
 
-        userDisplayNameElement.textContent = user.displayName || user.email || "User";
-        displayUserIdElement.textContent = window.currentUserId;
+        if (userDisplayNameElement) userDisplayNameElement.textContent = user.displayName || user.email || "User";
+        if (displayUserIdElement) displayUserIdElement.textContent = window.currentUserId;
+        // Update the user ID in the chat box if it exists
+        const chatBoxUserIdDisplay = document.getElementById("display-user-id");
+        if (chatBoxUserIdDisplay) chatBoxUserIdDisplay.textContent = window.currentUserId;
+
         console.log("Firebase Auth State Changed: User IS logged in. UID:", window.currentUserId);
         console.log("  DisplayName:", user.displayName);
         console.log("  Email:", user.email);
@@ -872,9 +940,11 @@
             }
         }
 
-        loginPopup.classList.remove('flex');
-        loginPopup.classList.add('hidden');
-        console.log("  loginPopup is now hidden:", loginPopup.classList.contains('hidden'));
+        if (loginPopup) {
+          loginPopup.classList.remove('flex');
+          loginPopup.classList.add('hidden');
+        }
+        console.log("  loginPopup is now hidden:", loginPopup ? loginPopup.classList.contains('hidden') : 'N/A');
 
         // Load chat sessions for the authenticated user
         window.loadChatSessions(); 
@@ -887,15 +957,20 @@
         window.currentChatMessages = [];
         window.chatCount = 0; 
 
-        userDisplayNameElement.textContent = "N/A";
-        displayUserIdElement.textContent = "N/A";
-        document.getElementById("chat-box").innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
-        document.getElementById("chat-list").innerHTML = ''; 
+        if (userDisplayNameElement) userDisplayNameElement.textContent = "N/A";
+        if (displayUserIdElement) displayUserIdElement.textContent = "N/A";
+        const chatBoxUserIdDisplay = document.getElementById("display-user-id");
+        if (chatBoxUserIdDisplay) chatBoxUserIdDisplay.textContent = "N/A";
 
-        loginPopup.classList.remove('hidden');
-        loginPopup.classList.add('flex'); 
+        if (chatBox) chatBox.innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
+        if (chatListElement) chatListElement.innerHTML = ''; 
+
+        if (loginPopup) {
+          loginPopup.classList.remove('hidden');
+          loginPopup.classList.add('flex'); 
+        }
         console.log("Firebase Auth State Changed: User IS NOT logged in.");
-        console.log("  loginPopup is now visible:", loginPopup.classList.contains('flex'));
+        console.log("  loginPopup is now visible:", loginPopup ? loginPopup.classList.contains('flex') : 'N/A');
 
         // If no user, attempt anonymous sign-in
         try {
@@ -966,7 +1041,7 @@
       <!-- Chat Input -->
       <div class="chat-input flex flex-col md:flex-row gap-2">
         <input type="text" id="user-input" placeholder="Ask Martoo AI anything..." autocomplete="off"
-               class="flex-grow p-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-2 focus:ring-teal-500"/>
+               class="flex-grow p-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"/>
         
         <input type="file" id="file-input" accept="image/*" class="hidden" />
         <label for="file-input" class="cursor-pointer bg-gray-600 hover:bg-gray-500 text-white p-3 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center">

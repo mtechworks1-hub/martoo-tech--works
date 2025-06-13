@@ -178,7 +178,7 @@
     // --- Core Chat UI Functions ---
 
     // Function to add a message to the chat box display
-    // This is now only called by renderMessages to ensure single source of truth for display
+    // This is now ONLY called by renderMessages to ensure single source of truth for display
     window.displayMessage = (text, sender) => {
       const chatBox = document.getElementById("chat-box");
       if (!chatBox) {
@@ -200,7 +200,8 @@
     };
 
     // Save chat message to Firestore (handles adding new messages to current chat)
-    window.saveChatMessage = async (messageObj, chatId = window.currentChatId) => { // Now accepts messageObj directly
+    // This function now expects the complete message object to save.
+    window.saveChatMessage = async (messageObj, chatId = window.currentChatId) => { 
         if (!window.currentUserId || !chatId) {
             console.warn("Cannot save message: User not authenticated or no active chat.");
             return;
@@ -209,7 +210,7 @@
         try {
             const chatDocRef = doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId);
             
-            // Retrieve current messages first to append
+            // Retrieve current messages first to append, for robustness against race conditions
             const currentChatData = (await getDoc(chatDocRef)).data();
             const messagesToSave = [...(currentChatData?.messages || []), messageObj];
 
@@ -323,6 +324,7 @@
 
     /**
      * Renders the messages from currentChatMessages array into the chat box.
+     * This is the single source of truth for updating the chat display.
      */
     window.renderMessages = () => {
       const chatBox = document.getElementById("chat-box");
@@ -330,7 +332,7 @@
         console.error("Chat box element not found during renderMessages!");
         return;
       }
-      chatBox.innerHTML = ''; 
+      chatBox.innerHTML = ''; // Clear existing messages
       const chatBoxUserIdDisplay = document.getElementById("display-user-id");
       if(chatBoxUserIdDisplay) { 
         const userIdP = document.createElement("p");
@@ -340,6 +342,7 @@
       }
 
       if (window.currentChatMessages.length === 0) {
+        // Only show initial AI message if no actual messages are present
         window.displayMessage("Hello 👋 I’m here to help. Ask me anything!", "ai");
       } else {
         window.currentChatMessages.forEach(msg => {
@@ -569,36 +572,35 @@
       if (!window.currentChatId) {
           window.showMessage("No chat session found. Creating a new one...", 'info');
           const newChatId = await window.createNewChat("New Chat", []);
-          if (newChatId) {
-              await window.loadChat(newChatId); 
-          } else {
+          if (!newChatId) { // Check for creation failure
               window.showMessage("Could not create a new chat session. Please try again.", 'error');
               window.isSendingMessage = false;
               if(sendButton) sendButton.disabled = false;
               return;
           }
+          // Give Firestore a moment to update and load the new chat via onSnapshot
+          await new Promise(resolve => setTimeout(resolve, 100)); 
       }
 
-      // Create user message object
+      // 1. Create user message object
       const userMessageObj = {
           text: message,
           role: "user",
           timestamp: new Date().toISOString()
       };
       
-      // Add user message to local state immediately for display and API call
-      window.currentChatMessages.push(userMessageObj); 
-      window.renderMessages(); // Render all messages including the new user message
+      // 2. Save user message to Firestore. This will trigger onSnapshot and re-render.
+      await window.saveChatMessage(userMessageObj, window.currentChatId); 
 
-      // Clear input and files
+      // 3. Clear input and files immediately
       if(userInput) userInput.value = "";
       if(fileInput) fileInput.value = '';
       if(previewImg) { previewImg.src = ''; previewImg.classList.add('hidden'); }
 
-      // Append loading indicator *after* user message is rendered
+      // 4. Append loading indicator *after* user message has been displayed (via Firestore listener)
       const loadingElement = document.createElement("p");
       loadingElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> <em class="typing-indicator">Typing...</em>`;
-      loadingElement.classList.add('p-2', 'my-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md', 'bg-gray-700', 'text-white', 'mr-auto');
+      loadingElement.classList.add('p-2', 'my-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md', 'bg-gray-700', 'text-white', 'mr-auto', 'typing-indicator-placeholder'); 
       const chatBox = document.getElementById("chat-box");
       if(chatBox) {
         chatBox.appendChild(loadingElement);
@@ -608,7 +610,11 @@
       }
 
       try {
-          // Build chat history for Gemini. This now includes the latest user message.
+          // Build chat history for Gemini. It's crucial this reflects the state *after* user message is saved.
+          // window.currentChatMessages is updated by the onSnapshot listener for the active chat.
+          // To ensure the latest user message is included for Gemini, we should use the state
+          // that *will be* in Firestore. Given that saveChatMessage is awaited, 
+          // window.currentChatMessages should be up-to-date from the onSnapshot.
           let chatHistoryForGemini = [...window.currentChatMessages]; 
 
           // Handle image if present (image understanding)
@@ -616,11 +622,14 @@
             const reader = new FileReader();
             reader.onload = async (e) => {
               const base64ImageData = e.target.result.split(',')[1]; 
-              // Update the parts of the *last* message (the one just added) to include image data
-              chatHistoryForGemini[chatHistoryForGemini.length - 1].parts = [
-                  { text: message },
-                  { inlineData: { mimeType: fileInput.files[0].type, data: base64ImageData } }
-              ];
+              // Find the user message object just added to chatHistoryForGemini (it should be the last one)
+              // and add image parts to it for the Gemini call.
+              const lastMessageForGemini = chatHistoryForGemini[chatHistoryForGemini.length - 1];
+              if (lastMessageForGemini && lastMessageForGemini.role === 'user' && lastMessageForGemini.text === message) {
+                  lastMessageForGemini.parts = [{ text: message }, { inlineData: { mimeType: fileInput.files[0].type, data: base64ImageData } }];
+              } else {
+                  console.warn("Could not find the last user message to attach image data for Gemini API call.");
+              }
               await window.callGemini(chatHistoryForGemini, loadingElement);
             };
             reader.readAsDataURL(fileInput.files[0]);
@@ -630,13 +639,16 @@
 
       } catch (err) {
           console.error("Error during AI communication (frontend catch):", err);
-          if(loadingElement && loadingElement.parentNode) { 
-              loadingElement.parentNode.removeChild(loadingElement); 
+          // Remove the specific loading indicator, ensure it's removed if error
+          const currentLoadingIndicator = document.querySelector('.typing-indicator-placeholder');
+          if (currentLoadingIndicator && currentLoadingIndicator.parentNode) {
+              currentLoadingIndicator.parentNode.removeChild(currentLoadingIndicator);
           }
-          // Add error to local state and save it
-          const errorAiMessage = { role: 'ai', text: `⚠️ Error contacting AI: ${err.message || 'Unknown error'}.`, timestamp: new Date().toISOString() };
-          window.currentChatMessages.push(errorAiMessage); 
-          window.saveChatMessage(errorAiMessage, window.currentChatId); // Save error message object
+          
+          // Create and save user-friendly error message
+          const friendlyErrorMessage = "Sorry, I'm having trouble connecting right now. Please try again in a moment.";
+          const errorAiMessageObj = { role: 'ai', text: friendlyErrorMessage, timestamp: new Date().toISOString() };
+          await window.saveChatMessage(errorAiMessageObj, window.currentChatId); // Save user-friendly error to Firestore
       } finally {
           window.isSendingMessage = false;
           if(sendButton) sendButton.disabled = false;
@@ -660,31 +672,30 @@
           if (!response.ok) {
               const errorBody = await response.text();
               console.error(`Backend API responded with status ${response.status}:`, errorBody);
+              // Throw specific error to be caught by sendMessage's catch for consistent error display
               throw new Error(`Backend error: ${response.status} - ${errorBody || response.statusText}`);
           }
 
           const result = await response.json();
           const aiResponseText = result.reply || "⚠️ No valid response from AI.";
 
-          // Remove the loading indicator
-          if(loadingElement && loadingElement.parentNode) {
-            loadingElement.parentNode.removeChild(loadingElement);
+          // Remove the loading indicator. This is crucial before saving the actual AI message.
+          if (loadingElement && loadingElement.parentNode) {
+              loadingElement.parentNode.removeChild(loadingElement);
           }
           
-          // Add AI response to local state. This will trigger onSnapshot, which in turn calls renderMessages.
+          // Create AI message object and save to Firestore. This will trigger onSnapshot to render.
           const aiMessageObj = { role: 'ai', text: aiResponseText, timestamp: new Date().toISOString() };
-          window.currentChatMessages.push(aiMessageObj);
-          window.saveChatMessage(aiMessageObj, window.currentChatId); // Save AI message object
+          await window.saveChatMessage(aiMessageObj, window.currentChatId); 
 
       } catch (e) {
           console.error("Fetch error to backend or processing response:", e);
-          if(loadingElement && loadingElement.parentNode) {
-            loadingElement.parentNode.removeChild(loadingElement); 
+          // Remove the loading indicator on error
+          if (loadingElement && loadingElement.parentNode) {
+              loadingElement.parentNode.removeChild(loadingElement); 
           }
-          // Display error as an AI message via local state and then save
-          const errorAiMessage = { role: 'ai', text: `⚠️ Error contacting AI: ${e.message || 'Unknown error'}.`, timestamp: new Date().toISOString() };
-          window.currentChatMessages.push(errorAiMessage);
-          window.saveChatMessage(errorAiMessage, window.currentChatId);
+          // Re-throw the error to be caught by sendMessage's catch block, which handles saving the friendly error message
+          throw e; 
       }
     };
 
@@ -824,6 +835,7 @@
       }
       const chatBox = document.getElementById("chat-box");
       if (chatBox && chatBox.children.length === 0) {
+        // Initial AI message only if chatbox is empty. Otherwise, it's rendered by onSnapshot.
         window.displayMessage("Hello 👋 I’m here to help. Ask me anything!", "ai");
       }
 
@@ -962,8 +974,7 @@
         }
 
         // Automatic anonymous sign-in ONLY for Canvas environment with initialAuthToken,
-        // or if the user explicitly clicks "Maybe Later".
-        // Otherwise, the login popup waits for user interaction.
+        // otherwise the login popup waits for user interaction.
         if (initialAuthToken && !user && !window.isLoggingOut) {
             try {
                 await signInWithCustomToken(auth, initialAuthToken);

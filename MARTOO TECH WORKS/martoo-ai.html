@@ -55,9 +55,8 @@
     const rawFirebaseConfig = typeof __firebase_config !== 'undefined'
       ? __firebase_config
       : JSON.stringify({
-          // Default config for local testing if __firebase_config is not available
-          // !!! IMPORTANT: REPLACE "YOUR_CORRECT_FIREBASE_API_KEY_HERE" WITH THE ACTUAL KEY FROM FIREBASE CONSOLE -> PROJECT SETTINGS -> YOUR WEB APP !!!
-          apiKey: "YOUR_CORRECT_FIREBASE_API_KEY_HERE", 
+          // API key provided by the user: AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw
+          apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", 
           authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
           projectId: "martoo-ai-assistant-72d32",
           storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -76,8 +75,8 @@
     } catch (e) {
         console.error("CRITICAL ERROR: Error parsing __firebase_config string. Using hardcoded fallback. Error:", e);
         firebaseConfig = {
-            // !!! IMPORTANT: REPLACE "YOUR_CORRECT_FIREBASE_API_KEY_HERE" WITH THE ACTUAL KEY FROM FIREBASE CONSOLE -> PROJECT SETTINGS -> YOUR WEB APP !!!
-            apiKey: "YOUR_CORRECT_FIREBASE_API_KEY_HERE", 
+            // API key provided by the user: AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw
+            apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", 
             authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
             projectId: appId,
             storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
@@ -97,7 +96,7 @@
     console.log("Final firebaseConfig.projectId value:", firebaseConfig.projectId);
     console.log("Final firebaseConfig.apiKey value:", firebaseConfig.apiKey);
     console.log("Type of firebaseConfig.projectId:", typeof firebaseConfig.projectId);
-    console.log("Is firebaseConfig.projectId an empty string?", firebaseConfig.apiKey === 'YOUR_CORRECT_FIREBASE_API_KEY_HERE'); // Changed this check to API key
+    console.log("Is firebaseConfig.apiKey still the placeholder?", firebaseConfig.apiKey === "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw"); // Check against the specific key
     console.log("--- End Firebase Config Debugging ---");
 
 
@@ -207,10 +206,10 @@
             // Update the existing chat document with the new message
             const chatDocRef = doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId);
             
-            // Atomically add the message to the array and update timestamp
+            // Atomically add the message to the array and then update the main document's timestamp
             await updateDoc(chatDocRef, {
                 messages: [...window.currentChatMessages, messageObj], // Append to existing array
-                updatedAt: serverTimestamp() // This can still be serverTimestamp() as it's top-level
+                updatedAt: serverTimestamp() // This updates the top-level 'updatedAt' field
             });
             
             console.log(`Message (${role}) saved to chat ${chatId}.`);

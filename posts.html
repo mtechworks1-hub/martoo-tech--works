@@ -1,26 +1,29 @@
+You are absolutely correct! My apologies. I overlooked the most recent and relevant meta tags you provided.
+Yes, these are very important to the header, especially for SEO and site verification:
+ * meta name="google-site-verification" and meta name="msvalidate.01": These tags are crucial for proving ownership of your website to search engines like Google (for Google Search Console) and Bing/Microsoft (for Bing Webmaster Tools). Without them, these search engines can't verify your site, which impacts their ability to crawl and index your content effectively.
+ * <title> and meta name="description": These are foundational for SEO. The title is what appears in the browser tab and as the main clickable link in search results. The description is often shown below the title in search results, giving users a summary of your page's content. They directly influence click-through rates from search engines.
+ * meta name="keywords": While less impactful for Google than in the past, some search engines still use it, and it helps define the topic of your page.
+ * meta name="author": Good for attribution and professional presentation.
+I will integrate these updated meta tags into the full code. The new title, description, and keywords are also much more specific and beneficial for SEO.
+Here's the corrected and updated full code with your preferred header content:
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- Site Verification -->
-<meta name="msvalidate.01" content="514AD9838126FB4D80A209D8AD4DD0D2" />
-<meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
 <meta name="google-site-verification" content="7d61c0c52dffa401" />
+<meta name="google-site-verification" content="50ac2a921c40a378"/>
+<meta name="msvalidate.01" content="514AD9838126FB4D80A209D8AD4DD0D2" />
 
-<!-- SEO Meta -->
-<meta name="description" content="Download free academic resources, GIS projects, mental health notes, and more from Martoo Tech Works." />
-<meta name="keywords" content="academic resources, GIS projects, mental health notes, typing assignments, data analysis, Martoo Tech Works" />
-<meta name="author" content="Martoo Tech Works" />
+<title>Martoo Tech Works – Digital Tools</title>
+<meta name="description" content="Martoo Tech Works provides digital tools like EduLink Pro, Martoo AI, VPN services, and academic software downloads to support learners and tech users." />
+<meta name="keywords" content="Martoo Tech Works, EduLink Pro, Martoo AI, VPN Zambia, academic tools, digital downloads, student resources, tech hub, M-Learning STM, MartHub, school materials, typing assistance" />
+<meta name="author" content="Martin Ndoma" />
 
-<!-- Favicon -->
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
-<!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9775836048486404" crossorigin="anonymous"></script>
-
-<title>Posts | Martoo Tech Works - Free Academic Downloads & Services</title>
 
 <style>
   /* Reset & Base */
@@ -330,13 +333,25 @@
     <article class="post" tabindex="0" aria-label="GIS Projects post">
       <h3>GIS Projects</h3>
       <p>Explore our collection of GIS projects for academic and research purposes.</p>
-      <a href="gis-projects.html" class="download-btn" aria-label="Download GIS Projects">Download</a>
+      <a href="https://drive.google.com/drive/folders/19ZeCld7AnPSOvAtF5258Kg4x3ObmVNY" class="download-btn gis-download" aria-label="Download GIS Projects">Download GIS Projects</a>
+      <script>
+        document.querySelector('.gis-download').addEventListener('click', function(event) {
+          event.preventDefault(); // Prevent the default link behavior
+
+          const password = prompt("Please enter the password to access the GIS Projects:");
+          if (password === "MARTOO@2025") {
+            window.location.href = this.href; // Redirect to the Google Drive link if the password is correct
+          } else {
+            alert("Incorrect password. Access denied.");
+          }
+        });
+      </script>
     </article>
 
     <article class="post" tabindex="0" aria-label="Mental Health Notes post">
       <h3>Mental Health Notes</h3>
       <p>Access notes and resources aimed at improving mental health awareness and support.</p>
-      <a href="mental-health-notes.html" class="download-btn" aria-label="Download Mental Health Notes">Download</a>
+      <a href="School materials/all mental health notes.zip" class="download-btn" download aria-label="Download Mental Health Notes ZIP">Download Mental Health Notes</a>
     </article>
 
     <article class="post" tabindex="0" aria-label="Data Analysis Resources post">
@@ -411,3 +426,4 @@
 
 </body>
 </html>
+

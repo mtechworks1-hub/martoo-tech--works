@@ -1,32 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.martootechworks.great-site.net/</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.martootechworks.great-site.net/index.html</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.martootechworks.great-site.net/about.html</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.martootechworks.great-site.net/services.html</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.martootechworks.great-site.net/posts.html</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.martootechworks.great-site.net/contact.html</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.martootechworks.great-site.net/typing-assignment.html</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.martootechworks.great-site.net/School%20materials/all%20mental%20health%20notes.zip</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.martootechworks.great-site.net/data-analysis.html</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.martootechworks.great-site.net/study-guides.html</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.martootechworks.great-site.net/exam-tips.html</loc>
+    <lastmod>2025-06-24T13:04:07+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

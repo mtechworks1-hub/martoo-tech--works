@@ -1,1463 +1,656 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Martoo AI Assistant</title>
-  <!-- Inter font from Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-  <!-- Tailwind CSS CDN for styling -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Configure Tailwind to use 'Inter' font -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            inter: ['Inter', 'sans-serif'],
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martoo AI Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
         }
-      }
-    }
-  </script>
-  <style>
-    /* Custom scrollbar styles */
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 8px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #374151; /* bg-gray-700 */
-      border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #4B5563; /* bg-gray-600 */
-      border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #6B7280; /* bg-gray-500 */
-    }
-
-    /* Active chat styling */
-    #chat-list li.active {
-        background-color: #1F2937; /* A darker gray for active chat */
-        border-left: 4px solid #20c997; /* Teal border for active chat */
-        padding-left: calc(0.75rem - 4px); /* Adjust padding due to border */
-    }
-
-    /* Typing indicator animation */
-    .typing-indicator::after {
-      content: '...';
-      animation: dots 1s steps(3, end) infinite;
-    }
-
-    @keyframes dots {
-      0%, 20% {
-        color: rgba(0,0,0,0);
-        text-shadow:
-          .25em 0 0 rgba(0,0,0,0),
-          .5em 0 0 rgba(0,0,0,0);
-      }
-      40% {
-        color: white;
-        text-shadow:
-          .25em 0 0 rgba(0,0,0,0),
-          .5em 0 0 rgba(0,0,0,0);
-      }
-      60% {
-        text-shadow:
-          .25em 0 0 white,
-          .5em 0 0 rgba(0,0,0,0);
-      }
-      80%, 100% {
-        text-shadow:
-          .25em 0 0 white,
-          .5em 0 0 white;
-      }
-    }
-
-    /* Specific styling for message hover and edit button */
-    .message-wrapper {
-        position: relative;
-        display: flex; /* Ensures edit button is positioned correctly */
-        align-items: center; /* Vertically aligns text and button */
-        gap: 0.5rem; /* Space between message and button */
-    }
-    .message-wrapper .edit-button {
-        display: none; /* Hidden by default */
-        position: absolute;
-        right: -30px; /* Adjust as needed */
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.4); /* Slightly transparent background */
-        color: #fff;
-        border-radius: 50%;
-        width: 24px;
-        height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 0.8rem;
-        transition: background-color 0.2s;
-    }
-    .message-wrapper:hover .edit-button,
-    .message-wrapper.editing .edit-button { /* Show when editing or hovering */
-        display: flex;
-    }
-    .message-wrapper .edit-button:hover {
-        background-color: rgba(0, 0, 0, 0.6);
-    }
-    /* Ensure contenteditable looks good */
-    .chat-message-text[contenteditable="true"] {
-        border: 1px dashed #20c997; /* Teal dashed border for editing */
-        padding: 4px;
-        border-radius: 4px;
-        outline: none; /* Remove default outline */
-    }
-  </style>
-  <!-- Firebase Modular SDK imports -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { 
-      getAuth, 
-      signInAnonymously, 
-      signInWithCustomToken, 
-      onAuthStateChanged, 
-      signInWithEmailAndPassword, 
-      GoogleAuthProvider, 
-      signInWithPopup,
-      signOut 
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { 
-      getFirestore, 
-      collection, 
-      query, 
-      orderBy,
-      addDoc, 
-      onSnapshot, 
-      serverTimestamp, 
-      doc,
-      deleteDoc,
-      updateDoc,
-      getDoc 
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-    // Global variables from the Canvas environment
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'martoo-ai-assistant-72d32'; 
-    
-    // Ensure rawFirebaseConfig is always a string for JSON.parse
-    const rawFirebaseConfig = typeof __firebase_config !== 'undefined'
-      ? __firebase_config
-      : JSON.stringify({
-          apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", 
-          authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
-          projectId: "martoo-ai-assistant-72d32",
-          storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
-          messagingSenderId: "8645131201",
-          appId: "1:8645131201:web:2602e81ae10c3857ce8d40",
-          measurementId: "G-6V02113XPX"
-      });
-
-    let firebaseConfig;
-    try {
-        firebaseConfig = JSON.parse(rawFirebaseConfig);
-        if (!firebaseConfig.projectId) {
-            console.warn("firebaseConfig.projectId is missing. Attempting to use appId as projectId for Firebase init.");
-            firebaseConfig.projectId = appId;
+        /* Custom scrollbar for chat messages */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
         }
-    } catch (e) {
-        console.error("CRITICAL ERROR: Error parsing __firebase_config string. Using hardcoded fallback. Error:", e);
-        firebaseConfig = {
-            apiKey: "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw", 
-            authDomain: "martoo-ai-assistant-72d32.firebaseapp.com",
-            projectId: appId,
-            storageBucket: "martoo-ai-assistant-72d32.firebasestorage.app",
-            messagingSenderId: "8645131201",
-            appId: "1:8645131201:web:2602e81ae10c3857ce8d40",
-            measurementId: "G-6V02113XPX"
-        };
-        window.showMessage("CRITICAL: Firebase config could not be parsed. Using default settings. Please check console.", 'error');
-    }
-
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-    // --- DEEP DEBUGGING LOGS FOR FIREBASE CONFIG ---
-    console.log("--- Firebase Config Debugging ---");
-    console.log("Raw __firebase_config string (received from Canvas or default):", rawFirebaseConfig);
-    console.log("Parsed/Final firebaseConfig object for initialization:", firebaseConfig);
-    console.log("Final firebaseConfig.projectId value:", firebaseConfig.projectId);
-    console.log("Final firebaseConfig.apiKey value:", firebaseConfig.apiKey);
-    console.log("Type of firebaseConfig.projectId:", typeof firebaseConfig.projectId);
-    console.log("Is firebaseConfig.apiKey the key you provided?", firebaseConfig.apiKey === "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw"); 
-    console.log("--- End Firebase Config Debugging ---");
-
-
-    // Initialize Firebase
-    let appInstance;
-    if (!appInstance) { 
-        appInstance = initializeApp(firebaseConfig);
-    }
-    const auth = getAuth(appInstance);
-    const db = getFirestore(appInstance);
-
-    // Make Firebase instances and core variables globally accessible
-    window.app = appInstance;
-    window.auth = auth;
-    window.db = db;
-    window.appId = appId;
-    window.initialAuthToken = initialAuthToken;
-
-    // State variables
-    window.loggedIn = false;
-    window.chatCount = 0; 
-    window.currentUserId = null; 
-    window.currentChatId = null; 
-    window.currentChatMessages = []; 
-    window.isLoggingOut = false; // Flag to control anonymous sign-in after explicit logout
-    window.isSendingMessage = false; // Prevents double-send
-
-    // Dictation variables
-    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    window.recognition = null;
-    window.isDictating = false;
-
-    // Custom message display function (replaces alert() and confirm())
-    window.showMessage = (message, type = 'info') => {
-      const messageBox = document.getElementById('message-box');
-      if (messageBox) {
-        messageBox.textContent = message;
-        messageBox.className = `fixed bottom-4 right-4 p-4 rounded-lg shadow-lg z-50 transition-transform duration-300 transform`;
-        if (type === 'error') {
-          messageBox.classList.add('bg-red-600', 'text-white');
-        } else if (type === 'success') {
-          messageBox.classList.add('bg-green-600', 'text-white');
-        } else { // info or default
-          messageBox.classList.add('bg-blue-600', 'text-white');
+        .chat-messages::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
         }
-        messageBox.classList.remove('translate-x-full'); 
-        setTimeout(() => {
-          messageBox.classList.add('translate-x-full'); 
-        }, 3000);
-      }
-    };
-
-    window.showConfirmModal = (message, onConfirmCallback, onCancelCallback) => {
-        const confirmModal = document.getElementById('confirm-modal');
-        const confirmMessageElement = document.getElementById('confirm-message');
-        const confirmYesBtn = document.getElementById('confirm-yes-btn');
-        const confirmNoBtn = document.getElementById('confirm-no-btn');
-
-        if (!confirmModal || !confirmMessageElement || !confirmYesBtn || !confirmNoBtn) {
-            console.error('Confirm modal elements not found!');
-            window.showMessage('Confirmation feature is not available.', 'error');
-            return;
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
         }
-
-        confirmMessageElement.textContent = message;
-        confirmModal.style.display = 'flex'; 
-
-        const handleYes = () => {
-            confirmModal.style.display = 'none';
-            confirmYesBtn.removeEventListener('click', handleYes);
-            confirmNoBtn.removeEventListener('click', handleNo);
-            if (onConfirmCallback) onConfirmCallback();
-        };
-
-        const handleNo = () => {
-            confirmModal.style.display = 'none';
-            confirmYesBtn.removeEventListener('click', handleYes);
-            confirmNoBtn.removeEventListener('click', handleNo);
-            if (onCancelCallback) onCancelCallback();
-        };
-
-        confirmYesBtn.addEventListener('click', handleYes);
-        confirmNoBtn.addEventListener('click', handleNo);
-    };
-
-    // --- Core Chat UI Functions ---
-
-    // Function to add a message to the chat box display
-    // This is now ONLY called by renderMessages to ensure single source of truth for display
-    window.displayMessage = (text, sender, index) => {
-      const chatBox = document.getElementById("chat-box");
-      if (!chatBox) {
-        console.error("Chat box element not found!");
-        return;
-      }
-
-      const messageWrapper = document.createElement("div");
-      messageWrapper.classList.add('message-wrapper', 'flex', 'items-start', 'my-2', 'relative'); // Added flex for positioning edit button
-
-      const messageElement = document.createElement("p");
-      messageElement.classList.add('p-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md', 'chat-message-text'); // Added chat-message-text class
-      messageElement.dataset.messageIndex = index; // Store index for editing
-
-      if (sender === "user") {
-        messageElement.innerHTML = `<span class="font-semibold text-blue-400">You:</span> ${text}`;
-        messageElement.classList.add('bg-blue-600', 'text-white', 'ml-auto'); 
-        messageWrapper.classList.add('flex-row-reverse'); // Align user message to the right
-        
-        // Add Edit Button for user messages
-        const editButton = document.createElement('button');
-        editButton.classList.add('edit-button', 'ml-2'); // Margin-left to separate from text
-        editButton.innerHTML = '<i class="fas fa-edit"></i>';
-        editButton.title = 'Edit Message';
-        editButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent message bubble click if any
-            window.editMessage(window.currentChatId, index, messageElement, editButton);
-        });
-        messageWrapper.appendChild(editButton);
-
-      } else { // sender === "ai" or "model"
-        messageElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> ${text}`;
-        messageElement.classList.add('bg-gray-700', 'text-white', 'mr-auto'); 
-        messageWrapper.classList.add('flex-row'); // Align AI message to the left
-      }
-      
-      messageWrapper.appendChild(messageElement);
-      chatBox.appendChild(messageWrapper);
-      chatBox.scrollTop = chatBox.scrollHeight;
-    };
-
-    // Save chat message to Firestore (handles adding new messages to current chat)
-    // This function now expects the complete message object to save.
-    window.saveChatMessage = async (messageObj, chatId = window.currentChatId) => { 
-        if (!window.currentUserId || !chatId) {
-            console.warn("Cannot save message: User not authenticated or no active chat.");
-            return;
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
+        /* Style for the typing indicator dots */
+        .typing-indicator span {
+            animation: blink 1s infinite;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        /* Hide scrollbar for the sidebar on small screens */
+        .sidebar-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sidebar-nav {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* Custom button styles for a modern look */
+        .btn-gradient {
+            background-image: linear-gradient(to right, #4CAF50, #8BC34A);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-gradient:hover {
+            background-image: linear-gradient(to right, #8BC34A, #4CAF50);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            transform: translateY(-1px);
+        }
+        .btn-gradient:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen bg-gray-100 text-gray-800">
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInWithCustomToken, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, query, orderBy, onSnapshot, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Global variables for Firebase services
+        let app;
+        let db;
+        let auth;
+        let currentUserId = null;
+        let currentUserName = null;
+        let currentChatId = null; // Stores the ID of the currently active chat
+        let chatSessions = {}; // Stores all chat sessions for the logged-in user
+
+        // MANDATORY: Firebase config and auth token from Canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfigString = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let firebaseConfig = {};
         try {
-            const chatDocRef = doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId);
-            
-            // Retrieve current messages first to append, for robustness against race conditions
-            const currentChatData = (await getDoc(chatDocRef)).data();
-            const messagesToSave = [...(currentChatData?.messages || []), messageObj];
-
-            await updateDoc(chatDocRef, {
-                messages: messagesToSave,
-                updatedAt: serverTimestamp() 
-            });
-            
-            console.log(`Message (${messageObj.role}) saved to chat ${chatId}.`);
+            firebaseConfig = JSON.parse(firebaseConfigString);
         } catch (e) {
-            console.error("Error saving message to Firestore:", e);
-            window.showMessage("Failed to save message to history.", 'error');
+            console.error("Failed to parse __firebase_config:", e);
         }
-    };
 
-    // --- Chat Session Management Functions ---
+        // Debugging Firebase Config
+        console.log("--- Firebase Config Debugging ---");
+        console.log("Raw __firebase_config string (received from Canvas or default):", firebaseConfigString);
+        console.log("Parsed/Final firebaseConfig object for initialization:", firebaseConfig);
+        console.log("Final firebaseConfig.projectId value:", firebaseConfig.projectId);
+        console.log("Final firebaseConfig.apiKey value:", firebaseConfig.apiKey);
+        console.log("Type of firebaseConfig.projectId:", typeof firebaseConfig.projectId);
+        console.log("Is firebaseConfig.apiKey the key you provided?", firebaseConfig.apiKey === "AIzaSyAPbeCzUCL1ocuLrdeySK0FXdqmympqCFw"); // Replace with your actual key for verification
+        console.log("--- End Firebase Config Debugging ---");
 
-    /**
-     * Creates a new chat session in Firestore.
-     * @param {string} title - The title for the new chat.
-     * @param {Array} initialMessages - An optional array of initial messages.
-     * @returns {Promise<string>} The ID of the newly created chat.
-     */
-    window.createNewChat = async (title, initialMessages = []) => {
-      if (!window.currentUserId) {
-        window.showMessage("Please log in to create a new chat.", 'error');
-        return null;
-      }
+        // Initialize Firebase
+        if (Object.keys(firebaseConfig).length > 0 && firebaseConfig.projectId) {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+        } else {
+            console.error("Firebase not initialized: Missing or invalid firebaseConfig.");
+            document.getElementById('chat-messages').innerHTML = '<div class="text-center text-red-500">Error: Firebase configuration is missing or invalid. Cannot load chat.</div>';
+        }
 
-      console.log("Attempting to create new chat with title:", title);
-      try {
-        const chatRef = collection(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`);
-        const newChatDocRef = await addDoc(chatRef, {
-          title: title,
-          messages: initialMessages.map(msg => ({ 
-            text: msg.text,
-            role: msg.role,
-            timestamp: msg.timestamp || new Date().toISOString()
-          })),
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-          userId: window.currentUserId
+        // Function to sign in with Google (for optional future use or if anonymous fails)
+        window.signInWithGoogle = async () => {
+            const provider = new GoogleAuthProvider();
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                console.error("Error signing in with Google:", error);
+                alert("Error signing in with Google: " + error.message);
+            }
+        };
+
+        // Function to handle authentication state changes
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserId = user.uid;
+                currentUserName = user.displayName || user.email || "Anonymous User";
+                console.log("Firebase Auth State Changed: User IS logged in. UID:", currentUserId);
+                console.log("   DisplayName:", currentUserName);
+                console.log("   Email:", user.email);
+
+                document.getElementById('login-popup').classList.add('hidden');
+                document.getElementById('logged-in-user').textContent = currentUserName;
+                document.getElementById('user-uid').textContent = currentUserId;
+                document.getElementById('login-section').classList.remove('hidden');
+                document.getElementById('sidebar').classList.remove('hidden'); // Show sidebar after login
+
+                // Load existing chat sessions for the user
+                loadChatSessions(currentUserId);
+
+            } else {
+                currentUserId = null;
+                currentUserName = null;
+                console.log("Firebase Auth State Changed: User IS NOT logged in.");
+                document.getElementById('login-popup').classList.remove('hidden');
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('sidebar').classList.add('hidden'); // Hide sidebar if not logged in
+                document.getElementById('chat-messages').innerHTML = '<div class="text-center text-gray-500 mt-4">Please log in to start chatting.</div>';
+                document.getElementById('chat-input-area').classList.add('hidden'); // Hide input area
+            }
         });
-        console.log("New chat created with ID:", newChatDocRef.id);
-        return newChatDocRef.id;
-      } catch (error) {
-        console.error("Error creating new chat:", error);
-        window.showMessage("Error creating new chat: " + error.message, 'error');
-        return null;
-      }
-    };
 
-    /**
-     * Loads the messages of a specific chat session into the chat box.
-     * @param {string} chatId - The ID of the chat session to load.
-     */
-    window.loadChat = async (chatId) => {
-      if (!window.currentUserId || !chatId) {
-        console.warn("Cannot load chat: user not logged in or chatId is missing.");
-        return;
-      }
-
-      console.log("Loading chat with ID:", chatId);
-      try {
-        if (window.chatSnapshotUnsubscribe) {
-            window.chatSnapshotUnsubscribe();
+        // Initial sign-in attempt (custom token from Canvas or anonymous)
+        if (auth && initialAuthToken) {
+            try {
+                await signInWithCustomToken(auth, initialAuthToken);
+                console.log("Signed in with custom token from Canvas.");
+            } catch (error) {
+                console.error("Error signing in with custom token:", error);
+                // Fallback to anonymous if custom token fails
+                try {
+                    await signInAnonymously(auth);
+                    console.log("Signed in anonymously (fallback).");
+                } catch (anonError) {
+                    console.error("Error signing in anonymously:", anonError);
+                    alert("Authentication failed. Please try again later.");
+                }
+            }
+        } else if (auth) {
+            // If no custom token, try anonymous sign-in directly
+            try {
+                await signInAnonymously(auth);
+                console.log("Signed in anonymously (no custom token provided).");
+            } catch (anonError) {
+                console.error("Error signing in anonymously:", anonError);
+                alert("Authentication failed. Please try again later.");
+            }
         }
 
-        const chatDocRef = doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId);
-        
-        window.chatSnapshotUnsubscribe = onSnapshot(chatDocRef, docSnapshot => {
-            if (docSnapshot.exists()) {
-                const chatData = docSnapshot.data();
-                window.currentChatId = docSnapshot.id;
-                window.currentChatMessages = chatData.messages || [];
+        // Function to load chat sessions from Firestore
+        async function loadChatSessions(userId) {
+            console.log(`Loading chat sessions for user: ${userId}`);
+            const q = query(collection(db, `artifacts/${appId}/users/${userId}/chats`), orderBy('createdAt', 'desc'));
 
-                document.querySelectorAll('#chat-list li').forEach(li => {
-                    li.classList.remove('active');
-                    if (li.dataset.chatId === window.currentChatId) {
-                        li.classList.add('active');
-                    }
+            onSnapshot(q, (snapshot) => {
+                chatSessions = {}; // Clear existing sessions
+                snapshot.forEach((doc) => {
+                    chatSessions[doc.id] = { id: doc.id, ...doc.data() };
+                });
+                renderChatSessions();
+                console.log("Chat sessions loaded and list updated in sidebar.");
+                // If no chat is active, try to load the most recent one or create a new one
+                if (!currentChatId && Object.keys(chatSessions).length > 0) {
+                    const latestChatId = Object.keys(chatSessions)[0];
+                    loadChatSession(latestChatId);
+                } else if (!currentChatId && Object.keys(chatSessions).length === 0) {
+                    // If no chats exist, encourage creating a new one
+                    document.getElementById('chat-messages').innerHTML = `
+                        <div class="flex flex-col items-center justify-center h-full text-gray-500 p-4 text-center">
+                            <i class="fas fa-comments text-6xl mb-4 text-gray-400"></i>
+                            <p class="text-lg font-semibold mb-2">No chats yet!</p>
+                            <p class="mb-4">Click "New Chat" to start a conversation with Martoo AI.</p>
+                            <button onclick="window.newChat()" class="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition duration-300">
+                                Start New Chat
+                            </button>
+                        </div>
+                    `;
+                    document.getElementById('chat-input-area').classList.remove('hidden'); // Show input area
+                }
+            }, (error) => {
+                console.error("Error loading chat sessions:", error);
+                document.getElementById('chat-messages').innerHTML = '<div class="text-center text-red-500 mt-4">Error loading chat sessions.</div>';
+            });
+        }
+
+        // Function to render chat sessions in the sidebar
+        function renderChatSessions() {
+            const chatList = document.getElementById('chat-list');
+            chatList.innerHTML = ''; // Clear existing list
+
+            const sortedChatIds = Object.keys(chatSessions).sort((a, b) => {
+                // Sort by createdAt timestamp in descending order
+                return chatSessions[b].createdAt - chatSessions[a].createdAt;
+            });
+
+            sortedChatIds.forEach(chatId => {
+                const chat = chatSessions[chatId];
+                const chatTitle = chat.title || `Chat ${chat.id.substring(0, 8)}`; // Default title
+                const isActive = chatId === currentChatId;
+
+                const li = document.createElement('li');
+                li.className = `p-3 rounded-lg cursor-pointer transition duration-200 ease-in-out ${isActive ? 'bg-green-600 text-white shadow-md' : 'hover:bg-gray-700 text-gray-300'}`;
+                li.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="truncate">${chatTitle}</span>
+                        <div class="flex space-x-2">
+                            <i class="fas fa-edit text-sm hover:text-green-300" onclick="event.stopPropagation(); window.editChatTitle('${chatId}')"></i>
+                            <i class="fas fa-trash-alt text-sm hover:text-red-300" onclick="event.stopPropagation(); window.deleteChat('${chatId}')"></i>
+                        </div>
+                    </div>
+                `;
+                li.onclick = () => loadChatSession(chatId);
+                chatList.appendChild(li);
+            });
+        }
+
+        // Function to load a specific chat session
+        window.loadChatSession = async (chatId) => {
+            console.log(`Loading chat with ID: ${chatId}`);
+            currentChatId = chatId;
+            document.getElementById('chat-input-area').classList.remove('hidden'); // Ensure input area is visible
+
+            // Update sidebar active state
+            renderChatSessions();
+
+            const chatDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/chats`, chatId);
+            onSnapshot(chatDocRef, (docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    const chatData = docSnapshot.data();
+                    chatSessions[chatId] = { id: chatId, ...chatData }; // Update local cache
+                    renderMessages(chatData.messages || []);
+                    // Update chat title in header if available
+                    document.getElementById('current-chat-title').textContent = chatData.title || `Chat ${chatId.substring(0, 8)}`;
+                    console.log("Chat loaded/updated:", chatId, chatData);
+                } else {
+                    console.warn("Chat does not exist:", chatId);
+                    document.getElementById('chat-messages').innerHTML = '<div class="text-center text-red-500 mt-4">Chat not found.</div>';
+                    document.getElementById('current-chat-title').textContent = 'New Chat';
+                    currentChatId = null; // Reset current chat ID
+                }
+            }, (error) => {
+                console.error("Error loading chat session:", error);
+                document.getElementById('chat-messages').innerHTML = '<div class="text-center text-red-500 mt-4">Error loading chat.</div>';
+            });
+        };
+
+        // Function to render messages in the chat display area
+        function renderMessages(messages) {
+            const chatMessagesDiv = document.getElementById('chat-messages');
+            chatMessagesDiv.innerHTML = ''; // Clear existing messages
+            messages.forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `flex mb-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`;
+                messageDiv.innerHTML = `
+                    <div class="max-w-xs sm:max-w-md lg:max-w-lg p-4 rounded-lg shadow-md ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}">
+                        ${msg.text ? `<p class="text-sm break-words">${msg.text}</p>` : ''}
+                        ${msg.imageUrl ? `<img src="${msg.imageUrl}" alt="Uploaded Image" class="mt-2 rounded-lg max-w-full h-auto">` : ''}
+                    </div>
+                `;
+                chatMessagesDiv.appendChild(messageDiv);
+            });
+            scrollToBottom();
+        }
+
+        // Function to scroll chat messages to the bottom
+        function scrollToBottom() {
+            const chatMessagesDiv = document.getElementById('chat-messages');
+            chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+        }
+
+        // Function to create a new chat
+        window.newChat = async () => {
+            if (!currentUserId) {
+                alert("Please log in to create a new chat.");
+                return;
+            }
+            try {
+                const newChatRef = collection(db, `artifacts/${appId}/users/${currentUserId}/chats`);
+                const docRef = await addDoc(newChatRef, {
+                    title: "New Chat",
+                    createdAt: Date.now(),
+                    messages: []
+                });
+                console.log("New chat created with ID:", docRef.id);
+                loadChatSession(docRef.id); // Load the newly created chat
+            } catch (error) {
+                console.error("Error creating new chat:", error);
+                alert("Failed to create new chat: " + error.message);
+            }
+        };
+
+        // Function to add a message to the current chat
+        async function addMessageToChat(chatId, role, text, imageUrl = null) {
+            if (!chatId) {
+                console.error("Cannot add message: No active chat selected.");
+                alert("Please select or create a chat before sending messages.");
+                return;
+            }
+            const chatDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/chats`, chatId);
+            const chatData = chatSessions[chatId];
+            if (!chatData) {
+                console.error("Chat data not found for ID:", chatId);
+                return;
+            }
+
+            const newMessage = {
+                role: role,
+                text: text,
+                timestamp: Date.now()
+            };
+            if (imageUrl) {
+                newMessage.imageUrl = imageUrl;
+                newMessage.parts = [{ text: text }, { inlineData: { mimeType: 'image/jpeg', data: imageUrl.split(',')[1] } }]; // Assuming base64 for now
+            } else {
+                newMessage.parts = [{ text: text }];
+            }
+
+            const updatedMessages = [...(chatData.messages || []), newMessage];
+            try {
+                await updateDoc(chatDocRef, { messages: updatedMessages });
+                console.log(`Message (${role}) saved to chat ${chatId}.`);
+            } catch (error) {
+                console.error("Error saving message to chat:", error);
+                alert("Failed to save message: " + error.message);
+            }
+        }
+
+        // Function to send message to backend API
+        window.sendMessage = async () => {
+            const chatInput = document.getElementById('chat-input');
+            const messageText = chatInput.value.trim();
+            const imageInput = document.getElementById('image-upload');
+            const file = imageInput.files[0];
+
+            if (!messageText && !file) {
+                alert("Please enter a message or select an image.");
+                return;
+            }
+            if (!currentChatId) {
+                alert("Please select or create a chat to send messages.");
+                return;
+            }
+       // Show typing indicator
+            document.getElementById('typing-indicator').classList.remove('hidden');
+            document.getElementById('send-button').disabled = true; // Disable send button
+
+            let imageUrl = null;
+            if (file) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = async () => {
+                    imageUrl = reader.result;
+                    await addMessageToChat(currentChatId, 'user', messageText, imageUrl);
+                    await callGemini(messageText, imageUrl);
+                    chatInput.value = '';
+                    imageInput.value = ''; // Clear file input
+                };
+                reader.onerror = (error) => {
+                    console.error("Error reading file:", error);
+                    alert("Failed to read image file.");
+                    document.getElementById('typing-indicator').classList.add('hidden');
+                    document.getElementById('send-button').disabled = false;
+                };
+            } else {
+                await addMessageToChat(currentChatId, 'user', messageText);
+                await callGemini(messageText);
+                chatInput.value = '';
+            }
+        };
+
+        // Function to call the Martoo AI backend (Vercel serverless function)
+        async function callGemini(userMessageText, imageUrl = null) {
+            const chatData = chatSessions[currentChatId];
+            if (!chatData) {
+                console.error("No chat data found for currentChatId:", currentChatId);
+                document.getElementById('typing-indicator').classList.add('hidden');
+                document.getElementById('send-button').disabled = false;
+                return;
+            }
+
+            const messagesForGemini = chatData.messages.map(msg => {
+                // Ensure parts are correctly formatted for Gemini API
+                let parts = [];
+                if (msg.text) {
+                    parts.push({ text: msg.text });
+                }
+                if (msg.imageUrl) {
+                    // Assuming imageUrl is base64 data URL
+                    parts.push({ inlineData: { mimeType: 'image/jpeg', data: msg.imageUrl.split(',')[1] } });
+                }
+                // Also include functionCall/functionResponse if they exist in history messages
+                if (msg.functionCall) {
+                    parts.push({ functionCall: msg.functionCall });
+                }
+                if (msg.functionResponse) {
+                    parts.push({ functionResponse: msg.functionResponse });
+                }
+
+                return {
+                    // Frontend 'ai' maps to 'model' for Gemini, 'user' remains 'user'
+                    role: msg.role === 'user' ? 'user' : 'model', 
+                    parts: parts
+                };
+            });
+
+            console.log("Sending payload to backend API:", "https://martoo-tech-backend.vercel.app/api/chat", messagesForGemini);
+
+            try {
+                const response = await fetch('https://martoo-tech-backend.vercel.app/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ messages: messagesForGemini }),
                 });
 
-                window.renderMessages(); 
-                const chatBox = document.getElementById('chat-box');
-                if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
-                console.log("Chat loaded/updated:", window.currentChatId, chatData);
-
-                if (window.innerWidth <= 768) {
-                    const sidebar = document.getElementById('sidebar');
-                    if(sidebar) sidebar.classList.remove('show');
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error(`Backend API responded with status ${response.status}:`, errorData);
+                    throw new Error(`Backend error: ${response.status} - ${JSON.stringify(errorData)}`);
                 }
-            } else {
-                console.warn("Selected chat does not exist:", chatId);
-                window.currentChatId = null;
-                window.currentChatMessages = [];
-                window.renderMessages();
-                window.showMessage("The selected chat no longer exists. Starting a new one.", 'info');
-                window.startNewChatSession('New Chat'); 
-            }
-        }, error => {
-            console.error("Error listening to chat snapshot:", error);
-            window.showMessage("Error loading chat in real-time: " + error.message, 'error');
-        });
 
-      } catch (error) {
-        console.error("Error fetching chat:", error);
-        window.showMessage("Error fetching chat: " + error.message, 'error');
-      }
-    };
+                const data = await response.json();
+                console.log("Backend API response:", data);
 
-    /**
-     * Renders the messages from currentChatMessages array into the chat box.
-     * This is the single source of truth for updating the chat display.
-     */
-    window.renderMessages = () => {
-      const chatBox = document.getElementById("chat-box");
-      if (!chatBox) {
-        console.error("Chat box element not found during renderMessages!");
-        return;
-      }
-      chatBox.innerHTML = ''; // Clear existing messages
-      const chatBoxUserIdDisplay = document.getElementById("display-user-id");
-      if(chatBoxUserIdDisplay) { 
-        const userIdP = document.createElement("p");
-        userIdP.classList.add('text-xs', 'text-gray-400', 'text-right', 'mb-2', 'self-end');
-        userIdP.innerHTML = `Your User ID: <span id="display-user-id" class="font-mono break-all">${window.currentUserId || "Loading..."}</span>`;
-        chatBox.appendChild(userIdP);
-      }
+                await addMessageToChat(currentChatId, 'ai', data.reply);
 
-      if (window.currentChatMessages.length === 0) {
-        // Only show initial AI message if no actual messages are present
-        window.displayMessage("Hello 👋 I’m here to help. Ask me anything!", "ai");
-      } else {
-        window.currentChatMessages.forEach((msg, index) => { // Pass index for editing
-            window.displayMessage(msg.text, msg.role, index);
-        });
-      }
-      chatBox.scrollTop = chatBox.scrollHeight;
-    };
-
-    /**
-     * Loads all chat session titles for the current user into the sidebar.
-     * Uses a real-time listener for the list of chat sessions.
-     */
-    window.loadChatSessions = () => {
-      if (!window.currentUserId) {
-        const chatListElement = document.getElementById('chat-list');
-        if(chatListElement) chatListElement.innerHTML = ''; 
-        console.log("No user logged in, chat sessions not loaded.");
-        return;
-      }
-
-      console.log("Loading chat sessions for user:", window.currentUserId);
-      const chatSessionsRef = collection(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`);
-      const q = query(chatSessionsRef, orderBy('updatedAt', 'desc'));
-
-      if (window.allChatsSnapshotUnsubscribe) {
-          window.allChatsSnapshotUnsubscribe();
-      }
-
-      window.allChatsSnapshotUnsubscribe = onSnapshot(q, snapshot => {
-        const chatListElement = document.getElementById('chat-list');
-        if (!chatListElement) {
-          console.error("Chat list element not found!");
-          return;
-        }
-        chatListElement.innerHTML = ''; 
-        let firstChatFound = false;
-
-        if (snapshot.empty) {
-          console.log("No chat sessions found for this user. Creating a new one automatically.");
-          window.startNewChatSession("My First Chat"); 
-          return; 
-        }
-
-        snapshot.forEach(docSnapshot => {
-          const chatData = docSnapshot.data();
-          const chatId = docSnapshot.id;
-          const chatTitle = chatData.title || `Chat ${chatId.substring(0, 5)}...`; 
-
-          const li = document.createElement('li');
-          li.dataset.chatId = chatId;
-          li.classList.add('flex', 'items-center', 'justify-between', 'p-3', 'rounded-lg', 'hover:bg-gray-700', 'cursor-pointer', 'mb-2');
-          
-          li.innerHTML = `
-              <span class="chat-title flex-grow overflow-hidden whitespace-nowrap text-ellipsis">${chatTitle}</span>
-              <button class="edit-chat-btn text-teal-400 hover:text-teal-300 ml-2 p-1 rounded-md">
-                  <i class="fas fa-edit"></i>
-              </button>
-              <button class="delete-chat-btn text-red-400 hover:text-red-300 ml-2 p-1 rounded-md">
-                  <i class="fas fa-trash"></i>
-              </button>
-          `;
-          
-          li.addEventListener('click', (event) => {
-              if (!event.target.closest('.edit-chat-btn') && !event.target.closest('.delete-chat-btn')) {
-                  window.loadChat(chatId);
-              }
-          });
-
-          li.querySelector('.edit-chat-btn').addEventListener('click', (event) => {
-              event.stopPropagation(); 
-              window.editChatTitle(chatId, chatTitle);
-          });
-
-          li.querySelector('.delete-chat-btn').addEventListener('click', (event) => {
-              event.stopPropagation(); 
-              window.deleteChat(chatId, chatTitle);
-          });
-
-          chatListElement.appendChild(li);
-
-          if (!firstChatFound) {
-              if (window.currentChatId === chatId) {
-                  li.classList.add('active'); 
-              } else if (!window.currentChatId) {
-                  window.loadChat(chatId);
-                  firstChatFound = true;
-              }
-          }
-        });
-
-        if (window.currentChatId && !document.querySelector(`#chat-list li[data-chat-id="${window.currentChatId}"]`)) {
-            const firstListedChat = chatListElement.querySelector('li');
-            if (firstListedChat) {
-                window.loadChat(firstListedChat.dataset.chatId);
-            } else {
-                window.startNewChatSession("New Chat"); 
+            } catch (error) {
+                console.error("Fetch error to backend or processing response:", error);
+                // Display a user-friendly error message in the chat
+                await addMessageToChat(currentChatId, 'ai', `I'm sorry, I encountered an error: ${error.message}. Please try again.`);
+            } finally {
+                document.getElementById('typing-indicator').classList.add('hidden');
+                document.getElementById('send-button').disabled = false;
             }
         }
-        console.log("Chat sessions loaded and list updated in sidebar.");
-      }, error => {
-        console.error("Error listening to all chat sessions:", error);
-        window.showMessage("Error loading chat list: " + error.message, 'error');
-      });
-    };
 
-    /**
-     * Prompts user for a new title and updates it in Firestore.
-     * @param {string} chatId - The ID of the chat to update.
-     * @param {string} currentTitle - The current title for the prompt.
-     */
-    window.editChatTitle = async (chatId, currentTitle) => {
-        const newTitle = prompt("Edit chat title:", currentTitle);
-        if (newTitle === null || newTitle.trim() === currentTitle.trim()) {
-            return;
-        }
-        if (newTitle.trim() === '') {
-            window.showMessage("Chat title cannot be empty.", 'error');
-            return;
-        }
-
-        try {
-            await updateDoc(doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId), {
-                title: newTitle.trim(),
-                updatedAt: serverTimestamp()
-            });
-            window.showMessage("Chat title updated successfully!", 'success');
-        } catch (error) {
-            console.error("Error updating chat title:", error);
-            window.showMessage("Error updating chat title: " + error.message, 'error');
-        }
-    };
-
-    /**
-     * Starts a new chat session and loads it.
-     * @param {string} [defaultTitle='New Chat'] - The default title if user doesn't provide one.
-     */
-    window.startNewChatSession = async (defaultTitle = 'New Chat') => {
-        if (!window.currentUserId) {
-            window.showMessage("Please log in to start a new chat.", 'error');
-            return;
-        }
-        let title = prompt("Enter a title for your new chat:", defaultTitle);
-        if (title === null) return; 
-
-        if (title.trim() === '') {
-            title = defaultTitle;
-        }
-
-        const newId = await window.createNewChat(title, []);
-        if (newId) {
-            await window.loadChat(newId);
-        }
-    };
-
-    /**
-     * Deletes a chat session from Firestore.
-     * @param {string} chatId - The ID of the chat session to delete.
-     * @param {string} chatTitle - The title of the chat for confirmation message.
-     */
-    window.deleteChat = async (chatId, chatTitle) => {
-      if (!window.currentUserId) {
-        window.showMessage("Please log in to delete chats.", 'error');
-        return;
-      }
-      if (!chatId) {
-        window.showMessage("No chat selected to delete.", 'error');
-        return;
-      }
-
-      window.showConfirmModal(`Are you sure you want to delete "${chatTitle}"? This cannot be undone.`, async () => {
-          console.log("Attempting to delete chat:", chatId);
-          try {
-              if (window.chatSnapshotUnsubscribe && window.currentChatId === chatId) {
-                  window.chatSnapshotUnsubscribe();
-                  window.chatSnapshotUnsubscribe = null;
-              }
-              await deleteDoc(doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId));
-              console.log("Chat deleted successfully:", chatId);
-              window.showMessage(`Chat "${chatTitle}" deleted.`, 'success');
-
-              if (window.currentChatId === chatId) {
-                  window.currentChatId = null;
-                  window.currentChatMessages = [];
-                  window.renderMessages(); 
-              }
-          } catch (error) {
-              console.error("Error deleting chat:", error);
-              window.showMessage("Error deleting chat: " + error.message, 'error');
-          }
-      });
-    };
-
-    /**
-     * Allows editing of a user message.
-     * @param {string} chatId - The ID of the current chat.
-     * @param {number} messageIndex - The index of the message in currentChatMessages to edit.
-     * @param {HTMLElement} messageElement - The P tag displaying the message.
-     * @param {HTMLElement} editButton - The edit button element.
-     */
-    window.editMessage = (chatId, messageIndex, messageElement, editButton) => {
-        if (!window.currentUserId || !chatId || messageIndex === undefined) {
-            window.showMessage("Cannot edit message: authentication or chat issue.", 'error');
-            return;
-        }
-        if (messageElement.contentEditable === 'true') {
-            // Already editing, so this click means "Resend"
-            window.saveEditedMessage(chatId, messageIndex, messageElement.textContent.replace('You: ', '').trim(), messageElement, editButton);
-            return;
-        }
-
-        // Enter edit mode
-        messageElement.contentEditable = 'true';
-        messageElement.classList.add('bg-gray-600'); // Indicate editing state
-        messageElement.classList.add('editing'); // Add class for CSS styling
-        editButton.innerHTML = '<i class="fas fa-paper-plane"></i>'; // Change icon to resend
-        editButton.title = 'Resend Edited Message';
-
-        // Set focus and put cursor at end of text
-        messageElement.focus();
-        const range = document.createRange();
-        range.selectNodeContents(messageElement);
-        range.collapse(false);
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        // Add event listener for Enter key to resend
-        const handleKeyPress = (event) => {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Prevent new line
-                window.saveEditedMessage(chatId, messageIndex, messageElement.textContent.replace('You: ', '').trim(), messageElement, editButton);
-                messageElement.removeEventListener('keydown', handleKeyPress); // Clean up
+        // Function to edit chat title
+        window.editChatTitle = async (chatId) => {
+            const newTitle = prompt("Enter new title for this chat:", chatSessions[chatId].title);
+            if (newTitle && newTitle.trim() !== '') {
+                try {
+                    const chatDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/chats`, chatId);
+                    await updateDoc(chatDocRef, { title: newTitle.trim() });
+                    console.log(`Chat ${chatId} title updated to: ${newTitle}`);
+                } catch (error) {
+                    console.error("Error updating chat title:", error);
+                    alert("Failed to update chat title: " + error.message);
+                }
             }
         };
-        messageElement.addEventListener('keydown', handleKeyPress);
-    };
 
-    /**
-     * Saves the edited message and truncates history, then resends.
-     * @param {string} chatId - The ID of the current chat.
-     * @param {number} messageIndex - The index of the message that was edited.
-     * @param {string} newText - The new text for the message.
-     * @param {HTMLElement} messageElement - The P tag displaying the message.
-     * @param {HTMLElement} editButton - The edit button element.
-     */
-    window.saveEditedMessage = async (chatId, messageIndex, newText, messageElement, editButton) => {
-        if (newText.trim() === '') {
-            window.showMessage("Message cannot be empty.", 'error');
-            // Revert edit state
-            messageElement.contentEditable = 'false';
-            messageElement.classList.remove('bg-gray-600', 'editing');
-            editButton.innerHTML = '<i class="fas fa-edit"></i>';
-            editButton.title = 'Edit Message';
-            window.renderMessages(); // Re-render from current state
-            return;
-        }
-
-        window.isSendingMessage = true; // Prevent new messages during this process
-        const sendButton = document.getElementById("send-button");
-        if(sendButton) sendButton.disabled = true;
-
-        try {
-            // 1. Update the message text in our local state
-            window.currentChatMessages[messageIndex].text = newText;
-            window.currentChatMessages[messageIndex].timestamp = new Date().toISOString(); // Update timestamp
-
-            // 2. Truncate the chat history from the edited message onwards
-            const newMessagesArray = window.currentChatMessages.slice(0, messageIndex + 1);
-
-            // 3. Update Firestore with the truncated history
-            const chatDocRef = doc(db, `artifacts/${appId}/users/${window.currentUserId}/chat_sessions`, chatId);
-            await updateDoc(chatDocRef, {
-                messages: newMessagesArray,
-                updatedAt: serverTimestamp() // Update chat's last updated time
-            });
-            console.log(`Chat ${chatId} history truncated and message ${messageIndex} updated.`);
-            window.showMessage("Message updated, regenerating AI response...", 'info');
-
-            // Reset edit mode UI
-            messageElement.contentEditable = 'false';
-            messageElement.classList.remove('bg-gray-600', 'editing');
-            editButton.innerHTML = '<i class="fas fa-edit"></i>';
-            editButton.title = 'Edit Message';
-
-            // IMPORTANT: onSnapshot will re-render messages after updateDoc.
-            // We need to wait for that render and then trigger sendMessage.
-            // The `sendMessage` function will use the *updated* `window.currentChatMessages`
-            // which will have been synced by onSnapshot.
-            await new Promise(resolve => setTimeout(resolve, 300)); // Small delay for UI sync
-
-            // 4. Trigger sendMessage with the newly updated (and truncated) history.
-            // The last message in window.currentChatMessages is now the edited user message.
-            await window.sendMessage(); // sendMessage will handle the loading indicator and AI call
-
-        } catch (error) {
-            console.error("Error saving edited message or regenerating AI response:", error);
-            window.showMessage("Failed to update message or get AI response. Please try again.", 'error');
-            // Revert UI changes on error
-            messageElement.contentEditable = 'false';
-            messageElement.classList.remove('bg-gray-600', 'editing');
-            editButton.innerHTML = '<i class="fas fa-edit"></i>';
-            editButton.title = 'Edit Message';
-            window.renderMessages(); // Re-render to original state
-        } finally {
-            window.isSendingMessage = false;
-            if(sendButton) sendButton.disabled = false;
-        }
-    };
-
-
-    // --- Main Message Sending Logic ---
-    window.sendMessage = async () => {
-      const userInput = document.getElementById("user-input");
-      const message = userInput.value.trim();
-      const previewImg = document.getElementById('preview-img');
-      const fileInput = document.getElementById("file-input");
-      const sendButton = document.getElementById("send-button"); 
-
-      if (window.isSendingMessage) { 
-        console.log("sendMessage: Already sending a message, preventing duplicate.");
-        return;
-      }
-
-      // Check login state and anonymous limit (only if not logged in)
-      if (!window.loggedIn && window.chatCount >= 5) {
-        const loginPopup = document.getElementById("login-popup");
-        if(loginPopup) {
-          loginPopup.classList.remove('hidden');
-          loginPopup.classList.add('flex');
-        }
-        window.showMessage("Please log in to send more messages.", 'info');
-        return;
-      }
-
-      // If both message and file are empty, prevent sending
-      // This condition now also checks if the message comes from an edit, in which case message might be empty initially
-      if (!message && (!fileInput || !fileInput.files || !fileInput.files[0]) && !window.currentChatMessages[window.currentChatMessages.length - 1]?.isEdited) { 
-          window.showMessage("Please enter a message or select an image.", 'info');
-          return;
-      }
-
-      window.isSendingMessage = true; 
-      if(sendButton) sendButton.disabled = true; 
-
-      // If no current chat is selected/loaded, create a new one automatically
-      if (!window.currentChatId) {
-          window.showMessage("No chat session found. Creating a new one...", 'info');
-          const newChatId = await window.createNewChat("New Chat", []);
-          if (!newChatId) { // Check for creation failure
-              window.showMessage("Could not create a new chat session. Please try again.", 'error');
-              window.isSendingMessage = false;
-              if(sendButton) sendButton.disabled = false;
-              return;
-          }
-          // Small delay to ensure onSnapshot has a chance to update window.currentChatMessages
-          await new Promise(resolve => setTimeout(resolve, 100)); 
-      }
-
-      // If this is a *new* message (not an edited one triggering a resend from saveEditedMessage)
-      // then we create and save the user message.
-      // If it's a resend from an an edit, the message is already in window.currentChatMessages
-      // and has already been saved/updated in saveEditedMessage.
-      const isResendFromEdit = window.currentChatMessages[window.currentChatMessages.length - 1]?.text === message && 
-                               window.currentChatMessages[window.currentChatMessages.length - 1]?.role === 'user' &&
-                               (fileInput && fileInput.files && fileInput.files[0] ? window.currentChatMessages[window.currentChatMessages.length - 1]?.parts?.length > 1 : true); // Check if image parts match
-                               
-      if (!isResendFromEdit) {
-        // 1. Create user message object
-        const userMessageObj = {
-            text: message,
-            role: "user",
-            timestamp: new Date().toISOString()
+        // Function to delete chat
+        window.deleteChat = async (chatId) => {
+            if (confirm("Are you sure you want to delete this chat? This cannot be undone.")) {
+                try {
+                    const chatDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/chats`, chatId);
+                    await deleteDoc(chatDocRef);
+                    console.log(`Chat ${chatId} deleted.`);
+                    // If the deleted chat was the current one, reset currentChatId
+                    if (currentChatId === chatId) {
+                        currentChatId = null;
+                        document.getElementById('chat-messages').innerHTML = `
+                            <div class="flex flex-col items-center justify-center h-full text-gray-500 p-4 text-center">
+                                <i class="fas fa-comments text-6xl mb-4 text-gray-400"></i>
+                                <p class="text-lg font-semibold mb-2">Chat deleted!</p>
+                                <p class="mb-4">Click "New Chat" to start a new conversation.</p>
+                                <button onclick="window.newChat()" class="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition duration-300">
+                                    Start New Chat
+                                </button>
+                            </div>
+                        `;
+                        document.getElementById('current-chat-title').textContent = 'New Chat';
+                    }
+                } catch (error) {
+                    console.error("Error deleting chat:", error);
+                    alert("Failed to delete chat: " + error.message);
+                }
+            }
         };
-        // 2. Save user message to Firestore. This will trigger onSnapshot and re-render display.
-        await window.saveChatMessage(userMessageObj, window.currentChatId); 
-      }
 
-      // 3. Clear input and files immediately (even if it's a resend, clear the current input box)
-      if(userInput) userInput.value = "";
-      if(fileInput) fileInput.value = '';
-      if(previewImg) { previewImg.src = ''; previewImg.classList.add('hidden'); }
-
-      // 4. Append loading indicator *after* user message has been displayed (via Firestore listener)
-      const loadingElement = document.createElement("p");
-      loadingElement.innerHTML = `<span class="font-semibold text-green-400">Martoo AI:</span> <em class="typing-indicator">Typing...</em>`;
-      loadingElement.classList.add('p-2', 'my-2', 'rounded-lg', 'max-w-xs', 'md:max-w-md', 'bg-gray-700', 'text-white', 'mr-auto', 'typing-indicator-placeholder'); 
-      const chatBox = document.getElementById("chat-box");
-      if(chatBox) {
-        chatBox.appendChild(loadingElement);
-        chatBox.scrollTop = chatBox.scrollHeight;
-      } else {
-        console.error("Chat box element not found when trying to append loading indicator.");
-      }
-
-      try {
-          // Build chat history for Gemini.
-          // window.currentChatMessages is now correctly updated by the onSnapshot listener after saveChatMessage.
-          let chatHistoryForGemini = [...window.currentChatMessages]; 
-
-          // Filter out the initial AI greeting from history sent to Gemini if it's the *very first* message in chat.
-          if (chatHistoryForGemini.length > 0 && chatHistoryForGemini[0].role === 'ai' && chatHistoryForGemini[0].text.includes("Hello 👋 I’m here to help")) {
-              const firstUserMsgIndex = chatHistoryForGemini.findIndex(msg => msg.role === 'user');
-              // If there's a user message and it's the second message in history, the first AI is likely the greeting.
-              // Or if no user messages yet, and it's the only AI message, remove it.
-              if ((firstUserMsgIndex === 1 && chatHistoryForGemini[0].role === 'ai') || (firstUserMsgIndex === -1 && chatHistoryForGemini.length === 1 && chatHistoryForGemini[0].role === 'ai')) {
-                  chatHistoryForGemini = chatHistoryForGemini.slice(1); // Remove the initial AI greeting
-                  console.log("Filtered out initial AI greeting from Gemini history.");
-              }
-          }
-
-          // Handle image if present (image understanding) - this logic should apply to the *last* user message in history
-          if (fileInput && fileInput.files && fileInput.files[0]) { 
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-              const base64ImageData = e.target.result.split(',')[1]; 
-              // Find the user message object just added to chatHistoryForGemini (it should be the last one)
-              // and add image parts to it for the Gemini call.
-              const lastMessageForGemini = chatHistoryForGemini[chatHistoryForGemini.length - 1];
-              if (lastMessageForGemini && lastMessageForGemini.role === 'user') {
-                  lastMessageForGemini.parts = [{ text: lastMessageForGemini.text }, { inlineData: { mimeType: fileInput.files[0].type, data: base64ImageData } }];
-              } else {
-                  console.warn("Could not find the last user message to attach image data for Gemini API call.");
-              }
-              await window.callGemini(chatHistoryForGemini, loadingElement);
-            };
-            reader.readAsDataURL(fileInput.files[0]);
-          } else {
-            await window.callGemini(chatHistoryForGemini, loadingElement);
-          }
-
-      } catch (err) {
-          console.error("Error during AI communication (frontend catch):", err);
-          // Remove the specific loading indicator, ensure it's removed if error
-          const currentLoadingIndicator = document.querySelector('.typing-indicator-placeholder');
-          if (currentLoadingIndicator && currentLoadingIndicator.parentNode) {
-              currentLoadingIndicator.parentNode.removeChild(currentLoadingIndicator);
-          }
-          
-          // Create and save user-friendly error message
-          const friendlyErrorMessage = "Sorry, I'm having trouble connecting right now. Please try again in a moment.";
-          const errorAiMessageObj = { role: 'ai', text: friendlyErrorMessage, timestamp: new Date().toISOString() };
-          await window.saveChatMessage(errorAiMessageObj, window.currentChatId); // Save user-friendly error to Firestore
-      } finally {
-          window.isSendingMessage = false;
-          if(sendButton) sendButton.disabled = false;
-          if(chatBox) chatBox.scrollTop = chatBox.scrollHeight;
-      }
-    };
-
-    // Helper function to make the Gemini API call
-    window.callGemini = async (chatHistory, loadingElement) => {
-      const payload = { messages: chatHistory }; 
-      const backendApiUrl = "https://martoo-tech-backend.vercel.app/api/chat";
-      console.log("Sending payload to backend API:", backendApiUrl, payload);
-
-      try {
-          const response = await fetch(backendApiUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
-          });
-
-          if (!response.ok) {
-              const errorBody = await response.text();
-              console.error(`Backend API responded with status ${response.status}:`, errorBody);
-              // Throw specific error to be caught by sendMessage's catch for consistent error display
-              throw new Error(`Backend error: ${response.status} - ${errorBody || response.statusText}`);
-          }
-
-          const result = await response.json();
-          const aiResponseText = result.reply || "⚠️ No valid response from AI.";
-
-          // Remove the loading indicator. This is crucial before saving the actual AI message.
-          const currentLoadingIndicator = document.querySelector('.typing-indicator-placeholder');
-          if (currentLoadingIndicator && currentLoadingIndicator.parentNode) {
-              currentLoadingIndicator.parentNode.removeChild(currentLoadingIndicator);
-          }
-          
-          // Create AI message object and save to Firestore. This will trigger onSnapshot to render.
-          const aiMessageObj = { role: 'ai', text: aiResponseText, timestamp: new Date().toISOString() };
-          await window.saveChatMessage(aiMessageObj, window.currentChatId); 
-
-      } catch (e) {
-          console.error("Fetch error to backend or processing response:", e);
-          // Remove the loading indicator on error
-          const currentLoadingIndicator = document.querySelector('.typing-indicator-placeholder');
-          if (currentLoadingIndicator && currentLoadingIndicator.parentNode) {
-              currentLoadingIndicator.parentNode.removeChild(currentLoadingIndicator); 
-          }
-          // Re-throw the error to be caught by sendMessage's catch block, which handles saving the friendly error message
-          throw e; 
-      }
-    };
-
-
-    // --- Authentication Functions ---
-    window.loginUser = async () => {
-      const emailInput = document.getElementById("login-email");
-      const passwordInput = document.getElementById("login-password");
-      const email = emailInput?.value; 
-      const password = passwordInput?.value; 
-      
-      if (!email || !password) {
-        window.showMessage("Please enter both email and password.", 'error');
-        return;
-      }
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.showMessage("Logged in successfully!", 'success');
-      } catch (error) {
-        console.error("Email/Password login error:", error);
-        let errorMessage = "Login failed: " + error.message;
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') errorMessage = "Login failed: Incorrect email or password.";
-        else if (error.code === 'auth/invalid-email') errorMessage = "Login failed: Invalid email format.";
-        window.showMessage(errorMessage, 'error');
-      }
-    };
-
-    window.googleSignIn = async () => {
-      const provider = new GoogleAuthProvider();
-      try {
-        await signInWithPopup(auth, provider);
-        window.showMessage("Signed in with Google successfully!", 'success');
-      } catch (error) {
-        console.error("Google login error:", error);
-        window.showMessage("Google login failed: " + error.message, 'error');
-      }
-    };
-
-    window.logoutUser = async () => {
-        window.showConfirmModal("Are you sure you want to log out?", async () => {
+        // Function to handle logout
+        window.logout = async () => {
             try {
-                window.isLoggingOut = true; // Set flag to prevent immediate anonymous sign-in
-                if (window.allChatsSnapshotUnsubscribe) {
-                    window.allChatsSnapshotUnsubscribe(); 
-                    window.allChatsSnapshotUnsubscribe = null;
-                }
-                if (window.chatSnapshotUnsubscribe) {
-                    window.chatSnapshotUnsubscribe(); 
-                    window.chatSnapshotUnsubscribe = null;
-                }
-                await signOut(auth); 
-                // Reset states immediately after logout
-                window.currentUserId = null;
-                window.loggedIn = false;
-                window.currentChatId = null;
-                window.currentChatMessages = [];
-
-                // Safely update DOM elements with null checks
-                const chatBox = document.getElementById("chat-box");
-                if (chatBox) {
-                    chatBox.innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
-                } else {
-                    console.error("Chat box element not found during logout!");
-                }
-                
-                const userDisplayNameElement = document.getElementById("user-display-name"); 
-                if (userDisplayNameElement) userDisplayNameElement.textContent = "N/A"; 
-                
-                const sidebarUserIdDisplayElement = document.getElementById("user-id-display"); 
-                if (sidebarUserIdDisplayElement) sidebarUserIdDisplayElement.textContent = "N/A"; 
-
-                const chatBoxUserIdDisplay = document.getElementById("display-user-id");
-                if (chatBoxUserIdDisplay) chatBoxUserIdDisplay.textContent = "N/A";
-                
-                const chatListElement = document.getElementById("chat-list");
-                if (chatListElement) chatListElement.innerHTML = ''; 
-
-                const loginPopup = document.getElementById("login-popup");
-                if (loginPopup) {
-                  loginPopup.classList.remove('hidden');
-                  loginPopup.classList.add('flex');
-                }
-                console.log("User logged out successfully.");
-                // Reset flag after a short delay, to allow login popup to stay
-                setTimeout(() => window.isLoggingOut = false, 1000); 
+                await signOut(auth);
+                console.log("User logged out.");
+                // UI will update via onAuthStateChanged listener
             } catch (error) {
                 console.error("Error logging out:", error);
-                window.showMessage("Error logging out: " + error.message, 'error');
-                setTimeout(() => window.isLoggingOut = false, 1000); 
+                alert("Failed to log out: " + error.message);
             }
-        });
-    };
-
-    // --- UI Toggles (Made global for programmatic access) ---
-    window.toggleSidebar = () => {
-      const sidebar = document.getElementById('sidebar');
-      if(sidebar) {
-        sidebar.classList.toggle('hidden'); 
-        sidebar.classList.toggle('flex'); 
-      } else {
-        console.error("Sidebar element not found!");
-      }
-    };
-
-    window.toggleMenu = () => {
-      const menu = document.getElementById("menu");
-      if(menu) {
-        menu.classList.toggle("hidden");
-      } else {
-        console.error("Menu element not found!");
-      }
-    };
-
-    // --- Dictation (Speech Recognition) Functions ---
-    window.startDictation = () => {
-        const dictationButton = document.getElementById("dictation-button");
-        const userInput = document.getElementById("user-input");
-
-        if (!window.SpeechRecognition) {
-            window.showMessage("Speech recognition not supported in your browser.", 'error');
-            console.error("SpeechRecognition API not available.");
-            return;
-        }
-
-        if (!window.recognition) {
-            window.recognition = new window.SpeechRecognition();
-            window.recognition.continuous = false; // Only get one result per dictation
-            window.recognition.lang = 'en-US'; // Set language
-            window.recognition.interimResults = false; // Only return final results
-        }
-
-        window.recognition.onstart = () => {
-            window.isDictating = true;
-            if (dictationButton) dictationButton.innerHTML = '<i class="fas fa-microphone-alt animate-pulse"></i>';
-            if (dictationButton) dictationButton.title = 'Listening... Click to Stop';
-            if (userInput) userInput.placeholder = "Listening...";
-            if (userInput) userInput.disabled = true; // Disable input while dictating
-            console.log("Speech recognition started.");
         };
 
-        window.recognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
-            if (userInput) {
-                userInput.value = transcript;
-            }
-            console.log("Speech recognized:", transcript);
-        };
-
-        window.recognition.onerror = (event) => {
-            window.isDictating = false;
-            if (dictationButton) dictationButton.innerHTML = '<i class="fas fa-microphone"></i>';
-            if (dictationButton) dictationButton.title = 'Start Dictation';
-            if (userInput) {
-                userInput.placeholder = "Ask Martoo AI anything...";
-                userInput.disabled = false; // Re-enable input
-            }
-            window.showMessage(`Speech recognition error: ${event.error}`, 'error');
-            console.error("Speech recognition error:", event.error);
-        };
-
-        window.recognition.onend = () => {
-            window.isDictating = false;
-            if (dictationButton) dictationButton.innerHTML = '<i class="fas fa-microphone"></i>';
-            if (dictationButton) dictationButton.title = 'Start Dictation';
-            if (userInput) {
-                userInput.placeholder = "Ask Martoo AI anything...";
-                userInput.disabled = false; // Re-enable input
-            }
-            console.log("Speech recognition ended.");
-        };
-
-        if (window.isDictating) {
-            window.recognition.stop();
-        } else {
-            window.recognition.start();
-        }
-    };
-
-
-    // --- Initializations on Window Load ---
-    window.onload = () => {
-      const userInput = document.getElementById("user-input");
-      const sendButton = document.getElementById("send-button");
-      const fileInput = document.getElementById("file-input");
-      const dictationButton = document.getElementById("dictation-button"); 
-      const loginBtn = document.getElementById("email-login-btn"); 
-      const googleSignInBtn = document.getElementById("google-sign-in-btn");
-      const newChatBtn = document.getElementById("new-chat-btn");
-      const anonContinueBtn = document.getElementById("anon-continue-btn"); 
-      const headerLogoutBtn = document.getElementById("header-logout-btn");
-      const sidebarLogoutBtn = document.querySelector('#user-info button'); 
-      const hamburger = document.getElementById('hamburger-button'); 
-      const menuLinks = document.querySelectorAll("nav ul li a");
-      const sidebar = document.getElementById('sidebar');
-      const headerNav = document.querySelector('header nav'); 
-      const menuUl = document.getElementById('menu');
-
-      const chatBoxUserIdDisplay = document.getElementById("display-user-id"); 
-      if (chatBoxUserIdDisplay) {
-        chatBoxUserIdDisplay.textContent = window.currentUserId || "Loading...";
-      }
-      const chatBox = document.getElementById("chat-box");
-      if (chatBox && chatBox.children.length === 0) {
-        // Initial AI message only if chatbox is empty. Otherwise, it's rendered by onSnapshot.
-        window.displayMessage("Hello 👋 I’m here to help. Ask me anything!", "ai");
-      }
-
-      // Event Listeners
-      if (sendButton) sendButton.addEventListener('click', window.sendMessage);
-      if (userInput) userInput.addEventListener("keydown", e => {
-        if (e.key === "Enter") window.sendMessage();
-      });
-      if (dictationButton) dictationButton.addEventListener('click', window.startDictation); 
-      if (loginBtn) loginBtn.addEventListener('click', window.loginUser); 
-      if (googleSignInBtn) googleSignInBtn.addEventListener('click', window.googleSignIn);
-      if (newChatBtn) newChatBtn.addEventListener('click', () => window.startNewChatSession());
-      if (anonContinueBtn) anonContinueBtn.addEventListener('click', async () => {
-        // Only allow anonymous sign-in via this button
-        if (!window.loggedIn) {
-            try {
-                await signInAnonymously(window.auth);
-                window.showMessage("Continuing as anonymous user.", 'info');
-                const loginPopup = document.getElementById("login-popup");
-                if (loginPopup) {
-                  loginPopup.classList.add('hidden');
-                  loginPopup.classList.remove('flex');
+        // Event listener for Enter key in chat input
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatInput = document.getElementById('chat-input');
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault(); // Prevent new line
+                    window.sendMessage();
                 }
-            } catch (error) {
-                console.error("Anonymous sign-in on 'Maybe Later' click failed:", error);
-                window.showMessage("Failed to continue anonymously: " + error.message, 'error');
-            }
-        } else {
-            // Already logged in (e.g. user previously logged in, now clicks anon button)
-            const loginPopup = document.getElementById("login-popup");
-            if (loginPopup) {
-              loginPopup.classList.add('hidden');
-              loginPopup.classList.remove('flex');
-            }
-        }
-      });
-      
-      if (headerLogoutBtn) {
-          headerLogoutBtn.addEventListener('click', window.logoutUser);
-      }
-      if (sidebarLogoutBtn) {
-          sidebarLogoutBtn.addEventListener('click', window.logoutUser);
-      }
-      if (fileInput) {
-        fileInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            const previewImgElement = document.getElementById('preview-img');
-            if (file && previewImgElement) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    previewImgElement.src = e.target.result;
-                    previewImgElement.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            } else if (previewImgElement) {
-                previewImgElement.src = '';
-                previewImgElement.classList.add('hidden');
-            }
+            });
         });
-      }
 
-      if (hamburger) {
-          hamburger.addEventListener('click', window.toggleMenu);
-      }
-      menuLinks.forEach(link => {
-        link.addEventListener("click", () => {
-          if (menuUl) menuUl.classList.add("hidden");
-        });
-      });
+    </script>
 
-      if (window.innerWidth > 768) {
-          if (sidebar) { sidebar.classList.remove('hidden'); sidebar.classList.add('flex'); }
-          if (headerNav) { headerNav.classList.remove('hidden'); headerNav.classList.add('block'); }
-          if (menuUl) { menuUl.classList.remove('hidden'); menuUl.classList.add('flex'); }
-      } else {
-          if (sidebar) { sidebar.classList.add('hidden'); sidebar.classList.remove('flex'); }
-          if (headerNav) { headerNav.classList.add('hidden'); headerNav.classList.remove('block'); }
-          if (menuUl) { menuUl.classList.add('hidden'); menuUl.classList.remove('flex'); }
-      }
+    <div id="login-popup" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm w-full">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Welcome to Martoo AI Assistant</h2>
+            <p class="text-gray-600 mb-6">Please log in to continue.</p>
+            <p class="text-sm text-gray-500 mt-4">Logging in anonymously...</p>
+            <p class="text-xs text-gray-400 mt-2">If you see this for a long time, there might be an issue with Firebase authentication or network.</p>
+        </div>
+    </div>
 
-      window.addEventListener('resize', () => {
-          if (window.innerWidth > 768) {
-              if (sidebar) { sidebar.classList.remove('hidden'); sidebar.classList.add('flex'); }
-              if (headerNav) { headerNav.classList.remove('hidden'); headerNav.classList.add('block'); }
-              if (menuUl) { menuUl.classList.remove('hidden'); menuUl.classList.add('flex'); }
-          } else {
-              if (sidebar && !sidebar.classList.contains('show')) { 
-                 sidebar.classList.add('hidden');
-                 sidebar.classList.remove('flex');
-              }
-              if (headerNav) { headerNav.classList.add('hidden'); headerNav.classList.remove('block'); }
-              if (menuUl && !menuUl.classList.contains('show')) { 
-                  menuUl.classList.add('hidden');
-                  menuUl.classList.remove('flex');
-              }
-          }
-      });
-    };
+    <div class="flex flex-1 overflow-hidden">
+        <aside id="sidebar" class="w-64 bg-gray-800 text-white flex flex-col p-4 shadow-lg hidden sm:flex transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out absolute inset-y-0 left-0 z-50">
+            <h1 class="text-2xl font-bold mb-6 text-green-400">Martoo AI</h1>
+            <nav class="flex-1 overflow-y-auto sidebar-nav">
+                <ul class="space-y-2">
+                    <li><a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-home mr-2"></i> Home</a></li>
+                    <li><a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-blog mr-2"></i> Blog</a></li>
+                    <li><a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-concierge-bell mr-2"></i> Services</a></li>
+                    <li><a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-keyboard mr-2"></i> Typing Assistant</a></li>
+                    <li><a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-info-circle mr-2"></i> About</a></li>
+                    <li><a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-address-book mr-2"></i> Contact</a></li>
+                    <li><a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-download mr-2"></i> Downloader</a></li>
+                </ul>
+                <div class="border-t border-gray-700 my-4 pt-4">
+                    <h2 class="text-lg font-semibold mb-3 text-gray-300">Chats</h2>
+                    <button onclick="window.newChat()" class="w-full btn-gradient text-white px-4 py-2 rounded-full mb-4 shadow-md hover:shadow-lg transition duration-300">
+                        <i class="fas fa-plus mr-2"></i> New Chat
+                    </button>
+                    <ul id="chat-list" class="space-y-2">
+                        </ul>
+                </div>
+            </nav>
+            <div id="login-section" class="mt-auto pt-4 border-t border-gray-700 text-sm hidden">
+                <p class="text-gray-400">Logged in as: <span id="logged-in-user" class="font-semibold text-green-300"></span></p>
+                <p class="text-gray-400 text-xs">UID: <span id="user-uid" class="font-mono text-green-300"></span></p>
+                <button onclick="window.logout()" class="mt-3 w-full bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300 shadow-md">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </button>
+            </div>
+        </aside>
 
+        <main class="flex-1 flex flex-col bg-white rounded-lg shadow-lg m-4 overflow-hidden">
+            <div class="bg-gray-100 p-4 border-b border-gray-200 flex items-center justify-between">
+                <h2 id="current-chat-title" class="text-xl font-semibold text-gray-800">New Chat</h2>
+                <button id="mobile-sidebar-toggle" class="sm:hidden text-gray-600 hover:text-gray-800 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
 
-    // Firebase Auth State Changed Listener
-    onAuthStateChanged(auth, async (user) => {
-      const loginPopup = document.getElementById('login-popup');
-      const userDisplayNameElement = document.getElementById("user-display-name"); 
-      const sidebarUserIdDisplayElement = document.getElementById("user-id-display"); 
-      const chatListElement = document.getElementById('chat-list');
-      const chatBox = document.getElementById("chat-box");
-      const chatBoxUserIdDisplay = document.getElementById("display-user-id"); 
+            <div id="chat-messages" class="flex-1 p-6 overflow-y-auto chat-messages flex flex-col space-y-4">
+                <div class="flex flex-col items-center justify-center h-full text-gray-500 p-4 text-center">
+                    <i class="fas fa-robot text-6xl mb-4 text-gray-400"></i>
+                    <p class="text-lg font-semibold mb-2">Welcome to Martoo AI Assistant!</p>
+                    <p class="mb-4">Start a new chat or select an existing one from the sidebar.</p>
+                </div>
+            </div>
 
-      if (user) {
-        window.currentUserId = user.uid;
-        window.loggedIn = true;
-        window.chatCount = 0; 
+            <div id="typing-indicator" class="hidden text-gray-500 text-sm px-6 pb-2">
+                Martoo AI is typing<span>.</span><span>.</span><span>.</span>
+            </div>
 
-        if (userDisplayNameElement) userDisplayNameElement.textContent = user.displayName || user.email || "User";
-        if (sidebarUserIdDisplayElement) sidebarUserIdDisplayElement.textContent = window.currentUserId;
-        if (chatBoxUserIdDisplay) chatBoxUserIdDisplay.textContent = window.currentUserId; 
+            <div id="chat-input-area" class="bg-gray-100 p-4 border-t border-gray-200 flex items-end space-x-3 sticky bottom-0 w-full z-10">
+                <label for="image-upload" class="cursor-pointer text-gray-600 hover:text-blue-500 transition duration-200 p-2 rounded-full bg-gray-200 hover:bg-gray-300">
+                    <i class="fas fa-image text-xl"></i>
+                    <input type="file" id="image-upload" accept="image/*" class="hidden">
+                </label>
+                <textarea id="chat-input" rows="1" class="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none overflow-hidden max-h-32" placeholder="Type your message..."></textarea>
+                <button id="send-button" onclick="window.sendMessage()" class="btn-gradient text-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                    Send
+                </button>
+            </div>
+        </main>
+    </div>
 
-        console.log("Firebase Auth State Changed: User IS logged in. UID:", window.currentUserId);
-        console.log("  DisplayName:", user.displayName);
-        console.log("  Email:", user.email);
+    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-40 hidden sm:hidden" onclick="document.getElementById('sidebar').classList.add('-translate-x-full'); this.classList.add('hidden');"></div>
 
-        if (loginPopup) {
-          loginPopup.classList.remove('flex');
-          loginPopup.classList.add('hidden');
-        }
-        console.log("  loginPopup is now hidden:", loginPopup ? loginPopup.classList.contains('hidden') : 'N/A');
+    <script>
+        // Toggle mobile sidebar
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const mobileSidebarOverlay = document.getElementById('mobile-sidebar-overlay');
 
-        window.loadChatSessions(); 
+            // Set initial state for mobile sidebar
+            if (window.innerWidth < 640) { // Check if it's a small screen
+                sidebar.classList.add('-translate-x-full'); // Hide sidebar by default on mobile
+                sidebar.classList.remove('sm:translate-x-0'); // Ensure sm:translate-x-0 doesn't override
+            } else {
+                sidebar.classList.remove('-translate-x-full'); // Show sidebar on larger screens
+                sidebar.classList.add('sm:translate-x-0');
+            }
+            sidebar.classList.remove('hidden'); // Remove hidden class after initial positioning
 
-      } else {
-        // User is logged out or not authenticated
-        window.currentUserId = null;
-        window.loggedIn = false;
-        window.currentChatId = null;
-        window.currentChatMessages = [];
-        window.chatCount = 0; 
+            mobileSidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                mobileSidebarOverlay.classList.toggle('hidden');
+            });
 
-        if (userDisplayNameElement) userDisplayNameElement.textContent = "N/A";
-        if (sidebarUserIdDisplayElement) sidebarUserIdDisplayElement.textContent = "N/A";
-        if (chatBoxUserIdDisplay) chatBoxUserIdDisplay.textContent = "N/A";
-
-        if (chatBox) chatBox.innerHTML = `<p class="p-2 my-2 rounded-lg bg-gray-700 text-white mr-auto"><span class="font-semibold text-green-400">Martoo AI:</span> Hello 👋 I’m here to help. Ask me anything!</p>`;
-        if (chatListElement) chatListElement.innerHTML = ''; 
-
-        // Only show the login popup if we're not currently in the process of logging out
-        // This prevents the popup from flashing after logout if the user is immediately redirected/reloaded.
-        if (loginPopup && !window.isLoggingOut) {
-          loginPopup.classList.remove('hidden');
-          loginPopup.classList.add('flex'); 
-          console.log("Firebase Auth State Changed: User IS NOT logged in. Login popup visible.");
-        } else {
-          console.log("Firebase Auth State Changed: User IS NOT logged in. Login popup suppressed (isLoggingOut: " + window.isLoggingOut + ").");
-        }
-
-        // Automatic anonymous sign-in ONLY for Canvas environment with initialAuthToken,
-        // otherwise the login popup waits for user interaction (Email/Google/Anon button click).
-        if (initialAuthToken && !user && !window.isLoggingOut) {
-            try {
-                await signInAnonymously(window.auth);
-                console.log("Signed in with custom token successfully on initial load (Canvas).");
-            } catch (error) {
-                console.error("Error signing in with custom token on initial load:", error);
-                window.showMessage("Canvas auth error: " + error.message, 'error');
-                // If custom token fails, ensure manual login is still possible
-                if (loginPopup) {
-                    loginPopup.classList.remove('hidden');
-                    loginPopup.classList.add('flex');
+            // Close mobile sidebar when a chat is selected
+            document.getElementById('chat-list').addEventListener('click', () => {
+                if (window.innerWidth < 640) { // Only on small screens
+                    sidebar.classList.add('-translate-x-full');
+                    mobileSidebarOverlay.classList.add('hidden');
                 }
-            }
-        }
-      }
-    });
+            });
 
-  </script>
-</head>
-<body class="flex flex-col min-h-screen bg-gray-900 text-white font-inter">
-  <!-- Header -->
-  <header class="bg-gray-800 p-4 shadow-md flex items-center justify-between z-10 sticky top-0">
-    <h1 class="text-xl md:text-2xl font-bold text-teal-400">Martoo AI Assistant</h1>
-    <div class="md:hidden">
-      <button id="hamburger-button" class="text-white text-2xl focus:outline-none">☰</button>
-    </div>
-    <nav class="hidden md:block">
-      <ul id="menu" class="flex flex-col md:flex-row md:space-x-6 text-lg">
-        <li><a href="index.html" class="hover:text-teal-400 transition-colors duration-200 p-2 rounded-md">Home</a></li>
-        <li><a href="posts.html" class="hover:text-teal-400 transition-colors duration-200 p-2 rounded-md">Blog</a></li>
-        <li><a href="services.html" class="hover:text-teal-400 transition-colors duration-200 p-2 rounded-md">Services</a></li>
-        <li><a href="typing_assistant.html" class="hover:text-teal-400 transition-colors duration-200 p-2 rounded-md">Typing Assistant</a></li>
-        <li><a href="about.html" class="hover:text-teal-400 transition-colors duration-200 p-2 rounded-md">About</a></li>
-        <li><a href="contact.html" class="hover:text-teal-400 transition-colors duration-200 p-2 rounded-md">Contact</a></li>
-        <li><a href="downloader.html" class="hover:text-teal-400 transition-colors duration-200 p-2 rounded-md">Downloader</a></li>
-        <li><button id="header-logout-btn" class="hover:text-teal-400 transition-colors duration-200 p-2 rounded-md bg-transparent border-none text-white cursor-pointer text-lg font-semibold">Logout</button></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Main Chat Content Wrapper -->
-  <div class="flex-grow flex flex-col md:flex-row items-center md:items-start p-4 w-full max-w-6xl mx-auto">
-    <!-- Sidebar for Chat History -->
-    <div id="sidebar" class="flex-shrink-0 w-full md:w-72 bg-gray-800 rounded-lg shadow-lg p-4 md:mr-4 mb-4 md:mb-0 flex flex-col hidden md:flex">
-      <div class="flex items-center justify-between border-b border-gray-700 pb-3 mb-4">
-        <h2 class="text-xl font-semibold text-teal-400">Chats</h2>
-        <button id="new-chat-btn" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg text-sm font-semibold transition-colors duration-200 flex items-center gap-1">
-          <i class="fas fa-plus"></i> New Chat
-        </button>
-      </div>
-      <ul id="chat-list" class="flex-grow overflow-y-auto custom-scrollbar">
-        <!-- Chat titles will be loaded here dynamically by JavaScript -->
-        <li class="p-3 text-gray-400">No chats yet. Start a new one!</li>
-      </ul>
-      <div id="user-info" class="mt-4 pt-4 border-t border-gray-700 text-sm text-gray-400">
-        Logged in as: <span id="user-display-name" class="font-semibold text-white">N/A</span><br>
-        UID: <span id="user-id-display" class="font-mono break-all text-white">N/A</span>
-        <button class="mt-3 bg-red-600 hover:bg-red-700 text-white p-2 rounded-lg text-sm font-semibold transition-colors duration-200">Logout</button>
-      </div>
-    </div>
-
-    <!-- Main Chat Area -->
-    <div class="chat-container bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col w-full max-w-3xl md:max-w-4xl h-[70vh] md:h-[80vh]">
-      <!-- Chat Box -->
-      <div id="chat-box" class="flex-grow overflow-y-auto p-3 mb-4 bg-gray-700 rounded-lg custom-scrollbar flex flex-col">
-        <!-- User ID display for multi-user apps (moved inside chat-box for better flow) -->
-        <p class="text-xs text-gray-400 text-right mb-2 self-end">
-          Your User ID: <span id="display-user-id" class="font-mono break-all">Loading...</span>
-        </p>
-        <!-- Chat messages will be appended here by JavaScript -->
-      </div>
-
-      <!-- Chat Input -->
-      <div class="chat-input flex flex-col md:flex-row gap-2">
-        <input type="text" id="user-input" placeholder="Ask Martoo AI anything..." autocomplete="off"
-               class="flex-grow p-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"/>
-        
-        <input type="file" id="file-input" accept="image/*" class="hidden" />
-        <label for="file-input" class="cursor-pointer bg-gray-600 hover:bg-gray-500 text-white p-3 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center">
-          <i class="fas fa-image"></i>
-        </label>
-        
-        <button id="send-button"
-                class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition-colors duration-200">
-          Send
-        </button>
-        
-        <button id="dictation-button"
-                class="bg-green-600 hover:bg-green-700 text-white p-3 rounded-lg font-semibold transition-colors duration-200">
-          <i class="fas fa-microphone"></i>
-        </button>
-      </div>
-      <!-- Image Preview -->
-      <img id="preview-img" class="mt-2 hidden w-32 h-auto rounded-lg shadow-md border border-gray-600 object-cover" alt="Image Preview" />
-    </div>
-  </div>
-
-  <!-- Login Popup (Custom Modal) -->
-  <div id="login-popup" class="hidden fixed inset-0 bg-black bg-opacity-80 z-[1001] items-center justify-center p-4">
-    <div class="login-box bg-gray-800 p-8 rounded-xl shadow-2xl text-white w-full max-w-sm text-center border-2 border-teal-500">
-      <h3 class="text-2xl font-bold mb-6 text-teal-400">Login to continue</h3>
-      <input type="email" id="login-email" placeholder="Email"
-             class="block w-full p-3 mb-4 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"/>
-      <input type="password" id="login-password" placeholder="Password"
-             class="block w-full p-3 mb-6 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"/>
-      <button id="email-login-btn"
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition-colors duration-200 mb-3">
-        Login
-      </button>
-      <button id="google-sign-in-btn"
-              class="w-full bg-red-600 hover:bg-red-700 text-white p-3 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2">
-        <i class="fab fa-google"></i> Login with Google
-      </button>
-      <button id="anon-continue-btn"
-              class="mt-4 text-sm text-gray-400 hover:text-gray-200 transition-colors duration-200">
-        Maybe Later (Continue as Anonymous)
-      </button>
-    </div>
-  </div>
-
-  <!-- Custom Confirmation Modal -->
-  <div id="confirm-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-[1002] items-center justify-center p-4">
-      <div class="confirm-box bg-gray-800 p-8 rounded-xl shadow-2xl text-white w-full max-w-sm text-center border-2 border-teal-500">
-          <p id="confirm-message" class="mb-6 text-lg"></p>
-          <div class="flex justify-center gap-4">
-              <button id="confirm-yes-btn" class="bg-red-600 hover:bg-red-700 text-white p-3 rounded-lg font-semibold transition-colors duration-200 min-w-[80px]">Yes</button>
-              <button id="confirm-no-btn" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition-colors duration-200 min-w-[80px]">No</button>
-          </div>
-      </div>
-  </div>
-
-  <!-- Custom Message Box (replaces alerts) -->
-  <div id="message-box" class="fixed bottom-4 right-4 p-4 rounded-lg shadow-lg z-50 transition-transform duration-300 transform translate-x-full">
-    <!-- Messages will appear here -->
-  </div>
-
-  <!-- Footer -->
-  <footer class="bg-gray-800 p-4 text-center text-gray-400 text-sm mt-auto">
-    &copy; 2024–2025 | Martoo Tech Works. All rights reserved.
-  </footer>
+            // Auto-resize textarea
+            const textarea = document.getElementById('chat-input');
+            textarea.addEventListener('input', () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            });
+        });
+    </script>
 </body>
 </html>

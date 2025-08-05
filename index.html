@@ -1,10 +1,10 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
-  <meta name="google-site-verification" content="7d61c0c52dffa401" />  
-  <meta name="google-site-verification" content="50ac2a921c40a378"/> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="google-site-verification" content="7d61c0c52dffa401" />
+  <meta name="google-site-verification" content="50ac2a921c40a378"/>
 
   <!-- ✅ SEO Meta Tags -->
   <title>Martoo Tech Works – Digital Tools</title>
@@ -14,279 +14,336 @@
   <meta name="robots" content="index, follow" />
 
   <!-- Icons and Styles -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>  
-  <link rel="icon" href="favicon.ico" type="image/x-icon">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-  <style>  
-    body {  
-      margin: 0;  
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
-      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)),  
-                  url('full-site-background.jpg') no-repeat center center fixed;  
-      background-size: cover;  
-      color: white;  
-      overflow-x: hidden;  
-    }  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)),
+                  url('full-site-background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      overflow-x: hidden;
+    }
 
-    header {  
-      position: relative;  
-      text-align: center;  
-      padding: 40px 20px;  
-      background: rgba(0, 0, 0, 0.85);  
-      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.15);  
-      animation: fadeInDown 1s;  
-    }  
+    header {
+      position: relative;
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.85);
+      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.15);
+      animation: fadeInDown 1s;
+    }
 
-    @keyframes fadeInDown {  
-      from { opacity: 0; transform: translateY(-20px); }  
-      to { opacity: 1; transform: translateY(0); }  
-    }  
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    header h1 {  
-      color: #00ffcc;  
-      font-size: 42px;  
-      margin: 0;  
-      text-shadow: 2px 2px 10px #000;  
-    }  
+    header h1 {
+      color: #00ffcc;
+      font-size: 42px;
+      margin: 0;
+      text-shadow: 2px 2px 10px #000;
+    }
 
-    .hamburger {  
-      position: absolute;  
-      top: 20px;  
-      right: 20px;  
-      font-size: 28px;  
-      color: white;  
-      cursor: pointer;  
-      padding: 8px;  
-      border-radius: 5px;  
-      border: 2px solid #00ffcc;  
-      background: rgba(0, 0, 0, 0.6);  
-      z-index: 1001;  
-    }  
+    .hamburger {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 5px;
+      border: 2px solid #00ffcc;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1001;
+    }
 
-    nav ul {  
-      list-style-type: none;  
-      padding: 0;  
-      margin: 0;  
-      position: absolute;  
-      top: 60px;  
-      right: 20px;  
-      width: 220px;  
-      background: rgba(0, 0, 0, 0.95);  
-      display: none;  
-      flex-direction: column;  
-      border-radius: 10px;  
-      box-shadow: 0 6px 16px rgba(0, 255, 255, 0.2);  
-      animation: slideDown 0.3s ease;  
-      z-index: 1000;  
-    }  
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      width: 220px;
+      background: rgba(0, 0, 0, 0.95);
+      display: none;
+      flex-direction: column;
+      border-radius: 10px;
+      box-shadow: 0 6px 16px rgba(0, 255, 255, 0.2);
+      animation: slideDown 0.3s ease;
+      z-index: 1000;
+    }
 
-    @keyframes slideDown {  
-      from { opacity: 0; transform: translateY(-10px); }  
-      to { opacity: 1; transform: translateY(0); }  
-    }  
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    #menu.show {  
-      display: flex;  
-    }  
+    #menu.show {
+      display: flex;
+    }
 
-    nav ul li a {  
-      color: white;  
-      text-decoration: none;  
-      padding: 14px 20px;  
-      display: block;  
-      font-weight: bold;  
-      transition: 0.3s;  
-      border-bottom: 1px solid #333;  
-    }  
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+      display: block;
+      font-weight: bold;
+      transition: 0.3s;
+      border-bottom: 1px solid #333;
+    }
 
-    nav ul li a:hover {  
-      background-color: #00ffcc;  
-      color: #000;  
-    }  
+    nav ul li a:hover {
+      background-color: #00ffcc;
+      color: #000;
+    }
 
-    #content-section {  
-      padding: 40px 20px;  
-      background: rgba(0, 0, 0, 0.6);  
-      margin: 30px auto;  
-      max-width: 900px;  
-      border-radius: 15px;  
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);  
-      backdrop-filter: blur(6px);  
-    }  
+    #content-section {
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.6);
+      margin: 30px auto;
+      max-width: 900px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+    }
 
-    .description {  
-      font-size: 16px;  
-      color: #ffcc00;  
-      margin-bottom: 25px;  
-      line-height: 1.6;  
-    }  
+    .description {
+      font-size: 16px;
+      color: #ffcc00;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
 
-    h3 {  
-      color: #00ffcc;  
-      font-size: 22px;  
-    }  
+    h3 {
+      color: #00ffcc;
+      font-size: 22px;
+    }
 
-    .download-btn {  
-      display: inline-block;  
-      padding: 14px 28px;  
-      margin: 10px;  
-      font-size: 17px;  
-      font-weight: bold;  
-      color: white;  
-      background: linear-gradient(145deg, #007BFF, #00bfff);  
-      text-decoration: none;  
-      border-radius: 12px;  
-      box-shadow: 0 0 15px rgba(0,255,255,0.3);  
-      transition: all 0.3s ease-in-out;  
-    }  
+    .download-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      margin: 10px;
+      font-size: 17px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(145deg, #007BFF, #00bfff);
+      text-decoration: none;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,255,255,0.3);
+      transition: all 0.3s ease-in-out;
+    }
 
-    .download-btn:hover {  
-      transform: scale(1.08);  
-      background: linear-gradient(145deg, #00bfff, #007BFF);  
-    }  
+    .download-btn:hover {
+      transform: scale(1.08);
+      background: linear-gradient(145deg, #00bfff, #007BFF);
+    }
 
-    .password-box {  
-      display: none;  
-      margin-top: 15px;  
-    }  
+    .password-box {
+      display: none;
+      margin-top: 15px;
+    }
 
-    .password-box input {  
-      padding: 10px;  
-      font-size: 16px;  
-      margin: 10px auto;  
-      border-radius: 6px;  
-      border: none;  
-      width: 260px;  
-      display: block;  
-      text-align: center;  
-    }  
+    .password-box input {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px auto;
+      border-radius: 6px;
+      border: none;
+      width: 260px;
+      display: block;
+      text-align: center;
+      color: #333; /* Added for better visibility */
+    }
 
-    .password-box button {  
-      padding: 10px 22px;  
-      font-size: 16px;  
-      background: #28a745;  
-      color: white;  
-      border: none;  
-      border-radius: 6px;  
-      cursor: pointer;  
-      margin-top: 5px;  
-    }  
+    .password-box button {
+      padding: 10px 22px;
+      font-size: 16px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 5px;
+      transition: background-color 0.3s ease;
+    }
 
-    footer {  
-      background: #111;  
-      color: white;  
-      text-align: center;  
-      padding: 25px 10px;  
-    }  
+    .password-box button:hover {
+        background-color: #218838;
+    }
 
-    .social-icons a {  
-      margin: 0 12px;  
-      color: white;  
-      font-size: 24px;  
-      transition: 0.3s;  
-    }  
+    /* Styles for the message box */
+    #message-box {
+        display: none;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
 
-    .social-icons a:hover {  
-      color: #00ffcc;  
-    }  
-  </style>  
-</head>  
-<body>  
-  <header>  
-    <h1>Welcome to Martoo Tech Works</h1>  
-    <div class="hamburger" onclick="toggleMenu()">☰</div>  
-    <nav>  
-      <ul id="menu">  
-        <li><a href="index.html">Home</a></li>  
-        <li><a href="posts.html">Blog Posts</a></li>  
-        <li><a href="services.html">Services</a></li>  
+    #message-box.show {
+        opacity: 1;
+    }
+
+    #message-box.success {
+        background-color: #28a745; /* Green for success */
+        color: white;
+    }
+
+    #message-box.error {
+        background-color: #dc3545; /* Red for error */
+        color: white;
+    }
+
+
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 25px 10px;
+    }
+
+    .social-icons a {
+      margin: 0 12px;
+      color: white;
+      font-size: 24px;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #00ffcc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to Martoo Tech Works</h1>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <nav>
+      <ul id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="posts.html">Blog Posts</a></li>
+        <li><a href="services.html">Services</a></li>
         <li><a href="typing_assistant.html">Typing Assistant</a></li>
-        <li><a href="about.html">About</a></li>  
-        <li><a href="contact.html">Contact</a></li>  
-        <li><a href="MARTOO TECH WORKS/martoo-ai.html">Martoo AI</a></li>  
-        <li><a href="downloader.html">Video Downloader</a></li>  
-      </ul>  
-    </nav>  
-  </header>  
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="MARTOO TECH WORKS/martoo-ai.html">Martoo AI</a></li>
+        <li><a href="downloader.html">Video Downloader</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <div id="content-section">  
-    <p class="description">  
-      Martoo Tech offers services related to:<br>  
-      1. Typing Assistant – Helping with assignments and documents.<br>  
-      2. VPN Services – Vmess, Trojan, and UDP configurations.<br>  
-      3. Essential School Materials – Academic resources.  
-    </p>  
+  <div id="content-section">
+    <p class="description">
+      Martoo Tech offers services related to:<br>
+      1. Typing Assistant – Helping with assignments and documents.<br>
+      2. VPN Services – Vmess, Trojan, and UDP configurations.<br>
+      3. Essential School Materials – Academic resources.
+    </p>
 
-    <h3>Download Software (Password required)</h3>  
+    <h3>Download Software (Password required)</h3>
 
-    <button class="download-btn" onclick="showPasswordBox('SPSS')">Download SPSS</button>  
-    <div id="SPSS-box" class="password-box">  
-      <input type="password" id="SPSS-pwd" placeholder="Enter SPSS Password">  
-      <button onclick="downloadFile('SPSS')">Submit</button>  
-    </div>  
+    <button class="download-btn" onclick="showPasswordBox('SPSS')">Download SPSS</button>
+    <div id="SPSS-box" class="password-box">
+      <input type="password" id="SPSS-pwd" placeholder="Enter SPSS Password">
+      <button onclick="downloadFile('SPSS')">Submit</button>
+    </div>
 
-    <button class="download-btn" onclick="showPasswordBox('GIS')">Download GIS</button>  
-    <div id="GIS-box" class="password-box">  
-      <input type="password" id="GIS-pwd" placeholder="Enter GIS Password">  
-      <button onclick="downloadFile('GIS')">Submit</button>  
-    </div>  
+    <button class="download-btn" onclick="showPasswordBox('GIS')">Download GIS</button>
+    <div id="GIS-box" class="password-box">
+      <input type="password" id="GIS-pwd" placeholder="Enter GIS Password">
+      <button onclick="downloadFile('GIS')">Submit</button>
+    </div>
 
-    <button class="download-btn" onclick="showPasswordBox('STATA')">Download STATA</button>  
-    <div id="STATA-box" class="password-box">  
-      <input type="password" id="STATA-pwd" placeholder="Enter STATA Password">  
-      <button onclick="downloadFile('STATA')">Submit</button>  
-    </div>  
-  </div>  
+    <button class="download-btn" onclick="showPasswordBox('STATA')">Download STATA</button>
+    <div id="STATA-box" class="password-box">
+      <input type="password" id="STATA-pwd" placeholder="Enter STATA Password">
+      <button onclick="downloadFile('STATA')">Submit</button>
+    </div>
 
-  <footer>  
-    <p>&copy; 2024–2025 | Licensed under Martoo Tech Works Terms of Service.</p>  
-    <div class="social-icons">  
-      <a href="https://facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>  
-      <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>  
-      <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>  
-    </div>  
-  </footer>  
+    <!-- Message box for feedback -->
+    <div id="message-box"></div>
+  </div>
 
-  <script>  
-    function toggleMenu() {  
-      const menu = document.getElementById('menu');  
-      menu.classList.toggle('show');  
-    }  
+  <footer>
+    <p>&copy; 2024–2025 | Licensed under Martoo Tech Works Terms of Service.</p>
+    <div class="social-icons">
+      <a href="https://facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
+      <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
+    </div>
+  </footer>
 
-    document.addEventListener('click', function(event) {  
-      const menu = document.getElementById('menu');  
-      const hamburger = document.querySelector('.hamburger');  
-      if (!menu.contains(event.target) && !hamburger.contains(event.target)) {  
-        menu.classList.remove('show');  
-      }  
-    });  
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('show');
+    }
 
-    function showPasswordBox(software) {  
-      document.querySelectorAll('.password-box').forEach(box => box.style.display = 'none');  
-      document.getElementById(`${software}-box`).style.display = 'block';  
-    }  
+    document.addEventListener('click', function(event) {
+      const menu = document.getElementById('menu');
+      const hamburger = document.querySelector('.hamburger');
+      if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+        menu.classList.remove('show');
+      }
+    });
 
-    function downloadFile(software) {  
-      const passwords = {  
-        SPSS: "MARTOO TECH SPSS",  
-        GIS: "MARTOO TECH GIS",  
-        STATA: "MARTOO TECH STATA"  
-      };  
+    function showPasswordBox(software) {
+      document.querySelectorAll('.password-box').forEach(box => box.style.display = 'none');
+      document.getElementById(`${software}-box`).style.display = 'block';
+      showMessage('', ''); // Clear any previous messages
+    }
 
-      const links = {  
-        SPSS: "https://drive.google.com/uc?export=download&id=1-0T0omxeFigW_ct_xxoPxMS3-_hIc6Wl",  
-        GIS: "https://drive.google.com/uc?export=download&id=1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI",  
-        STATA: "https://drive.google.com/uc?export=download&id=1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H"  
-      };  
+    function showMessage(message, type) {
+        const messageBox = document.getElementById('message-box');
+        messageBox.textContent = message;
+        messageBox.className = 'show'; // Reset classes
+        if (type) {
+            messageBox.classList.add(type);
+        }
+        if (message) {
+            messageBox.style.display = 'block';
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+                setTimeout(() => messageBox.style.display = 'none', 500); // Hide after transition
+            }, 3000); // Message disappears after 3 seconds
+        } else {
+            messageBox.style.display = 'none';
+        }
+    }
 
-      const inputPwd = document.getElementById(`${software}-pwd`).value;  
+    function downloadFile(software) {
+      const passwords = {
+        SPSS: "MARTOO TECH SPSS",
+        GIS: "MARTOO TECH GIS",
+        STATA: "MARTOO TECH STATA"
+      };
 
-      if (inputPwd === passwords[software]) {  
-        window.location.href = links[software];  
-      } else {  
-        alert("Incorrect password! Please try again.");  
-      }  
-    }  
-  </script>  
-</body>  
-</html>>
+      const links = {
+        SPSS: "https://drive.google.com/uc?export=download&id=1-0T0omxeFigW_ct_xxoPxMS3-_hIc6Wl",
+        GIS: "https://drive.google.com/uc?export=download&id=1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI",
+        STATA: "https://drive.google.com/uc?export=download&id=1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H"
+      };
+
+      const inputPwd = document.getElementById(`${software}-pwd`).value;
+
+      if (inputPwd === passwords[software]) {
+        // Open the download link in a new tab instead of redirecting the current page
+        window.open(links[software], '_blank');
+        showMessage(`Downloading ${software}...`, 'success');
+      } else {
+        showMessage("Incorrect password! Please try again.", 'error');
+      }
+    }
+  </script>
+</body>
+</html>

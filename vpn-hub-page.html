@@ -1,92 +1,392 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPN Hub | Martoo Tech Works</title>
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter font from Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Martoo Tech Works - Services</title>
+    <meta name="description" content="Explore Martoo Tech Works services including Typing Assistant, VPN setup, and Study Materials." />
+    <meta name="author" content="Martoo Tech Works" />
+    <meta name="robots" content="index, follow" />
+    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
+    <meta name="google-adsense-account" content="ca-pub-9775836048486404">
+  
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        rel="stylesheet"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
+  
     <style>
+        /* General body and styling consistent with services.html */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('full site background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header styling consistent with services.html */
+        header {
+            background: rgba(0,0,0,0.75);
+            padding: 1rem 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        /* Logo */
+        .logo {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffcc00;
+            flex-shrink: 0;
+        }
+
+        /* Site title */
+        .site-title {
+            font-size: 1.8rem;
+            color: #ff9800;
+            margin-left: 1rem;
+            flex-grow: 1;
+            font-weight: 700;
+        }
+
+        /* Navigation styles */
+        nav {
+            position: relative;
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        /* Hamburger button */
+        .hamburger {
+            font-size: 2rem;
+            cursor: pointer;
+            display: none;
+            color: #ff9800;
+            background: transparent;
+            border: none;
+            padding: 0;
+            user-select: none;
+        }
+
+        /* Menu list */
+        ul.menu {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        ul.menu li {
+            position: relative;
+        }
+
+        ul.menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            border-radius: 4px;
+        }
+
+        ul.menu li a:hover,
+        ul.menu li a:focus {
+            background-color: #ff7f00;
+            outline: none;
+        }
+
+        /* Dropdown arrow */
+        ul.menu li.has-dropdown > a::after {
+            content: " ▼";
+            font-size: 0.6rem;
+            margin-left: 5px;
+        }
+
+        /* Dropdown menu */
+        ul.menu li ul.dropdown {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: rgba(0,0,0,0.9);
+            border-radius: 5px;
+            display: none;
+            min-width: 180px;
+            flex-direction: column;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
+
+        ul.menu li ul.dropdown li {
+            position: relative;
+        }
+
+        ul.menu li ul.dropdown li a {
+            padding: 0.5rem 1rem;
+            font-weight: 400;
+            display: block;
+        }
+
+        ul.menu li ul.dropdown li a:hover,
+        ul.menu li ul.dropdown li a:focus {
+            background-color: #ff7f00;
+            color: #000;
+        }
+      
+        /* Nested dropdowns for desktop */
+        ul.menu li ul.dropdown li.has-dropdown > a::after {
+            content: " ▶";
+            float: right;
+            margin-left: 5px;
+        }
+      
+        ul.menu li ul.dropdown li.has-dropdown ul.dropdown {
+            left: 100%;
+            top: 0;
+        }
+
+        /* Show dropdown on hover for desktops */
+        @media (hover: hover) and (pointer: fine) {
+            ul.menu li.has-dropdown:hover > ul.dropdown {
+                display: flex;
+            }
+            ul.menu li ul.dropdown li.has-dropdown:hover > ul.dropdown {
+                display: flex;
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            /* Show hamburger */
+            .hamburger {
+                display: block;
+            }
+
+            nav {
+                flex-basis: 100%;
+                margin-top: 1rem;
+            }
+
+            ul.menu {
+                flex-direction: column;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                background: rgba(0,0,0,0.85);
+                border-radius: 5px;
+            }
+
+            ul.menu.expanded {
+                max-height: 500px; /* enough to show full menu */
+            }
+
+            ul.menu li {
+                width: 100%;
+            }
+
+            ul.menu li ul.dropdown {
+                position: static;
+                display: none;
+                padding-left: 1rem;
+                background: none;
+            }
+
+            ul.menu li ul.dropdown li.has-dropdown ul.dropdown {
+                padding-left: 1rem;
+            }
+
+            ul.menu li.expanded > ul.dropdown {
+                display: flex;
+                flex-direction: column;
+            }
+
+            ul.menu li.has-dropdown > a::after {
+                content: " ▶";
+                float: right;
+                margin-left: 0;
+            }
+
+            ul.menu li.expanded > a::after {
+                content: " ▼";
+            }
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.6);
+            border-radius: 10px;
+        }
+
+        main h2 {
+            color: #ff9800;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        main p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .video-grid iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 10px;
+            border: none;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.8);
+            padding: 1rem 2rem;
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        footer .social-icons a {
+            margin: 0 10px;
+            color: white;
+            font-size: 1.6rem;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-icons a:hover,
+        footer .social-icons a:focus {
+            color: #ff9800;
+            outline: none;
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen">
+<body>
+    <header>
+        <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="logo" />
+        <div class="site-title">Martoo Tech Works - Services</div>
 
-    <!-- Header section with navigation and hamburger menu -->
-    <header class="bg-gray-800 p-4 shadow-lg sticky top-0 z-50">
-        <nav class="container mx-auto flex items-center justify-between flex-wrap">
-            <a href="#" class="text-2xl font-bold text-blue-400">Martoo Tech Works</a>
-            
-            <!-- Hamburger menu icon for mobile -->
-            <div class="block md:hidden">
-                <button id="hamburger-button" class="text-white focus:outline-none">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
-                </button>
-            </div>
-            
-            <!-- Main navigation links -->
-            <div id="nav-links" class="hidden w-full md:block md:w-auto md:flex-grow md:flex md:items-center">
-                <div class="text-sm md:flex-grow">
-                    <a href="udp.html" class="block mt-4 md:inline-block md:mt-0 text-gray-300 hover:text-white mr-4 transition-colors duration-200">UDP Services</a>
-                    <a href="vmess.html" class="block mt-4 md:inline-block md:mt-0 text-gray-300 hover:text-white mr-4 transition-colors duration-200">VMess Protocol</a>
-                    <a href="trojan.html" class="block mt-4 md:inline-block md:mt-0 text-gray-300 hover:text-white transition-colors duration-200">Trojan Protocol</a>
-                </div>
-            </div>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav>
+            <ul class="menu" id="primary-menu" role="menu">
+                <li role="none"><a href="index.html" role="menuitem" tabindex="0">Home</a></li>
+                <li class="has-dropdown" role="none">
+                    <a href="#" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">Services</a>
+                    <ul class="dropdown" role="menu" aria-label="Services submenu">
+                        <li role="none"><a href="typing_assistant.html" role="menuitem" tabindex="-1">Typing Assistant</a></li>
+                        <li class="has-dropdown" role="none">
+                            <!-- Updated: This link now goes to the VPN Hub Page -->
+                            <a href="vpn-hub-page.html" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="-1">VPN</a>
+                            <ul class="dropdown" role="menu" aria-label="VPN submenu">
+                                <!-- Updated: These links now go to their own separate pages -->
+                                <li role="none"><a href="vmess.html" role="menuitem" tabindex="-1">vmess</a></li>
+                                <li role="none"><a href="trojan.html" role="menuitem" tabindex="-1">trojan</a></li>
+                                <li role="none"><a href="udp.html" role="menuitem" tabindex="-1">udp</a></li>
+                            </ul>
+                        </li>
+                        <li role="none"><a href="school-materials.html" role="menuitem" tabindex="-1">Materials</a></li>
+                    </ul>
+                </li>
+                <li role="none"><a href="about.html" role="menuitem" tabindex="0">About</a></li>
+                <li role="none"><a href="contact.html" role="menuitem" tabindex="0">Contact</a></li>
+            </ul>
         </nav>
     </header>
 
-    <!-- Main content container -->
-    <main class="flex flex-col items-center justify-center p-6 mt-12">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-blue-400 mb-2">VPN Services Hub</h1>
-            <p class="text-lg text-gray-400">Select a service to get started.</p>
-        </div>
+    <main>
+        <h2>Welcome to Martoo Tech Works Services</h2>
+        <p>Explore our range of services, including Typing Assistance, VPN configurations, and access to essential study materials. All designed to simplify your tech experience.</p>
 
-        <!-- Container for service cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl w-full">
-            <!-- UDP Service Card -->
-            <a href="udp.html" class="bg-gray-800 rounded-xl p-8 text-center hover:bg-gray-700 transition-colors duration-300 shadow-lg">
-                <div class="text-5xl text-green-400 mb-4">
-                    <i class="fas fa-network-wired"></i>
-                </div>
-                <h2 class="text-2xl font-bold mb-2">UDP Services</h2>
-                <p class="text-gray-400">Generate UDP configuration files for your client.</p>
-            </a>
-
-            <!-- VMess Service Card -->
-            <a href="vmess.html" class="bg-gray-800 rounded-xl p-8 text-center hover:bg-gray-700 transition-colors duration-300 shadow-lg">
-                <div class="text-5xl text-yellow-400 mb-4">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h2 class="text-2xl font-bold mb-2">VMess Protocol</h2>
-                <p class="text-gray-400">Learn more about the secure and fast VMess protocol.</p>
-            </a>
-
-            <!-- Trojan Service Card -->
-            <a href="trojan.html" class="bg-gray-800 rounded-xl p-8 text-center hover:bg-gray-700 transition-colors duration-300 shadow-lg">
-                <div class="text-5xl text-purple-400 mb-4">
-                    <i class="fas fa-user-secret"></i>
-                </div>
-                <h2 class="text-2xl font-bold mb-2">Trojan Protocol</h2>
-                <p class="text-gray-400">Discover the features of the Trojan protocol.</p>
-            </a>
-        </div>
+        <section class="video-grid" aria-label="Service overview videos">
+            <iframe src="https://www.youtube.com/embed/w0_sFwO1IR8" title="Typing Assistant Video" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/J-DNnARdB8E" title="VPN Setup Video" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM" title="Study Materials Overview" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs" title="Additional Services Video" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/53iT5sKyh9s?si=06rO1U9Cfw1U6E1D" title="Bonus Tutorial Video" allowfullscreen></iframe>
+        </section>
     </main>
 
+    <footer>
+        <div class="social-icons" aria-label="Social media links">
+            <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+    </footer>
+
     <script>
-        document.getElementById('hamburger-button').addEventListener('click', function() {
-            var navLinks = document.getElementById('nav-links');
-            navLinks.classList.toggle('hidden');
+        // Hamburger menu toggle
+        const hamburger = document.querySelector(".hamburger");
+        const menu = document.querySelector("ul.menu");
+
+        hamburger.addEventListener("click", () => {
+            const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
+            hamburger.setAttribute("aria-expanded", !expanded);
+            menu.classList.toggle("expanded");
+        });
+
+        // Dropdown toggles for mobile and desktop
+        const dropdownParents = document.querySelectorAll("li.has-dropdown > a");
+
+        dropdownParents.forEach(parentLink => {
+            parentLink.addEventListener("click", e => {
+                const isMobile = window.innerWidth <= 768;
+                // On mobile, prevent default to toggle the menu.
+                if (isMobile) {
+                    e.preventDefault();
+                    const expanded = parentLink.getAttribute("aria-expanded") === "true" || false;
+                    parentLink.setAttribute("aria-expanded", !expanded);
+                    parentLink.parentElement.classList.toggle("expanded");
+                }
+            });
+        });
+
+        // Keyboard accessibility: close menu on Escape
+        document.addEventListener('keydown', e => {
+            if(e.key === "Escape") {
+                if(menu.classList.contains("expanded")) {
+                    menu.classList.remove("expanded");
+                    hamburger.setAttribute("aria-expanded", false);
+                    // close any open dropdowns
+                    dropdownParents.forEach(link => {
+                        link.setAttribute("aria-expanded", false);
+                        link.parentElement.classList.remove("expanded");
+                    });
+                    hamburger.focus();
+                }
+            }
         });
     </script>
 </body>

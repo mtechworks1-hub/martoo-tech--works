@@ -24,6 +24,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            /* Note: The image URL 'full site background.jpg' is a placeholder and won't work without the actual file. */
             background: url('full site background.jpg') no-repeat center center fixed;
             background-size: cover;
         }
@@ -35,12 +36,13 @@
     <header class="bg-gray-900/80 backdrop-blur-sm p-4 md:px-8 shadow-lg flex items-center justify-between flex-wrap rounded-b-xl">
         <!-- Logo and Site Title -->
         <div class="flex items-center gap-4">
+            <!-- Note: The image URL 'Images/file_00000000dad061f886772cbf982dfb4b.png' is a placeholder and won't work without the actual file. -->
             <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="h-12 w-12 rounded-full object-cover border-2 border-amber-500 shadow-md" />
             <div class="text-2xl font-bold text-orange-500 tracking-wide">Martoo Tech Works</div>
         </div>
         
-        <!-- Hamburger menu button for mobile -->
-        <button class="md:hidden text-orange-500 text-2xl p-2 rounded-md hover:bg-orange-500 hover:text-white transition-colors" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
+        <!-- Hamburger menu button for mobile - ADDED a new class 'hamburger-button' for the JavaScript to easily select it -->
+        <button class="md:hidden text-orange-500 text-2xl p-2 rounded-md hover:bg-orange-500 hover:text-white transition-colors hamburger-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
             <i class="fas fa-bars"></i>
         </button>
         
@@ -124,7 +126,9 @@
         const passwordMessage = document.getElementById('password-message');
         const submitBtn = document.getElementById('submit-btn');
         const cancelBtn = document.getElementById('cancel-btn');
-        const hamburger = document.querySelector(".hamburger");
+        
+        // FIX: Correctly select the hamburger button by its new class name
+        const hamburger = document.querySelector(".hamburger-button");
         const menu = document.querySelector("#primary-menu");
 
         let currentFile = '';
@@ -199,6 +203,7 @@
             const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
             hamburger.setAttribute("aria-expanded", !expanded);
             menu.classList.toggle("hidden");
+            // Also toggle the flex-col class on mobile to stack the menu items vertically
             menu.classList.toggle("flex-col");
             // If the menu is not hidden, add a basic responsive style for mobile
             if (!menu.classList.contains("hidden")) {
@@ -213,8 +218,8 @@
 
         dropdownParents.forEach(parentLink => {
             parentLink.addEventListener("click", e => {
-                // Only toggle on mobile
-                if (window.innerWidth <= 768) {
+                // Only toggle on mobile (when the menu is shown via the hamburger)
+                if (!menu.classList.contains("hidden")) {
                     e.preventDefault();
                     const dropdown = parentLink.nextElementSibling;
                     dropdown.classList.toggle("hidden");

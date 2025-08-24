@@ -3,288 +3,462 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Contact - Martoo Tech Works</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <title>Martoo Tech Works - Contact</title>
+    <meta name="description" content="Contact Martoo Tech Works via email, phone, or social media. Get in touch with us for questions, concerns, or support." />
+    <meta name="author" content="Martoo Tech Works" />
+    <meta name="robots" content="index, follow" />
+    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
+    <meta name="google-adsense-account" content="ca-pub-9775836048486404">
+  
+    <!-- Font Awesome for icons -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        rel="stylesheet"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
+  
     <style>
-        /* Full-site background */
+        /* General body and styling consistent with other pages */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-image: url('full site background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-            font-family: Arial, sans-serif;
             margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('full site background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Header styles */
+        /* Header styling consistent with other pages */
         header {
+            background: rgba(0,0,0,0.75);
+            padding: 1rem 2rem;
             position: relative;
-            text-align: center;
-            padding: 60px 20px;
-            background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
-            flex-shrink: 0;
-        }
-
-        /* Header text styles */
-        header h1 {
-            color: #ff9800;
-            font-size: 32px;
-            margin: 0;
-            position: relative;
-            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
         /* Logo */
         .logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 60px;
             height: 60px;
+            width: 60px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #ffcc00;
-            z-index: 1;
+            flex-shrink: 0;
         }
 
-        /* Hamburger menu icon */
+        /* Site title */
+        .site-title {
+            font-size: 1.8rem;
+            color: #ff9800;
+            margin-left: 1rem;
+            flex-grow: 1;
+            font-weight: 700;
+        }
+
+        /* Navigation styles */
+        nav {
+            position: relative;
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        /* Hamburger button */
         .hamburger {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            color: white;
+            font-size: 2rem;
             cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 8px;
-            border-radius: 5px;
-            border: 2px solid #ffcc00;
-            z-index: 3;
-        }
-
-        /* Navigation menu styling */
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 200px;
-            background-color: rgba(0, 0, 0, 0.9);
             display: none;
-            flex-direction: column;
-            align-items: flex-start;
-            border-radius: 5px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease-in-out;
-            z-index: 4;
+            color: #ff9800;
+            background: transparent;
+            border: none;
+            padding: 0;
+            user-select: none;
         }
 
-        /* Menu toggle */
-        #menu.show {
+        /* Menu list */
+        ul.menu {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
             display: flex;
+            gap: 1.5rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
         }
 
-        /* Menu items */
-        nav ul li {
-            margin: 3px 0;
+        ul.menu li {
+            position: relative;
         }
 
-        nav ul li a {
+        ul.menu li a {
             color: white;
             text-decoration: none;
-            padding: 5px 10px;
-            display: block;
-            font-weight: bold;
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.8);
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            display: inline-block;
             transition: background-color 0.3s ease;
+            border-radius: 4px;
         }
 
-        nav ul li a:hover {
+        ul.menu li a:hover,
+        ul.menu li a:focus {
             background-color: #ff7f00;
+            outline: none;
         }
 
-        /* Main content section */
-        #content-section {
-            padding: 40px 20px;
-            text-align: center;
-            color: white;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            max-width: 800px;
-            margin: 20px auto 40px auto; /* Added bottom margin for footer */
-            flex-shrink: 0;
+        /* Dropdown arrow */
+        ul.menu li.has-dropdown > a::after {
+            content: " ▼";
+            font-size: 0.6rem;
+            margin-left: 5px;
         }
 
-        #content-section h2, #content-section p {
-            margin: 10px 0;
-        }
-
-        /* Subscription Form Section */
-        .form-section {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: 20px auto 40px auto;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        /* Form styling */
-        form input, form textarea, form button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #ff9800;
+        /* Dropdown menu */
+        ul.menu li ul.dropdown {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: rgba(0,0,0,0.9);
             border-radius: 5px;
-            font-size: 16px;
+            display: none;
+            min-width: 180px;
+            flex-direction: column;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
+
+        ul.menu li ul.dropdown li a {
+            padding: 0.5rem 1rem;
+            font-weight: 400;
+            display: block;
+        }
+
+        ul.menu li ul.dropdown li a:hover,
+        ul.menu li ul.dropdown li a:focus {
+            background-color: #ff7f00;
+            color: #000;
+        }
+
+        /* Show dropdown on hover for desktops */
+        @media (hover: hover) and (pointer: fine) {
+            ul.menu li.has-dropdown:hover > ul.dropdown {
+                display: flex;
+            }
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            /* Show hamburger */
+            .hamburger {
+                display: block;
+            }
+
+            nav {
+                flex-basis: 100%;
+                margin-top: 1rem;
+            }
+
+            ul.menu {
+                flex-direction: column;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                background: rgba(0,0,0,0.85);
+                border-radius: 5px;
+            }
+
+            ul.menu.expanded {
+                max-height: 500px; /* enough to show full menu */
+            }
+
+            ul.menu li {
+                width: 100%;
+            }
+
+            ul.menu li ul.dropdown {
+                position: static;
+                display: none;
+                padding-left: 1rem;
+                background: none;
+            }
+
+            ul.menu li.expanded > ul.dropdown {
+                display: flex;
+                flex-direction: column;
+            }
+
+            ul.menu li.has-dropdown > a::after {
+                content: " ▶";
+                float: right;
+                margin-left: 0;
+            }
+
+            ul.menu li.expanded > a::after {
+                content: " ▼";
+            }
+        }
+        
+        main {
+            flex-grow: 1;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            background: rgba(0,0,0,0.6);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        main h1 {
+            color: #ff9800;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        main p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0 auto 1.5rem auto;
+            text-align: center;
+        }
+
+        .contact-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .contact-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .contact-form-card, .contact-info-card {
+            background: rgba(0,0,0,0.7);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-form-card h2, .contact-info-card h2 {
+            margin-top: 0;
+            color: #ffcc00;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        form label {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid #ff9800;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        form input:focus, form textarea:focus {
+            outline: none;
+            border-color: #ff7f00;
+            box-shadow: 0 0 5px #ff7f00;
         }
 
         form button {
             background-color: #ff9800;
             color: white;
-            font-size: 14px;
-            cursor: pointer;
-            display: block;
-            width: auto;
-            margin-top: 10px;
-            padding: 10px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
             border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         form button:hover {
             background-color: #ff7f00;
         }
 
-        /* Contact Information Section */
-        section.contact-info {
-            max-width: 600px;
-            margin: 0 auto 80px auto; /* Added big bottom margin */
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
+        /* Style for the Contact Icons section */
+        .contact-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-icons a {
             color: white;
+            font-size: 2.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .contact-icons a:hover {
+            transform: scale(1.1);
+        }
+        
+        .contact-icons a.email-link:hover { color: #f0c040; } /* Subtle color change for email */
+        .contact-icons a.phone-link:hover { color: #4CAF50; } /* Subtle color change for phone */
+        .contact-icons a.whatsapp-link:hover { color: #25D366; } /* WhatsApp green */
+        .contact-icons a.facebook-link:hover { color: #3b5998; } /* Facebook blue */
+        .contact-icons a.youtube-link:hover { color: #FF0000; } /* YouTube red */
+
+        .contact-label {
+            display: block;
+            font-size: 0.9rem;
+            color: #ddd;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer styling consistent with other pages */
+        footer {
+            background: rgba(0,0,0,0.8);
+            padding: 1rem 2rem;
             text-align: center;
-            flex-shrink: 0;
-        }
-
-        section.contact-info h3 {
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-
-        section.contact-info p {
-            margin: 5px 0 15px 0;
-            font-size: 18px;
-        }
-
-        /* Social icons bigger and spaced */
-        .social-icons {
-            font-size: 36px; /* Bigger icons */
-        }
-
-        .social-icons a {
-            margin: 0 20px;
             color: white;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        footer .social-icons a {
+            margin: 0 10px;
+            color: white;
+            font-size: 1.6rem;
             transition: color 0.3s ease;
         }
 
-        .social-icons a:hover {
-            color: #ff7f00;
+        footer .social-icons a:hover,
+        footer .social-icons a:focus {
+            color: #ff9800;
+            outline: none;
         }
-
-        /* Footer */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            /* Removed position: fixed to avoid overlap */
-            flex-shrink: 0;
-        }
-
     </style>
 </head>
 <body>
-
-    <!-- Header with logo and navigation -->
     <header>
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo" />
-        <h1>Contact Us - Martoo Tech Works</h1>
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+        <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="logo" />
+        <div class="site-title">Martoo Tech Works - Contact</div>
+
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
+            <i class="fas fa-bars"></i>
+        </button>
+
         <nav>
-            <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-                <li class="dropdown">
-                    <a href="services.html">Services</a>
-                    <div class="dropdown-content">
-                        <a href="vpn.html">VPN</a>
-                        <a href="vmess.html">Vmess</a>
-                        <a href="trojan.html">Trojan</a>
-                        <a href="udp.html">UDP</a>
-                        <a href="typing_assistant.html">Typing Assistant</a>
-                        <a href="school-materials.html">School Materials</a>
-                    </div>
+            <ul class="menu" id="primary-menu" role="menu">
+                <li role="none"><a href="index.html" role="menuitem" tabindex="0">Home</a></li>
+                <li class="has-dropdown" role="none">
+                    <a href="services.html" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">Services</a>
+                    <ul class="dropdown" role="menu" aria-label="Services submenu">
+                        <li role="none"><a href="typing_assistant.html" role="menuitem" tabindex="-1">Typing Assistant</a></li>
+                        <li class="has-dropdown" role="none">
+                            <a href="trojan.html" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="-1">VPN</a>
+                            <ul class="dropdown" role="menu" aria-label="VPN submenu">
+                                <li role="none"><a href="trojan.html#vmess" role="menuitem" tabindex="-1">vmess</a></li>
+                                <li role="none"><a href="trojan.html#trojan" role="menuitem" tabindex="-1">trojan</a></li>
+                                <li role="none"><a href="trojan.html#udp" role="menuitem" tabindex="-1">udp</a></li>
+                            </ul>
+                        </li>
+                        <li role="none"><a href="school-materials.html" role="menuitem" tabindex="-1">Materials</a></li>
+                    </ul>
                 </li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="posts.html">Posts</a></li>
+                <li role="none"><a href="posts.html" role="menuitem" tabindex="0">Blog Posts</a></li>
+                <li role="none"><a href="about.html" role="menuitem" tabindex="0">About</a></li>
+                <li role="none"><a href="contact.html" role="menuitem" tabindex="0">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main content section -->
-    <section id="content-section">
-        <h2>Get in Touch</h2>
-        <p>If you have any questions, concerns, or suggestions, feel free to reach out to us. We’re happy to help!</p>
-    </section>
+    <main>
+        <h1>Get in Touch with Us</h1>
+        <p>
+            Whether you have a question about our services, need technical support, or want to collaborate, we're here to help. Feel free to use the contact form below or connect with us directly via our social channels.
+        </p>
 
-    <!-- Subscription Form Section -->
-    <section class="form-section">
-        <h2>Subscribe to Our Newsletter</h2>
-        <form action="https://formspree.io/f/xnnqvkpd" method="POST">
-            <label for="email">Your email:</label>
-            <input type="email" name="email" id="email" required />
+        <div class="contact-section">
+            <div class="contact-form-card">
+                <h2>Send Us a Message</h2>
+                <form action="https://formspree.io/f/xnnqvkpd" method="POST">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
 
-            <label for="message">Your message:</label>
-            <textarea name="message" id="message" required></textarea>
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
-            <button type="submit">Send</button>
-        </form>
-    </section>
+                    <label for="message">Your Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
 
-    <!-- Contact Information -->
-    <section class="contact-info">
-        <h3>Our Contact Information</h3>
-        <p>Email us at <a href="mailto:infomartooedutech@gmail.com">infomartooedutech@gmail.com</a></p>
-        <p>Follow us on social media:</p>
-        <div class="social-icons">
-            <a href="https://wa.me/260950322498" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61568599103956" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+            
+            <div class="contact-info-card">
+                <h2>Our Contact Information</h2>
+                <p>Reach out to us through the following channels:</p>
+                <div class="contact-icons">
+                    <a href="mailto:martootechworks@gmail.com,martinndoma15@gmail.com,martootechhub@gmail.com" class="email-link" aria-label="Email Us"><i class="fas fa-envelope"></i><span class="contact-label">Email</span></a>
+                    <a href="https://wa.me/260973495316" target="_blank" class="whatsapp-link" aria-label="Message on WhatsApp"><i class="fab fa-whatsapp"></i><span class="contact-label">WhatsApp</span></a>
+                    <a href="tel:+260973495316" class="phone-link" aria-label="Call Us"><i class="fas fa-phone"></i><span class="contact-label">Call</span></a>
+                    <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" class="facebook-link" aria-label="Visit our Facebook page"><i class="fab fa-facebook"></i><span class="contact-label">Facebook</span></a>
+                    <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" class="youtube-link" aria-label="Visit our YouTube channel"><i class="fab fa-youtube"></i><span class="contact-label">YouTube</span></a>
+                </div>
+            </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
     <footer>
-        <div class="license">
-            <p>&copy; 2024 Martoo Tech Works. All rights reserved. Licensed under the Martoo Tech Works Terms of Service.</p>
+        <div class="social-icons" aria-label="Social media links">
+            <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
+        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript for menu toggle -->
     <script>
-        function toggleMenu() {
-            var menu = document.getElementById('menu');
-            menu.classList.toggle('show');
-        }
+        // Hamburger menu toggle
+        const hamburger = document.querySelector(".hamburger");
+        const menu = document.querySelector("ul.menu");
+
+        hamburger.addEventListener("click", () => {
+            const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
+            hamburger.setAttribute("aria-expanded", !expanded);
+            menu.classList.toggle("expanded");
+        });
+
+        // Dropdown toggles for mobile and desktop
+        const dropdownParents = document.querySelectorAll("li.has-dropdown > a");
+
+        dropdownParents.forEach(parentLink => {
+            parentLink.addEventListener("click", e => {
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                    e.preventDefault();
+                    const expanded = parentLink.getAttribute("aria-expanded") === "true" || false;
+                    parentLink.setAttribute("aria-expanded", !expanded);
+                    parentLink.parentElement.classList.toggle("expanded");
+                }
+            });
+        });
     </script>
 </body>
 </html>

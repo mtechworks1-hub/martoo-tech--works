@@ -2,451 +2,159 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Martoo Tech Works - Typing Assistant</title>
     <meta name="description" content="Improve your typing speed and accuracy with our online Typing Assistant service. Download protected documents and get professional typing help." />
     <meta name="author" content="Martoo Tech Works" />
     <meta name="robots" content="index, follow" />
     <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
     <meta name="google-adsense-account" content="ca-pub-9775836048486404">
-  
+    
+    <!-- Tailwind CSS CDN for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts for "Inter" -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome for icons -->
-    <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        rel="stylesheet"
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    />
-  
-    <style>
-        /* General body and styling consistent with services.html */
-        * {
-            box-sizing: border-box;
-        }
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <style>
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: url('full site background.jpg') no-repeat center center fixed;
             background-size: cover;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header styling consistent with services.html */
-        header {
-            background: rgba(0,0,0,0.75);
-            padding: 1rem 2rem;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        /* Logo */
-        .logo {
-            height: 60px;
-            width: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ffcc00;
-            flex-shrink: 0;
-        }
-
-        /* Site title */
-        .site-title {
-            font-size: 1.8rem;
-            color: #ff9800;
-            margin-left: 1rem;
-            flex-grow: 1;
-            font-weight: 700;
-        }
-
-        /* Navigation styles */
-        nav {
-            position: relative;
-            flex-basis: 100%;
-            margin-top: 1rem;
-        }
-
-        /* Hamburger button */
-        .hamburger {
-            font-size: 2rem;
-            cursor: pointer;
-            display: none;
-            color: #ff9800;
-            background: transparent;
-            border: none;
-            padding: 0;
-            user-select: none;
-        }
-
-        /* Menu list */
-        ul.menu {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-            display: flex;
-            gap: 1.5rem;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-        }
-
-        ul.menu li {
-            position: relative;
-        }
-
-        ul.menu li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.5rem 0.75rem;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-            border-radius: 4px;
-        }
-
-        ul.menu li a:hover,
-        ul.menu li a:focus {
-            background-color: #ff7f00;
-            outline: none;
-        }
-
-        /* Dropdown arrow */
-        ul.menu li.has-dropdown > a::after {
-            content: " ▼";
-            font-size: 0.6rem;
-            margin-left: 5px;
-        }
-
-        /* Dropdown menu */
-        ul.menu li ul.dropdown {
-            position: absolute;
-            top: 110%;
-            left: 0;
-            background: rgba(0,0,0,0.9);
-            border-radius: 5px;
-            display: none;
-            min-width: 180px;
-            flex-direction: column;
-            padding: 0.5rem 0;
-            z-index: 1000;
-        }
-
-        ul.menu li ul.dropdown li a {
-            padding: 0.5rem 1rem;
-            font-weight: 400;
-            display: block;
-        }
-
-        ul.menu li ul.dropdown li a:hover,
-        ul.menu li ul.dropdown li a:focus {
-            background-color: #ff7f00;
-            color: #000;
-        }
-
-        /* Show dropdown on hover for desktops */
-        @media (hover: hover) and (pointer: fine) {
-            ul.menu li.has-dropdown:hover > ul.dropdown {
-                display: flex;
-            }
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            /* Show hamburger */
-            .hamburger {
-                display: block;
-            }
-
-            nav {
-                flex-basis: 100%;
-            }
-
-            ul.menu {
-                flex-direction: column;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease;
-                background: rgba(0,0,0,0.85);
-                border-radius: 5px;
-            }
-
-            ul.menu.expanded {
-                max-height: 500px; /* enough to show full menu */
-            }
-
-            ul.menu li {
-                width: 100%;
-            }
-
-            ul.menu li ul.dropdown {
-                position: static;
-                display: none;
-                padding-left: 1rem;
-                background: none;
-            }
-
-            ul.menu li.expanded > ul.dropdown {
-                display: flex;
-                flex-direction: column;
-            }
-
-            ul.menu li.has-dropdown > a::after {
-                content: " ▶";
-                float: right;
-                margin-left: 0;
-            }
-
-            ul.menu li.expanded > a::after {
-                content: " ▼";
-            }
-        }
-
-        /* Main content area */
-        main {
-            flex-grow: 1;
-            padding: 2rem;
-            max-width: 900px;
-            margin: 2rem auto;
-            background: rgba(0,0,0,0.6);
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        main h2 {
-            color: #ff9800;
-            margin-top: 0;
-            font-size: 2rem;
-        }
-        
-        h3 {
-            color: #ffcc00;
-            font-size: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        .download-btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background: linear-gradient(145deg, #3e8e41, #2e6b30);
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            margin-top: 1rem;
-        }
-        .download-btn:hover {
-            background: linear-gradient(145deg, #2e6b30, #3e8e41);
-            transform: scale(1.05);
-        }
-
-        /* Style for the custom password modal */
-        .password-modal-overlay {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .password-modal {
-            background: #222;
-            color: #fff;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            max-width: 400px;
-            text-align: center;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .password-modal h3 {
-            margin-top: 0;
-        }
-
-        .password-modal input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 1rem;
-            border: 1px solid #ffcc00;
-            background: #333;
-            color: white;
-            border-radius: 5px;
-        }
-
-        .password-modal-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .password-modal-buttons button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .password-modal-buttons .submit-btn {
-            background-color: #ff9800;
-            color: #000;
-        }
-
-        .password-modal-buttons .cancel-btn {
-            background-color: #555;
-            color: #fff;
-        }
-
-        .message-box {
-            color: red;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        /* Jotform embed container */
-        .upload-container {
-            margin-top: 2rem;
-        }
-
-        /* Footer styling consistent with services.html */
-        footer {
-            background: rgba(0,0,0,0.8);
-            padding: 1rem 2rem;
-            text-align: center;
-            color: white;
-            font-size: 0.9rem;
-            margin-top: auto;
-        }
-
-        footer .social-icons a {
-            margin: 0 10px;
-            color: white;
-            font-size: 1.6rem;
-            transition: color 0.3s ease;
-        }
-
-        footer .social-icons a:hover,
-        footer .social-icons a:focus {
-            color: #ff9800;
-            outline: none;
         }
     </style>
 </head>
-<body>
-    <header>
-        <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="logo" />
-        <div class="site-title">Martoo Tech Works - Typing Assistant</div>
-    
-        <!-- Hamburger for mobile -->
-        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
+<body class="flex flex-col min-h-screen text-white">
+
+    <!-- Header: Consistent, modern, and responsive -->
+    <header class="bg-gray-900/80 backdrop-blur-sm p-4 md:px-8 shadow-lg flex items-center justify-between flex-wrap rounded-b-xl">
+        <!-- Logo and Site Title -->
+        <div class="flex items-center gap-4">
+            <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="h-12 w-12 rounded-full object-cover border-2 border-amber-500 shadow-md" />
+            <div class="text-2xl font-bold text-orange-500 tracking-wide">Martoo Tech Works</div>
+        </div>
+        
+        <!-- Hamburger menu button for mobile -->
+        <button class="md:hidden text-orange-500 text-2xl p-2 rounded-md hover:bg-orange-500 hover:text-white transition-colors" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
             <i class="fas fa-bars"></i>
         </button>
-    
+        
         <!-- Navigation menu -->
-        <nav>
-            <ul class="menu" id="primary-menu" role="menu">
-                <li role="none"><a href="index.html" role="menuitem" tabindex="0">Home</a></li>
-                <li class="has-dropdown" role="none">
-                    <a href="services.html" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">Services</a>
-                    <ul class="dropdown" role="menu" aria-label="Services submenu">
-                        <li role="none"><a href="typing_assistant.html" role="menuitem" tabindex="-1">Typing Assistant</a></li>
-                        <li role="none"><a href="trojan.html" role="menuitem" tabindex="-1">VPN</a></li>
-                        <li role="none"><a href="school-materials.html" role="menuitem" tabindex="-1">Materials</a></li>
+        <nav class="w-full md:w-auto mt-4 md:mt-0">
+            <ul id="primary-menu" class="hidden md:flex md:items-center space-y-2 md:space-y-0 md:space-x-8">
+                <li><a href="index.html" class="block py-2 px-4 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-white transition-all">Home</a></li>
+                <li class="relative group">
+                    <a href="services.html" class="block py-2 px-4 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-white transition-all" aria-haspopup="true" aria-expanded="false">Services</a>
+                    <!-- Dropdown menu -->
+                    <ul class="absolute z-10 hidden group-hover:block bg-gray-800 rounded-lg shadow-lg py-2 min-w-[180px] top-full left-0 mt-2 transition-all duration-300 transform scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
+                        <li><a href="typing_assistant.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-orange-500 hover:text-white rounded-md transition-colors">Typing Assistant</a></li>
+                        <li><a href="trojan.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-orange-500 hover:text-white rounded-md transition-colors">VPN</a></li>
+                        <li><a href="school-materials.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-orange-500 hover:text-white rounded-md transition-colors">Materials</a></li>
                     </ul>
                 </li>
-                <li role="none"><a href="posts.html" role="menuitem" tabindex="0">Blog Posts</a></li>
-                <li role="none"><a href="about.html" role="menuitem" tabindex="0">About</a></li>
-                <li role="none"><a href="contact.html" role="menuitem" tabindex="0">Contact</a></li>
+                <li><a href="posts.html" class="block py-2 px-4 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-white transition-all">Blog Posts</a></li>
+                <li><a href="about.html" class="block py-2 px-4 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-white transition-all">About</a></li>
+                <li><a href="contact.html" class="block py-2 px-4 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-white transition-all">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <h2>Typing Assistant Service</h2>
-        <p>Whether you're a student or a professional, we're here to help you with your typing needs. From assignments to important documents, our service ensures accuracy and efficiency.</p>
+    <!-- Main Content Area: Centered and stylish -->
+    <main class="flex-grow p-4 md:p-8 max-w-5xl mx-auto my-8 bg-gray-900/60 backdrop-blur-lg rounded-3xl shadow-2xl text-center">
+        <h2 class="text-4xl font-extrabold text-orange-500 mb-4">Typing Assistant Service</h2>
+        <p class="text-gray-200 text-lg leading-relaxed">Whether you're a student or a professional, we're here to help you with your typing needs. From assignments to important documents, our service ensures accuracy and efficiency.</p>
 
-        <h3>Download Protected Documents</h3>
-        <p>This document is protected (READ-ONLY). If you want to have it, it is just a draft.</p>
-        <button class="download-btn" data-file="School materials/BBA100 S1 2025-1= FINAL.xlsx" data-password="">Download BBA100 S1 2025-1 FINAL</button>
-        <br><br>
-        <p>This document below is protected and ready for submission for only one group. If you want to have it, please contact MARTOO TECH WORKS on 0774766077, and you can also request a different version for different individuals to avoid using the same work.</p>
-        <button class="download-btn" data-file="School materials/BBA100 S1 2025-1.xlsx" data-password="MARTOOTECH">Download BBA100 S1 2025-1</button>
+        <!-- Section: Download Protected Documents -->
+        <div class="mt-8 pt-6 border-t border-gray-700">
+            <h3 class="text-2xl font-bold text-amber-400 mb-4">Download Protected Documents</h3>
+            <p class="text-gray-300">This document is protected (READ-ONLY). If you want to have it, it is just a draft.</p>
+            <button class="download-btn mt-4 px-6 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" data-file="School materials/BBA100 S1 2025-1= FINAL.xlsx" data-password="">
+                <i class="fas fa-download mr-2"></i> Download BBA100 S1 2025-1 FINAL
+            </button>
+            
+            <p class="mt-8 text-gray-300">This document below is protected and ready for submission for only one group. If you want to have it, please contact MARTOO TECH WORKS on 0774766077, and you can also request a different version for different individuals to avoid using the same work.</p>
+            <button class="download-btn mt-4 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-700 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" data-file="School materials/BBA100 S1 2025-1.xlsx" data-password="MARTOOTECH">
+                <i class="fas fa-download mr-2"></i> Download BBA100 S1 2025-1
+            </button>
+        </div>
         
-        <h3>Upload a File for Typing</h3>
-        <p>Need help with typing? Upload your files below:</p>
-        <div class="upload-container">
+        <!-- Section: Upload a File for Typing -->
+        <div class="upload-container mt-12 pt-6 border-t border-gray-700">
+            <h3 class="text-2xl font-bold text-amber-400 mb-4">Upload a File for Typing</h3>
+            <p class="text-gray-300 mb-6">Need help with typing? Upload your files below:</p>
+            <!-- Jotform embed script -->
             <script type="text/javascript" src="https://form.jotform.com/jsform/250152076105041"></script>
         </div>
     </main>
 
     <!-- The custom password modal -->
-    <div id="password-modal-overlay" class="password-modal-overlay">
-        <div class="password-modal">
-            <h3>Enter Password</h3>
-            <p>This document is protected. Please enter the password to download.</p>
-            <input type="password" id="password-input" placeholder="Password" />
-            <div id="password-message" class="message-box"></div>
-            <div class="password-modal-buttons">
-                <button id="submit-btn" class="submit-btn">Submit</button>
-                <button id="cancel-btn" class="cancel-btn">Cancel</button>
+    <div id="password-modal-overlay" class="hidden fixed inset-0 z-[1001] bg-black/80 backdrop-blur-sm flex items-center justify-center">
+        <div class="bg-gray-800 text-white p-8 rounded-xl shadow-2xl max-w-sm text-center transform transition-all duration-300 scale-95 opacity-0" id="password-modal">
+            <h3 class="text-2xl font-bold text-amber-400 mb-4">Enter Password</h3>
+            <p class="text-gray-300 mb-4">This document is protected. Please enter the password to download.</p>
+            <input type="password" id="password-input" placeholder="Password" class="w-full p-3 mb-4 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-orange-500" />
+            <div id="password-message" class="text-red-400 font-semibold mb-4"></div>
+            <div class="flex justify-center gap-4">
+                <button id="submit-btn" class="px-6 py-3 bg-orange-500 text-gray-900 font-bold rounded-full shadow-md hover:bg-orange-600 transition-colors">Submit</button>
+                <button id="cancel-btn" class="px-6 py-3 bg-gray-600 text-white font-bold rounded-full shadow-md hover:bg-gray-700 transition-colors">Cancel</button>
             </div>
         </div>
     </div>
 
-    <footer>
-        <div class="social-icons" aria-label="Social media links">
-            <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    <!-- Footer: Simple, clean, and professional -->
+    <footer class="bg-gray-900/80 backdrop-blur-sm p-4 text-center text-gray-400 rounded-t-xl mt-auto">
+        <div class="social-icons mb-4">
+            <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="text-2xl mx-2 hover:text-orange-500 transition-colors"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-2xl mx-2 hover:text-orange-500 transition-colors"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="text-2xl mx-2 hover:text-orange-500 transition-colors"><i class="fab fa-youtube"></i></a>
         </div>
         <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
     </footer>
 
     <script>
-        // Store variables for the modal
+        // Store variables for the modal and menu
         const modalOverlay = document.getElementById('password-modal-overlay');
+        const passwordModal = document.getElementById('password-modal');
         const passwordInput = document.getElementById('password-input');
         const passwordMessage = document.getElementById('password-message');
         const submitBtn = document.getElementById('submit-btn');
         const cancelBtn = document.getElementById('cancel-btn');
-        
+        const hamburger = document.querySelector(".hamburger");
+        const menu = document.querySelector("#primary-menu");
+
         let currentFile = '';
         let currentPassword = '';
 
-        // Function to show the modal and handle download
+        // Function to show the modal with a smooth animation
         function showPasswordModal(file, password) {
             currentFile = file;
             currentPassword = password;
-            passwordInput.value = ''; // Clear any previous input
-            passwordMessage.textContent = ''; // Clear previous message
-            modalOverlay.style.display = 'flex';
+            passwordInput.value = '';
+            passwordMessage.textContent = '';
+            modalOverlay.classList.remove('hidden');
+            modalOverlay.classList.add('flex');
+            // Animate the modal into view
+            setTimeout(() => {
+                passwordModal.classList.remove('scale-95', 'opacity-0');
+                passwordModal.classList.add('scale-100', 'opacity-100');
+            }, 10);
             passwordInput.focus();
+        }
+
+        // Function to hide the modal with a smooth animation
+        function hidePasswordModal() {
+            passwordModal.classList.remove('scale-100', 'opacity-100');
+            passwordModal.classList.add('scale-95', 'opacity-0');
+            // Hide the overlay after the animation
+            setTimeout(() => {
+                modalOverlay.classList.remove('flex');
+                modalOverlay.classList.add('hidden');
+            }, 300);
         }
 
         // Event listener for all download buttons
@@ -467,7 +175,7 @@
         submitBtn.addEventListener('click', () => {
             if (passwordInput.value === currentPassword) {
                 window.location.href = currentFile;
-                modalOverlay.style.display = 'none';
+                hidePasswordModal();
             } else {
                 passwordMessage.textContent = 'Incorrect password! Please try again.';
             }
@@ -475,7 +183,7 @@
 
         // Event listener for modal cancel button
         cancelBtn.addEventListener('click', () => {
-            modalOverlay.style.display = 'none';
+            hidePasswordModal();
         });
 
         // Keyboard support for the modal (e.g., Enter key to submit)
@@ -486,25 +194,31 @@
             }
         });
 
-        // Hamburger menu toggle (consistent with services.html)
-        const hamburger = document.querySelector(".hamburger");
-        const menu = document.querySelector("ul.menu");
-
+        // Hamburger menu toggle
         hamburger.addEventListener("click", () => {
             const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
             hamburger.setAttribute("aria-expanded", !expanded);
-            menu.classList.toggle("expanded");
+            menu.classList.toggle("hidden");
+            menu.classList.toggle("flex-col");
+            // If the menu is not hidden, add a basic responsive style for mobile
+            if (!menu.classList.contains("hidden")) {
+                menu.classList.add("bg-gray-800", "p-4", "rounded-md", "w-full");
+            } else {
+                menu.classList.remove("bg-gray-800", "p-4", "rounded-md", "w-full");
+            }
         });
 
         // Dropdown toggles for mobile
-        const dropdownParents = document.querySelectorAll("li.has-dropdown > a");
+        const dropdownParents = document.querySelectorAll("li.relative > a");
 
         dropdownParents.forEach(parentLink => {
             parentLink.addEventListener("click", e => {
-                e.preventDefault();
-                const expanded = parentLink.getAttribute("aria-expanded") === "true" || false;
-                parentLink.setAttribute("aria-expanded", !expanded);
-                parentLink.parentElement.classList.toggle("expanded");
+                // Only toggle on mobile
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const dropdown = parentLink.nextElementSibling;
+                    dropdown.classList.toggle("hidden");
+                }
             });
         });
     </script>

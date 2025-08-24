@@ -1,453 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Martoo Tech Works - Access school materials, medicine study resources, GIS data sets, and mental health notes for students and professionals.">
-    <meta name="keywords" content="Martoo Tech, School Materials, GIS Data, Medicine Notes, Public Health, Mental Health Notes, VPN, Tech Resources">
-    <meta name="author" content="Martin Ndoma">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="School Materials - Martoo Tech Works">
-    <meta property="og:description" content="Download school materials including medicine study guides, GIS datasets, mental health notes, and more.">
-    <meta property="og:image" content="full site background.jpg">
-    <meta property="og:url" content="https://martootechhub.github.io/MARTOOTECHHUB/">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="School Materials - Martoo Tech Works">
-    <meta name="twitter:description" content="Get free access to study materials, GIS datasets, and more at Martoo Tech Works.">
-    <meta name="twitter:image" content="full site background.jpg">
-    
-    <title>Martoo Tech Works - School Materials</title>
-    
-    <!-- Font Awesome for icons -->
-    <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        rel="stylesheet"
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    />
-    
-    <style>
-        /* General body and styling consistent with other pages */
-        * {
-            box-sizing: border-box;
-        }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Martoo Tech Works - School Materials</title>
 
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: url('full site background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-        /* Header styling consistent with other pages */
-        header {
-            background: rgba(0,0,0,0.75);
-            padding: 1rem 2rem;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
+    <!-- Inter Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-        /* Logo */
-        .logo {
-            height: 60px;
-            width: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ffcc00;
-            flex-shrink: 0;
-        }
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7s3b9mBf/P5P1d7G7R2+B8K5E5z5P1n5f5C8z6G3H+7wV0zV0/a2u7s1Uf3tG5yG5QG6P6Uf4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        /* Site title */
-        .site-title {
-            font-size: 1.8rem;
-            color: #ff9800;
-            margin-left: 1rem;
-            flex-grow: 1;
-            font-weight: 700;
-        }
+    <style>
+        /* Apply the Inter font to the entire body */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* Dark background similar to original */
+            color: #f0f6fc;
+        }
 
-        /* Navigation styles */
-        nav {
-            position: relative;
-            flex-grow: 1;
-            text-align: right;
-        }
-
-        /* Hamburger button */
-        .hamburger {
-            font-size: 2rem;
-            cursor: pointer;
-            display: none;
-            color: #ff9800;
-            background: transparent;
-            border: none;
-            padding: 0;
-            user-select: none;
-        }
-
-        /* Menu list */
-        ul.menu {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-            display: flex;
-            gap: 1.5rem;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-        }
-
-        ul.menu li {
-            position: relative;
-        }
-
-        ul.menu li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.5rem 0.75rem;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-            border-radius: 4px;
-        }
-
-        ul.menu li a:hover,
-        ul.menu li a:focus {
-            background-color: #ff7f00;
-            outline: none;
-        }
-
-        /* Dropdown arrow */
-        ul.menu li.has-dropdown > a::after {
-            content: " ▼";
-            font-size: 0.6rem;
-            margin-left: 5px;
-        }
-
-        /* Dropdown menu */
-        ul.menu li ul.dropdown {
-            position: absolute;
-            top: 110%;
-            left: 0;
-            background: rgba(0,0,0,0.9);
-            border-radius: 5px;
-            display: none;
-            min-width: 180px;
-            flex-direction: column;
-            padding: 0.5rem 0;
-            z-index: 1000;
-        }
-
-        ul.menu li ul.dropdown li a {
-            padding: 0.5rem 1rem;
-            font-weight: 400;
-            display: block;
-        }
-
-        ul.menu li ul.dropdown li a:hover,
-        ul.menu li ul.dropdown li a:focus {
-            background-color: #ff7f00;
-            color: #000;
-        }
-
-        /* Show dropdown on hover for desktops */
-        @media (hover: hover) and (pointer: fine) {
-            ul.menu li.has-dropdown:hover > ul.dropdown {
-                display: flex;
-            }
-        }
-        
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            /* Show hamburger */
-            .hamburger {
-                display: block;
-            }
-
-            nav {
-                flex-basis: 100%;
-                margin-top: 1rem;
-            }
-
-            ul.menu {
-                flex-direction: column;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease;
-                background: rgba(0,0,0,0.85);
-                border-radius: 5px;
-            }
-
-            ul.menu.expanded {
-                max-height: 500px; /* enough to show full menu */
-            }
-
-            ul.menu li {
-                width: 100%;
-            }
-
-            ul.menu li ul.dropdown {
-                position: static;
-                display: none;
-                padding-left: 1rem;
-                background: none;
-            }
-
-            ul.menu li.expanded > ul.dropdown {
-                display: flex;
-                flex-direction: column;
-            }
-
-            ul.menu li.has-dropdown > a::after {
-                content: " ▶";
-                float: right;
-                margin-left: 0;
-            }
-
-            ul.menu li.expanded > a::after {
-                content: " ▼";
-            }
-        }
-        
-        main {
-            flex-grow: 1;
-            padding: 2rem;
-            max-width: 900px;
-            margin: 2rem auto;
-            background: rgba(0,0,0,0.6);
-            border-radius: 10px;
-            text-align: center;
-        }
-        
-        main h1 {
-            color: #ff9800;
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-        }
-        
-        main p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin: 0 auto 1.5rem auto;
-            text-align: center;
-        }
-
-        .materials-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            padding: 1rem;
-        }
-
-        @media (min-width: 600px) {
-            .materials-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            }
-        }
-        
-        .material-card {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .material-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(255, 152, 0, 0.2);
-        }
-
-        .material-card .icon {
-            font-size: 3.5rem;
-            color: #ff9800;
-            margin-bottom: 1rem;
-        }
-
-        .material-card h3 {
-            font-size: 1.5rem;
-            margin: 0;
-            color: #ffcc00;
-        }
-        
-        .material-card p {
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            color: #ddd;
-        }
-
-        /* Footer styling consistent with other pages */
-        footer {
-            background: rgba(0,0,0,0.8);
-            padding: 1rem 2rem;
-            text-align: center;
-            color: white;
-            font-size: 0.9rem;
-            margin-top: auto;
-        }
-
-        footer .social-icons a {
-            margin: 0 10px;
-            color: white;
-            font-size: 1.6rem;
-            transition: color 0.3s ease;
-        }
-
-        footer .social-icons a:hover,
-        footer .social-icons a:focus {
-            color: #ff9800;
-            outline: none;
-        }
-    </style>
+        /* Custom styling for the page background - using a gradient since the image is missing */
+        .page-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://placehold.co/1920x1080/0d1117/ffffff?text=Martoo+Tech');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="logo" />
-        <div class="site-title">Martoo Tech Works - School Materials</div>
+<body class="min-h-screen flex flex-col page-bg">
+    <!-- Header with logo, title, and navigation -->
+    <header class="bg-gray-900/75 backdrop-blur-sm p-4 md:p-6 flex flex-wrap items-center justify-between shadow-lg">
+        <!-- Logo and Site Title -->
+        <div class="flex items-center space-x-4">
+            <!-- Placeholder for the logo. Replace this with your actual image URL. -->
+            <img src="https://placehold.co/60x60/ffcc00/000?text=MTW" alt="Martoo Tech Works Logo" class="h-14 w-14 rounded-full border-2 border-yellow-500 object-cover" />
+            <h1 class="text-xl md:text-2xl font-bold text-orange-400">Martoo Tech Works</h1>
+        </div>
+        
+        <!-- Hamburger Menu Button for mobile -->
+        <button id="menu-button" class="md:hidden text-2xl text-orange-400 focus:outline-none p-2 rounded-md transition-colors duration-200 hover:bg-orange-400 hover:text-gray-900" aria-label="Toggle menu" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Navigation Menu -->
+        <nav id="main-nav" class="hidden md:flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6 mt-4 md:mt-0 w-full md:w-auto transition-all duration-300 ease-in-out">
+            <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
+                <li><a href="#" class="block px-4 py-2 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Home</a></li>
+                <li class="relative group" id="services-dropdown">
+                    <a href="#" class="flex items-center justify-between w-full md:w-auto px-4 py-2 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">
+                        Services <i class="fas fa-chevron-down ml-2 text-xs transition-transform transform group-hover:rotate-180"></i>
+                    </a>
+                    <ul class="md:absolute hidden group-hover:block top-full left-0 bg-gray-800/90 rounded-lg shadow-xl w-48 mt-2 transition-all duration-300 ease-in-out">
+                        <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Typing Assistant</a></li>
+                        <li class="relative group/vpn" id="vpn-dropdown">
+                            <a href="#" class="flex items-center justify-between w-full px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">
+                                VPN <i class="fas fa-chevron-right ml-2 text-xs transition-transform transform group-hover/vpn:rotate-90"></i>
+                            </a>
+                            <ul class="md:absolute hidden group-hover/vpn:block left-full top-0 bg-gray-700/90 rounded-lg shadow-xl w-48 mt-0 ml-2 transition-all duration-300 ease-in-out">
+                                <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Vmess</a></li>
+                                <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Trojan</a></li>
+                                <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">UDP</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Materials</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" class="block px-4 py-2 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Blog Posts</a></li>
+                <li><a href="#" class="block px-4 py-2 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">About</a></li>
+                <li><a href="#" class="block px-4 py-2 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
-            <i class="fas fa-bars"></i>
-        </button>
+    <!-- Main Content Area -->
+    <main class="flex-grow p-4 md:p-8 max-w-5xl mx-auto my-8 bg-gray-900/60 backdrop-blur-sm rounded-xl shadow-lg text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-orange-400 mb-4">Essential Study Materials</h2>
+        <p class="text-base md:text-lg text-gray-300 mb-8 max-w-prose mx-auto">
+            Explore our curated collection of resources designed to support your academic and professional growth. Click on a card to access the materials.
+        </p>
 
-        <nav>
-            <ul class="menu" id="primary-menu" role="menu">
-                <li role="none"><a href="index.html" role="menuitem" tabindex="0">Home</a></li>
-                <li class="has-dropdown" role="none">
-                    <a href="services.html" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">Services</a>
-                    <ul class="dropdown" role="menu" aria-label="Services submenu">
-                        <li role="none"><a href="typing_assistant.html" role="menuitem" tabindex="-1">Typing Assistant</a></li>
-                        <li class="has-dropdown" role="none">
-                            <a href="trojan.html" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="-1">VPN</a>
-                            <ul class="dropdown" role="menu" aria-label="VPN submenu">
-                                <li role="none"><a href="trojan.html#vmess" role="menuitem" tabindex="-1">vmess</a></li>
-                                <li role="none"><a href="trojan.html#trojan" role="menuitem" tabindex="-1">trojan</a></li>
-                                <li role="none"><a href="trojan.html#udp" role="menuitem" tabindex="-1">udp</a></li>
-                            </ul>
-                        </li>
-                        <li role="none"><a href="school-materials.html" role="menuitem" tabindex="-1">Materials</a></li>
-                    </ul>
-                </li>
-                <li role="none"><a href="posts.html" role="menuitem" tabindex="0">Blog Posts</a></li>
-                <li role="none"><a href="about.html" role="menuitem" tabindex="0">About</a></li>
-                <li role="none"><a href="contact.html" role="menuitem" tabindex="0">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+        <!-- Material Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+            <!-- Medical Study Materials Card -->
+            <a href="https://drive.google.com/drive/folders/1C3IdOlXofYJcUXuVRD8FHsLcPBjSTlEj" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white hover:bg-gray-700/80 transform transition-transform hover:-translate-y-2 shadow-lg hover:shadow-2xl hover:shadow-orange-400/20">
+                <i class="fas fa-notes-medical text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Medicine Study Materials</h3>
+                <p class="text-sm text-gray-300">A comprehensive collection of notes and guides for medical students.</p>
+            </a>
+            
+            <!-- GIS Data Sets Card -->
+            <a href="https://drive.google.com/drive/folders/19liIF8D8IPFr3ZTs8oPefNNuZWPKhpSp" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white hover:bg-gray-700/80 transform transition-transform hover:-translate-y-2 shadow-lg hover:shadow-2xl hover:shadow-orange-400/20">
+                <i class="fas fa-map-marked-alt text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">GIS Data Sets</h3>
+                <p class="text-sm text-gray-300">High-quality GIS data and mapping resources for your projects.</p>
+            </a>
+            
+            <!-- Mental Health Notes Card -->
+            <a href="School materials/all mental health notes.zip" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white hover:bg-gray-700/80 transform transition-transform hover:-translate-y-2 shadow-lg hover:shadow-2xl hover:shadow-orange-400/20">
+                <i class="fas fa-brain text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Mental Health Notes</h3>
+                <p class="text-sm text-gray-300">Valuable notes and resources on mental health and wellness.</p>
+            </a>
+            
+            <!-- Generics Study Guides Card -->
+            <a href="https://drive.google.com/drive/folders/1_bN9UdjCaD4Wei3fTbYUlH_0xjLMcV1b" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white hover:bg-gray-700/80 transform transition-transform hover:-translate-y-2 shadow-lg hover:shadow-2xl hover:shadow-orange-400/20">
+                <i class="fas fa-prescription-bottle-alt text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Generics Study Guides</h3>
+                <p class="text-sm text-gray-300">Study materials and notes on generic medicines.</p>
+            </a>
 
-    <main>
-        <h1>Essential Study Materials</h1>
-        <p>
-            Explore our curated collection of resources designed to support your academic and professional growth. Click on a card to access the materials.
-        </p>
+            <!-- Health Economics Card -->
+            <a href="https://drive.google.com/drive/folders/1Mcc7TCR5hHDrKJxrhPqh5M7DoXBNh4BK" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white hover:bg-gray-700/80 transform transition-transform hover:-translate-y-2 shadow-lg hover:shadow-2xl hover:shadow-orange-400/20">
+                <i class="fas fa-chart-line text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Health Economics</h3>
+                <p class="text-sm text-gray-300">Resources on health economics and healthcare financing.</p>
+            </a>
 
-        <div class="materials-grid">
-            <!-- Medical Study Materials -->
-            <a href="https://drive.google.com/drive/folders/1C3IdOlXofYJcUXuVRD8FHsLcPBjSTlEj" target="_blank" rel="noopener noreferrer" class="material-card">
-                <i class="fas fa-notes-medical icon"></i>
-                <h3>Medicine Study Materials</h3>
-                <p>A comprehensive collection of notes and guides for medical students.</p>
-            </a>
+            <!-- HRM Card -->
+            <a href="https://drive.google.com/drive/folders/1SCnqtjrc2wKrmUxNkSmHUyvdYluIY6So" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white hover:bg-gray-700/80 transform transition-transform hover:-translate-y-2 shadow-lg hover:shadow-2xl hover:shadow-orange-400/20">
+                <i class="fas fa-users text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">HRM</h3>
+                <p class="text-sm text-gray-300">Human Resource Management study materials.</p>
+            </a>
 
-            <!-- GIS Data Sets -->
-            <a href="https://drive.google.com/drive/folders/19liIF8D8IPFr3ZTs8oPefNNuZWPKhpSp" target="_blank" rel="noopener noreferrer" class="material-card">
-                <i class="fas fa-map-marked-alt icon"></i>
-                <h3>GIS Data Sets</h3>
-                <p>High-quality GIS data and mapping resources for your projects.</p>
-            </a>
-            
-            <!-- Mental Health Notes -->
-            <a href="https://drive.google.com/drive/folders/1WMN-YWz-7Qw91yfzEBZ4bCfRYFz7LnpF" target="_blank" rel="noopener noreferrer" class="material-card">
-                <i class="fas fa-brain icon"></i>
-                <h3>Mental Health Notes</h3>
-                <p>Valuable notes and resources on mental health and wellness.</p>
-            </a>
+            <!-- Medical Anthropology Card -->
+            <a href="https://drive.google.com/drive/folders/17RSEmzgBcBc64e4-4hx4ZjTe8eJCbeBT" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white hover:bg-gray-700/80 transform transition-transform hover:-translate-y-2 shadow-lg hover:shadow-2xl hover:shadow-orange-400/20">
+                <i class="fas fa-hospital-user text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Medical Anthropology</h3>
+                <p class="text-sm text-gray-300">Notes on the cultural and social aspects of health and medicine.</p>
+            </a>
 
-            <!-- New Links -->
-            <a href="https://drive.google.com/drive/folders/1_bN9UdjCaD4Wei3fTbYUlH_0xjLMcV1b" target="_blank" rel="noopener noreferrer" class="material-card">
-                <i class="fas fa-prescription-bottle-alt icon"></i>
-                <h3>Generics Study Guides</h3>
-                <p>Study materials and notes on generic medicines.</p>
-            </a>
+            <!-- Health Systems Research Card -->
+            <a href="https://drive.google.com/drive/folders/1M-9H1LcveH7N0qO7JMdGGy2h20YIgNk0" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white hover:bg-gray-700/80 transform transition-transform hover:-translate-y-2 shadow-lg hover:shadow-2xl hover:shadow-orange-400/20">
+                <i class="fas fa-flask text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Health Systems Research</h3>
+                <p class="text-sm text-gray-300">Resources on health systems research and projects.</p>
+            </a>
+            
+            <!-- Risk Assessment & Disaster Management Card -->
+            <a href="https://drive.google.com/drive/drive/folders/18gamu0wButJnS9UvFSmt7fd7SNlbWuyS" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white hover:bg-gray-700/80 transform transition-transform hover:-translate-y-2 shadow-lg hover:shadow-2xl hover:shadow-orange-400/20">
+                <i class="fas fa-exclamation-triangle text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Risk Assessment & Disaster Management</h3>
+                <p class="text-sm text-gray-300">Materials for risk assessment and disaster management.</p>
+            </a>
+        </div>
+    </main>
 
-            <a href="https://drive.google.com/drive/folders/1Mcc7TCR5hHDrKJxrhPqh5M7DoXBNh4BK" target="_blank" rel="noopener noreferrer" class="material-card">
-                <i class="fas fa-chart-line icon"></i>
-                <h3>Health Economics</h3>
-                <p>Resources on health economics and healthcare financing.</p>
-            </a>
+    <!-- Footer -->
+    <footer class="bg-gray-900/80 backdrop-blur-sm p-4 md:p-6 text-center text-gray-400 text-sm mt-auto shadow-inner">
+        <div class="flex justify-center space-x-6 mb-4" aria-label="Social media links">
+            <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="text-2xl text-white hover:text-green-500 transition-colors">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-2xl text-white hover:text-blue-600 transition-colors">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="text-2xl text-white hover:text-red-600 transition-colors">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+    </footer>
 
-            <a href="https://drive.google.com/drive/folders/1SCnqtjrc2wKrmUxNkSmHUyvdYluIY6So" target="_blank" rel="noopener noreferrer" class="material-card">
-                <i class="fas fa-users icon"></i>
-                <h3>HRM</h3>
-                <p>Human Resource Management study materials.</p>
-            </a>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mainNav = document.getElementById('main-nav');
+            const servicesDropdown = document.getElementById('services-dropdown');
+            const vpnDropdown = document.getElementById('vpn-dropdown');
 
-            <a href="https://drive.google.com/drive/folders/17RSEmzgBcBc64e4-4hx4ZjTe8eJCbeBT" target="_blank" rel="noopener noreferrer" class="material-card">
-                <i class="fas fa-hospital-user icon"></i>
-                <h3>Medical Anthropology</h3>
-                <p>Notes on the cultural and social aspects of health and medicine.</p>
-            </a>
+            // Toggle main navigation menu on mobile
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                mainNav.classList.toggle('hidden');
+                mainNav.classList.toggle('flex');
+            });
+            
+            // Toggle services dropdown on mobile (and prevent default link behavior)
+            servicesDropdown.querySelector('a').addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    servicesDropdown.classList.toggle('group-hover:block'); // This is a bit of a hack, better to use a dedicated class
+                    servicesDropdown.classList.toggle('relative');
+                    servicesDropdown.querySelector('ul').classList.toggle('hidden');
+                }
+            });
 
-            <a href="https://drive.google.com/drive/folders/1M-9H1LcveH7N0qO7JMdGGy2h20YIgNk0" target="_blank" rel="noopener noreferrer" class="material-card">
-                <i class="fas fa-flask icon"></i>
-                <h3>Health Systems Research</h3>
-                <p>Resources on health systems research and projects.</p>
-            </a>
-
-            <a href="https://drive.google.com/drive/drive/folders/18gamu0wButJnS9UvFSmt7fd7SNlbWuyS" target="_blank" rel="noopener noreferrer" class="material-card">
-                <i class="fas fa-exclamation-triangle icon"></i>
-                <h3>Risk Assessment & Disaster Management</h3>
-                <p>Materials for risk assessment and disaster management.</p>
-            </a>
-        </div>
-    </main>
-
-    <footer>
-        <div class="social-icons" aria-label="Social media links">
-            <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-        </div>
-        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
-    </footer>
-
-    <script>
-        // Hamburger menu toggle
-        const hamburger = document.querySelector(".hamburger");
-        const menu = document.querySelector("ul.menu");
-
-        hamburger.addEventListener("click", () => {
-            const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
-            hamburger.setAttribute("aria-expanded", !expanded);
-            menu.classList.toggle("expanded");
-        });
-
-        // Dropdown toggles for mobile and desktop
-        const dropdownParents = document.querySelectorAll("li.has-dropdown > a");
-
-        dropdownParents.forEach(parentLink => {
-            parentLink.addEventListener("click", e => {
-                const isMobile = window.innerWidth <= 768;
-                if (isMobile) {
-                    e.preventDefault();
-                    const expanded = parentLink.getAttribute("aria-expanded") === "true" || false;
-                    parentLink.setAttribute("aria-expanded", !expanded);
-                    parentLink.parentElement.classList.toggle("expanded");
-                }
-            });
-        });
-    </script>
+            // Toggle VPN dropdown on mobile (and prevent default link behavior)
+            vpnDropdown.querySelector('a').addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    vpnDropdown.classList.toggle('group-hover/vpn:block');
+                    vpnDropdown.classList.toggle('relative');
+                    vpnDropdown.querySelector('ul').classList.toggle('hidden');
+                }
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mainNav.contains(e.target) && !menuButton.contains(e.target)) {
+                    mainNav.classList.add('hidden');
+                    mainNav.classList.remove('flex');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

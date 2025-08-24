@@ -4,217 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vmess | Martoo Tech Works</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Use Tailwind CSS for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Use Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* General body background and layout settings */
+        /* Apply the Inter font to the body */
         body {
-            background-color: #3f51b5; /* Indigo background */
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding-bottom: 60px; /* Make space for footer */
-            min-height: 100vh; /* Ensure content takes up at least full viewport height */
+            font-family: 'Inter', sans-serif;
         }
-
-        /* Header styles with main background image */
-        header {
-            background-image: url('background.jpg');
+        /* Custom CSS to handle the background image since Tailwind cannot directly use a custom URL */
+        .header-bg {
+            background-image: url('https://placehold.co/1920x1080/1a202c/e2e8f0?text=Martoo+Tech+Works+Header');
             background-size: cover;
             background-position: center;
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-            position: relative; /* For absolute positioning of logo */
-            width: 100vw;
-        }
-
-        /* Logo placed in top left corner as circle */
-        .logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%; /* Circle shape */
-            object-fit: cover;
-            border: 4px solid #ffcc00;
-        }
-
-        /* Header Text Styling */
-        header h1 {
-            color: #ffcc00;
-            font-size: 36px;
-            position: relative;
-            z-index: 1;
-            margin-top: 20px;
-        }
-
-        /* Hamburger menu styling */
-        .hamburger {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 30px;
-            color: #ffcc00;
-            cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            border: 2px solid #ffcc00;
-        }
-
-        /* Navigation styles */
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: none;
-            margin: 0;
-        }
-
-        nav ul li {
-            margin: 10px 0;
-        }
-
-        nav ul li a {
-            color: #ffcc00;
-            text-decoration: none;
-            padding: 10px;
-            display: block;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        nav ul li a:hover {
-            background-color: #000;
-        }
-
-        /* Show the menu when toggled */
-        #menu.show {
-            display: block;
-        }
-
-        /* Section for Vmess explanation */
-        #vmess-section {
-            background-color: #222;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        #vmess-section h2 {
-            margin-bottom: 30px;
-        }
-
-        #vmess-section p {
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .vmess-features {
-            margin-top: 20px;
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .vmess-features li {
-            background-color: rgba(0, 0, 0, 0.7);
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        /* Footer styles */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* Social media icons */
-        .social-icons a {
-            margin: 0 15px;
-            color: white;
-            font-size: 24px;
-        }
-
-        .social-icons a:hover {
-            color: #ff7f00;
-        }
-
-        /* License text */
-        .license {
-            margin-top: 10px;
-            font-size: 14px;
         }
     </style>
 </head>
-<body>
+<body class="bg-[#3f51b5] text-white min-h-screen">
 
-    <!-- Header -->
-    <header>
+    <!-- Header section with a background image placeholder -->
+    <header class="header-bg relative text-center py-16 md:py-24 overflow-hidden w-full">
         <!-- Logo placed in the top left corner as a circle -->
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
+        <img src="https://placehold.co/100x100/ffcc00/000?text=MTW" alt="Martoo Tech Works Logo" class="absolute top-5 left-5 w-20 h-20 rounded-full object-cover border-4 border-yellow-400">
         
-        <!-- Header text -->
-        <h1>Vmess Protocol</h1>
+        <!-- Header text with a glowing effect -->
+        <h1 class="text-4xl md:text-5xl font-extrabold text-yellow-400 relative z-10 drop-shadow-lg mt-8">Vmess Protocol</h1>
         
-        <!-- Hamburger icon -->
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+        <!-- Hamburger icon for mobile navigation -->
+        <div class="hamburger absolute top-4 right-4 text-3xl text-yellow-400 cursor-pointer bg-black bg-opacity-50 p-3 rounded-lg border-2 border-yellow-400 md:hidden" onclick="toggleMenu()">&#9776;</div>
 
         <!-- Navigation menu -->
-        <nav>
-            <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="posts.html">Posts</a></li>
+        <nav class="absolute top-24 right-4 left-4 md:static">
+            <ul id="menu" class="hidden list-none p-0 m-0 space-y-4 md:flex md:justify-center md:space-x-8">
+                <li><a href="#" class="block text-yellow-400 text-lg font-semibold p-4 bg-black bg-opacity-70 rounded-lg transition-colors duration-300 hover:bg-black">Home</a></li>
+                <li><a href="#" class="block text-yellow-400 text-lg font-semibold p-4 bg-black bg-opacity-70 rounded-lg transition-colors duration-300 hover:bg-black">Services</a></li>
+                <li><a href="#" class="block text-yellow-400 text-lg font-semibold p-4 bg-black bg-opacity-70 rounded-lg transition-colors duration-300 hover:bg-black">About</a></li>
+                <li><a href="#" class="block text-yellow-400 text-lg font-semibold p-4 bg-black bg-opacity-70 rounded-lg transition-colors duration-300 hover:bg-black">Contact</a></li>
+                <li><a href="#" class="block text-yellow-400 text-lg font-semibold p-4 bg-black bg-opacity-70 rounded-lg transition-colors duration-300 hover:bg-black">Posts</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Vmess Content Section -->
-    <section id="vmess-section">
-        <h2>What is Vmess?</h2>
-        <p>Vmess (VMess Protocol) is a secure and fast proxy protocol developed to protect your online privacy. It is commonly used in VPN services to provide secure internet access. In this guide, we’ll explain its features and how it benefits users.</p>
+    <section id="vmess-section" class="bg-gray-800 p-8 md:p-16 text-center">
+        <h2 class="text-3xl font-bold mb-8 text-yellow-400">What is Vmess?</h2>
+        <p class="text-lg leading-relaxed mb-6 max-w-2xl mx-auto">Vmess (VMess Protocol) is a secure and fast proxy protocol developed to protect your online privacy. It is commonly used in VPN services to provide secure internet access. In this guide, we’ll explain its features and how it benefits users.</p>
 
-        <h3>Features of Vmess</h3>
-        <ul class="vmess-features">
-            <li><strong>Encryption:</strong> Provides robust encryption to secure user data.</li>
-            <li><strong>Obfuscation:</strong> Helps to bypass firewalls and other network restrictions.</li>
-            <li><strong>Low Latency:</strong> Offers low-latency connections, making it ideal for streaming and gaming.</li>
-            <li><strong>Multiple Protocol Support:</strong> Compatible with a variety of devices and platforms.</li>
-            <li><strong>Privacy Protection:</strong> Ensures that your online activity remains private and secure.</li>
+        <h3 class="text-2xl font-semibold mb-4 text-yellow-400">Features of Vmess</h3>
+        <ul class="vmess-features list-none p-0 m-0 space-y-3 max-w-xl mx-auto">
+            <li class="bg-gray-700 bg-opacity-80 p-4 rounded-lg"><strong>Encryption:</strong> Provides robust encryption to secure user data.</li>
+            <li class="bg-gray-700 bg-opacity-80 p-4 rounded-lg"><strong>Obfuscation:</strong> Helps to bypass firewalls and other network restrictions.</li>
+            <li class="bg-gray-700 bg-opacity-80 p-4 rounded-lg"><strong>Low Latency:</strong> Offers low-latency connections, making it ideal for streaming and gaming.</li>
+            <li class="bg-gray-700 bg-opacity-80 p-4 rounded-lg"><strong>Multiple Protocol Support:</strong> Compatible with a variety of devices and platforms.</li>
+            <li class="bg-gray-700 bg-opacity-80 p-4 rounded-lg"><strong>Privacy Protection:</strong> Ensures that your online activity remains private and secure.</li>
         </ul>
 
-        <p>Vmess is an ideal solution for users looking for a combination of security, speed, and bypassing network censorship.</p>
+        <p class="text-lg leading-relaxed mt-6 max-w-2xl mx-auto">Vmess is an ideal solution for users looking for a combination of security, speed, and bypassing network censorship.</p>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="social-icons">
-            <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
-            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
+    <footer class="bg-gray-900 text-white text-center py-6 px-4 absolute bottom-0 w-full">
+        <div class="social-icons flex justify-center space-x-6 mb-4">
+            <a href="https://wa.me/260950322498" class="text-white hover:text-yellow-400 transition-colors duration-200" aria-label="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" class="text-white hover:text-yellow-400 transition-colors duration-200" aria-label="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" class="text-white hover:text-yellow-400 transition-colors duration-200" aria-label="YouTube"><i class="fab fa-youtube text-2xl"></i></a>
         </div>
-        <div class="license">
+        <div class="license text-sm text-gray-400">
             <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        /**
+         * Toggles the visibility of the navigation menu on mobile devices.
+         * The function adds or removes the 'hidden' Tailwind class.
+         */
         function toggleMenu() {
             var menu = document.getElementById("menu");
-            menu.classList.toggle("show");
+            menu.classList.toggle("hidden");
         }
     </script>
-
 </body>
 </html>

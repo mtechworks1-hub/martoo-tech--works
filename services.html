@@ -1,353 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Martoo Tech Works - Services</title>
-  <meta name="description" content="Explore Martoo Tech Works services including Typing Assistant, VPN setup, and Study Materials." />
-  <meta name="author" content="Martoo Tech Works" />
-  <meta name="robots" content="index, follow" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Martoo Tech Works - Services</title>
+    <meta name="description" content="Explore Martoo Tech Works services including Typing Assistant, VPN setup, and Study Materials." />
+    <meta name="author" content="Martoo Tech Works" />
+    <meta name="robots" content="index, follow" />
+    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
+    <meta name="google-adsense-account" content="ca-pub-9775836048486404">
   
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    rel="stylesheet"
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        rel="stylesheet"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
   
-  <style>
-    /* Reset some default styling */
-    * {
-      box-sizing: border-box;
-    }
+    <style>
+        /* General body and styling consistent with services.html */
+        * {
+            box-sizing: border-box;
+        }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('services-background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('full site background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    header {
-      background: rgba(0,0,0,0.75);
-      padding: 1rem 2rem;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
+        /* Header styling consistent with services.html */
+        header {
+            background: rgba(0,0,0,0.75);
+            padding: 1rem 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
 
-    /* Logo */
-    .logo {
-      height: 60px;
-      width: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #ffcc00;
-      flex-shrink: 0;
-    }
+        /* Logo */
+        .logo {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffcc00;
+            flex-shrink: 0;
+        }
 
-    /* Site title */
-    .site-title {
-      font-size: 1.8rem;
-      color: #ff9800;
-      margin-left: 1rem;
-      flex-grow: 1;
-      font-weight: 700;
-    }
+        /* Site title */
+        .site-title {
+            font-size: 1.8rem;
+            color: #ff9800;
+            margin-left: 1rem;
+            flex-grow: 1;
+            font-weight: 700;
+        }
 
-    /* Navigation styles */
-    nav {
-      position: relative;
-      flex-basis: 100%;
-      margin-top: 1rem;
-    }
+        /* Navigation styles */
+        nav {
+            position: relative;
+            flex-grow: 1;
+            text-align: right;
+        }
 
-    /* Hamburger button */
-    .hamburger {
-      font-size: 2rem;
-      cursor: pointer;
-      display: none;
-      color: #ff9800;
-      background: transparent;
-      border: none;
-      padding: 0;
-      user-select: none;
-    }
+        /* Hamburger button */
+        .hamburger {
+            font-size: 2rem;
+            cursor: pointer;
+            display: none;
+            color: #ff9800;
+            background: transparent;
+            border: none;
+            padding: 0;
+            user-select: none;
+        }
 
-    /* Menu list */
-    ul.menu {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-      display: flex;
-      gap: 1.5rem;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
+        /* Menu list */
+        ul.menu {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
 
-    ul.menu li {
-      position: relative;
-    }
+        ul.menu li {
+            position: relative;
+        }
 
-    ul.menu li a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 0.5rem 0.75rem;
-      display: inline-block;
-      transition: background-color 0.3s ease;
-      border-radius: 4px;
-    }
+        ul.menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            border-radius: 4px;
+        }
 
-    ul.menu li a:hover,
-    ul.menu li a:focus {
-      background-color: #ff7f00;
-      outline: none;
-    }
+        ul.menu li a:hover,
+        ul.menu li a:focus {
+            background-color: #ff7f00;
+            outline: none;
+        }
 
-    /* Dropdown arrow */
-    ul.menu li.has-dropdown > a::after {
-      content: " ▼";
-      font-size: 0.6rem;
-      margin-left: 5px;
-    }
+        /* Dropdown arrow */
+        ul.menu li.has-dropdown > a::after {
+            content: " ▼";
+            font-size: 0.6rem;
+            margin-left: 5px;
+        }
 
-    /* Dropdown menu */
-    ul.menu li ul.dropdown {
-      position: absolute;
-      top: 110%;
-      left: 0;
-      background: rgba(0,0,0,0.9);
-      border-radius: 5px;
-      display: none;
-      min-width: 180px;
-      flex-direction: column;
-      padding: 0.5rem 0;
-      z-index: 1000;
-    }
+        /* Dropdown menu */
+        ul.menu li ul.dropdown {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: rgba(0,0,0,0.9);
+            border-radius: 5px;
+            display: none;
+            min-width: 180px;
+            flex-direction: column;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
 
-    ul.menu li ul.dropdown li a {
-      padding: 0.5rem 1rem;
-      font-weight: 400;
-      display: block;
-    }
+        ul.menu li ul.dropdown li {
+            position: relative;
+        }
 
-    ul.menu li ul.dropdown li a:hover,
-    ul.menu li ul.dropdown li a:focus {
-      background-color: #ff7f00;
-      color: #000;
-    }
+        ul.menu li ul.dropdown li a {
+            padding: 0.5rem 1rem;
+            font-weight: 400;
+            display: block;
+        }
 
-    /* Show dropdown on hover for desktops */
-    @media (hover: hover) and (pointer: fine) {
-      ul.menu li.has-dropdown:hover > ul.dropdown {
-        display: flex;
-      }
-    }
+        ul.menu li ul.dropdown li a:hover,
+        ul.menu li ul.dropdown li a:focus {
+            background-color: #ff7f00;
+            color: #000;
+        }
+        
+        /* Nested dropdowns for desktop */
+        ul.menu li ul.dropdown li.has-dropdown > a::after {
+            content: " ▶";
+            float: right;
+        }
+        
+        ul.menu li ul.dropdown li.has-dropdown ul.dropdown {
+            left: 100%;
+            top: 0;
+        }
 
-    /* Responsive Styles */
-    @media (max-width: 768px) {
-      /* Show hamburger */
-      .hamburger {
-        display: block;
-      }
+        /* Show dropdown on hover for desktops */
+        @media (hover: hover) and (pointer: fine) {
+            ul.menu li.has-dropdown:hover > ul.dropdown {
+                display: flex;
+            }
+            ul.menu li ul.dropdown li.has-dropdown:hover > ul.dropdown {
+                display: flex;
+            }
+        }
 
-      nav {
-        flex-basis: 100%;
-      }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            /* Show hamburger */
+            .hamburger {
+                display: block;
+            }
 
-      ul.menu {
-        flex-direction: column;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        background: rgba(0,0,0,0.85);
-        border-radius: 5px;
-      }
+            nav {
+                flex-basis: 100%;
+                margin-top: 1rem;
+            }
 
-      ul.menu.expanded {
-        max-height: 500px; /* enough to show full menu */
-      }
+            ul.menu {
+                flex-direction: column;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                background: rgba(0,0,0,0.85);
+                border-radius: 5px;
+            }
 
-      ul.menu li {
-        width: 100%;
-      }
+            ul.menu.expanded {
+                max-height: 500px; /* enough to show full menu */
+            }
 
-      ul.menu li ul.dropdown {
-        position: static;
-        display: none;
-        padding-left: 1rem;
-        background: none;
-      }
+            ul.menu li {
+                width: 100%;
+            }
 
-      ul.menu li.expanded > ul.dropdown {
-        display: flex;
-        flex-direction: column;
-      }
+            ul.menu li ul.dropdown {
+                position: static;
+                display: none;
+                padding-left: 1rem;
+                background: none;
+            }
 
-      ul.menu li.has-dropdown > a::after {
-        content: " ▶";
-        float: right;
-        margin-left: 0;
-      }
+            ul.menu li ul.dropdown li.has-dropdown ul.dropdown {
+                padding-left: 1rem;
+            }
 
-      ul.menu li.expanded > a::after {
-        content: " ▼";
-      }
-    }
+            ul.menu li.expanded > ul.dropdown {
+                display: flex;
+                flex-direction: column;
+            }
 
-    main {
-      flex-grow: 1;
-      padding: 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-      background: rgba(0,0,0,0.6);
-      border-radius: 10px;
-    }
+            ul.menu li.has-dropdown > a::after {
+                content: " ▶";
+                float: right;
+                margin-left: 0;
+            }
 
-    main h2 {
-      color: #ff9800;
-      margin-top: 0;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
+            ul.menu li.expanded > a::after {
+                content: " ▼";
+            }
+        }
 
-    main p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 2rem auto;
-    }
+        main {
+            flex-grow: 1;
+            padding: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.6);
+            border-radius: 10px;
+        }
 
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
+        main h2 {
+            color: #ff9800;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
 
-    .video-grid iframe {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border-radius: 10px;
-      border: none;
-    }
+        main p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
 
-    footer {
-      background: rgba(0,0,0,0.8);
-      padding: 1rem 2rem;
-      text-align: center;
-      color: white;
-      font-size: 0.9rem;
-    }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
 
-    footer .social-icons a {
-      margin: 0 10px;
-      color: white;
-      font-size: 1.6rem;
-      transition: color 0.3s ease;
-    }
+        .video-grid iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 10px;
+            border: none;
+        }
 
-    footer .social-icons a:hover,
-    footer .social-icons a:focus {
-      color: #ff9800;
-      outline: none;
-    }
+        footer {
+            background: rgba(0,0,0,0.8);
+            padding: 1rem 2rem;
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
 
-  </style>
+        footer .social-icons a {
+            margin: 0 10px;
+            color: white;
+            font-size: 1.6rem;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-icons a:hover,
+        footer .social-icons a:focus {
+            color: #ff9800;
+            outline: none;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo" />
-    <div class="site-title">Martoo Tech Works - Services</div>
+    <header>
+        <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="logo" />
+        <div class="site-title">Martoo Tech Works - Services</div>
 
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
-      <i class="fas fa-bars"></i>
-    </button>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
+            <i class="fas fa-bars"></i>
+        </button>
 
-    <nav>
-      <ul class="menu" id="primary-menu" role="menu">
-        <li role="none"><a href="index.html" role="menuitem" tabindex="0">Home</a></li>
-        <li class="has-dropdown" role="none">
-          <a href="#" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">Services</a>
-          <ul class="dropdown" role="menu" aria-label="Services submenu">
-            <li role="none"><a href="typing_assistant.html" role="menuitem" tabindex="-1">Typing Assistant</a></li>
-            <li role="none"><a href="trojan.html" role="menuitem" tabindex="-1">VPN</a></li>
-            <li role="none"><a href="school-materials.html" role="menuitem" tabindex="-1">Materials</a></li>
-          </ul>
-        </li>
-        <li role="none"><a href="about.html" role="menuitem" tabindex="0">About</a></li>
-        <li role="none"><a href="contact.html" role="menuitem" tabindex="0">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+        <nav>
+            <ul class="menu" id="primary-menu" role="menu">
+                <li role="none"><a href="index.html" role="menuitem" tabindex="0">Home</a></li>
+                <li class="has-dropdown" role="none">
+                    <a href="#" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">Services</a>
+                    <ul class="dropdown" role="menu" aria-label="Services submenu">
+                        <li role="none"><a href="typing_assistant.html" role="menuitem" tabindex="-1">Typing Assistant</a></li>
+                        <li class="has-dropdown" role="none">
+                            <a href="trojan.html" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="-1">VPN</a>
+                            <ul class="dropdown" role="menu" aria-label="VPN submenu">
+                                <li role="none"><a href="trojan.html#vmess" role="menuitem" tabindex="-1">vmess</a></li>
+                                <li role="none"><a href="trojan.html#trojan" role="menuitem" tabindex="-1">trojan</a></li>
+                                <li role="none"><a href="trojan.html#udp" role="menuitem" tabindex="-1">udp</a></li>
+                            </ul>
+                        </li>
+                        <li role="none"><a href="school-materials.html" role="menuitem" tabindex="-1">Materials</a></li>
+                    </ul>
+                </li>
+                <li role="none"><a href="about.html" role="menuitem" tabindex="0">About</a></li>
+                <li role="none"><a href="contact.html" role="menuitem" tabindex="0">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <main>
-    <h2>Welcome to Martoo Tech Works Services</h2>
-    <p>Explore our range of services, including Typing Assistance, VPN configurations, and access to essential study materials. All designed to simplify your tech experience.</p>
+    <main>
+        <h2>Welcome to Martoo Tech Works Services</h2>
+        <p>Explore our range of services, including Typing Assistance, VPN configurations, and access to essential study materials. All designed to simplify your tech experience.</p>
 
-    <section class="video-grid" aria-label="Service overview videos">
-      <iframe src="https://www.youtube.com/embed/w0_sFwO1IR8" title="Typing Assistant Video" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/J-DNnARdB8E" title="VPN Setup Video" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM" title="Study Materials Overview" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs" title="Additional Services Video" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/53iT5sKyh9s?si=06rO1U9Cfw1U6E1D" title="Bonus Tutorial Video" allowfullscreen></iframe>
-    </section>
-  </main>
+        <section class="video-grid" aria-label="Service overview videos">
+            <iframe src="https://www.youtube.com/embed/w0_sFwO1IR8" title="Typing Assistant Video" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/J-DNnARdB8E" title="VPN Setup Video" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/cUR1aVxpmxM" title="Study Materials Overview" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/TOMLVJA_vrs" title="Additional Services Video" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/53iT5sKyh9s?si=06rO1U9Cfw1U6E1D" title="Bonus Tutorial Video" allowfullscreen></iframe>
+        </section>
+    </main>
 
-  <footer>
-    <div class="social-icons" aria-label="Social media links">
-      <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-      <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-    </div>
-    <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
-  </footer>
+    <footer>
+        <div class="social-icons" aria-label="Social media links">
+            <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+    </footer>
 
-  <script>
-    // Hamburger menu toggle
-    const hamburger = document.querySelector(".hamburger");
-    const menu = document.querySelector("ul.menu");
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.querySelector(".hamburger");
+        const menu = document.querySelector("ul.menu");
 
-    hamburger.addEventListener("click", () => {
-      const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
-      hamburger.setAttribute("aria-expanded", !expanded);
-      menu.classList.toggle("expanded");
-    });
+        hamburger.addEventListener("click", () => {
+            const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
+            hamburger.setAttribute("aria-expanded", !expanded);
+            menu.classList.toggle("expanded");
+        });
 
-    // Dropdown toggles for mobile
-    const dropdownParents = document.querySelectorAll("li.has-dropdown > a");
+        // Dropdown toggles for mobile and desktop
+        const dropdownParents = document.querySelectorAll("li.has-dropdown > a");
 
-    dropdownParents.forEach(parentLink => {
-      parentLink.addEventListener("click", e => {
-        e.preventDefault();
-        const expanded = parentLink.getAttribute("aria-expanded") === "true" || false;
-        parentLink.setAttribute("aria-expanded", !expanded);
-        parentLink.parentElement.classList.toggle("expanded");
-      });
-    });
+        dropdownParents.forEach(parentLink => {
+            parentLink.addEventListener("click", e => {
+                const isMobile = window.innerWidth <= 768;
+                // On mobile, prevent default to toggle the menu.
+                if (isMobile) {
+                    e.preventDefault();
+                    const expanded = parentLink.getAttribute("aria-expanded") === "true" || false;
+                    parentLink.setAttribute("aria-expanded", !expanded);
+                    parentLink.parentElement.classList.toggle("expanded");
+                }
+            });
+        });
 
-    // Keyboard accessibility: close menu on Escape
-    document.addEventListener('keydown', e => {
-      if(e.key === "Escape") {
-        if(menu.classList.contains("expanded")) {
-          menu.classList.remove("expanded");
-          hamburger.setAttribute("aria-expanded", false);
-          // close any open dropdowns
-          dropdownParents.forEach(link => {
-            link.setAttribute("aria-expanded", false);
-            link.parentElement.classList.remove("expanded");
-          });
-          hamburger.focus();
-        }
-      }
-    });
-  </script>
+        // Keyboard accessibility: close menu on Escape
+        document.addEventListener('keydown', e => {
+            if(e.key === "Escape") {
+                if(menu.classList.contains("expanded")) {
+                    menu.classList.remove("expanded");
+                    hamburger.setAttribute("aria-expanded", false);
+                    // close any open dropdowns
+                    dropdownParents.forEach(link => {
+                        link.setAttribute("aria-expanded", false);
+                        link.parentElement.classList.remove("expanded");
+                    });
+                    hamburger.focus();
+                }
+            }
+        });
+    </script>
 </body>
 </html>

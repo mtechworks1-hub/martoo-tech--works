@@ -1,220 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trojan | Martoo Tech Works</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CSS -->
-    <style>
-        /* General body background and layout settings */
-        body {
-            background-color: #3f51b5; /* Indigo background */
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding-bottom: 60px; /* Make space for footer */
-            min-height: 100vh; /* Ensure content takes up at least full viewport height */
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Trojan Protocol | Martoo Tech Works</title>
+  <meta name="description" content="Learn about the Trojan protocol, a secure and stealthy proxy technology provided by Martoo Tech Works for encrypted internet access." />
+  <meta name="keywords" content="Trojan, proxy, VPN, Martoo Tech Works, internet security, secure connection, bypass censorship, encrypted browsing, tech solutions" />
+  <meta name="author" content="Martin Ndoma" />
+  <meta name="robots" content="index, follow" />
 
-        /* Header styles with main background image */
-        header {
-            background-image: url('background.jpg'); /* Main background image */
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-            position: relative; /* For absolute positioning of logo */
-            width: 100vw;
-        }
+  <!-- Inter Font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  
+  <!-- Tailwind CSS CDN - All styling is done with Tailwind classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-        /* Logo placed in top left corner as circle */
-        .logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 100px; /* Size of the logo */
-            height: 100px;
-            border-radius: 50%; /* Circle shape */
-            object-fit: cover; /* Ensures logo fits well */
-            border: 4px solid #ffcc00; /* Orange border around logo */
-        }
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    /* A cool, modern background with a subtle gradient and pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #111827;
+      background-image: radial-gradient(#1f2937 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.2;
+      z-index: -1;
+    }
 
-        /* Header Text Styling */
-        header h1 {
-            color: #ffcc00; /* Orange color for the header text */
-            font-size: 36px;
-            position: relative; /* Allow header text to overlay */
-            z-index: 1; /* Ensure the text stays on top of the logo */
-            margin-top: 20px;
-        }
+    /* Keyframe animation for a subtle glow effect */
+    @keyframes glow-border {
+      0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 255, 255, 0.4), 0 0 10px rgba(0, 255, 255, 0.2), 0 0 15px rgba(0, 255, 255, 0.1);
+      }
+      50% {
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.6), 0 0 25px rgba(0, 255, 255, 0.4), 0 0 30px rgba(0, 255, 255, 0.2);
+      }
+    }
 
-        /* Hamburger menu styling */
-        .hamburger {
-            position: absolute;
-            top: 15px; /* Move it down a bit for visibility */
-            right: 20px; /* Adjust from the far-right edge */
-            font-size: 30px;
-            color: #ffcc00; /* Dark Orange color */
-            cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            border: 2px solid #ffcc00;
-        }
+    /* Keyframe animation for the floating effect */
+    @keyframes floating {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+    }
 
-        /* Navigation styles */
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: none;
-            margin: 0;
-        }
+    /* Custom styles for the nav items */
+    .nav-item {
+      position: relative;
+    }
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 2px;
+      background-color: #00FFFF;
+      transition: width 0.3s ease-in-out;
+    }
+    .nav-item:hover::after {
+      width: 100%;
+    }
 
-        nav ul li {
-            margin: 10px 0;
-        }
-
-        nav ul li a {
-            color: #ffcc00; /* Dark Orange color */
-            text-decoration: none;
-            padding: 10px;
-            display: block;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 5px;
-            transition: background-color 0.3s ease; /* Smooth transition for highlight */
-        }
-
-        nav ul li a:hover {
-            background-color: #000; /* Black highlight */
-        }
-
-        /* Show the menu when toggled */
-        #menu.show {
-            display: block;
-        }
-
-        /* Section for Trojan explanation */
-        #trojan-section {
-            background-color: #222;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        #trojan-section h2 {
-            margin-bottom: 30px;
-        }
-
-        #trojan-section p {
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .trojan-features {
-            margin-top: 20px;
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .trojan-features li {
-            background-color: rgba(0, 0, 0, 0.7);
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        /* Footer styles */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* Social media icons */
-        .social-icons a {
-            margin: 0 15px;
-            color: white;
-            font-size: 24px;
-        }
-
-        .social-icons a:hover {
-            color: #ff7f00; /* Dark Orange highlight */
-        }
-
-        /* License text */
-        .license {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-    </style>
+    /* Full-screen mobile menu overlay */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      transform: translateX(100%);
+      transition: transform 0.5s ease-in-out;
+    }
+    .mobile-menu-overlay.open {
+      transform: translateX(0);
+    }
+  </style>
 </head>
-<body>
+<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col items-center">
 
-    <!-- Header -->
-    <header>
-        <!-- Logo placed in the top left corner as a circle -->
-        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo"> <!-- Path to logo.jpg -->
-        
-        <!-- Header text -->
-        <h1>Trojan Protocol</h1>
-        
-        <!-- Hamburger icon -->
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+  <!-- Header Section -->
+  <header class="w-full relative py-8 md:py-12 bg-gray-900/80 backdrop-blur-sm shadow-lg shadow-cyan-500/10">
+    <div class="container mx-auto px-4 flex items-center justify-between md:justify-center relative">
+      <!-- Logo with a techy icon -->
+      <a href="index.html" class="flex items-center gap-4 text-3xl md:text-5xl font-bold text-cyan-400 drop-shadow-md">
+        <i class="fas fa-shield-alt text-4xl animate-pulse"></i>
+        Trojan Protocol
+      </a>
+      <!-- Hamburger Menu Button -->
+      <button class="md:hidden text-gray-100 text-2xl p-2 rounded-md transition-transform duration-300 hover:scale-110" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
 
-        <!-- Navigation menu -->
-        <nav>
-            <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="posts.html">Posts</a></li>
-            </ul>
-        </nav>
-    </header>
+  <!-- Mobile Navigation Menu (Full-screen overlay) -->
+  <div id="mobile-menu" class="mobile-menu-overlay flex flex-col items-center justify-center space-y-8">
+    <button class="absolute top-6 right-6 text-gray-100 text-3xl hover:text-cyan-400 transition-colors" onclick="toggleMenu()">
+      <i class="fas fa-times"></i>
+    </button>
+    <ul class="text-center text-2xl">
+      <li><a href="index.html" class="block py-4 text-gray-200 hover:text-cyan-400 transition-colors">Home</a></li>
+      <li><a href="services.html" class="block py-4 text-gray-200 hover:text-cyan-400 transition-colors">Services</a></li>
+      <li><a href="about.html" class="block py-4 text-gray-200 hover:text-cyan-400 transition-colors">About</a></li>
+      <li><a href="contact.html" class="block py-4 text-gray-200 hover:text-cyan-400 transition-colors">Contact</a></li>
+      <li><a href="posts.html" class="block py-4 text-gray-200 hover:text-cyan-400 transition-colors">Blog Posts</a></li>
+    </ul>
+  </div>
 
-    <!-- Trojan Content Section -->
-    <section id="trojan-section">
-        <h2>What is Trojan?</h2>
-        <p>The Trojan protocol is an advanced proxy technology used to provide secure and encrypted internet access. It is popular for its performance and stealth capabilities, making it useful for bypassing censorship and firewalls.</p>
+  <!-- Desktop Navigation Menu -->
+  <nav class="hidden md:block w-full mt-4">
+    <ul class="flex justify-center space-x-6 text-lg">
+      <li><a href="index.html" class="py-2 px-4 rounded-lg text-gray-200 hover:text-cyan-400 nav-item">Home</a></li>
+      <li><a href="services.html" class="py-2 px-4 rounded-lg text-gray-200 hover:text-cyan-400 nav-item">Services</a></li>
+      <li><a href="about.html" class="py-2 px-4 rounded-lg text-gray-200 hover:text-cyan-400 nav-item">About</a></li>
+      <li><a href="contact.html" class="py-2 px-4 rounded-lg text-gray-200 hover:text-cyan-400 nav-item">Contact</a></li>
+      <li><a href="posts.html" class="py-2 px-4 rounded-lg text-gray-200 hover:text-cyan-400 nav-item">Blog Posts</a></li>
+    </ul>
+  </nav>
 
-        <h3>Features of Trojan</h3>
-        <ul class="trojan-features">
-            <li><strong>Secure and Fast:</strong> Provides strong encryption and high-speed connections.</li>
-            <li><strong>Stealth:</strong> Uses HTTPS to blend in with regular web traffic, making it harder to detect.</li>
-            <li><strong>Reliable:</strong> Offers stable connections, even under high network congestion.</li>
-            <li><strong>Cross-platform:</strong> Works across multiple platforms and devices with ease.</li>
-            <li><strong>Bypass Censorship:</strong> Helps you access restricted websites and services in censorship-heavy regions.</li>
-        </ul>
+  <!-- Main Content Section -->
+  <main class="container mx-auto mt-8 p-6 md:p-12 bg-gray-800/60 rounded-3xl shadow-2xl shadow-cyan-500/10 max-w-4xl animate-fade-in-up">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-cyan-400 mb-6 drop-shadow-lg">What is Trojan?</h2>
+    
+    <div class="mb-8 p-6 bg-gray-900/50 rounded-xl transition-all duration-300 card-hover animate-[floating_3s_infinite_ease-in-out]">
+      <p class="text-base md:text-lg leading-relaxed text-gray-300 text-center">
+        The **Trojan protocol** is an advanced proxy technology used to provide **secure and encrypted internet access**. It is popular for its **performance and stealth capabilities**, making it useful for bypassing censorship and firewalls by masquerading as normal HTTPS traffic.
+      </p>
+    </div>
 
-        <p>The Trojan protocol offers a balance of security, speed, and reliability, making it a great choice for users seeking privacy and internet freedom.</p>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="social-icons">
-            <a href="https://wa.me/260950322498"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61568599103956"><i class="fab fa-facebook"></i></a>
-            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF"><i class="fab fa-youtube"></i></a>
+    <h3 class="text-2xl md:text-3xl font-semibold text-center text-purple-400 mb-6 drop-shadow-md">Key Features</h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Secure & Fast Feature Card -->
+      <div class="feature-card p-6 bg-gray-900/50 rounded-xl shadow-lg transition-all duration-300 card-hover">
+        <div class="flex items-center text-cyan-400 mb-4">
+          <i class="fas fa-shield-alt text-3xl mr-3"></i>
+          <h4 class="font-bold text-xl">Secure and Fast</h4>
         </div>
-        <div class="license">
-            <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+        <p class="text-gray-300">Trojan provides strong encryption and high-speed connections, ensuring your data is protected without sacrificing performance.</p>
+      </div>
+      
+      <!-- Stealth Feature Card -->
+      <div class="feature-card p-6 bg-gray-900/50 rounded-xl shadow-lg transition-all duration-300 card-hover">
+        <div class="flex items-center text-purple-400 mb-4">
+          <i class="fas fa-mask text-3xl mr-3"></i>
+          <h4 class="font-bold text-xl">Stealth</h4>
         </div>
-    </footer>
+        <p class="text-gray-300">Using HTTPS, Trojan blends in with regular web traffic, making it incredibly difficult for network firewalls to detect and block.</p>
+      </div>
 
-    <script>
-        function toggleMenu() {
-            var menu = document.getElementById("menu");
-            menu.classList.toggle("show");
-        }
-    </script>
+      <!-- Reliable Feature Card -->
+      <div class="feature-card p-6 bg-gray-900/50 rounded-xl shadow-lg transition-all duration-300 card-hover">
+        <div class="flex items-center text-cyan-400 mb-4">
+          <i class="fas fa-check-circle text-3xl mr-3"></i>
+          <h4 class="font-bold text-xl">Reliable</h4>
+        </div>
+        <p class="text-gray-300">Enjoy stable connections even in areas with high network congestion, thanks to its robust design and efficient protocol.</p>
+      </div>
+
+      <!-- Cross-platform Feature Card -->
+      <div class="feature-card p-6 bg-gray-900/50 rounded-xl shadow-lg transition-all duration-300 card-hover">
+        <div class="flex items-center text-purple-400 mb-4">
+          <i class="fas fa-desktop text-3xl mr-3"></i>
+          <h4 class="font-bold text-xl">Cross-platform</h4>
+        </div>
+        <p class="text-gray-300">Works seamlessly across a wide range of devices and operating systems, so you can stay protected no matter what you're using.</p>
+      </div>
+    </div>
+    
+    <p class="text-center text-gray-400 mt-8 text-sm md:text-base">
+      The Trojan protocol offers a perfect balance of **security, speed, and reliability**, making it a prime choice for users seeking privacy and internet freedom.
+    </p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full mt-auto py-8 bg-gray-900/80 backdrop-blur-sm text-center">
+    <div class="social-icons flex justify-center space-x-6 mb-4">
+      <a href="https://wa.me/260950322498" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors text-2xl"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors text-2xl"><i class="fab fa-facebook"></i></a>
+      <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors text-2xl"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="license">
+      <p class="text-sm text-gray-500">&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("mobile-menu");
+      menu.classList.toggle("open");
+    }
+  </script>
 
 </body>
 </html>

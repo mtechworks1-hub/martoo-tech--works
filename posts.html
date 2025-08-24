@@ -1,399 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="google-site-verification" content="7d61c0c52dffa401" />
-<meta name="google-site-verification" content="50ac2a921c40a378"/>
-<meta name="msvalidate.01" content="514AD9838126FB4D80A209D8AD4DD0D2" /><title>Martoo Tech Works – Digital Tools</title>
-<meta name="description" content="Martoo Tech Works provides digital tools like EduLink Pro, Martoo AI, VPN services, and academic software downloads to support learners and tech users." />
-<meta name="keywords" content="Martoo Tech Works, EduLink Pro, Martoo AI, VPN Zambia, academic tools, digital downloads, student resources, tech hub, M-Learning STM, MartHub, school materials, typing assistance" />
-<meta name="author" content="Martin Ndoma" /><link rel="icon" href="favicon.ico" type="image/x-icon" /><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9775836048486404" crossorigin="anonymous"></script><style>
-  /* Reset & Base */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  body {
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="7d61c0c52dffa401" />
+    <meta name="google-site-verification" content="50ac2a921c40a378"/>
+    <meta name="msvalidate.01" content="514AD9838126FB4D80A209D8AD4DD0D2" />
+    <title>Martoo Tech Works – Digital Tools</title>
+    <meta name="description" content="Martoo Tech Works provides digital tools like EduLink Pro, Martoo AI, VPN services, and academic software downloads to support learners and tech users." />
+    <meta name="keywords" content="Martoo Tech Works, EduLink Pro, Martoo AI, VPN Zambia, academic tools, digital downloads, student resources, tech hub, M-Learning STM, MartHub, school materials, typing assistance" />
+    <meta name="author" content="Martin Ndoma" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
-    margin: 0; padding: 0 1rem 3rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-image: url('full site background.jpg');
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    line-height: 1.5;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  a {
-    color: #ffcc00;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  a:hover,
-  a:focus {
-    text-decoration: underline;
-    color: #e6b800;
-  }
-  h1, h2, h3 {
-    color: #ffcc00;
-    margin-bottom: 0.5rem;
-  }
-  ul {
-    list-style: none;
-    padding-left: 0;
-  }
-  li + li {
-    margin-top: 0.5rem;
-  }
+    <!-- Tailwind CSS CDN for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  /* Fade-in animation on load */
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+    <!-- Font Awesome for icons -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        rel="stylesheet"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
 
-  /* Bounce animation for buttons */
-  @keyframes bounceIn {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-8px);
-    }
-    60% {
-      transform: translateY(-4px);
-    }
-  }
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  /* Slide-in for nav menu */
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
+    <!-- Custom styling to override default Tailwind behavior -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('full site background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
 
-  /* Header */
-  header {
-    position: relative;
-    padding: 3rem 1rem 4rem;
-    background: url('background.jpg') no-repeat center/cover;
-    text-align: center;
-    border-bottom: 3px solid #ffcc00;
-    animation: fadeInUp 1s ease forwards;
-  }
-  .logo {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 3px solid #ffcc00;
-    object-fit: cover;
-  }
-  header h1 {
-    font-size: 2.5rem;
-  }
+        /* Styles for mobile menu and dropdowns */
+        .menu.expanded {
+            max-height: 500px; /* enough to show full menu */
+        }
+        .menu li.expanded > ul.dropdown {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
 
-  /* Navigation */
-  nav {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-  }
-  .hamburger-btn {
-    font-size: 2rem;
-    background: transparent;
-    border: 2px solid #ffcc00;
-    color: #ffcc00;
-    padding: 0.25rem 0.5rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  .hamburger-btn:hover,
-  .hamburger-btn:focus {
-    background-color: #ffcc00;
-    color: #000;
-    outline: none;
-  }
-  .hamburger-btn:focus-visible {
-    outline: 3px solid #ffcc00;
-    outline-offset: 2px;
-  }
-  #nav-menu {
-    margin-top: 0.5rem;
-    background: rgba(0,0,0,0.9);
-    border-radius: 8px;
-    display: none;
-    min-width: 150px;
-    animation-duration: 0.3s;
-    animation-fill-mode: forwards;
-  }
-  #nav-menu.show {
-    display: block;
-    animation-name: slideInRight;
-  }
-  #nav-menu a {
-    display: block;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #ffcc00;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  #nav-menu a:last-child {
-    border-bottom: none;
-  }
-  #nav-menu a:hover,
-  #nav-menu a:focus {
-    background: #ffcc00;
-    color: #000;
-    outline: none;
-  }
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
 
-  /* Main Sections */
-  main {
-    max-width: 900px;
-    margin: 2rem auto 0;
-    background: rgba(0,0,0,0.75);
-    border-radius: 12px;
-    padding: 2rem;
-    animation: fadeInUp 1s ease 0.3s forwards;
-    opacity: 0;
-  }
-  section {
-    margin-bottom: 2.5rem;
-  }
-  .service-list li::before {
-    content: "✅ ";
-  }
+    <!-- Header section, consistent with other pages -->
+    <header class="bg-zinc-800 bg-opacity-75 backdrop-blur-sm p-4 flex items-center justify-between flex-wrap">
+        <div class="flex items-center">
+            <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="h-14 w-14 rounded-full border-2 border-amber-400 object-cover" />
+            <h1 class="text-2xl md:text-3xl text-amber-400 font-bold ml-4">Martoo Tech Works</h1>
+        </div>
 
-  /* Posts */
-  .post {
-    background: rgba(255,204,0,0.15);
-    border-radius: 10px;
-    padding: 1rem 1.5rem;
-    margin-bottom: 1.5rem;
-    animation: fadeInUp 1s ease forwards;
-    opacity: 0;
-  }
-  /* Stagger fadeInUp delays on posts */
-  .post:nth-child(1) {
-    animation-delay: 0.4s;
-  }
-  .post:nth-child(2) {
-    animation-delay: 0.55s;
-  }
-  .post:nth-child(3) {
-    animation-delay: 0.7s;
-  }
-  .post:nth-child(4) {
-    animation-delay: 0.85s;
-  }
-  .post:nth-child(5) {
-    animation-delay: 1s;
-  }
-  .post:nth-child(6) {
-    animation-delay: 1.15s;
-  }
+        <!-- Hamburger button for mobile -->
+        <button id="hamburger" class="lg:hidden text-amber-400 text-3xl focus:outline-none focus:ring-2 focus:ring-amber-400 p-2 rounded-md">
+            <i class="fas fa-bars"></i>
+        </button>
 
-  .post h3 {
-    margin-top: 0;
-  }
-  .download-btn {
-    background-color: #ffcc00;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-weight: bold;
-    color: #000;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    display: inline-block;
-    text-decoration: none;
-    animation: bounceIn 1.5s ease forwards;
-  }
-  .download-btn:hover,
-  .download-btn:focus {
-    background-color: #e6b800;
-    outline: none;
-    transform: scale(1.05);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
+        <!-- Navigation menu -->
+        <nav class="w-full lg:w-auto mt-4 lg:mt-0">
+            <ul id="menu" class="menu flex flex-col lg:flex-row lg:space-x-8 space-y-2 lg:space-y-0 text-lg transition-all duration-300 overflow-hidden max-h-0 lg:max-h-full">
+                <li><a href="index.html" class="block py-2 px-4 rounded-lg hover:bg-amber-500 hover:text-white transition-colors duration-200">Home</a></li>
+                <li class="relative has-dropdown">
+                    <a href="services.html" class="block py-2 px-4 rounded-lg hover:bg-amber-500 hover:text-white transition-colors duration-200">Services <i class="fas fa-chevron-down text-xs"></i></a>
+                    <ul class="dropdown hidden lg:absolute lg:top-full lg:left-0 bg-zinc-800 rounded-lg shadow-lg p-2 mt-2 w-48 z-10">
+                        <li><a href="typing_assistant.html" class="block py-2 px-4 rounded-lg hover:bg-amber-500 hover:text-white transition-colors duration-200">Typing Assistant</a></li>
+                        <li class="relative">
+                            <a href="trojan.html" class="block py-2 px-4 rounded-lg hover:bg-amber-500 hover:text-white transition-colors duration-200">VPN <i class="fas fa-chevron-right text-xs float-right mt-1"></i></a>
+                            <ul class="dropdown hidden lg:absolute lg:top-0 lg:left-full bg-zinc-800 rounded-lg shadow-lg p-2 mt-2 lg:mt-0 w-48">
+                                <li><a href="trojan.html#vmess" class="block py-2 px-4 rounded-lg hover:bg-amber-500 hover:text-white transition-colors duration-200">vmess</a></li>
+                                <li><a href="trojan.html#trojan" class="block py-2 px-4 rounded-lg hover:bg-amber-500 hover:text-white transition-colors duration-200">trojan</a></li>
+                                <li><a href="trojan.html#udp" class="block py-2 px-4 rounded-lg hover:bg-amber-500 hover:text-white transition-colors duration-200">udp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="school-materials.html" class="block py-2 px-4 rounded-lg hover:bg-amber-500 hover:text-white transition-colors duration-200">Materials</a></li>
+                    </ul>
+                </li>
+                <li><a href="posts.html" class="block py-2 px-4 rounded-lg bg-amber-500 text-white font-semibold">Blog Posts</a></li>
+                <li><a href="about.html" class="block py-2 px-4 rounded-lg hover:bg-amber-500 hover:text-white transition-colors duration-200">About</a></li>
+                <li><a href="contact.html" class="block py-2 px-4 rounded-lg hover:bg-amber-500 hover:text-white transition-colors duration-200">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: #222;
-    color: #aaa;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
+    <!-- Main content container -->
+    <main class="flex-grow max-w-7xl mx-auto py-8 px-4">
+        
+        <!-- About section -->
+        <section class="bg-zinc-800 bg-opacity-75 backdrop-blur-sm p-8 rounded-2xl shadow-xl mb-12">
+            <h2 class="text-3xl font-bold text-amber-400 mb-4">About Martoo Tech Works</h2>
+            <p class="text-lg text-gray-200 mb-4">
+                We provide free academic downloads and services focused on health sciences, technology, and data analysis.
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-300">
+                <li>Free academic downloads</li>
+                <li>Typing assignments and projects</li>
+                <li>GIS projects and tutorials</li>
+                <li>Mental health notes and support resources</li>
+                <li>Study guides and exam tips</li>
+            </ul>
+        </section>
 
-  /* Responsive */
-  @media (min-width: 600px) {
-    nav {
-      position: static;
-      margin-bottom: 1.5rem;
-      text-align: right;
-    }
-    .hamburger-btn {
-      display: none;
-    }
-    #nav-menu {
-      display: block !important;
-      background: transparent;
-      padding: 0;
-      animation: none;
-    }
-    #nav-menu a {
-      display: inline-block;
-      padding: 0 1rem 0 0;
-      border: none;
-      color: #ffcc00;
-      transition: color 0.3s ease;
-    }
-    #nav-menu a:hover,
-    #nav-menu a:focus {
-      background: transparent;
-      color: #e6b800;
-      text-decoration: underline;
-    }
-  }
-</style></head>
-<body><header>
-  <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="logo" />
-  <h1>MARTOO TECH WORKS POSTS</h1>
-  <nav aria-label="Primary Navigation">
-    <button class="hamburger-btn" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle menu" id="hamburger">
-      ☰
-    </button>
-    <div id="nav-menu" role="menu">
-      <a href="index.html" role="menuitem" tabindex="-1">Home</a>
-      <a href="posts.html" role="menuitem" tabindex="-1" aria-current="page">Posts</a>
-      <a href="contact.html" role="menuitem" tabindex="-1">Contact</a>
-    </div>
-  </nav>
-</header><main>
-  <section aria-labelledby="about-title">
-    <h2 id="about-title">About Martoo Tech Works</h2>
-    <p>We provide free academic downloads and services focused on health sciences, technology, and data analysis.</p>
-    <ul class="service-list">
-      <li>Free academic downloads</li>
-      <li>Typing assignments and projects</li>
-      <li>GIS projects and tutorials</li>
-      <li>Mental health notes and support resources</li>
-      <li>Study guides and exam tips</li>
-    </ul>
-  </section>  <section aria-labelledby="posts-title">
-    <h2 id="posts-title">Latest Posts & Resources</h2><article class="post" tabindex="0" aria-label="Typing assignments post">
-  <h3>Typing Assignments</h3>
-  <p>Get help with your typing assignments and projects at a reasonable fee.</p>
-  <a href="typing-assignment.html" class="download-btn" aria-label="Download Typing Assignments">Download</a>
-</article>
+        <!-- Posts and resources section -->
+        <section>
+            <h2 class="text-3xl font-bold text-amber-400 text-center mb-8">Latest Posts & Resources</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Post 1 -->
+                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Typing Assignments</h3>
+                    <p class="text-gray-300 mb-4">
+                        Get help with your typing assignments and projects at a reasonable fee.
+                    </p>
+                    <a href="typing-assignment.html" class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
+                        View Details
+                    </a>
+                </article>
 
-<article class="post" tabindex="0" aria-label="GIS Notes post">
-  <h3>Geographic Information Systems (GIS)</h3>
-  <p>Download detailed notes for GIS to support your academic and research needs.</p>
-  <a href="https://drive.google.com/drive/folders/19liIF8D8IPFr3ZTs8oPefNNuZWPKhpSp" class="download-btn" aria-label="Download GIS Notes">Download GIS Notes</a>
-</article>
+                <!-- Post 2 - Google Drive link changed to a direct download -->
+                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Geographic Information Systems (GIS)</h3>
+                    <p class="text-gray-300 mb-4">
+                        Download detailed notes for GIS to support your academic and research needs.
+                    </p>
+                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
+                    <a href="downloads/gis_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
+                        Download Notes
+                    </a>
+                </article>
 
-<article class="post" tabindex="0" aria-label="Health Economics Notes post">
-  <h3>Health Economics</h3>
-  <p>Download comprehensive notes for Health Economics.</p>
-  <a href="https://drive.google.com/drive/folders/1Mcc7TCR5hHDrKJxrhPqh5M7DoXBNh4BK" class="download-btn" aria-label="Download Health Economics Notes">Download Health Economics Notes</a>
-</article>
+                <!-- Post 3 - Google Drive link changed to a direct download -->
+                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Health Economics</h3>
+                    <p class="text-gray-300 mb-4">
+                        Download comprehensive notes for Health Economics.
+                    </p>
+                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
+                    <a href="downloads/health_economics_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
+                        Download Notes
+                    </a>
+                </article>
+                
+                <!-- Post 4 - Google Drive link changed to a direct download -->
+                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Human Resource Management (HRM)</h3>
+                    <p class="text-gray-300 mb-4">
+                        Download notes for HRM courses.
+                    </p>
+                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
+                    <a href="downloads/hrm_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
+                        Download Notes
+                    </a>
+                </article>
+                
+                <!-- Post 5 - Google Drive link changed to a direct download -->
+                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Medical Anthropology</h3>
+                    <p class="text-gray-300 mb-4">
+                        Access Medical Anthropology course materials and notes.
+                    </p>
+                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
+                    <a href="downloads/medical_anthropology_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
+                        Download Notes
+                    </a>
+                </article>
+                
+                <!-- Post 6 - Google Drive link changed to a direct download -->
+                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Research Methods</h3>
+                    <p class="text-gray-300 mb-4">
+                        Download essential notes for your Research Methods course.
+                    </p>
+                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
+                    <a href="downloads/research_methods_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
+                        Download Notes
+                    </a>
+                </article>
+                
+                <!-- Post 7 - Google Drive link changed to a direct download -->
+                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Risk Assessment</h3>
+                    <p class="text-gray-300 mb-4">
+                        Detailed notes to help you understand Risk Assessment concepts.
+                    </p>
+                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
+                    <a href="downloads/risk_assessment_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
+                        Download Notes
+                    </a>
+                </article>
+                
+                <!-- Post 8 -->
+                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Mental Health Notes</h3>
+                    <p class="text-gray-300 mb-4">
+                        Access notes and resources aimed at improving mental health awareness and support.
+                    </p>
+                    <a href="School materials/all mental health notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
+                        Download ZIP
+                    </a>
+                </article>
+            </div>
+        </section>
+    </main>
 
-<article class="post" tabindex="0" aria-label="HRM Notes post">
-  <h3>Human Resource Management (HRM)</h3>
-  <p>Download notes for HRM courses.</p>
-  <a href="https://drive.google.com/drive/folders/1SCnqtjrc2wKrmUxNkSmHUyvdYluIY6So" class="download-btn" aria-label="Download HRM Notes">Download HRM Notes</a>
-</article>
+    <!-- Footer section, consistent with other pages -->
+    <footer class="bg-zinc-800 bg-opacity-75 backdrop-blur-sm py-6 text-center mt-auto">
+        <div class="social-icons mb-4">
+            <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" class="text-white text-2xl mx-2 hover:text-amber-400 transition-colors duration-200"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" class="text-white text-2xl mx-2 hover:text-amber-400 transition-colors duration-200"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" class="text-white text-2xl mx-2 hover:text-amber-400 transition-colors duration-200"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p class="text-sm text-gray-400">&copy; 2025 Martoo Tech Works. All rights reserved.</p>
+    </footer>
 
-<article class="post" tabindex="0" aria-label="Medical Anthropology Notes post">
-  <h3>Medical Anthropology</h3>
-  <p>Access Medical Anthropology course materials and notes.</p>
-  <a href="https://drive.google.com/drive/folders/17RSEmzgBcBc64e4-4hx4ZjTe8eJCbeBT" class="download-btn" aria-label="Download Medical Anthropology Notes">Download Medical Anthropology Notes</a>
-</article>
+    <script>
+        // JavaScript for the responsive hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.getElementById('menu');
 
-<article class="post" tabindex="0" aria-label="Research Notes post">
-  <h3>Research Methods</h3>
-  <p>Download essential notes for your Research Methods course.</p>
-  <a href="https://drive.google.com/drive/folders/1M-9H1LcveH7N0qO7JMdGGy2h20YIgNk0" class="download-btn" aria-label="Download Research Methods Notes">Download Research Notes</a>
-</article>
+        // Toggle mobile menu visibility
+        hamburger.addEventListener('click', () => {
+            const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
+            hamburger.setAttribute("aria-expanded", !expanded);
+            menu.classList.toggle('expanded');
+        });
 
-<article class="post" tabindex="0" aria-label="Risk Assessment Notes post">
-  <h3>Risk Assessment</h3>
-  <p>Detailed notes to help you understand Risk Assessment concepts.</p>
-  <a href="https://drive.google.com/drive/folders/18gamu0wButJnS9UvFSmt7fd7SNlbWuyS" class="download-btn" aria-label="Download Risk Assessment Notes">Download Risk Assessment Notes</a>
-</article>
+        // Close menu when a link is clicked
+        menu.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' && window.innerWidth < 1024) {
+                menu.classList.remove('expanded');
+                hamburger.setAttribute("aria-expanded", false);
+            }
+        });
 
-<article class="post" tabindex="0" aria-label="Mental Health Notes post">
-  <h3>Mental Health Notes</h3>
-  <p>Access notes and resources aimed at improving mental health awareness and support.</p>
-  <a href="School materials/all mental health notes.zip" class="download-btn" download aria-label="Download Mental Health Notes ZIP">Download Mental Health Notes</a>
-</article>
+        // Dropdown toggles for mobile
+        const dropdownParents = document.querySelectorAll("li.has-dropdown > a");
 
-  </section>
-</main><footer>
-  &copy; 2025 Martoo Tech Works. All rights reserved.
-</footer><script>
-  // Hamburger menu toggle with accessibility attributes
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
+        dropdownParents.forEach(parentLink => {
+            parentLink.addEventListener("click", e => {
+                const isMobile = window.innerWidth <= 1024;
+                if (isMobile) {
+                    e.preventDefault();
+                    parentLink.parentElement.classList.toggle("expanded");
+                }
+            });
+        });
 
-  hamburger.addEventListener('click', () => {
-    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
-    hamburger.setAttribute('aria-expanded', !expanded);
-    navMenu.classList.toggle('show');
-
-    // Manage tabindex for keyboard nav
-    if (navMenu.classList.contains('show')) {
-      [...navMenu.querySelectorAll('a')].forEach(link => link.setAttribute('tabindex', '0'));
-      navMenu.querySelector('a').focus();
-    } else {
-      [...navMenu.querySelectorAll('a')].forEach(link => link.setAttribute('tabindex', '-1'));
-      hamburger.focus();
-    }
-  });
-
-  // Initialize nav menu links tabindex offscreen for mobile
-  if (window.innerWidth < 600) {
-    [...navMenu.querySelectorAll('a')].forEach(link => link.setAttribute('tabindex', '-1'));
-  }
-
-  // Optional: Close menu when clicking outside or on link
-  document.addEventListener('click', (e) => {
-    if (!navMenu.contains(e.target) && e.target !== hamburger && navMenu.classList.contains('show')) {
-      navMenu.classList.remove('show');
-      hamburger.setAttribute('aria-expanded', false);
-      [...navMenu.querySelectorAll('a')].forEach(link => link.setAttribute('tabindex', '-1'));
-    }
-  });
-
-  // Keyboard support: close menu on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && navMenu.classList.contains('show')) {
-      navMenu.classList.remove('show');
-      hamburger.setAttribute('aria-expanded', false);
-      [...navMenu.querySelectorAll('a')].forEach(link => link.setAttribute('tabindex', '-1'));
-      hamburger.focus();
-    }
-  });
-</script></body>
+    </script>
+</body>
 </html>
-
-  

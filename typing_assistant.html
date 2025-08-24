@@ -144,4 +144,114 @@
         }
     </script>
 </body>
+</html>            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffcc00;
+        }
+        .hamburger {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 5px;
+            border: 2px solid #ffcc00;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            width: 200px;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+            z-index: 4;
+        }
+        #menu.show {
+            display: flex;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(145deg, #3e8e41, #2e6b30);
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+        .download-btn:hover {
+            background: linear-gradient(145deg, #2e6b30, #3e8e41);
+            transform: scale(1.05);
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo">
+        <h1>Welcome to Martoo Tech Works</h1>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+        <nav>
+            <ul id="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="posts.html">Blog Posts</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About Martoo</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="content-section">
+        <h2>Typing Assistant</h2>
+        <h3>Download BBA100 Assignment</h3>
+        <p>This document is protected (READ-ONLY). If you want to have it, it is just a draft.</p>
+        <button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1= FINAL.xlsx', '')">Download BBA100 S1 2025-1 FINAL</button>
+        <br><br>
+        <p>This document below is protected and ready for submission for only one group. If you want to have it, please contact MARTOO TECH WORKS on 0774766077, and you can also request a different version for different individuals to avoid using the same work.</p>
+        <button class="download-btn" onclick="downloadFile('School materials/BBA100 S1 2025-1.xlsx', 'MARTOOTECH')">Download BBA100 S1 2025-1</button>
+        <script>
+            function downloadFile(path, password) {
+                if (password) {
+                    let userPass = prompt("Enter password:");
+                    if (userPass !== password) {
+                        alert("Incorrect password!");
+                        return;
+                    }
+                }
+                window.location.href = path;
+            }
+        </script>
+        <h3>Typing Assistant Service</h3>
+        <p>Need help with typing? Upload your files below:</p>
+        <div class="upload-container">
+            <script type="text/javascript" src="https://form.jotform.com/jsform/250152076105041"></script>
+        </div>
+    </section>
+    <footer>
+        <p>Copyright Martoo Tech Works 2025, All rights reserved.</p>
+    </footer>
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('menu');
+            menu.classList.toggle('show');
+        }
+    </script>
+</body>
 </html>

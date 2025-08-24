@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPN Hub | Martoo Tech Works</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+
+    <!-- Header section with navigation and hamburger menu -->
+    <header class="bg-gray-800 p-4 shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto flex items-center justify-between flex-wrap">
+            <a href="#" class="text-2xl font-bold text-blue-400">Martoo Tech Works</a>
+            
+            <!-- Hamburger menu icon for mobile -->
+            <div class="block md:hidden">
+                <button id="hamburger-button" class="text-white focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Main navigation links -->
+            <div id="nav-links" class="hidden w-full md:block md:w-auto md:flex-grow md:flex md:items-center">
+                <div class="text-sm md:flex-grow">
+                    <a href="udp.html" class="block mt-4 md:inline-block md:mt-0 text-gray-300 hover:text-white mr-4 transition-colors duration-200">UDP Services</a>
+                    <a href="vmess.html" class="block mt-4 md:inline-block md:mt-0 text-gray-300 hover:text-white mr-4 transition-colors duration-200">VMess Protocol</a>
+                    <a href="trojan.html" class="block mt-4 md:inline-block md:mt-0 text-gray-300 hover:text-white transition-colors duration-200">Trojan Protocol</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content container -->
+    <main class="flex flex-col items-center justify-center p-6 mt-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-blue-400 mb-2">VPN Services Hub</h1>
+            <p class="text-lg text-gray-400">Select a service to get started.</p>
+        </div>
+
+        <!-- Container for service cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl w-full">
+            <!-- UDP Service Card -->
+            <a href="udp.html" class="bg-gray-800 rounded-xl p-8 text-center hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                <div class="text-5xl text-green-400 mb-4">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-2">UDP Services</h2>
+                <p class="text-gray-400">Generate UDP configuration files for your client.</p>
+            </a>
+
+            <!-- VMess Service Card -->
+            <a href="vmess.html" class="bg-gray-800 rounded-xl p-8 text-center hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                <div class="text-5xl text-yellow-400 mb-4">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-2">VMess Protocol</h2>
+                <p class="text-gray-400">Learn more about the secure and fast VMess protocol.</p>
+            </a>
+
+            <!-- Trojan Service Card -->
+            <a href="trojan.html" class="bg-gray-800 rounded-xl p-8 text-center hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                <div class="text-5xl text-purple-400 mb-4">
+                    <i class="fas fa-user-secret"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-2">Trojan Protocol</h2>
+                <p class="text-gray-400">Discover the features of the Trojan protocol.</p>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('hamburger-button').addEventListener('click', function() {
+            var navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

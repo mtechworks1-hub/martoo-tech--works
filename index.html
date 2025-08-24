@@ -27,15 +27,15 @@
       font-family: 'Inter', sans-serif;
     }
     
-    /* Keyframe animation for the floating effect */
+    /* Keyframe animation for the floating effect with a more pronounced lift */
     @keyframes floating {
       0% {
         transform: translateY(0);
         box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
       }
       50% {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 255, 255, 0.4);
+        transform: translateY(-10px); /* Deeper lift */
+        box-shadow: 0 20px 30px rgba(0, 255, 255, 0.5); /* More spread out shadow */
       }
       100% {
         transform: translateY(0);
@@ -52,24 +52,39 @@
     
     /* Custom button styles that now include animations */
     .download-btn {
-      @apply relative inline-flex items-center justify-center text-xl font-bold text-gray-100 px-16 py-8 rounded-[4rem] shadow-2xl transition-all duration-300 ease-in-out;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem; /* Smaller font size */
+      font-weight: bold;
+      color: #f1f1f1;
+      padding: 1.5rem 3rem; /* Explicitly smaller padding */
+      border-radius: 9999px; /* Explicitly a pill shape */
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+      transition: all 0.3s ease-in-out;
       background: linear-gradient(135deg, #FF69B4, #8A2BE2, #00BFFF, #00FFFF, #FFD700, #FF00FF, #00FF00);
       background-size: 800% 800%;
-      animation: floating 2.5s ease-in-out infinite, color-change 3s ease-in-out infinite;
+      animation: floating 2.5s ease-in-out infinite, color-change 2s ease-in-out infinite;
     }
     .download-btn:hover {
       background: linear-gradient(135deg, #00FFFF, #FFD700, #FF69B4, #8A2BE2, #00BFFF, #00FF00, #FF00FF);
       box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4);
       transform: scale(1.05) translateY(-2px);
-      /* Stop floating animation on hover for a different feel */
       animation: none;
     }
+
+    /* Updated submit button styles to make it float and have a pill shape */
     .submit-btn {
-      @apply w-full mt-4 p-2 text-lg font-bold text-gray-100 rounded-lg transition-colors duration-300;
-      background-color: #28a745;
+      @apply w-full mt-4 p-2 text-lg font-bold rounded-full transition-colors duration-300;
+      background-color: #00FFFF; /* Vibrant cyan color */
+      color: #000; /* Text color for contrast */
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+      animation: floating 2.5s ease-in-out infinite;
     }
     .submit-btn:hover {
-      background-color: #218838;
+      background-color: #00BFFF; /* Slightly darker blue on hover */
+      box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4);
     }
   </style>
 </head>
@@ -140,7 +155,7 @@
           <i class="fas fa-chart-line mr-2"></i> Download SPSS
         </button>
         <div id="SPSS-box" class="password-box hidden mt-4">
-          <input type="password" id="SPSS-pwd" placeholder="Enter SPSS Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-900 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+          <input type="password" id="SPSS-pwd" placeholder="Enter SPSS Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
           <button class="submit-btn" onclick="downloadFile('SPSS')">Submit</button>
         </div>
       </div>
@@ -151,7 +166,7 @@
           <i class="fas fa-map-marked-alt mr-2"></i> Download GIS
         </button>
         <div id="GIS-box" class="password-box hidden mt-4">
-          <input type="password" id="GIS-pwd" placeholder="Enter GIS Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-900 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+          <input type="password" id="GIS-pwd" placeholder="Enter GIS Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
           <button class="submit-btn" onclick="downloadFile('GIS')">Submit</button>
         </div>
       </div>
@@ -162,7 +177,7 @@
           <i class="fas fa-chart-bar mr-2"></i> Download STATA
         </button>
         <div id="STATA-box" class="password-box hidden mt-4">
-          <input type="password" id="STATA-pwd" placeholder="Enter STATA Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-900 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+          <input type="password" id="STATA-pwd" placeholder="Enter STATA Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
           <button class="submit-btn" onclick="downloadFile('STATA')">Submit</button>
         </div>
       </div>

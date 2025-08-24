@@ -1,282 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- SEO Meta Tags -->
-  <title>Martoo Tech Works – Digital Tools</title>
-  <meta name="description" content="Martoo Tech Works provides digital tools like EduLink Pro, Martoo AI, VPN services, and academic software downloads to support learners and tech users." />
-  <meta name="keywords" content="Martoo Tech Works, EduLink Pro, Martoo AI, VPN Zambia, academic tools, digital downloads, student resources, tech hub, M-Learning STM, MartHub, school materials, typing assistance" />
-  <meta name="author" content="Martin Ndoma" />
-  <meta name="robots" content="index, follow" />
+    <!-- SEO Meta Tags -->
+    <title>Martoo Tech Works – Digital Tools</title>
+    <meta name="description" content="Martoo Tech Works provides digital tools like EduLink Pro, Martoo AI, VPN services, and academic software downloads to support learners and tech users." />
+    <meta name="keywords" content="Martoo Tech Works, EduLink Pro, Martoo AI, VPN Zambia, academic tools, digital downloads, student resources, tech hub, M-Learning STM, MartHub, school materials, typing assistance" />
+    <meta name="author" content="Martin Ndoma" />
+    <meta name="robots" content="index, follow" />
 
-  <!-- Inter Font from Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Inter Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-  <!-- Tailwind CSS CDN - All styling is done with Tailwind classes -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    
-    /* Keyframe animation for the floating effect with a more pronounced lift */
-    @keyframes floating {
-      0% {
-        transform: translateY(0);
-        box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
-      }
-      50% {
-        transform: translateY(-10px); /* Deeper lift */
-        box-shadow: 0 20px 30px rgba(0, 255, 255, 0.5); /* More spread out shadow */
-      }
-      100% {
-        transform: translateY(0);
-        box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
-      }
-    }
-    
-    /* Keyframe animation for the color-changing gradient */
-    @keyframes color-change {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    
-    /* Custom button styles that now include animations */
-    .download-btn {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      /* Smaller size for better mobile display */
-      font-size: 1rem;
-      font-weight: bold;
-      color: #f1f1f1;
-      padding: 0.75rem 1.5rem;
-      border-radius: 9999px;
-      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
-      transition: all 0.3s ease-in-out;
-      /* Restored animations and gradient */
-      background: linear-gradient(135deg, #FF69B4, #8A2BE2, #00BFFF, #00FFFF, #FFD700, #FF00FF, #00FF00);
-      background-size: 800% 800%;
-      animation: floating 2.5s ease-in-out infinite, color-change 2s ease-in-out infinite;
-    }
-    .download-btn:hover {
-      background: linear-gradient(135deg, #00FFFF, #FFD700, #FF69B4, #8A2BE2, #00BFFF, #00FF00, #FF00FF);
-      box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4);
-      transform: scale(1.05) translateY(-2px);
-      animation: none;
-    }
+    <!-- Tailwind CSS CDN - All styling is done with Tailwind classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Keyframe animation for the floating effect with a more pronounced lift */
+        @keyframes floating {
+            0% {
+                transform: translateY(0);
+                box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+            }
+            50% {
+                transform: translateY(-10px); /* Deeper lift */
+                box-shadow: 0 20px 30px rgba(0, 255, 255, 0.5); /* More spread out shadow */
+            }
+            100% {
+                transform: translateY(0);
+                box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+            }
+        }
+        
+        /* Keyframe animation for the color-changing gradient */
+        @keyframes color-change {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Custom button styles that now include animations */
+        .download-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #f1f1f1;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease-in-out;
+            /* Restored animations and gradient */
+            background: linear-gradient(135deg, #FF69B4, #8A2BE2, #00BFFF, #00FFFF, #FFD700, #FF00FF, #00FF00);
+            background-size: 800% 800%;
+            animation: floating 2.5s ease-in-out infinite, color-change 2s ease-in-out infinite;
+        }
+        .download-btn:hover {
+            background: linear-gradient(135deg, #00FFFF, #FFD700, #FF69B4, #8A2BE2, #00BFFF, #00FF00, #FF00FF);
+            box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4);
+            transform: scale(1.05) translateY(-2px);
+            animation: none;
+        }
 
-    /* Updated submit button styles to make it float and have a pill shape */
-    .submit-btn {
-      @apply w-full mt-4 p-2 text-lg font-bold rounded-full transition-colors duration-300;
-      background-color: #00FFFF; /* Vibrant cyan color */
-      color: #000; /* Text color for contrast */
-      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
-      animation: floating 2.5s ease-in-out infinite;
-    }
-    .submit-btn:hover {
-      background-color: #00BFFF; /* Slightly darker blue on hover */
-      box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4);
-    }
-  </style>
+        /* Updated submit button styles to make it float and have a pill shape */
+        .submit-btn {
+            @apply w-full mt-4 p-2 text-lg font-bold rounded-full transition-colors duration-300;
+            background-color: #00FFFF; /* Vibrant cyan color */
+            color: #000; /* Text color for contrast */
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+            animation: floating 2.5s ease-in-out infinite;
+        }
+        .submit-btn:hover {
+            background-color: #00BFFF; /* Slightly darker blue on hover */
+            box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Responsive logo container to stack on mobile */
+        .logo-container {
+            @apply flex flex-col items-center justify-center text-center;
+        }
+        /* Style for the header card that contains the intro text */
+        .intro-card {
+            @apply bg-gray-800/60 rounded-3xl shadow-2xl shadow-cyan-500/10 max-w-4xl w-full mx-auto p-6 md:p-12 mt-8 md:mt-16;
+        }
+    </style>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col items-center justify-center">
 
-  <!-- Header -->
-  <header class="w-full relative py-8 md:py-12 bg-gray-900/80 backdrop-blur-sm shadow-lg shadow-cyan-500/10">
-    <div class="container mx-auto px-4 flex items-center justify-between md:justify-center relative">
-      <!-- Added a logo icon to the header -->
-      <h1 class="text-3xl md:text-5xl font-bold text-cyan-400 drop-shadow-md text-center flex items-center gap-4">
-        <i class="fas fa-cogs text-4xl"></i>
-        Martoo Tech Works
-      </h1>
-      <!-- Hamburger Menu Button, now correctly hidden on medium screens and above -->
-      <button class="md:hidden text-gray-100 text-2xl p-2 rounded-md transition-transform duration-300 hover:scale-110" onclick="toggleMenu()">
-        ☰
-      </button>
-    </div>
-  </header>
+    <!-- Header -->
+    <header class="w-full relative py-8 md:py-12 bg-gray-900/80 backdrop-blur-sm shadow-lg shadow-cyan-500/10">
+        <div class="container mx-auto px-4 flex items-center justify-between relative">
+            <!-- Logo and Text Container -->
+            <div class="logo-container">
+                <i class="fas fa-cogs text-4xl md:text-5xl text-cyan-400"></i>
+                <h1 class="text-3xl md:text-5xl font-bold text-cyan-400 drop-shadow-md text-center mt-2">
+                    Martoo Tech Works
+                </h1>
+            </div>
+            <!-- Hamburger Menu Button, now correctly hidden on medium screens and above -->
+            <button class="md:hidden text-gray-100 text-2xl p-2 rounded-md transition-transform duration-300 hover:scale-110" onclick="toggleMenu()">
+                ☰
+            </button>
+        </div>
+    </header>
 
-  <!-- Navigation Menu for Mobile (starts hidden) -->
-  <nav id="mobile-menu" class="absolute top-24 right-4 z-50 w-64 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-2xl p-4 transition-all duration-300 transform scale-95 opacity-0 pointer-events-none hidden">
-    <ul class="flex flex-col space-y-2">
-      <li><a href="index.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Home</a></li>
-      <li><a href="posts.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Blog Posts</a></li>
-      <li><a href="services.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Services</a></li>
-      <li><a href="school-materials.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">School Materials</a></li>
-      <li><a href="typing_assistant.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Typing Assistant</a></li>
-      <li><a href="about.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">About</a></li>
-      <li><a href="contact.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Contact</a></li>
-      <li><a href="MARTOO TECH WORKS/martoo-ai.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Martoo AI</a></li>
-      <li><a href="downloader.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Video Downloader</a></li>
-    </ul>
-  </nav>
+    <!-- Navigation Menu for Mobile (starts hidden) -->
+    <nav id="mobile-menu" class="absolute top-24 right-4 z-50 w-64 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-2xl p-4 transition-all duration-300 transform scale-95 opacity-0 pointer-events-none hidden">
+        <ul class="flex flex-col space-y-2">
+            <li><a href="index.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Home</a></li>
+            <li><a href="posts.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Blog Posts</a></li>
+            <li><a href="services.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Services</a></li>
+            <li><a href="school-materials.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">School Materials</a></li>
+            <li><a href="typing_assistant.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Typing Assistant</a></li>
+            <li><a href="about.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">About</a></li>
+            <li><a href="contact.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Contact</a></li>
+            <li><a href="MARTOO TECH WORKS/martoo-ai.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Martoo AI</a></li>
+            <li><a href="downloader.html" class="block py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:bg-cyan-500 hover:text-gray-900 transition-colors">Video Downloader</a></li>
+        </ul>
+    </nav>
 
-  <!-- Desktop Navigation Menu (correctly hidden on mobile) -->
-  <nav class="hidden md:block w-full mt-4">
-    <ul class="flex justify-center space-x-6">
-      <li><a href="index.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Home</a></li>
-      <li><a href="posts.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Blog Posts</a></li>
-      <li><a href="services.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Services</a></li>
-      <li><a href="school-materials.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">School Materials</a></li>
-      <li><a href="typing_assistant.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Typing Assistant</a></li>
-      <li><a href="about.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">About</a></li>
-      <li><a href="contact.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Contact</a></li>
-      <li><a href="MARTOO TECH WORKS/martoo-ai.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Martoo AI</a></li>
-      <li><a href="downloader.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Video Downloader</a></li>
-    </ul>
-  </nav>
+    <!-- Desktop Navigation Menu (correctly hidden on mobile) -->
+    <nav class="hidden md:block w-full mt-4">
+        <ul class="flex justify-center space-x-6">
+            <li><a href="index.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Home</a></li>
+            <li><a href="posts.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Blog Posts</a></li>
+            <li><a href="services.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Services</a></li>
+            <li><a href="school-materials.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">School Materials</a></li>
+            <li><a href="typing_assistant.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Typing Assistant</a></li>
+            <li><a href="about.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">About</a></li>
+            <li><a href="contact.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Contact</a></li>
+            <li><a href="MARTOO TECH WORKS/martoo-ai.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Martoo AI</a></li>
+            <li><a href="downloader.html" class="py-2 px-4 rounded-lg text-lg font-medium text-gray-200 hover:text-cyan-400 transition-colors">Video Downloader</a></li>
+        </ul>
+    </nav>
 
-  <!-- Main Content Section -->
-  <main class="container mx-auto mt-8 md:mt-16 p-6 md:p-12 bg-gray-800/60 rounded-3xl shadow-2xl shadow-cyan-500/10 max-w-4xl">
-    <p class="text-base text-yellow-300 mb-6 leading-relaxed">
-      Martoo Tech offers services related to:<br>
-      1. Typing Assistant – Helping with assignments and documents.<br>
-      2. VPN Services – Vmess, Trojan, and UDP configurations.<br>
-      3. Essential School Materials – Academic resources.
-    </p>
+    <!-- Main Content Section -->
+    <main class="intro-card">
+        <p class="text-base text-yellow-300 mb-6 leading-relaxed">
+            Martoo Tech offers services related to:<br>
+            1. Typing Assistant – Helping with assignments and documents.<br>
+            2. VPN Services – Vmess, Trojan, and UDP configurations.<br>
+            3. Essential School Materials – Academic resources.
+        </p>
 
-    <h2 class="text-xl md:text-2xl font-semibold text-cyan-400 mb-6 border-b border-gray-600 pb-2">Download Software (Password required)</h2>
+        <h2 class="text-xl md:text-2xl font-semibold text-cyan-400 mb-6 border-b border-gray-600 pb-2">Download Software (Password required)</h2>
 
-    <!-- Download Buttons & Password Boxes -->
-    <div class="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-6">
+        <!-- Download Buttons & Password Boxes -->
+        <div class="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-6">
 
-      <!-- SPSS Button with Icon -->
-      <div class="flex flex-col items-center">
-        <button class="download-btn w-auto md:w-auto" onclick="showPasswordBox('SPSS')">
-          <i class="fas fa-chart-line mr-2"></i> Download SPSS
-        </button>
-        <div id="SPSS-box" class="password-box hidden mt-4">
-          <input type="password" id="SPSS-pwd" placeholder="Enter SPSS Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-          <button class="submit-btn" onclick="downloadFile('SPSS')">Submit</button>
-        </div>
-      </div>
+            <!-- SPSS Button with Icon -->
+            <div class="flex flex-col items-center">
+                <button class="download-btn w-auto md:w-auto" onclick="showPasswordBox('SPSS')">
+                    <i class="fas fa-chart-line mr-2"></i> Download SPSS
+                </button>
+                <div id="SPSS-box" class="password-box hidden mt-4">
+                    <input type="password" id="SPSS-pwd" placeholder="Enter SPSS Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    <button class="submit-btn" onclick="downloadFile('SPSS')">Submit</button>
+                </div>
+            </div>
 
-      <!-- GIS Button with Icon -->
-      <div class="flex flex-col items-center">
-        <button class="download-btn w-auto md:w-auto" onclick="showPasswordBox('GIS')">
-          <i class="fas fa-map-marked-alt mr-2"></i> Download GIS
-        </button>
-        <div id="GIS-box" class="password-box hidden mt-4">
-          <input type="password" id="GIS-pwd" placeholder="Enter GIS Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-          <button class="submit-btn" onclick="downloadFile('GIS')">Submit</button>
-        </div>
-      </div>
+            <!-- GIS Button with Icon -->
+            <div class="flex flex-col items-center">
+                <button class="download-btn w-auto md:w-auto" onclick="showPasswordBox('GIS')">
+                    <i class="fas fa-map-marked-alt mr-2"></i> Download GIS
+                </button>
+                <div id="GIS-box" class="password-box hidden mt-4">
+                    <input type="password" id="GIS-pwd" placeholder="Enter GIS Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    <button class="submit-btn" onclick="downloadFile('GIS')">Submit</button>
+                </div>
+            </div>
 
-      <!-- STATA Button with Icon -->
-      <div class="flex flex-col items-center">
-        <button class="download-btn w-auto md:w-auto" onclick="showPasswordBox('STATA')">
-          <i class="fas fa-chart-bar mr-2"></i> Download STATA
-        </button>
-        <div id="STATA-box" class="password-box hidden mt-4">
-          <input type="password" id="STATA-pwd" placeholder="Enter STATA Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-          <button class="submit-btn" onclick="downloadFile('STATA')">Submit</button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Message box for feedback -->
-    <div id="message-box" class="hidden mt-8 text-center font-bold px-4 py-3 rounded-lg opacity-0 transition-opacity duration-500"></div>
-  </main>
+            <!-- STATA Button with Icon -->
+            <div class="flex flex-col items-center">
+                <button class="download-btn w-auto md:w-auto" onclick="showPasswordBox('STATA')">
+                    <i class="fas fa-chart-bar mr-2"></i> Download STATA
+                </button>
+                <div id="STATA-box" class="password-box hidden mt-4">
+                    <input type="password" id="STATA-pwd" placeholder="Enter STATA Password" class="p-2 w-64 rounded-md border border-gray-600 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    <button class="submit-btn" onclick="downloadFile('STATA')">Submit</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Message box for feedback -->
+        <div id="message-box" class="hidden mt-8 text-center font-bold px-4 py-3 rounded-lg opacity-0 transition-opacity duration-500"></div>
+    </main>
 
-  <!-- Footer -->
-  <footer class="w-full mt-16 py-8 md:py-12 bg-gray-900/80 backdrop-blur-sm text-center">
-    <p class="text-sm md:text-base text-gray-400 mb-4">&copy; 2024–2025 | Licensed under Martoo Tech Works Terms of Service.</p>
-    <div class="flex justify-center space-x-6">
-      <a href="https://facebook.com/profile.php?id=61568599103956" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors text-2xl"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://wa.me/260950322498" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors text-2xl"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors text-2xl"><i class="fab fa-youtube"></i></a>
-    </div>
-  </footer>
+    <!-- Footer -->
+    <footer class="w-full mt-16 py-8 md:py-12 bg-gray-900/80 backdrop-blur-sm text-center">
+        <p class="text-sm md:text-base text-gray-400 mb-4">&copy; 2024–2025 | Licensed under Martoo Tech Works Terms of Service.</p>
+        <div class="flex justify-center space-x-6">
+            <a href="https://facebook.com/profile.php?id=61568599103956" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors text-2xl"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/260950322498" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors text-2xl"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors text-2xl"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
 
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById('mobile-menu');
-      if (menu.classList.contains('hidden')) {
-        menu.classList.remove('hidden');
-        setTimeout(() => {
-          menu.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
-          menu.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
-        }, 10);
-      } else {
-        menu.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
-        menu.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
-        setTimeout(() => {
-          menu.classList.add('hidden');
-        }, 300); // Match transition duration
-      }
-    }
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                setTimeout(() => {
+                    menu.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+                    menu.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+                }, 10);
+            } else {
+                menu.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+                menu.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                }, 300); // Match transition duration
+            }
+        }
 
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-      const menu = document.getElementById('mobile-menu');
-      const hamburger = document.querySelector('button[onclick="toggleMenu()"]');
-      if (!menu.contains(event.target) && !hamburger.contains(event.target) && !menu.classList.contains('hidden')) {
-        toggleMenu();
-      }
-    });
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobile-menu');
+            const hamburger = document.querySelector('button[onclick="toggleMenu()"]');
+            if (!menu.contains(event.target) && !hamburger.contains(event.target) && !menu.classList.contains('hidden')) {
+                toggleMenu();
+            }
+        });
 
-    function showPasswordBox(software) {
-      document.querySelectorAll('.password-box').forEach(box => box.classList.add('hidden'));
-      document.getElementById(`${software}-box`).classList.remove('hidden');
-      showMessage('', ''); // Clear any previous messages
-    }
+        function showPasswordBox(software) {
+            document.querySelectorAll('.password-box').forEach(box => box.classList.add('hidden'));
+            document.getElementById(`${software}-box`).classList.remove('hidden');
+            showMessage('', ''); // Clear any previous messages
+        }
 
-    function showMessage(message, type) {
-      const messageBox = document.getElementById('message-box');
-      messageBox.textContent = message;
-      messageBox.classList.remove('hidden', 'success', 'error');
-      messageBox.classList.add('opacity-100');
-      
-      if (type === 'success') {
-        messageBox.classList.add('bg-green-600', 'text-white');
-      } else if (type === 'error') {
-        messageBox.classList.add('bg-red-600', 'text-white');
-      }
+        function showMessage(message, type) {
+            const messageBox = document.getElementById('message-box');
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'success', 'error');
+            messageBox.classList.add('opacity-100');
+            
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-600', 'text-white');
+            } else if (type === 'error') {
+                messageBox.classList.add('bg-red-600', 'text-white');
+            }
 
-      if (message) {
-        messageBox.classList.remove('hidden');
-        setTimeout(() => {
-          messageBox.classList.add('opacity-0');
-          setTimeout(() => messageBox.classList.add('hidden'), 500);
-        }, 3000);
-      } else {
-        messageBox.classList.add('hidden');
-      }
-    }
+            if (message) {
+                messageBox.classList.remove('hidden');
+                setTimeout(() => {
+                    messageBox.classList.add('opacity-0');
+                    setTimeout(() => messageBox.classList.add('hidden'), 500);
+                }, 3000);
+            } else {
+                messageBox.classList.add('hidden');
+            }
+        }
 
-    function downloadFile(software) {
-      const passwords = {
-        SPSS: "MARTOO TECH SPSS",
-        GIS: "MARTOO TECH GIS",
-        STATA: "MARTOO TECH STATA"
-      };
+        function downloadFile(software) {
+            const passwords = {
+                SPSS: "MARTOO TECH SPSS",
+                GIS: "MARTOO TECH GIS",
+                STATA: "MARTOO TECH STATA"
+            };
 
-      const links = {
-        SPSS: "https://drive.google.com/uc?export=download&id=1-0T0omxeFigW_ct_xxoPxMS3-_hIc6Wl",
-        GIS: "https://drive.google.com/uc?export=download&id=1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI",
-        STATA: "https://drive.google.com/uc?export=download&id=1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H"
-      };
+            const links = {
+                SPSS: "https://drive.google.com/uc?export=download&id=1-0T0omxeFigW_ct_xxoPxMS3-_hIc6Wl",
+                GIS: "https://drive.google.com/uc?export=download&id=1IerwqKrrZH6JwdiVoVgAHyKlebjCnaQI",
+                STATA: "https://drive.google.com/uc?export=download&id=1EBmJgeGp5Eh_NoYvbZOF9eGDc90OH13H"
+            };
 
-      const inputPwd = document.getElementById(`${software}-pwd`).value.trim();
+            const inputPwd = document.getElementById(`${software}-pwd`).value.trim();
 
-      if (inputPwd === passwords[software]) {
-        window.open(links[software], '_blank');
-        showMessage(`Downloading ${software}...`, 'success');
-      } else {
-        showMessage("Incorrect password! Please try again.", 'error');
-      }
-    }
-  </script>
+            if (inputPwd === passwords[software]) {
+                window.open(links[software], '_blank');
+                showMessage(`Downloading ${software}...`, 'success');
+            } else {
+                showMessage("Incorrect password! Please try again.", 'error');
+            }
+        }
+    </script>
 </body>
 </html>

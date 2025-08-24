@@ -45,6 +45,33 @@
             display: flex;
             flex-direction: column;
         }
+
+        /* Additional styles for the cards to match the design */
+        .material-card {
+            background-color: rgba(63, 63, 70, 0.7); /* zinc-700 with opacity */
+            padding: 1.5rem; /* p-6 */
+            border-radius: 1rem; /* rounded-2xl */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transform: scale(1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .material-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        .material-card .icon {
+            font-size: 3.5rem;
+            color: #fbbf24; /* amber-400 */
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 
@@ -111,99 +138,75 @@
             <h2 class="text-3xl font-bold text-amber-400 text-center mb-8">Latest Posts & Resources</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <!-- Post 1 -->
-                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
+                <!-- Card 1: Typing Assignments (Keep as is since it's a separate page) -->
+                <a href="typing-assignment.html" class="material-card">
+                    <i class="fas fa-keyboard icon"></i>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">Typing Assignments</h3>
-                    <p class="text-gray-300 mb-4">
-                        Get help with your typing assignments and projects at a reasonable fee.
-                    </p>
-                    <a href="typing-assignment.html" class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
-                        View Details
-                    </a>
-                </article>
+                    <p class="text-gray-300">Get help with your typing assignments and projects at a reasonable fee.</p>
+                </a>
 
-                <!-- Post 2 - Google Drive link changed to a direct download -->
-                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
-                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Geographic Information Systems (GIS)</h3>
-                    <p class="text-gray-300 mb-4">
-                        Download detailed notes for GIS to support your academic and research needs.
-                    </p>
-                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
-                    <a href="downloads/gis_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
-                        Download Notes
-                    </a>
-                </article>
+                <!-- Card 2: Medicine Study Materials -->
+                <a href="https://drive.google.com/drive/folders/1C3IdOlXofYJcUXuVRD8FHsLcPBjSTlEj" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <i class="fas fa-notes-medical icon"></i>
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Medicine Study Materials</h3>
+                    <p class="text-gray-300">A comprehensive collection of notes and guides for medical students.</p>
+                </a>
 
-                <!-- Post 3 - Google Drive link changed to a direct download -->
-                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
-                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Health Economics</h3>
-                    <p class="text-gray-300 mb-4">
-                        Download comprehensive notes for Health Economics.
-                    </p>
-                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
-                    <a href="downloads/health_economics_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
-                        Download Notes
-                    </a>
-                </article>
+                <!-- Card 3: GIS Data Sets -->
+                <a href="https://drive.google.com/drive/folders/19liIF8D8IPFr3ZTs8oPefNNuZWPKhpSp" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <i class="fas fa-map-marked-alt icon"></i>
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">GIS Data Sets</h3>
+                    <p class="text-gray-300">High-quality GIS data and mapping resources for your projects.</p>
+                </a>
                 
-                <!-- Post 4 - Google Drive link changed to a direct download -->
-                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
-                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Human Resource Management (HRM)</h3>
-                    <p class="text-gray-300 mb-4">
-                        Download notes for HRM courses.
-                    </p>
-                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
-                    <a href="downloads/hrm_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
-                        Download Notes
-                    </a>
-                </article>
-                
-                <!-- Post 5 - Google Drive link changed to a direct download -->
-                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
-                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Medical Anthropology</h3>
-                    <p class="text-gray-300 mb-4">
-                        Access Medical Anthropology course materials and notes.
-                    </p>
-                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
-                    <a href="downloads/medical_anthropology_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
-                        Download Notes
-                    </a>
-                </article>
-                
-                <!-- Post 6 - Google Drive link changed to a direct download -->
-                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
-                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Research Methods</h3>
-                    <p class="text-gray-300 mb-4">
-                        Download essential notes for your Research Methods course.
-                    </p>
-                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
-                    <a href="downloads/research_methods_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
-                        Download Notes
-                    </a>
-                </article>
-                
-                <!-- Post 7 - Google Drive link changed to a direct download -->
-                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
-                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Risk Assessment</h3>
-                    <p class="text-gray-300 mb-4">
-                        Detailed notes to help you understand Risk Assessment concepts.
-                    </p>
-                    <!-- !!! IMPORTANT: Change this path to your actual file location on your web server. -->
-                    <a href="downloads/risk_assessment_notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
-                        Download Notes
-                    </a>
-                </article>
-                
-                <!-- Post 8 -->
-                <article class="bg-zinc-700 bg-opacity-75 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition-transform duration-200 hover:scale-105">
+                <!-- Card 4: Mental Health Notes -->
+                <a href="https://drive.google.com/drive/folders/1WMN-YWz-7Qw91yfzEBZ4bCfRYFz7LnpF" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <i class="fas fa-brain icon"></i>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">Mental Health Notes</h3>
-                    <p class="text-gray-300 mb-4">
-                        Access notes and resources aimed at improving mental health awareness and support.
-                    </p>
-                    <a href="School materials/all mental health notes.zip" download class="bg-amber-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-amber-600 transition-colors duration-200">
-                        Download ZIP
-                    </a>
-                </article>
+                    <p class="text-gray-300">Valuable notes and resources on mental health and wellness.</p>
+                </a>
+
+                <!-- Card 5: Generics Study Guides -->
+                <a href="https://drive.google.com/drive/folders/1_bN9UdjCaD4Wei3fTbYUlH_0xjLMcV1b" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <i class="fas fa-prescription-bottle-alt icon"></i>
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Generics Study Guides</h3>
+                    <p class="text-gray-300">Study materials and notes on generic medicines.</p>
+                </a>
+
+                <!-- Card 6: Health Economics -->
+                <a href="https://drive.google.com/drive/folders/1Mcc7TCR5hHDrKJxrhPqh5M7DoXBNh4BK" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <i class="fas fa-chart-line icon"></i>
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Health Economics</h3>
+                    <p class="text-gray-300">Resources on health economics and healthcare financing.</p>
+                </a>
+
+                <!-- Card 7: HRM -->
+                <a href="https://drive.google.com/drive/folders/1SCnqtjrc2wKrmUxNkSmHUyvdYluIY6So" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <i class="fas fa-users icon"></i>
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">HRM</h3>
+                    <p class="text-gray-300">Human Resource Management study materials.</p>
+                </a>
+
+                <!-- Card 8: Medical Anthropology -->
+                <a href="https://drive.google.com/drive/folders/17RSEmzgBcBc64e4-4hx4ZjTe8eJCbeBT" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <i class="fas fa-hospital-user icon"></i>
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Medical Anthropology</h3>
+                    <p class="text-gray-300">Notes on the cultural and social aspects of health and medicine.</p>
+                </a>
+                
+                <!-- Card 9: Health Systems Research -->
+                <a href="https://drive.google.com/drive/folders/1M-9H1LcveH7N0qO7JMdGGy2h20YIgNk0" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <i class="fas fa-flask icon"></i>
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Health Systems Research</h3>
+                    <p class="text-gray-300">Resources on health systems research and projects.</p>
+                </a>
+
+                <!-- Card 10: Risk Assessment & Disaster Management -->
+                <a href="https://drive.google.com/drive/drive/folders/18gamu0wButJnS9UvFSmt7fd7SNlbWuyS" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <i class="fas fa-exclamation-triangle icon"></i>
+                    <h3 class="text-xl font-semibold text-amber-400 mb-2">Risk Assessment & Disaster Management</h3>
+                    <p class="text-gray-300">Materials for risk assessment and disaster management.</p>
+                </a>
             </div>
         </section>
     </main>
@@ -250,7 +253,6 @@
                 }
             });
         });
-
     </script>
 </body>
 </html>

@@ -3,132 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UDP SERVICES</title>
+    <title>UDP Services</title>
+    <!-- Use Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Use Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* General styling */
+        /* General body and font styles for a clean look */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .form-container {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            max-width: 500px;
-            margin: 50px auto;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .form-container h3 {
-            text-align: center;
-            color: #007bff;
-        }
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-        input[type="text"], select, button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .generated-code {
-            background-color: #333;
-            color: #ff9800;
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        .copy-button {
-            background-color: #ff9800;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-        .copy-button:hover {
-            background-color: #ff7f00;
+            font-family: 'Inter', sans-serif;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
     <!-- Form Container -->
-    <div class="form-container">
-        <h3>Generate UDP Configuration</h3>
-        <form id="udpForm">
+    <div class="form-container bg-white rounded-2xl p-6 md:p-8 max-w-md w-full shadow-lg">
+        <h3 class="text-3xl font-bold text-center text-blue-600 mb-6">Generate UDP Configuration</h3>
+        <form id="udpForm" class="space-y-4">
             <!-- Server Dropdown -->
-            <label for="server">Select Server:</label>
-            <select id="server" name="server">
-                <option value="iceland">Iceland</option>
-                <option value="us">United States</option>
-                <option value="uk">United Kingdom</option>
-                <!-- Add other server options here -->
-            </select>
+            <div>
+                <label for="server" class="block font-semibold mb-2 text-gray-700">Select Server:</label>
+                <select id="server" name="server" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+                    <option value="iceland">Iceland</option>
+                    <option value="us">United States</option>
+                    <option value="uk">United Kingdom</option>
+                    <option value="france">France</option>
+                    <option value="germany">Germany</option>
+                </select>
+            </div>
 
             <!-- Username Field -->
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required placeholder="Enter username">
+            <div>
+                <label for="username" class="block font-semibold mb-2 text-gray-700">Username:</label>
+                <input type="text" id="username" name="username" required placeholder="Enter username" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+            </div>
 
             <!-- Password Field -->
-            <label for="password">Password:</label>
-            <input type="text" id="password" name="password" required placeholder="Enter password">
+            <div>
+                <label for="password" class="block font-semibold mb-2 text-gray-700">Password:</label>
+                <input type="text" id="password" name="password" required placeholder="Enter password" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+            </div>
 
             <!-- Submit Button -->
-            <button type="button" onclick="generateCode()">Generate Code</button>
+            <button type="button" onclick="generateCode()" class="w-full p-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Generate Code
+            </button>
         </form>
 
         <!-- Display Generated Code -->
-        <div class="generated-code" id="generatedCode" style="display:none;">
-            <p id="codeOutput"></p>
-            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+        <div id="generatedCode" class="mt-8 hidden">
+            <div class="generated-code bg-gray-900 text-yellow-400 p-6 text-center rounded-lg break-all">
+                <p id="codeOutput" class="font-mono text-sm"></p>
+            </div>
+            <button class="copy-button w-full mt-4 p-3 bg-yellow-500 text-white font-semibold rounded-lg hover:bg-yellow-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
+                <i class="fas fa-copy mr-2"></i> Copy Code
+            </button>
         </div>
     </div>
 
+    <!-- Message for copied code (replaces alert) -->
+    <div id="copyMessage" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-green-500 text-white py-3 px-6 rounded-full shadow-lg transition-opacity duration-300 opacity-0 pointer-events-none z-50">
+        Code copied to clipboard!
+    </div>
+
     <script>
-        // Function to generate the code
+        /**
+         * Function to generate the UDP configuration code.
+         * It retrieves the server, username, and password from the form
+         * and formats them into the required string.
+         */
         function generateCode() {
-            // Get selected values
+            // Get selected values from the form elements
             var server = document.getElementById('server').value;
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
 
-            // Generate code in the required format
+            // Simple validation to ensure fields are not empty
+            if (username === "" || password === "") {
+                document.getElementById('codeOutput').innerText = "Please fill in all fields.";
+                document.getElementById('generatedCode').style.display = 'block';
+                return;
+            }
+
+            // Generate the code string in the format: server:1-65535@username:password
             var generatedCode = server + ":1-65535@" + username + ":" + password;
 
-            // Display the generated code
+            // Display the generated code and make the container visible
             document.getElementById('codeOutput').innerText = generatedCode;
             document.getElementById('generatedCode').style.display = 'block';
         }
 
-        // Function to copy the generated code
+        /**
+         * Function to copy the generated code to the clipboard.
+         * It creates a temporary input element to handle the copy command
+         * and displays a non-intrusive message to the user.
+         */
         function copyCode() {
             var code = document.getElementById('codeOutput').innerText;
+
+            // Create a temporary input element
             var tempInput = document.createElement('input');
             tempInput.value = code;
             document.body.appendChild(tempInput);
+            
+            // Select the text and execute the copy command
             tempInput.select();
             document.execCommand('copy');
+            
+            // Clean up by removing the temporary input
             document.body.removeChild(tempInput);
-            alert("Code copied to clipboard!");
+
+            // Show the "copied" message
+            const copyMessage = document.getElementById('copyMessage');
+            copyMessage.classList.remove('opacity-0', 'pointer-events-none');
+            copyMessage.classList.add('opacity-100');
+
+            // Hide the message after 2 seconds
+            setTimeout(() => {
+                copyMessage.classList.remove('opacity-100');
+                copyMessage.classList.add('opacity-0', 'pointer-events-none');
+            }, 2000);
         }
     </script>
 </body>

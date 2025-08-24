@@ -1,258 +1,399 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-site-verification" content="7d61c0c52dffa401" />
-  <meta name="msvalidate.01" content="514AD9838126FB4D80A209D8AD4DD0D2" />
-  <title>About Us | Martoo Tech Works</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9775836048486404" crossorigin="anonymous"></script>
-  <style>
-    body {
-      background-color: #3f51b5;
-      color: white;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding-bottom: 60px;
-      min-height: 100vh;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Martoo Tech Works - About Us</title>
+    <meta name="description" content="Learn about Martoo Tech Works, our mission to empower learners and creators with innovative digital solutions, and our vision for the future of technology." />
+    <meta name="author" content="Martoo Tech Works" />
+    <meta name="robots" content="index, follow" />
+    <meta name="google-site-verification" content="UQqV69aQs7NrreaOuYJjg6SXpx2dBPOfIPJLH1hhIkw" />
+    <meta name="google-adsense-account" content="ca-pub-9775836048486404">
+  
+    <!-- Font Awesome for icons -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        rel="stylesheet"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
+  
+    <style>
+        /* General body and styling consistent with other pages */
+        * {
+            box-sizing: border-box;
+        }
 
-    header {
-      background-image: url('background.jpg');
-      background-size: cover;
-      background-position: center;
-      color: white;
-      text-align: center;
-      padding: 60px 20px;
-      position: relative;
-      width: 100vw;
-    }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('full site background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header styling consistent with other pages */
+        header {
+            background: rgba(0,0,0,0.75);
+            padding: 1rem 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
 
-    .logo {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #ffcc00;
-    }
+        /* Logo */
+        .logo {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffcc00;
+            flex-shrink: 0;
+        }
 
-    header h1 {
-      color: #ffcc00;
-      font-size: 36px;
-      position: relative;
-      z-index: 1;
-      margin-top: 20px;
-    }
+        /* Site title */
+        .site-title {
+            font-size: 1.8rem;
+            color: #ff9800;
+            margin-left: 1rem;
+            flex-grow: 1;
+            font-weight: 700;
+        }
 
-    .hamburger {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 30px;
-      color: #fff;
-      cursor: pointer;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 10px;
-      border-radius: 5px;
-      border: 2px solid #ffcc00;
-      user-select: none;
-      z-index: 11;
-    }
+        /* Navigation styles */
+        nav {
+            position: relative;
+            flex-grow: 1;
+            text-align: right;
+        }
 
-    nav ul {
-      list-style-type: none;
-      padding: 0;
-      display: none;
-      margin: 0;
-      background-color: rgba(0, 0, 0, 0.8);
-      position: absolute;
-      top: 60px;
-      right: 0;
-      width: 200px;
-      border-radius: 5px;
-      z-index: 10;
-    }
+        /* Hamburger button */
+        .hamburger {
+            font-size: 2rem;
+            cursor: pointer;
+            display: none;
+            color: #ff9800;
+            background: transparent;
+            border: none;
+            padding: 0;
+            user-select: none;
+        }
 
-    nav ul li {
-      margin: 10px 0;
-    }
+        /* Menu list */
+        ul.menu {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
 
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      padding: 10px;
-      display: block;
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
+        ul.menu li {
+            position: relative;
+        }
 
-    nav ul li a:hover {
-      background-color: #000;
-    }
+        ul.menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            border-radius: 4px;
+        }
 
-    #menu.show {
-      display: block;
-    }
+        ul.menu li a:hover,
+        ul.menu li a:focus {
+            background-color: #ff7f00;
+            outline: none;
+        }
 
-    #about-content-section {
-      position: relative;
-      background-image: url('background.jpg');
-      background-size: cover;
-      background-position: center;
-      color: white;
-      text-align: center;
-      padding: 60px 20px;
-      max-width: 900px;
-      margin: 0 auto 80px auto;
-    }
+        /* Dropdown arrow */
+        ul.menu li.has-dropdown > a::after {
+            content: " ▼";
+            font-size: 0.6rem;
+            margin-left: 5px;
+        }
 
-    #about-content-section h2, 
-    #about-content-section p {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 10px;
-      display: inline-block;
-      margin: 20px auto;
-      max-width: 700px;
-      text-align: left;
-    }
+        /* Dropdown menu */
+        ul.menu li ul.dropdown {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: rgba(0,0,0,0.9);
+            border-radius: 5px;
+            display: none;
+            min-width: 180px;
+            flex-direction: column;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
 
-    #about-content-section p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
+        ul.menu li ul.dropdown li a {
+            padding: 0.5rem 1rem;
+            font-weight: 400;
+            display: block;
+        }
 
-    footer {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      box-sizing: border-box;
-      z-index: 10;
-    }
+        ul.menu li ul.dropdown li a:hover,
+        ul.menu li ul.dropdown li a:focus {
+            background-color: #ff7f00;
+            color: #000;
+        }
 
-    .social-icons a {
-      margin: 0 15px;
-      color: white;
-      font-size: 24px;
-      transition: color 0.3s ease;
-      text-decoration: none;
-    }
+        /* Show dropdown on hover for desktops */
+        @media (hover: hover) and (pointer: fine) {
+            ul.menu li.has-dropdown:hover > ul.dropdown {
+                display: flex;
+            }
+        }
 
-    .social-icons a:hover {
-      color: #ff7f00;
-    }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            /* Show hamburger */
+            .hamburger {
+                display: block;
+            }
 
-    .license {
-      margin-top: 10px;
-      font-size: 14px;
-    }
+            nav {
+                flex-basis: 100%;
+                margin-top: 1rem;
+            }
 
-    /* Responsive tweaks */
-    @media (min-width: 768px) {
-      nav ul {
-        display: flex !important;
-        position: static;
-        width: auto;
-        background: none;
-        margin-top: 10px;
-        border-radius: 0;
-      }
-      nav ul li {
-        margin: 0 15px;
-      }
-      nav ul li a {
-        background: none;
-        padding: 0;
-        color: #ffcc00;
-        font-weight: bold;
-      }
-      nav ul li a:hover {
-        background: none;
-        color: #fff;
-      }
-      .hamburger {
-        display: none;
-      }
-    }
-  </style>
+            ul.menu {
+                flex-direction: column;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                background: rgba(0,0,0,0.85);
+                border-radius: 5px;
+            }
+
+            ul.menu.expanded {
+                max-height: 500px; /* enough to show full menu */
+            }
+
+            ul.menu li {
+                width: 100%;
+            }
+
+            ul.menu li ul.dropdown {
+                position: static;
+                display: none;
+                padding-left: 1rem;
+                background: none;
+            }
+
+            ul.menu li.expanded > ul.dropdown {
+                display: flex;
+                flex-direction: column;
+            }
+
+            ul.menu li.has-dropdown > a::after {
+                content: " ▶";
+                float: right;
+                margin-left: 0;
+            }
+
+            ul.menu li.expanded > a::after {
+                content: " ▼";
+            }
+        }
+        
+        main {
+            flex-grow: 1;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            background: rgba(0,0,0,0.6);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        main h1 {
+            color: #ff9800;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        main h2 {
+            color: #ffcc00;
+            font-size: 1.8rem;
+            margin-top: 2rem;
+        }
+        
+        main p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0 auto 1.5rem auto;
+            text-align: center;
+        }
+
+        /* Style for the Contact Icons section */
+        .contact-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-icons a {
+            color: white;
+            font-size: 2.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .contact-icons a:hover {
+            transform: scale(1.1);
+            color: #ff9800;
+        }
+
+        .contact-icons a.email-link:hover { color: #f0c040; } /* Subtle color change for email */
+        .contact-icons a.phone-link:hover { color: #4CAF50; } /* Subtle color change for phone */
+        .contact-icons a.whatsapp-link:hover { color: #25D366; } /* WhatsApp green */
+        .contact-icons a.facebook-link:hover { color: #3b5998; } /* Facebook blue */
+        .contact-icons a.youtube-link:hover { color: #FF0000; } /* YouTube red */
+
+        .contact-label {
+            display: block;
+            font-size: 0.9rem;
+            color: #ddd;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer styling consistent with other pages */
+        footer {
+            background: rgba(0,0,0,0.8);
+            padding: 1rem 2rem;
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        footer .social-icons a {
+            margin: 0 10px;
+            color: white;
+            font-size: 1.6rem;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-icons a:hover,
+        footer .social-icons a:focus {
+            color: #ff9800;
+            outline: none;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="logo" />
+        <div class="site-title">Martoo Tech Works - About Us</div>
 
-  <header>
-    <img src="logo.jpg" alt="Martoo Tech Works Logo" class="logo" />
-    <h1>About Martoo Tech Works</h1>
-    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-    <nav>
-      <ul id="menu" aria-label="Primary navigation menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="posts.html">Posts</a></li>
-      </ul>
-    </nav>
-  </header>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-menu">
+            <i class="fas fa-bars"></i>
+        </button>
 
-  <section id="about-content-section" role="main">
-    <h2>Our Mission and Vision</h2>
-    <p>
-      Martoo Tech Works is dedicated to delivering innovative digital solutions, empowering both learners and creators through technology.
-      We envision a world where smart, open, and accessible tools unlock everyone’s full potential—especially in education, development, and tech empowerment.
-    </p>
-    
-    <h2>What We Do</h2>
-    <p>
-      We develop tech tools like M-Learning STM, MARTOO AI, VPN solutions, education platforms, and websites. We serve students, institutions, and startups with practical,
-      no-cost or low-cost tools that solve real-world problems.
-    </p>
-    
-    <h2>Our Identity</h2>
-    <p>
-      🧠 <strong>Founder:</strong> Martin Ndoma<br />
-      💡 <strong>Tech Tagline:</strong> “Smart, Simple, Powerful.”<br />
-      🏷️ <strong>Brand:</strong> Martoo Tech Works / Martoo Tech Enterprise
-    </p>
-    
-    <h2>Contact Us</h2>
-    <p>
-      📧 Emails: <br />
-      martootechworks@gmail.com <br />
-      martinndoma15@gmail.com <br />
-      martootechhub@gmail.com<br />
-      📱 WhatsApp: +260 973495316<br />
-      🌐 Facebook: <a href="https://www.facebook.com/profile.php?id=61568599103956" style="color: #ffcc00;">Visit</a><br />
-      📺 YouTube: <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" style="color: #ffcc00;">Watch</a>
-    </p>
-  </section>
+        <nav>
+            <ul class="menu" id="primary-menu" role="menu">
+                <li role="none"><a href="index.html" role="menuitem" tabindex="0">Home</a></li>
+                <li class="has-dropdown" role="none">
+                    <a href="services.html" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">Services</a>
+                    <ul class="dropdown" role="menu" aria-label="Services submenu">
+                        <li role="none"><a href="typing_assistant.html" role="menuitem" tabindex="-1">Typing Assistant</a></li>
+                        <li class="has-dropdown" role="none">
+                            <a href="trojan.html" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="-1">VPN</a>
+                            <ul class="dropdown" role="menu" aria-label="VPN submenu">
+                                <li role="none"><a href="trojan.html#vmess" role="menuitem" tabindex="-1">vmess</a></li>
+                                <li role="none"><a href="trojan.html#trojan" role="menuitem" tabindex="-1">trojan</a></li>
+                                <li role="none"><a href="trojan.html#udp" role="menuitem" tabindex="-1">udp</a></li>
+                            </ul>
+                        </li>
+                        <li role="none"><a href="school-materials.html" role="menuitem" tabindex="-1">Materials</a></li>
+                    </ul>
+                </li>
+                <li role="none"><a href="posts.html" role="menuitem" tabindex="0">Blog Posts</a></li>
+                <li role="none"><a href="about.html" role="menuitem" tabindex="0">About</a></li>
+                <li role="none"><a href="contact.html" role="menuitem" tabindex="0">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <footer>
-    <div class="social-icons" role="contentinfo" aria-label="Social media links">
-      <a href="https://wa.me/260973495316" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://www.facebook.com/profile.php?id=61568599103956" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-      <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-    </div>
-    <div class="license">
-      <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
-    </div>
-  </footer>
+    <main>
+        <h1>About Martoo Tech Works</h1>
+        <p>Martoo Tech Works is a leading provider of innovative digital solutions, committed to empowering learners and creators through technology. We believe in creating a world where smart, open, and accessible tools unlock everyone’s full potential.</p>
+        
+        <h2>Our Mission & Vision</h2>
+        <p>
+            We are dedicated to delivering innovative digital solutions, empowering both learners and creators. We envision a world where smart, open, and accessible tools unlock everyone’s full potential—especially in education and tech empowerment.
+        </p>
 
-  <script>
-    function toggleMenu() {
-      var menu = document.getElementById("menu");
-      menu.classList.toggle("show");
-    }
-  </script>
+        <h2>What We Do</h2>
+        <p>
+            We develop practical tools like M-Learning STM, MARTOO AI, VPN solutions, education platforms, and websites. We serve students, institutions, and startups with low-cost tools that solve real-world problems.
+        </p>
 
+        <h2>Our Identity</h2>
+        <p>
+            <strong>Founder:</strong> Martin Ndoma<br />
+            <strong>Tech Tagline:</strong> “Smart, Simple, Powerful.”<br />
+            <strong>Brand:</strong> Martoo Tech Works / Martoo Tech Enterprise
+        </p>
+
+        <h2>Connect with Us</h2>
+        <p>Have questions or need assistance? Reach out to us through our social channels or contact methods below.</p>
+        <div class="contact-icons">
+            <a href="mailto:martootechworks@gmail.com,martinndoma15@gmail.com,martootechhub@gmail.com" class="email-link" aria-label="Email Us"><i class="fas fa-envelope"></i><span class="contact-label">Email</span></a>
+            <a href="https://wa.me/260973495316" target="_blank" class="whatsapp-link" aria-label="Message on WhatsApp"><i class="fab fa-whatsapp"></i><span class="contact-label">WhatsApp</span></a>
+            <a href="tel:+260973495316" class="phone-link" aria-label="Call Us"><i class="fas fa-phone"></i><span class="contact-label">Call</span></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" class="facebook-link" aria-label="Visit our Facebook page"><i class="fab fa-facebook"></i><span class="contact-label">Facebook</span></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" class="youtube-link" aria-label="Visit our YouTube channel"><i class="fab fa-youtube"></i><span class="contact-label">YouTube</span></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-icons" aria-label="Social media links">
+            <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.querySelector(".hamburger");
+        const menu = document.querySelector("ul.menu");
+
+        hamburger.addEventListener("click", () => {
+            const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
+            hamburger.setAttribute("aria-expanded", !expanded);
+            menu.classList.toggle("expanded");
+        });
+
+        // Dropdown toggles for mobile and desktop
+        const dropdownParents = document.querySelectorAll("li.has-dropdown > a");
+
+        dropdownParents.forEach(parentLink => {
+            parentLink.addEventListener("click", e => {
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                    e.preventDefault();
+                    const expanded = parentLink.getAttribute("aria-expanded") === "true" || false;
+                    parentLink.setAttribute("aria-expanded", !expanded);
+                    parentLink.parentElement.classList.toggle("expanded");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -46,7 +46,7 @@
             flex-direction: column;
         }
 
-        /* Additional styles for the cards to match the design */
+        /* Styles for the cards to make them more visually appealing */
         .material-card {
             background-color: rgba(63, 63, 70, 0.7); /* zinc-700 with opacity */
             padding: 1.5rem; /* p-6 */
@@ -60,6 +60,9 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            /* Add a subtle inset shadow and border for a more defined look */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .material-card:hover {
@@ -67,10 +70,28 @@
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
 
-        .material-card .icon {
-            font-size: 3.5rem;
-            color: #fbbf24; /* amber-400 */
+        /* Style the icon container to make the icons pop */
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            background: rgba(251, 191, 36, 0.15); /* amber-400 with opacity */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 1rem;
+            border: 2px solid rgba(251, 191, 36, 0.5);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .material-card:hover .icon-container {
+            transform: translateY(-5px);
+            background: rgba(251, 191, 36, 0.25);
+        }
+
+        .icon-container .icon {
+            font-size: 3rem; /* Adjusted icon size to fit the container */
+            color: #fbbf24; /* amber-400 */
         }
     </style>
 </head>
@@ -140,70 +161,90 @@
                 
                 <!-- Card 1: Typing Assignments (Keep as is since it's a separate page) -->
                 <a href="typing-assignment.html" class="material-card">
-                    <i class="fas fa-keyboard icon"></i>
+                    <div class="icon-container">
+                        <i class="fas fa-keyboard icon"></i>
+                    </div>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">Typing Assignments</h3>
                     <p class="text-gray-300">Get help with your typing assignments and projects at a reasonable fee.</p>
                 </a>
 
                 <!-- Card 2: Medicine Study Materials -->
                 <a href="https://drive.google.com/drive/folders/1C3IdOlXofYJcUXuVRD8FHsLcPBjSTlEj" target="_blank" rel="noopener noreferrer" class="material-card">
-                    <i class="fas fa-notes-medical icon"></i>
+                    <div class="icon-container">
+                        <i class="fas fa-notes-medical icon"></i>
+                    </div>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">Medicine Study Materials</h3>
                     <p class="text-gray-300">A comprehensive collection of notes and guides for medical students.</p>
                 </a>
 
                 <!-- Card 3: GIS Data Sets -->
                 <a href="https://drive.google.com/drive/folders/19liIF8D8IPFr3ZTs8oPefNNuZWPKhpSp" target="_blank" rel="noopener noreferrer" class="material-card">
-                    <i class="fas fa-map-marked-alt icon"></i>
+                    <div class="icon-container">
+                        <i class="fas fa-map-marked-alt icon"></i>
+                    </div>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">GIS Data Sets</h3>
                     <p class="text-gray-300">High-quality GIS data and mapping resources for your projects.</p>
                 </a>
                 
                 <!-- Card 4: Mental Health Notes -->
-                <a href="https://drive.google.com/drive/folders/1WMN-YWz-7Qw91yfzEBZ4bCfRYFz7LnpF" target="_blank" rel="noopener noreferrer" class="material-card">
-                    <i class="fas fa-brain icon"></i>
+                <a href="School materials/all mental health notes.zip" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <div class="icon-container">
+                        <i class="fas fa-brain icon"></i>
+                    </div>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">Mental Health Notes</h3>
                     <p class="text-gray-300">Valuable notes and resources on mental health and wellness.</p>
                 </a>
 
                 <!-- Card 5: Generics Study Guides -->
                 <a href="https://drive.google.com/drive/folders/1_bN9UdjCaD4Wei3fTbYUlH_0xjLMcV1b" target="_blank" rel="noopener noreferrer" class="material-card">
-                    <i class="fas fa-prescription-bottle-alt icon"></i>
+                    <div class="icon-container">
+                        <i class="fas fa-prescription-bottle-alt icon"></i>
+                    </div>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">Generics Study Guides</h3>
                     <p class="text-gray-300">Study materials and notes on generic medicines.</p>
                 </a>
 
                 <!-- Card 6: Health Economics -->
                 <a href="https://drive.google.com/drive/folders/1Mcc7TCR5hHDrKJxrhPqh5M7DoXBNh4BK" target="_blank" rel="noopener noreferrer" class="material-card">
-                    <i class="fas fa-chart-line icon"></i>
+                    <div class="icon-container">
+                        <i class="fas fa-chart-line icon"></i>
+                    </div>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">Health Economics</h3>
                     <p class="text-gray-300">Resources on health economics and healthcare financing.</p>
                 </a>
 
                 <!-- Card 7: HRM -->
                 <a href="https://drive.google.com/drive/folders/1SCnqtjrc2wKrmUxNkSmHUyvdYluIY6So" target="_blank" rel="noopener noreferrer" class="material-card">
-                    <i class="fas fa-users icon"></i>
+                    <div class="icon-container">
+                        <i class="fas fa-users icon"></i>
+                    </div>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">HRM</h3>
                     <p class="text-gray-300">Human Resource Management study materials.</p>
                 </a>
 
                 <!-- Card 8: Medical Anthropology -->
                 <a href="https://drive.google.com/drive/folders/17RSEmzgBcBc64e4-4hx4ZjTe8eJCbeBT" target="_blank" rel="noopener noreferrer" class="material-card">
-                    <i class="fas fa-hospital-user icon"></i>
+                    <div class="icon-container">
+                        <i class="fas fa-hospital-user icon"></i>
+                    </div>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">Medical Anthropology</h3>
                     <p class="text-gray-300">Notes on the cultural and social aspects of health and medicine.</p>
                 </a>
                 
                 <!-- Card 9: Health Systems Research -->
                 <a href="https://drive.google.com/drive/folders/1M-9H1LcveH7N0qO7JMdGGy2h20YIgNk0" target="_blank" rel="noopener noreferrer" class="material-card">
-                    <i class="fas fa-flask icon"></i>
+                    <div class="icon-container">
+                        <i class="fas fa-flask icon"></i>
+                    </div>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">Health Systems Research</h3>
                     <p class="text-gray-300">Resources on health systems research and projects.</p>
                 </a>
 
                 <!-- Card 10: Risk Assessment & Disaster Management -->
-                <a href="https://drive.google.com/drive/drive/folders/18gamu0wButJnS9UvFSmt7fd7SNlbWuyS" target="_blank" rel="noopener noreferrer" class="material-card">
-                    <i class="fas fa-exclamation-triangle icon"></i>
+                <a href="https://drive.google.com/drive/folders/18gamu0wButJnS9UvFSmt7fd7SNlbWuyS" target="_blank" rel="noopener noreferrer" class="material-card">
+                    <div class="icon-container">
+                        <i class="fas fa-exclamation-triangle icon"></i>
+                    </div>
                     <h3 class="text-xl font-semibold text-amber-400 mb-2">Risk Assessment & Disaster Management</h3>
                     <p class="text-gray-300">Materials for risk assessment and disaster management.</p>
                 </a>

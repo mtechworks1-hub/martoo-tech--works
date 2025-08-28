@@ -3,310 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Martoo AI Assistant</title>
+    <title>MARTOO AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
+            background-color: #f3f4f6;
         }
-        .chat-messages::-webkit-scrollbar {
-            width: 8px;
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
         }
-        .chat-messages::-webkit-scrollbar-track {
-            background: #e0e0e0;
-            border-radius: 10px;
-        }
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
-        .chat-messages::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-        .typing-indicator span {
-            animation: blink 1s infinite;
-        }
-        .typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
-        }
-        .btn-gradient {
-            background: linear-gradient(135deg, #4CAF50, #2E7D32);
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .btn-gradient:hover {
-            background: linear-gradient(135deg, #66BB6A, #43A047);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-        .main-container {
-            height: 100vh;
-        }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border-left-color: #4CAF50;
-            animation: spin 1s ease infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .main-content-transition {
+            transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
         }
     </style>
 </head>
-<body>
-    <div class="flex main-container">
-        <!-- Sidebar Menu -->
-        <div class="bg-gray-800 text-gray-100 w-64 p-6 flex flex-col justify-between hidden md:flex rounded-r-lg shadow-xl">
-            <div>
-                <h1 class="text-3xl font-bold mb-6">Martoo AI</h1>
-                <button id="new-chat-button" class="w-full text-left py-3 px-4 rounded-lg bg-gray-700 hover:bg-gray-600 transition duration-200 mb-4">
-                    <i class="fas fa-plus mr-3"></i>New Chat
-                </button>
-                <div class="space-y-2">
-                    <a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-gray-700 transition duration-200">
-                        <i class="fas fa-comment-dots mr-3"></i>Recent Chat
+<body class="bg-gray-100 min-h-screen flex">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-gray-800 text-white p-6 shadow-2xl z-10 sidebar-transition">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-bold">MARTOO</h2>
+            <button id="sidebar-toggle" class="text-gray-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+        <nav>
+            <ul>
+                <li class="mb-4">
+                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                        </svg>
+                        <span>Home</span>
                     </a>
-                </div>
-            </div>
-            <div class="text-sm text-gray-500">
-                <p>Chat with Martoo AI</p>
-            </div>
-        </div>
+                </li>
+                <li class="mb-4">
+                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                        <span>About</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h1a3 3 0 003-3 2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 3a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Docs</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
 
-        <!-- Main Chat Content -->
-        <div class="flex-1 flex flex-col bg-white rounded-l-lg shadow-xl md:rounded-l-none">
-            <!-- Header for the chat area -->
-            <div class="bg-gray-200 p-4 border-b border-gray-300 flex justify-between items-center sticky top-0 z-10">
-                <h1 class="text-xl font-bold text-gray-800 md:hidden">Martoo AI</h1>
-                <div class="flex-1 flex justify-end items-center space-x-2">
-                    <div id="loading-spinner" class="spinner"></div>
-                    <span id="user-id-display" class="bg-gray-300 text-gray-600 px-3 py-1 rounded-full text-xs">Connecting...</span>
-                </div>
+    <!-- Main content area -->
+    <div id="main-content" class="flex-1 ml-64 p-4 md:p-8 flex flex-col main-content-transition">
+
+        <!-- Main chat container -->
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-3xl mx-auto flex flex-col p-6 md:p-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-2 text-center">MARTOO AI Assistant</h1>
+            <p class="text-sm text-gray-500 mb-6 text-center">Ask me anything!</p>
+
+            <!-- Chat messages display area -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200 min-h-[320px]">
+                <!-- Messages will be injected here -->
             </div>
 
-            <!-- Chat messages container -->
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4">
-                <div id="initial-message" class="text-center text-gray-400 mt-10">
-                    <i class="fas fa-robot text-6xl mb-4 text-gray-400"></i>
-                    <p class="text-lg font-semibold mb-2">Welcome to Martoo AI Assistant!</p>
-                    <p class="mb-4">Start a new chat or select an existing one from the sidebar.</p>
-                </div>
-            </div>
-
-            <div id="typing-indicator" class="hidden text-gray-500 text-sm px-6 pb-2 typing-indicator">
-                Martoo AI is typing<span>.</span><span>.</span><span>.</span>
-            </div>
-
-            <!-- Chat input area -->
-            <div id="chat-input-area" class="bg-gray-100 p-4 border-t border-gray-200 flex items-end space-x-3 sticky bottom-0 w-full z-10 hidden">
-                <label for="image-upload" class="cursor-pointer text-gray-600 hover:text-blue-500 transition duration-200 p-2 rounded-full bg-gray-200 hover:bg-gray-300">
-                    <i class="fas fa-image text-xl"></i>
-                    <input type="file" id="image-upload" accept="image/*" class="hidden">
-                </label>
-                <textarea id="chat-input" rows="1" class="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 resize-none overflow-y-hidden" placeholder="Type your message..."></textarea>
-                <button id="send-button" class="btn-gradient text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-200">
-                    <i class="fas fa-paper-plane"></i>
+            <!-- Input area -->
+            <div class="flex items-center space-x-4">
+                <input type="text" id="prompt-input" placeholder="Type your message here..."
+                    class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200">
+                <button id="send-button"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95">
+                    Send
                 </button>
             </div>
         </div>
+
     </div>
 
-    <!-- Import Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, onSnapshot, collection, addDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sendButton = document.getElementById('send-button');
+            const promptInput = document.getElementById('prompt-input');
+            const chatMessages = document.getElementById('chat-messages');
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
 
-        // Constants and global variables
-        const CHAT_COLLECTION_NAME = 'chats';
+            // Replace this with your Vercel backend URL
+            const backendUrl = 'YOUR_VERCEL_BACKEND_URL_HERE';
 
-        // Get DOM elements
-        const chatMessages = document.getElementById('chat-messages');
-        const chatInput = document.getElementById('chat-input');
-        const sendButton = document.getElementById('send-button');
-        const imageUpload = document.getElementById('image-upload');
-        const chatInputArea = document.getElementById('chat-input-area');
-        const initialMessage = document.getElementById('initial-message');
-        const userIdDisplay = document.getElementById('user-id-display');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const typingIndicator = document.getElementById('typing-indicator');
+            let isSidebarOpen = true;
 
-        // Initialize Firebase services
-        let db;
-        let auth;
-        let userId;
-
-        // Securely retrieve Firebase config and app ID from the environment
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-        // Function to create a chat message element
-        function createChatMessage(data, isUser) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
-
-            const messageContentDiv = document.createElement('div');
-            messageContentDiv.className = `max-w-md px-4 py-2 rounded-lg shadow-md ${isUser ? 'bg-green-400 text-white' : 'bg-white text-gray-800'}`;
-
-            if (data.text) {
-                const textParagraph = document.createElement('p');
-                textParagraph.textContent = data.text;
-                messageContentDiv.appendChild(textParagraph);
-            }
-
-            if (data.imageUrl) {
-                const image = document.createElement('img');
-                image.src = data.imageUrl;
-                image.className = "mt-2 rounded-md max-w-full h-auto";
-                messageContentDiv.appendChild(image);
-            }
-
-            const timestampSpan = document.createElement('span');
-            const date = data.timestamp ? new Date(data.timestamp.seconds * 1000) : new Date();
-            timestampSpan.textContent = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            timestampSpan.className = `text-xs mt-1 ${isUser ? 'text-green-200' : 'text-gray-400'} block`;
-            messageContentDiv.appendChild(timestampSpan);
-
-            messageDiv.appendChild(messageContentDiv);
-            return messageDiv;
-        }
-
-        // Function to handle Firebase initialization and authentication
-        async function setupFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
+            const toggleSidebar = () => {
+                isSidebarOpen = !isSidebarOpen;
+                if (isSidebarOpen) {
+                    sidebar.style.transform = 'translateX(0)';
+                    mainContent.style.marginLeft = '16rem';
                 } else {
-                    await signInAnonymously(auth);
+                    sidebar.style.transform = 'translateX(-16rem)';
+                    mainContent.style.marginLeft = '0';
+                }
+            };
+
+            sidebarToggle.addEventListener('click', toggleSidebar);
+
+            const addMessage = (content, sender) => {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('mb-4', 'p-4', 'rounded-xl', 'max-w-[85%]', 'break-words', 'shadow-sm');
+
+                if (sender === 'user') {
+                    messageDiv.classList.add('bg-blue-500', 'text-white', 'ml-auto');
+                } else {
+                    messageDiv.classList.add('bg-gray-200', 'text-gray-800', 'mr-auto');
                 }
 
-                userId = auth.currentUser?.uid || crypto.randomUUID();
-                userIdDisplay.textContent = `User ID: ${userId}`;
-                chatInputArea.classList.remove('hidden');
-                loadingSpinner.style.display = 'none';
+                messageDiv.textContent = content;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to bottom
+            };
 
-                listenForChatMessages();
+            const sendMessage = async () => {
+                const prompt = promptInput.value.trim();
+                if (prompt === '') return;
 
-            } catch (error) {
-                console.error("Firebase setup failed:", error);
-                userIdDisplay.textContent = 'Connection failed';
-                loadingSpinner.style.display = 'none';
-            }
-        }
+                addMessage(prompt, 'user');
+                promptInput.value = '';
 
-        // Function to call the AI backend on Vercel
-        async function getAIResponse(prompt) {
-            typingIndicator.classList.remove('hidden');
-            const apiUrl = 'https://martoo-tech-backend.vercel.app/api/chat';
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: prompt })
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`API call failed with status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                const text = result.response;
-                
-                await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
-                    userId: "Martoo AI",
-                    text: text,
-                    timestamp: serverTimestamp()
-                });
-            } catch (error) {
-                console.error("Error getting AI response:", error);
-                 await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
-                    userId: "Martoo AI",
-                    text: "Sorry, I'm having trouble with the AI right now. Please try again later.",
-                    timestamp: serverTimestamp()
-                });
-            } finally {
-                typingIndicator.classList.add('hidden');
-            }
-        }
-
-        // Function to send a message to Firestore and trigger AI response
-        async function sendMessage() {
-            const messageText = chatInput.value.trim();
-            const imageFile = imageUpload.files[0];
-
-            if (!messageText && !imageFile) {
-                return;
-            }
-
-            try {
-                await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
-                    userId: userId,
-                    text: messageText,
-                    timestamp: serverTimestamp()
-                });
-                chatInput.value = '';
-                imageUpload.value = '';
-                chatInput.style.height = 'auto';
-
-                getAIResponse(messageText);
-
-            } catch (error) {
-                console.error("Error writing message to Firestore: ", error);
-            }
-        }
-
-        // Real-time listener for chat messages
-        function listenForChatMessages() {
-            const messagesRef = collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME);
-            const q = query(messagesRef, orderBy('timestamp'));
-
-            onSnapshot(q, (snapshot) => {
-                chatMessages.innerHTML = '';
-                initialMessage.style.display = 'none';
-
-                snapshot.forEach((doc) => {
-                    const messageData = doc.data();
-                    const isUser = messageData.userId === userId;
-                    const messageElement = createChatMessage(messageData, isUser);
-                    chatMessages.appendChild(messageElement);
-                });
+                // Add a placeholder message for the AI response
+                const loadingMessage = 'Thinking...';
+                const loadingDiv = document.createElement('div');
+                loadingDiv.id = 'loading-message';
+                loadingDiv.classList.add('mb-4', 'p-4', 'rounded-xl', 'max-w-[85%]', 'break-words', 'shadow-sm', 'bg-gray-200', 'text-gray-500', 'mr-auto', 'animate-pulse');
+                loadingDiv.textContent = loadingMessage;
+                chatMessages.appendChild(loadingDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
-            });
-        }
-        
-        // Event listeners for the UI
-        sendButton.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-        
-        chatInput.addEventListener('input', () => {
-            chatInput.style.height = 'auto';
-            chatInput.style.height = chatInput.scrollHeight + 'px';
-        });
 
-        window.addEventListener('load', setupFirebase);
+                try {
+                    const response = await fetch(backendUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ prompt: prompt })
+                    });
+
+                    // Remove the loading message
+                    loadingDiv.remove();
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        addMessage(`Error: ${errorData.error}`, 'ai');
+                        return;
+                    }
+
+                    const data = await response.json();
+                    addMessage(data.response, 'ai');
+
+                } catch (error) {
+                    loadingDiv.remove();
+                    console.error('Network or server error:', error);
+                    addMessage('I apologize, but I am unable to connect to the AI at this time. Please try again.', 'ai');
+                }
+            };
+
+            sendButton.addEventListener('click', sendMessage);
+            promptInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
     </script>
 </body>
 </html>

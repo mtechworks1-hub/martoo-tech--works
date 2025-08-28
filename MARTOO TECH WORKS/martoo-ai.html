@@ -12,8 +12,6 @@
             font-family: 'Inter', sans-serif;
             background-color: #f0f2f5;
         }
-
-        /* Custom scrollbar for chat messages */
         .chat-messages::-webkit-scrollbar {
             width: 8px;
         }
@@ -28,8 +26,6 @@
         .chat-messages::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-
-        /* Style for the typing indicator dots */
         .typing-indicator span {
             animation: blink 1s infinite;
         }
@@ -43,25 +39,19 @@
             0%, 100% { opacity: 0.2; }
             50% { opacity: 1; }
         }
-
         .btn-gradient {
             background: linear-gradient(135deg, #4CAF50, #2E7D32);
             transition: all 0.2s ease-in-out;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
         .btn-gradient:hover {
             background: linear-gradient(135deg, #66BB6A, #43A047);
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         }
-
-        /* Ensure the main container fills the viewport height */
         .main-container {
             height: 100vh;
         }
-        
-        /* Loading spinner */
         .spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
             width: 36px;
@@ -70,7 +60,6 @@
             border-left-color: #4CAF50;
             animation: spin 1s ease infinite;
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -87,7 +76,6 @@
                     <i class="fas fa-plus mr-3"></i>New Chat
                 </button>
                 <div class="space-y-2">
-                    <!-- Placeholder for chat history, to be implemented later -->
                     <a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-gray-700 transition duration-200">
                         <i class="fas fa-comment-dots mr-3"></i>Recent Chat
                     </a>
@@ -104,7 +92,6 @@
             <div class="bg-gray-200 p-4 border-b border-gray-300 flex justify-between items-center sticky top-0 z-10">
                 <h1 class="text-xl font-bold text-gray-800 md:hidden">Martoo AI</h1>
                 <div class="flex-1 flex justify-end items-center space-x-2">
-                    <!-- Display loading spinner while app is initializing -->
                     <div id="loading-spinner" class="spinner"></div>
                     <span id="user-id-display" class="bg-gray-300 text-gray-600 px-3 py-1 rounded-full text-xs">Connecting...</span>
                 </div>
@@ -165,7 +152,6 @@
         // Securely retrieve Firebase config and app ID from the environment
         const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const geminiAPIKey = typeof __api_key !== 'undefined' ? __api_key : '';
 
         // Function to create a chat message element
         function createChatMessage(data, isUser) {
@@ -188,7 +174,6 @@
                 messageContentDiv.appendChild(image);
             }
 
-            // Optional timestamp for messages
             const timestampSpan = document.createElement('span');
             const date = data.timestamp ? new Date(data.timestamp.seconds * 1000) : new Date();
             timestampSpan.textContent = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -202,25 +187,21 @@
         // Function to handle Firebase initialization and authentication
         async function setupFirebase() {
             try {
-                // Initialize Firebase app
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
 
-                // Sign in the user. This is crucial for accessing Firestore.
                 if (typeof __initial_auth_token !== 'undefined') {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
                     await signInAnonymously(auth);
                 }
 
-                // Get the user's ID and display it
                 userId = auth.currentUser?.uid || crypto.randomUUID();
                 userIdDisplay.textContent = `User ID: ${userId}`;
                 chatInputArea.classList.remove('hidden');
-                loadingSpinner.style.display = 'none'; // Hide the spinner
+                loadingSpinner.style.display = 'none';
 
-                // Start listening for real-time updates to the chat
                 listenForChatMessages();
 
             } catch (error) {
@@ -230,24 +211,16 @@
             }
         }
 
-        // Function to call the AI backend and get a response
+        // Function to call the AI backend on Vercel
         async function getAIResponse(prompt) {
             typingIndicator.classList.remove('hidden');
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${geminiAPIKey}`;
+            const apiUrl = 'https://martoo-tech-backend.vercel.app/api/chat';
 
             try {
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                    tools: [{ "google_search": {} }],
-                    systemInstruction: {
-                        parts: [{ text: "You are a helpful AI assistant. Answer user queries concisely." }]
-                    }
-                };
-                
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({ prompt: prompt })
                 });
                 
                 if (!response.ok) {
@@ -255,27 +228,24 @@
                 }
 
                 const result = await response.json();
-                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't generate a response.";
+                const text = result.response;
                 
-                // Add the AI's response to Firestore
                 await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
-                    userId: "Martoo AI", // Unique ID for the AI
+                    userId: "Martoo AI",
                     text: text,
                     timestamp: serverTimestamp()
                 });
             } catch (error) {
                 console.error("Error getting AI response:", error);
-                // Add an error message to the chat
                  await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
                     userId: "Martoo AI",
-                    text: "Sorry, I'm having trouble connecting right now. Please try again later.",
+                    text: "Sorry, I'm having trouble with the AI right now. Please try again later.",
                     timestamp: serverTimestamp()
                 });
             } finally {
                 typingIndicator.classList.add('hidden');
             }
         }
-
 
         // Function to send a message to Firestore and trigger AI response
         async function sendMessage() {
@@ -287,19 +257,15 @@
             }
 
             try {
-                // Add the user's message to Firestore first
                 await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
                     userId: userId,
                     text: messageText,
                     timestamp: serverTimestamp()
                 });
-
-                // Clear the input field and reset height
                 chatInput.value = '';
                 imageUpload.value = '';
                 chatInput.style.height = 'auto';
 
-                // Now, call the AI backend with the user's message
                 getAIResponse(messageText);
 
             } catch (error) {
@@ -313,7 +279,6 @@
             const q = query(messagesRef, orderBy('timestamp'));
 
             onSnapshot(q, (snapshot) => {
-                // Clear the chat and initial message
                 chatMessages.innerHTML = '';
                 initialMessage.style.display = 'none';
 
@@ -323,8 +288,6 @@
                     const messageElement = createChatMessage(messageData, isUser);
                     chatMessages.appendChild(messageElement);
                 });
-
-                // Scroll to the bottom after new messages are loaded
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             });
         }
@@ -338,13 +301,11 @@
             }
         });
         
-        // Auto-resize the textarea
         chatInput.addEventListener('input', () => {
             chatInput.style.height = 'auto';
             chatInput.style.height = chatInput.scrollHeight + 'px';
         });
 
-        // Initialize the app on window load
         window.addEventListener('load', setupFirebase);
     </script>
 </body>

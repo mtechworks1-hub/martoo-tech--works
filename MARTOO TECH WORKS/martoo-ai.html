@@ -60,32 +60,53 @@
         .main-container {
             height: 100vh;
         }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #4CAF50;
+            animation: spin 1s ease infinite;
+        }
 
-        /* Style for user ID display */
-        .user-id-container {
-            font-size: 0.8rem;
-            color: #6B7280;
-            padding: 8px;
-            text-align: center;
-            background-color: #E5E7EB;
-            border-radius: 9999px;
-            max-width: fit-content;
-            margin: 0 auto 1rem;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="flex main-container">
-        <!-- Sidebar and main content layout -->
-        <div class="flex-1 flex flex-col">
+        <!-- Sidebar Menu -->
+        <div class="bg-gray-800 text-gray-100 w-64 p-6 flex flex-col justify-between hidden md:flex rounded-r-lg shadow-xl">
+            <div>
+                <h1 class="text-3xl font-bold mb-6">Martoo AI</h1>
+                <button id="new-chat-button" class="w-full text-left py-3 px-4 rounded-lg bg-gray-700 hover:bg-gray-600 transition duration-200 mb-4">
+                    <i class="fas fa-plus mr-3"></i>New Chat
+                </button>
+                <div class="space-y-2">
+                    <!-- Placeholder for chat history, to be implemented later -->
+                    <a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-gray-700 transition duration-200">
+                        <i class="fas fa-comment-dots mr-3"></i>Recent Chat
+                    </a>
+                </div>
+            </div>
+            <div class="text-sm text-gray-500">
+                <p>Chat with Martoo AI</p>
+            </div>
+        </div>
+
+        <!-- Main Chat Content -->
+        <div class="flex-1 flex flex-col bg-white rounded-l-lg shadow-xl md:rounded-l-none">
             <!-- Header for the chat area -->
-            <div class="bg-white p-4 border-b border-gray-200 flex justify-between items-center sticky top-0 z-10">
-                <h1 class="text-2xl font-bold text-gray-800">Martoo AI Assistant</h1>
-                <div class="flex items-center space-x-2">
-                    <span id="user-id-display" class="user-id-container">Loading...</span>
-                    <button id="new-chat-button" class="text-gray-600 hover:text-blue-500 transition duration-200 p-2 rounded-full">
-                        <i class="fas fa-plus text-xl"></i>
-                    </button>
+            <div class="bg-gray-200 p-4 border-b border-gray-300 flex justify-between items-center sticky top-0 z-10">
+                <h1 class="text-xl font-bold text-gray-800 md:hidden">Martoo AI</h1>
+                <div class="flex-1 flex justify-end items-center space-x-2">
+                    <!-- Display loading spinner while app is initializing -->
+                    <div id="loading-spinner" class="spinner"></div>
+                    <span id="user-id-display" class="bg-gray-300 text-gray-600 px-3 py-1 rounded-full text-xs">Connecting...</span>
                 </div>
             </div>
 
@@ -120,7 +141,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, addDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, onSnapshot, collection, addDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Constants and global variables
         const CHAT_COLLECTION_NAME = 'chats';
@@ -133,6 +154,7 @@
         const chatInputArea = document.getElementById('chat-input-area');
         const initialMessage = document.getElementById('initial-message');
         const userIdDisplay = document.getElementById('user-id-display');
+        const loadingSpinner = document.getElementById('loading-spinner');
 
         // Initialize Firebase services
         let db;
@@ -194,12 +216,15 @@
                 userId = auth.currentUser?.uid || crypto.randomUUID();
                 userIdDisplay.textContent = `User ID: ${userId}`;
                 chatInputArea.classList.remove('hidden');
+                loadingSpinner.style.display = 'none'; // Hide the spinner
 
                 // Start listening for real-time updates to the chat
                 listenForChatMessages();
 
             } catch (error) {
                 console.error("Firebase setup failed:", error);
+                userIdDisplay.textContent = 'Connection failed';
+                loadingSpinner.style.display = 'none';
             }
         }
 
@@ -217,8 +242,6 @@
                 await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
                     userId: userId,
                     text: messageText,
-                    // Note: image upload logic would be more complex, involving storage.
-                    // For this example, we'll just handle text.
                     timestamp: serverTimestamp()
                 });
 
@@ -269,7 +292,7 @@
             chatInput.style.height = chatInput.scrollHeight + 'px';
         });
 
-        // Initialize the app
+        // Initialize the app on window load
         window.addEventListener('load', setupFirebase);
     </script>
 </body>

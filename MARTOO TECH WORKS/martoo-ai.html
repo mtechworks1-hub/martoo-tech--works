@@ -155,6 +155,7 @@
         const initialMessage = document.getElementById('initial-message');
         const userIdDisplay = document.getElementById('user-id-display');
         const loadingSpinner = document.getElementById('loading-spinner');
+        const typingIndicator = document.getElementById('typing-indicator');
 
         // Initialize Firebase services
         let db;
@@ -164,6 +165,7 @@
         // Securely retrieve Firebase config and app ID from the environment
         const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const geminiAPIKey = typeof __api_key !== 'undefined' ? __api_key : '';
 
         // Function to create a chat message element
         function createChatMessage(data, isUser) {
@@ -228,7 +230,54 @@
             }
         }
 
-        // Function to send a message to Firestore
+        // Function to call the AI backend and get a response
+        async function getAIResponse(prompt) {
+            typingIndicator.classList.remove('hidden');
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${geminiAPIKey}`;
+
+            try {
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    tools: [{ "google_search": {} }],
+                    systemInstruction: {
+                        parts: [{ text: "You are a helpful AI assistant. Answer user queries concisely." }]
+                    }
+                };
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't generate a response.";
+                
+                // Add the AI's response to Firestore
+                await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
+                    userId: "Martoo AI", // Unique ID for the AI
+                    text: text,
+                    timestamp: serverTimestamp()
+                });
+            } catch (error) {
+                console.error("Error getting AI response:", error);
+                // Add an error message to the chat
+                 await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
+                    userId: "Martoo AI",
+                    text: "Sorry, I'm having trouble connecting right now. Please try again later.",
+                    timestamp: serverTimestamp()
+                });
+            } finally {
+                typingIndicator.classList.add('hidden');
+            }
+        }
+
+
+        // Function to send a message to Firestore and trigger AI response
         async function sendMessage() {
             const messageText = chatInput.value.trim();
             const imageFile = imageUpload.files[0];
@@ -238,17 +287,20 @@
             }
 
             try {
-                // Add the message to Firestore
+                // Add the user's message to Firestore first
                 await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
                     userId: userId,
                     text: messageText,
                     timestamp: serverTimestamp()
                 });
 
-                // Clear the input field after sending
+                // Clear the input field and reset height
                 chatInput.value = '';
                 imageUpload.value = '';
-                chatInput.style.height = 'auto'; // Reset textarea height
+                chatInput.style.height = 'auto';
+
+                // Now, call the AI backend with the user's message
+                getAIResponse(messageText);
 
             } catch (error) {
                 console.error("Error writing message to Firestore: ", error);

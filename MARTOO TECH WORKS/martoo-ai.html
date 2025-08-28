@@ -10,23 +10,25 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1C1D1F; /* Deep charcoal background */
+            background-color: #f0f2f5;
         }
+
         /* Custom scrollbar for chat messages */
         .chat-messages::-webkit-scrollbar {
             width: 8px;
         }
         .chat-messages::-webkit-scrollbar-track {
-            background: #27292D;
+            background: #e0e0e0;
             border-radius: 10px;
         }
         .chat-messages::-webkit-scrollbar-thumb {
-            background: #4A4D53;
+            background: #888;
             border-radius: 10px;
         }
         .chat-messages::-webkit-scrollbar-thumb:hover {
-            background: #6A6E75;
+            background: #555;
         }
+
         /* Style for the typing indicator dots */
         .typing-indicator span {
             animation: blink 1s infinite;
@@ -41,657 +43,234 @@
             0%, 100% { opacity: 0.2; }
             50% { opacity: 1; }
         }
-        /* Hide scrollbar for the sidebar on small screens */
-        .sidebar-nav::-webkit-scrollbar {
-            display: none;
-        }
-        .sidebar-nav {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        /* Custom button styles for a modern look */
+
         .btn-gradient {
-            background-image: linear-gradient(to right, #29B6F6, #00C292);
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            transition: all 0.2s ease-in-out;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .btn-gradient:hover {
-            background-image: linear-gradient(to right, #00C292, #29B6F6);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-            transform: translateY(-1px);
-        }
-        .btn-gradient:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        /* Sidebar slide-in/out on mobile */
-        #sidebar.open {
-            transform: translateX(0);
         }
 
-        /* Responsive layout for the main content */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            margin: 1rem;
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #66BB6A, #43A047);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         }
-        
-        /* Modal backdrop for custom popups */
-        .modal-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
+
+        /* Ensure the main container fills the viewport height */
+        .main-container {
+            height: 100vh;
         }
-        .modal-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 90%;
+
+        /* Style for user ID display */
+        .user-id-container {
+            font-size: 0.8rem;
+            color: #6B7280;
+            padding: 8px;
             text-align: center;
+            background-color: #E5E7EB;
+            border-radius: 9999px;
+            max-width: fit-content;
+            margin: 0 auto 1rem;
         }
     </style>
 </head>
-<body class="flex flex-col h-screen bg-gray-900 text-gray-100">
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, signInWithCustomToken, onAuthStateChanged, signOut, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, setDoc, collection, query, orderBy, onSnapshot, addDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-        // Global variables for Firebase services
-        let app;
-        let db;
-        let auth;
-        let currentUserId = null;
-        let currentUserName = null;
-        let currentChatId = null; // Stores the ID of the currently active chat
-        let chatSessions = {}; // Stores all chat sessions for the logged-in user
-
-        // MANDATORY: Firebase config and auth token from Canvas environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfigString = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let firebaseConfig = {};
-        try {
-            firebaseConfig = JSON.parse(firebaseConfigString);
-        } catch (e) {
-            console.error("Failed to parse __firebase_config:", e);
-        }
-
-        // Initialize Firebase
-        if (Object.keys(firebaseConfig).length > 0 && firebaseConfig.projectId) {
-            app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-        } else {
-            console.error("Firebase not initialized: Missing or invalid firebaseConfig.");
-            document.getElementById('chat-messages').innerHTML = '<div class="text-center text-red-500">Error: Firebase configuration is missing or invalid. Cannot load chat.</div>';
-        }
-
-        // Function to handle authentication state changes
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                currentUserId = user.uid;
-                currentUserName = user.displayName || user.email || "Anonymous User";
-                console.log("Firebase Auth State Changed: User IS logged in. UID:", currentUserId);
-                
-                document.getElementById('login-popup').classList.add('hidden');
-                document.getElementById('logged-in-user').textContent = currentUserName;
-                document.getElementById('user-uid').textContent = currentUserId;
-                document.getElementById('login-section').classList.remove('hidden');
-                document.getElementById('sidebar').classList.remove('hidden'); // Show sidebar after login
-
-                // Load existing chat sessions for the user
-                loadChatSessions(currentUserId);
-                document.getElementById('chat-input-area').classList.remove('hidden'); // Show input area
-            } else {
-                currentUserId = null;
-                currentUserName = null;
-                console.log("Firebase Auth State Changed: User IS NOT logged in.");
-                document.getElementById('login-popup').classList.remove('hidden');
-                document.getElementById('login-section').classList.add('hidden');
-                document.getElementById('sidebar').classList.add('hidden'); // Hide sidebar if not logged in
-                document.getElementById('chat-messages').innerHTML = '<div class="text-center text-gray-500 mt-4">Please log in to start chatting.</div>';
-                document.getElementById('chat-input-area').classList.add('hidden'); // Hide input area
-            }
-        });
-
-        // Initial sign-in attempt (custom token from Canvas or anonymous)
-        if (auth && initialAuthToken) {
-            try {
-                await signInWithCustomToken(auth, initialAuthToken);
-                console.log("Signed in with custom token from Canvas.");
-            } catch (error) {
-                console.error("Error signing in with custom token:", error);
-                // Fallback to anonymous if custom token fails
-                try {
-                    await signInAnonymously(auth);
-                    console.log("Signed in anonymously (fallback).");
-                } catch (anonError) {
-                    console.error("Error signing in anonymously:", anonError);
-                }
-            }
-        } else if (auth) {
-            // If no custom token, try anonymous sign-in directly
-            try {
-                await signInAnonymously(auth);
-                console.log("Signed in anonymously (no custom token provided).");
-            } catch (anonError) {
-                console.error("Error signing in anonymously:", anonError);
-            }
-        }
-
-        // Function to load chat sessions from Firestore
-        async function loadChatSessions(userId) {
-            console.log(`Loading chat sessions for user: ${userId}`);
-            const q = query(collection(db, `artifacts/${appId}/users/${userId}/chats`));
-
-            onSnapshot(q, (snapshot) => {
-                chatSessions = {}; // Clear existing sessions
-                snapshot.forEach((doc) => {
-                    chatSessions[doc.id] = { id: doc.id, ...doc.data() };
-                });
-                renderChatSessions();
-                console.log("Chat sessions loaded and list updated in sidebar.");
-                // If no chat is active, try to load the most recent one or create a new one
-                if (!currentChatId && Object.keys(chatSessions).length > 0) {
-                    const sortedChatIds = Object.keys(chatSessions).sort((a, b) => {
-                        return (chatSessions[b].updatedAt?.toMillis() || 0) - (chatSessions[a].updatedAt?.toMillis() || 0);
-                    });
-                    const latestChatId = sortedChatIds[0];
-                    loadChatSession(latestChatId);
-                } else if (!currentChatId && Object.keys(chatSessions).length === 0) {
-                    document.getElementById('chat-messages').innerHTML = `
-                        <div class="flex flex-col items-center justify-center h-full text-gray-500 p-4 text-center">
-                            <i class="fas fa-comments text-6xl mb-4 text-gray-400"></i>
-                            <p class="text-lg font-semibold mb-2">No chats yet!</p>
-                            <p class="mb-4">Click "New Chat" to start a conversation with Martoo AI.</p>
-                            <button onclick="window.newChat()" class="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition duration-300">
-                                Start New Chat
-                            </button>
-                        </div>
-                    `;
-                }
-            }, (error) => {
-                console.error("Error loading chat sessions:", error);
-                document.getElementById('chat-messages').innerHTML = '<div class="text-center text-red-500 mt-4">Error loading chat sessions.</div>';
-            });
-        }
-
-        // Function to render chat sessions in the sidebar
-        function renderChatSessions() {
-            const chatList = document.getElementById('chat-list');
-            chatList.innerHTML = ''; // Clear existing list
-
-            const sortedChatIds = Object.keys(chatSessions).sort((a, b) => {
-                return (chatSessions[b].updatedAt?.toMillis() || 0) - (chatSessions[a].updatedAt?.toMillis() || 0);
-            });
-
-            sortedChatIds.forEach(chatId => {
-                const chat = chatSessions[chatId];
-                const chatTitle = chat.title || `Chat ${chat.id.substring(0, 8)}`; // Default title
-                const isActive = chatId === currentChatId;
-
-                const li = document.createElement('li');
-                li.className = `p-3 rounded-lg cursor-pointer transition duration-200 ease-in-out ${isActive ? 'bg-blue-600 text-white shadow-md' : 'hover:bg-slate-700 text-gray-300'}`;
-                li.innerHTML = `
-                    <div class="flex items-center justify-between">
-                        <span class="truncate pr-2">${chatTitle}</span>
-                        <div class="flex space-x-2">
-                            <i class="fas fa-edit text-sm hover:text-blue-300" onclick="event.stopPropagation(); window.showEditModal('${chatId}')"></i>
-                            <i class="fas fa-trash-alt text-sm hover:text-red-300" onclick="event.stopPropagation(); window.showDeleteModal('${chatId}')"></i>
-                        </div>
-                    </div>
-                `;
-                li.onclick = () => loadChatSession(chatId);
-                chatList.appendChild(li);
-            });
-        }
-
-        // Function to load a specific chat session
-        window.loadChatSession = async (chatId) => {
-            console.log(`Loading chat with ID: ${chatId}`);
-            currentChatId = chatId;
-            
-            // Update sidebar active state
-            renderChatSessions();
-
-            const chatDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/chats`, chatId);
-            onSnapshot(chatDocRef, (docSnapshot) => {
-                if (docSnapshot.exists()) {
-                    const chatData = docSnapshot.data();
-                    chatSessions[chatId] = { id: chatId, ...chatData }; // Update local cache
-                    renderMessages(chatData.messages || []);
-                    // Update chat title in header if available
-                    document.getElementById('current-chat-title').textContent = chatData.title || `Chat ${chatId.substring(0, 8)}`;
-                    console.log("Chat loaded/updated:", chatId, chatData);
-                } else {
-                    console.warn("Chat does not exist:", chatId);
-                    document.getElementById('chat-messages').innerHTML = '<div class="text-center text-red-500 mt-4">Chat not found.</div>';
-                    document.getElementById('current-chat-title').textContent = 'New Chat';
-                    currentChatId = null; // Reset current chat ID
-                }
-            }, (error) => {
-                console.error("Error loading chat session:", error);
-                document.getElementById('chat-messages').innerHTML = '<div class="text-center text-red-500 mt-4">Error loading chat.</div>';
-            });
-        };
-
-        // Function to render messages in the chat display area
-        function renderMessages(messages) {
-            const chatMessagesDiv = document.getElementById('chat-messages');
-            chatMessagesDiv.innerHTML = ''; // Clear existing messages
-            messages.forEach(msg => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `flex mb-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`;
-                messageDiv.innerHTML = `
-                    <div class="max-w-[85%] p-4 rounded-lg shadow-md ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}" style="word-break: break-word;">
-                        ${msg.text ? `<p class="text-sm">${msg.text}</p>` : ''}
-                        ${msg.imageUrl ? `<img src="${msg.imageUrl}" alt="Uploaded Image" class="mt-2 rounded-lg max-w-full h-auto">` : ''}
-                    </div>
-                `;
-                chatMessagesDiv.appendChild(messageDiv);
-            });
-            scrollToBottom();
-        }
-
-        // Function to scroll chat messages to the bottom
-        function scrollToBottom() {
-            const chatMessagesDiv = document.getElementById('chat-messages');
-            chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
-        }
-
-        // Function to create a new chat
-        window.newChat = async () => {
-            if (!currentUserId) {
-                showModal("Error", "Please log in to create a new chat.");
-                return;
-            }
-            try {
-                const newChatRef = collection(db, `artifacts/${appId}/users/${currentUserId}/chats`);
-                const docRef = await addDoc(newChatRef, {
-                    title: "New Chat",
-                    createdAt: serverTimestamp(),
-                    updatedAt: serverTimestamp(),
-                    messages: []
-                });
-                console.log("New chat created with ID:", docRef.id);
-                loadChatSession(docRef.id); // Load the newly created chat
-            } catch (error) {
-                console.error("Error creating new chat:", error);
-                showModal("Error", "Failed to create new chat: " + error.message);
-            }
-        };
-
-        // Function to add a message to the current chat
-        async function addMessageToChat(chatId, role, text, imageUrl = null) {
-            if (!chatId) {
-                console.error("Cannot add message: No active chat selected.");
-                showModal("Error", "Please select or create a chat before sending messages.");
-                return;
-            }
-            const chatDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/chats`, chatId);
-            const chatData = chatSessions[chatId];
-            if (!chatData) {
-                console.error("Chat data not found for ID:", chatId);
-                return;
-            }
-
-            const newMessage = {
-                role: role,
-                text: text,
-                timestamp: Date.now()
-            };
-            if (imageUrl) {
-                newMessage.imageUrl = imageUrl;
-            }
-
-            const updatedMessages = [...(chatData.messages || []), newMessage];
-            try {
-                await updateDoc(chatDocRef, { messages: updatedMessages, updatedAt: serverTimestamp() });
-                console.log(`Message (${role}) saved to chat ${chatId}.`);
-            } catch (error) {
-                console.error("Error saving message to chat:", error);
-                showModal("Error", "Failed to save message: " + error.message);
-            }
-        }
-
-        // Function to send message to Gemini API (direct call, no backend server needed)
-        window.sendMessage = async () => {
-            const chatInput = document.getElementById('chat-input');
-            const messageText = chatInput.value.trim();
-            const imageInput = document.getElementById('image-upload');
-            const file = imageInput.files[0];
-
-            if (!messageText && !file) {
-                showModal("Error", "Please enter a message or select an image.");
-                return;
-            }
-            if (!currentChatId) {
-                showModal("Error", "Please select or create a chat to send messages.");
-                return;
-            }
-
-            // Disable input and show typing indicator
-            document.getElementById('typing-indicator').classList.remove('hidden');
-            document.getElementById('send-button').disabled = true;
-            chatInput.disabled = true;
-
-            let imageUrl = null;
-            let base64ImageData = null;
-
-            const processMessage = async () => {
-                await addMessageToChat(currentChatId, 'user', messageText, imageUrl);
-                await callGemini(messageText, base64ImageData);
-                chatInput.value = '';
-                imageInput.value = ''; // Clear file input
-                chatInput.disabled = false;
-                document.getElementById('send-button').disabled = false;
-                document.getElementById('typing-indicator').classList.add('hidden');
-            };
-
-            if (file) {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = async () => {
-                    imageUrl = reader.result;
-                    base64ImageData = imageUrl.split(',')[1];
-                    await processMessage();
-                };
-                reader.onerror = (error) => {
-                    console.error("Error reading file:", error);
-                    showModal("Error", "Failed to read image file.");
-                    chatInput.disabled = false;
-                    document.getElementById('send-button').disabled = false;
-                    document.getElementById('typing-indicator').classList.add('hidden');
-                };
-            } else {
-                await processMessage();
-            }
-        };
-
-        // Function to call the Gemini API
-        async function callGemini(userMessageText, base64ImageData = null) {
-            const chatData = chatSessions[currentChatId];
-            if (!chatData) {
-                console.error("No chat data found for currentChatId:", currentChatId);
-                return;
-            }
-
-            const apiKey = ""; // Canvas will automatically provide the key
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            const chatHistory = [];
-            chatData.messages.forEach(msg => {
-                if (msg.role === 'user') {
-                    const userParts = [{ text: msg.text }];
-                    if (msg.imageUrl) {
-                        userParts.push({
-                            inlineData: {
-                                mimeType: "image/jpeg",
-                                data: msg.imageUrl.split(',')[1]
-                            }
-                        });
-                    }
-                    chatHistory.push({ role: "user", parts: userParts });
-                } else if (msg.role === 'ai') {
-                    chatHistory.push({ role: "model", parts: [{ text: msg.text }] });
-                }
-            });
-
-            const payload = { contents: chatHistory };
-            
-            // Retry logic with exponential backoff
-            for (let i = 0; i < 3; i++) { // Max 3 retries
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error(`Gemini API responded with status ${response.status}:`, errorData);
-                        if (response.status === 429) { // Too Many Requests
-                            const delay = Math.pow(2, i) * 1000; // Exponential backoff
-                            console.log(`Rate limit hit. Retrying in ${delay / 1000}s...`);
-                            await new Promise(res => setTimeout(res, delay));
-                            continue; // Go to the next retry
-                        }
-                        throw new Error(`Gemini API Error: ${response.status} - ${JSON.stringify(errorData)}`);
-                    }
-
-                    const result = await response.json();
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        await addMessageToChat(currentChatId, 'ai', text);
-                        return; // Success, exit function
-                    } else {
-                        console.error("Unexpected Gemini API response structure:", result);
-                        await addMessageToChat(currentChatId, 'ai', "I'm sorry, I received an unexpected response from the AI. Please try again.");
-                        return;
-                    }
-                } catch (error) {
-                    console.error("Fetch error to Gemini API:", error);
-                    await addMessageToChat(currentChatId, 'ai', `I'm sorry, I encountered an error: ${error.message}. Please try again.`);
-                    return;
-                }
-            }
-            await addMessageToChat(currentChatId, 'ai', "I'm sorry, the request failed after multiple retries. Please try again later.");
-        }
-
-        // Custom modal to replace window.alert
-        function showModal(title, message) {
-            const modalHtml = `
-                <div id="custom-modal" class="modal-backdrop">
-                    <div class="modal-content">
-                        <h3 class="text-xl font-bold mb-4">${title}</h3>
-                        <p class="text-gray-700 mb-6">${message}</p>
-                        <button onclick="document.getElementById('custom-modal').remove()" class="btn-gradient text-white px-6 py-2 rounded-full shadow-md">OK</button>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', modalHtml);
-        }
-
-        // Custom edit title modal
-        window.showEditModal = (chatId) => {
-            const currentTitle = chatSessions[chatId]?.title || "New Chat";
-            const modalHtml = `
-                <div id="edit-modal" class="modal-backdrop">
-                    <div class="modal-content">
-                        <h3 class="text-xl font-bold mb-4">Edit Chat Title</h3>
-                        <input type="text" id="edit-chat-input" class="w-full p-2 border rounded-md mb-4" value="${currentTitle}" />
-                        <div class="flex justify-end space-x-2">
-                            <button onclick="window.editChatTitle('${chatId}', document.getElementById('edit-chat-input').value)" class="btn-gradient text-white px-4 py-2 rounded-full shadow-md">Save</button>
-                            <button onclick="document.getElementById('edit-modal').remove()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-full shadow-md">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', modalHtml);
-        }
-
-        // Custom delete confirmation modal
-        window.showDeleteModal = (chatId) => {
-            const modalHtml = `
-                <div id="delete-modal" class="modal-backdrop">
-                    <div class="modal-content">
-                        <h3 class="text-xl font-bold mb-4 text-red-600">Delete Chat</h3>
-                        <p class="text-gray-700 mb-6">Are you sure you want to delete this chat? This action cannot be undone.</p>
-                        <div class="flex justify-center space-x-4">
-                            <button onclick="window.deleteChat('${chatId}')" class="bg-red-600 text-white px-6 py-2 rounded-full shadow-md hover:bg-red-700">Delete</button>
-                            <button onclick="document.getElementById('delete-modal').remove()" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-full shadow-md">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', modalHtml);
-        }
-
-        // Function to edit chat title
-        window.editChatTitle = async (chatId, newTitle) => {
-            document.getElementById('edit-modal').remove(); // Close the modal
-            if (newTitle && newTitle.trim() !== '') {
-                try {
-                    const chatDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/chats`, chatId);
-                    await updateDoc(chatDocRef, { title: newTitle.trim() });
-                    console.log(`Chat ${chatId} title updated to: ${newTitle}`);
-                } catch (error) {
-                    console.error("Error updating chat title:", error);
-                    showModal("Error", "Failed to update chat title: " + error.message);
-                }
-            }
-        };
-
-        // Function to delete chat
-        window.deleteChat = async (chatId) => {
-            document.getElementById('delete-modal').remove(); // Close the modal
-            try {
-                const chatDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/chats`, chatId);
-                await deleteDoc(chatDocRef);
-                console.log(`Chat ${chatId} deleted.`);
-                if (currentChatId === chatId) {
-                    currentChatId = null;
-                    document.getElementById('chat-messages').innerHTML = `
-                        <div class="flex flex-col items-center justify-center h-full text-gray-500 p-4 text-center">
-                            <i class="fas fa-comments text-6xl mb-4 text-gray-400"></i>
-                            <p class="text-lg font-semibold mb-2">Chat deleted!</p>
-                            <p class="mb-4">Click "New Chat" to start a new conversation.</p>
-                            <button onclick="window.newChat()" class="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition duration-300">
-                                Start New Chat
-                            </button>
-                        </div>
-                    `;
-                    document.getElementById('current-chat-title').textContent = 'New Chat';
-                }
-            } catch (error) {
-                console.error("Error deleting chat:", error);
-                showModal("Error", "Failed to delete chat: " + error.message);
-            }
-        };
-
-        // Function to handle logout
-        window.logout = async () => {
-            try {
-                await signOut(auth);
-                console.log("User logged out.");
-            } catch (error) {
-                console.error("Error logging out:", error);
-                showModal("Error", "Failed to log out: " + error.message);
-            }
-        };
-
-        // Event listener for Enter key in chat input
-        document.addEventListener('DOMContentLoaded', () => {
-            const chatInput = document.getElementById('chat-input');
-            const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
-            const sidebar = document.getElementById('sidebar');
-
-            chatInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault(); // Prevent new line
-                    window.sendMessage();
-                }
-            });
-
-            // Mobile sidebar toggle functionality
-            mobileSidebarToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('open');
-            });
-        });
-
-    </script>
-
-    <div id="login-popup" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
-        <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm w-full">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">Welcome to Martoo AI Assistant</h2>
-            <p class="text-gray-600 mb-6">Please wait while we log you in...</p>
-            <p class="text-sm text-gray-500 mt-4">Logging in anonymously...</p>
-            <p class="text-xs text-gray-400 mt-2">If you see this for a long time, there might be an issue with Firebase authentication or network.</p>
-        </div>
-    </div>
-
-    <div class="flex flex-1 overflow-hidden">
-        <aside id="sidebar" class="w-64 bg-gray-900 text-white flex flex-col p-4 shadow-lg hidden sm:flex transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out fixed sm:relative inset-y-0 left-0 z-50">
-            <h1 class="text-2xl font-bold mb-6 text-blue-400">Martoo AI</h1>
-            <nav class="flex-1 overflow-y-auto sidebar-nav">
-                <ul class="space-y-2">
-                    <li><a href="#" class="block p-3 rounded-lg hover:bg-slate-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-home mr-2"></i> Home</a></li>
-                    <li><a href="#" class="block p-3 rounded-lg hover:bg-slate-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-blog mr-2"></i> Blog</a></li>
-                    <li><a href="#" class="block p-3 rounded-lg hover:bg-slate-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-concierge-bell mr-2"></i> Services</a></li>
-                    <li><a href="#" class="block p-3 rounded-lg hover:bg-slate-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-keyboard mr-2"></i> Typing Assistant</a></li>
-                    <li><a href="#" class="block p-3 rounded-lg hover:bg-slate-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-info-circle mr-2"></i> About</a></li>
-                    <li><a href="#" class="block p-3 rounded-lg hover:bg-slate-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-address-book mr-2"></i> Contact</a></li>
-                    <li><a href="#" class="block p-3 rounded-lg hover:bg-slate-700 transition duration-200 ease-in-out text-gray-300"><i class="fas fa-download mr-2"></i> Downloader</a></li>
-                </ul>
-                <div class="border-t border-gray-700 my-4 pt-4">
-                    <h2 class="text-lg font-semibold mb-3 text-gray-300">Chats</h2>
-                    <button onclick="window.newChat()" class="w-full btn-gradient text-white px-4 py-2 rounded-full mb-4 shadow-md hover:shadow-lg transition duration-300">
-                        <i class="fas fa-plus mr-2"></i> New Chat
+<body>
+    <div class="flex main-container">
+        <!-- Sidebar and main content layout -->
+        <div class="flex-1 flex flex-col">
+            <!-- Header for the chat area -->
+            <div class="bg-white p-4 border-b border-gray-200 flex justify-between items-center sticky top-0 z-10">
+                <h1 class="text-2xl font-bold text-gray-800">Martoo AI Assistant</h1>
+                <div class="flex items-center space-x-2">
+                    <span id="user-id-display" class="user-id-container">Loading...</span>
+                    <button id="new-chat-button" class="text-gray-600 hover:text-blue-500 transition duration-200 p-2 rounded-full">
+                        <i class="fas fa-plus text-xl"></i>
                     </button>
-                    <ul id="chat-list" class="space-y-2">
-                    </ul>
                 </div>
-            </nav>
-            <div id="login-section" class="mt-auto pt-4 border-t border-gray-700 text-sm hidden">
-                <p class="text-gray-400">Logged in as: <span id="logged-in-user" class="font-semibold text-blue-300"></span></p>
-                <p class="text-gray-400 text-xs break-all">UID: <span id="user-uid" class="font-mono text-blue-300"></span></p>
-                <button onclick="window.logout()" class="mt-3 w-full bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300 shadow-md">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                </button>
-            </div>
-        </aside>
-
-        <main class="flex-1 flex flex-col bg-slate-900 rounded-lg shadow-lg m-0 sm:m-4 overflow-hidden relative">
-            <div class="bg-slate-800 p-4 border-b border-slate-700 flex items-center justify-between">
-                <h2 id="current-chat-title" class="text-xl font-semibold text-gray-200">New Chat</h2>
-                <button id="mobile-sidebar-toggle" class="sm:hidden text-gray-400 hover:text-gray-200 focus:outline-none">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
             </div>
 
-            <div id="chat-messages" class="flex-1 p-6 overflow-y-auto chat-messages flex flex-col space-y-4">
-                <div class="flex flex-col items-center justify-center h-full text-gray-400 p-4 text-center">
-                    <i class="fas fa-robot text-6xl mb-4 text-gray-500"></i>
+            <!-- Chat messages container -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <div id="initial-message" class="text-center text-gray-400 mt-10">
+                    <i class="fas fa-robot text-6xl mb-4 text-gray-400"></i>
                     <p class="text-lg font-semibold mb-2">Welcome to Martoo AI Assistant!</p>
                     <p class="mb-4">Start a new chat or select an existing one from the sidebar.</p>
                 </div>
             </div>
 
-            <div id="typing-indicator" class="hidden text-gray-500 text-sm px-6 pb-2">
+            <div id="typing-indicator" class="hidden text-gray-500 text-sm px-6 pb-2 typing-indicator">
                 Martoo AI is typing<span>.</span><span>.</span><span>.</span>
             </div>
 
-            <div id="chat-input-area" class="bg-slate-800 p-4 border-t border-slate-700 flex items-end space-x-3 sticky bottom-0 w-full z-10 hidden">
-                <label for="image-upload" class="cursor-pointer text-gray-400 hover:text-blue-500 transition duration-200 p-2 rounded-full bg-slate-700 hover:bg-slate-600">
+            <!-- Chat input area -->
+            <div id="chat-input-area" class="bg-gray-100 p-4 border-t border-gray-200 flex items-end space-x-3 sticky bottom-0 w-full z-10 hidden">
+                <label for="image-upload" class="cursor-pointer text-gray-600 hover:text-blue-500 transition duration-200 p-2 rounded-full bg-gray-200 hover:bg-gray-300">
                     <i class="fas fa-image text-xl"></i>
                     <input type="file" id="image-upload" accept="image/*" class="hidden">
                 </label>
-                <textarea id="chat-input" rows="1" class="flex-1 p-3 rounded-lg border border-slate-600 bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none overflow-y-hidden" placeholder="Type your message..."></textarea>
-                <button id="send-button" onclick="window.sendMessage()" class="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition duration-300">
+                <textarea id="chat-input" rows="1" class="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 resize-none overflow-y-hidden" placeholder="Type your message..."></textarea>
+                <button id="send-button" class="btn-gradient text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-200">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
-        </main>
+        </div>
     </div>
+
+    <!-- Import Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, addDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Constants and global variables
+        const CHAT_COLLECTION_NAME = 'chats';
+
+        // Get DOM elements
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendButton = document.getElementById('send-button');
+        const imageUpload = document.getElementById('image-upload');
+        const chatInputArea = document.getElementById('chat-input-area');
+        const initialMessage = document.getElementById('initial-message');
+        const userIdDisplay = document.getElementById('user-id-display');
+
+        // Initialize Firebase services
+        let db;
+        let auth;
+        let userId;
+
+        // Securely retrieve Firebase config and app ID from the environment
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // Function to create a chat message element
+        function createChatMessage(data, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+
+            const messageContentDiv = document.createElement('div');
+            messageContentDiv.className = `max-w-md px-4 py-2 rounded-lg shadow-md ${isUser ? 'bg-green-400 text-white' : 'bg-white text-gray-800'}`;
+
+            if (data.text) {
+                const textParagraph = document.createElement('p');
+                textParagraph.textContent = data.text;
+                messageContentDiv.appendChild(textParagraph);
+            }
+
+            if (data.imageUrl) {
+                const image = document.createElement('img');
+                image.src = data.imageUrl;
+                image.className = "mt-2 rounded-md max-w-full h-auto";
+                messageContentDiv.appendChild(image);
+            }
+
+            // Optional timestamp for messages
+            const timestampSpan = document.createElement('span');
+            const date = data.timestamp ? new Date(data.timestamp.seconds * 1000) : new Date();
+            timestampSpan.textContent = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            timestampSpan.className = `text-xs mt-1 ${isUser ? 'text-green-200' : 'text-gray-400'} block`;
+            messageContentDiv.appendChild(timestampSpan);
+
+            messageDiv.appendChild(messageContentDiv);
+            return messageDiv;
+        }
+
+        // Function to handle Firebase initialization and authentication
+        async function setupFirebase() {
+            try {
+                // Initialize Firebase app
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Sign in the user. This is crucial for accessing Firestore.
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // Get the user's ID and display it
+                userId = auth.currentUser?.uid || crypto.randomUUID();
+                userIdDisplay.textContent = `User ID: ${userId}`;
+                chatInputArea.classList.remove('hidden');
+
+                // Start listening for real-time updates to the chat
+                listenForChatMessages();
+
+            } catch (error) {
+                console.error("Firebase setup failed:", error);
+            }
+        }
+
+        // Function to send a message to Firestore
+        async function sendMessage() {
+            const messageText = chatInput.value.trim();
+            const imageFile = imageUpload.files[0];
+
+            if (!messageText && !imageFile) {
+                return;
+            }
+
+            try {
+                // Add the message to Firestore
+                await addDoc(collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME), {
+                    userId: userId,
+                    text: messageText,
+                    // Note: image upload logic would be more complex, involving storage.
+                    // For this example, we'll just handle text.
+                    timestamp: serverTimestamp()
+                });
+
+                // Clear the input field after sending
+                chatInput.value = '';
+                imageUpload.value = '';
+                chatInput.style.height = 'auto'; // Reset textarea height
+
+            } catch (error) {
+                console.error("Error writing message to Firestore: ", error);
+            }
+        }
+
+        // Real-time listener for chat messages
+        function listenForChatMessages() {
+            const messagesRef = collection(db, 'artifacts', appId, 'public/data', CHAT_COLLECTION_NAME);
+            const q = query(messagesRef, orderBy('timestamp'));
+
+            onSnapshot(q, (snapshot) => {
+                // Clear the chat and initial message
+                chatMessages.innerHTML = '';
+                initialMessage.style.display = 'none';
+
+                snapshot.forEach((doc) => {
+                    const messageData = doc.data();
+                    const isUser = messageData.userId === userId;
+                    const messageElement = createChatMessage(messageData, isUser);
+                    chatMessages.appendChild(messageElement);
+                });
+
+                // Scroll to the bottom after new messages are loaded
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+        }
+        
+        // Event listeners for the UI
+        sendButton.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        // Auto-resize the textarea
+        chatInput.addEventListener('input', () => {
+            chatInput.style.height = 'auto';
+            chatInput.style.height = chatInput.scrollHeight + 'px';
+        });
+
+        // Initialize the app
+        window.addEventListener('load', setupFirebase);
+    </script>
 </body>
 </html>

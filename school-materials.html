@@ -5,35 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Martoo Tech Works - School Materials</title>
 
-    <!-- Tailwind CSS for modern styling -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Inter Font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
 
     <style>
+        /* Apply the Inter font to the entire body */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0a0e13;
+            background-color: #0a0e13; /* A very dark background for a sleek look */
             color: #f0f6fc;
         }
+
+        /* Custom styles for the cards */
         .material-card {
             border: 1px solid transparent;
             transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
+
         .material-card:hover {
             transform: translateY(-8px);
-            border-color: #fb923c;
-            box-shadow: 0 10px 20px rgba(251, 146, 60, 0.15);
+            border-color: #fb923c; /* A subtle orange border on hover */
+            box-shadow: 0 10px 20px rgba(251, 146, 60, 0.15); /* A glow effect on hover */
         }
+
+        /* Updated header styles for better alignment and responsiveness */
         .main-header {
             @apply flex flex-col items-center justify-center text-center p-4 md:p-6;
         }
+
+        /* Mobile navigation styling for slide-in effect */
         .mobile-nav {
             transform: translateX(100%);
             transition: transform 0.3s ease-in-out;
@@ -44,16 +49,17 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
-    <!-- Header Section -->
     <header class="bg-gray-900/75 backdrop-blur-sm shadow-lg">
         <div class="container mx-auto flex items-center justify-between p-4 md:p-6">
             <div class="main-header">
                 <img src="Images/file_00000000dad061f886772cbf982dfb4b.png" alt="Martoo Tech Works Logo" class="h-14 w-14 md:h-20 md:w-20 rounded-full border-2 border-yellow-500 object-cover" />
                 <h1 class="text-xl md:text-2xl font-bold text-orange-400 mt-2">Martoo Tech Works</h1>
             </div>
+
             <button id="menu-button" class="md:hidden text-2xl text-orange-400 focus:outline-none p-2 rounded-md transition-colors duration-200 hover:bg-orange-400 hover:text-gray-900" aria-label="Toggle menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
+            
             <nav id="main-nav-desktop" class="hidden md:flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6 w-full md:w-auto mt-4 md:mt-0">
                 <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
                     <li><a href="#" class="block px-4 py-2 rounded-lg font-semibold text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Home</a></li>
@@ -69,8 +75,8 @@
                                 </a>
                                 <ul class="absolute hidden group-hover/vpn:block left-full top-0 bg-gray-700/90 rounded-lg shadow-xl w-48 mt-0 ml-2">
                                     <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Vmess</a></li>
-                                    <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Trojan</a></li>
-                                    <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">UDP</a></li>
+                                    <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:hover:text-gray-900 transition-colors">Trojan</a></li>
+                                    <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:hover:text-gray-900 transition-colors">UDP</a></li>
                                 </ul>
                             </li>
                             <li><a href="#" class="block px-4 py-2 rounded-lg text-white hover:bg-orange-500 hover:text-gray-900 transition-colors">Materials</a></li>
@@ -82,8 +88,7 @@
                 </ul>
             </nav>
         </div>
-
-        <!-- Mobile Menu -->
+        
         <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 bg-gray-900/95 backdrop-blur-sm z-50 mobile-nav shadow-lg md:hidden">
             <div class="p-6">
                 <button id="close-menu-button" class="text-2xl text-orange-400 focus:outline-none mb-6">
@@ -120,12 +125,138 @@
         </div>
     </header>
 
-    <!-- Main Content Area -->
     <main class="flex-grow p-4 md:p-8 max-w-7xl mx-auto my-8 bg-gray-900/60 backdrop-blur-sm rounded-xl shadow-lg text-center">
         <h2 class="text-3xl md:text-4xl font-bold text-orange-400 mb-4">Essential Study Materials</h2>
         <p class="text-base md:text-lg text-gray-300 mb-8 max-w-prose mx-auto">
             Explore our curated collection of resources designed to support your academic and professional growth. Click on a card to access the materials.
         </p>
 
-        <!-- Original Material Cards Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+            <a href="https://drive.google.com/drive/folders/1C3IdOlXofYJcUXuVRD8FHsLcPBjSTlEj" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-notes-medical text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Medicine Study Materials</h3>
+                <p class="text-sm text-gray-300">A comprehensive collection of notes and guides for medical students.</p>
+            </a>
+            
+            <a href="https://drive.google.com/drive/folders/19liIF8D8IPFr3ZTs8oPefNNuZWPKhpSp" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-map-marked-alt text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">GIS Data Sets</h3>
+                <p class="text-sm text-gray-300">High-quality GIS data and mapping resources for your projects.</p>
+            </a>
+            
+            <a href="School materials/all mental health notes.zip" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-brain text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Mental Health Notes</h3>
+                <p class="text-sm text-gray-300">Valuable notes and resources on mental health and wellness.</p>
+            </a>
+            
+            <a href="https://drive.google.com/drive/folders/1_bN9UdjCaD4Wei3fTbYUlH_0xjLMcV1b" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-prescription-bottle-alt text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Generics Study Guides</h3>
+                <p class="text-sm text-gray-300">Study materials and notes on generic medicines.</p>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1Mcc7TCR5hHDrKJxrhPqh5M7DoXBNh4BK" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-chart-line text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Health Economics</h3>
+                <p class="text-sm text-gray-300">Resources on health economics and healthcare financing.</p>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1SCnqtjrc2wKrmUxNkSmHUyvdYluIY6So" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-users text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">HRM</h3>
+                <p class="text-sm text-gray-300">Human Resource Management study materials.</p>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/17RSEmzgBcBc64e4-4hx4ZjTe8eJCbeBT" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-hospital-user text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Medical Anthropology</h3>
+                <p class="text-sm text-gray-300">Notes on the cultural and social aspects of health and medicine.</p>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1M-9H1LcveH7N0qO7JMdGGy2h20YIgNk0" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-flask text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Health Systems Research</h3>
+                <p class="text-sm text-gray-300">Resources on health systems research and projects.</p>
+            </a>
+            
+            <a href="https://drive.google.com/drive/folders/18gamu0wButJnS9UvFSmt7fd7SNlbWuyS" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-exclamation-triangle text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Risk Assessment & Disaster Management</h3>
+                <p class="text-sm text-gray-300">Materials for risk assessment and disaster management.</p>
+            </a>
+            
+            <a href="https://drive.google.com/drive/u/0/mobile/folders/1if09a9QyNfBRlAKey7If5preZ3BswudZ" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-laptop-code text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">Tech & Professional Skills</h3>
+                <p class="text-sm text-gray-300">Project Management, Product Management, Software Engineering, Scrum, PMP Certification, SQL, UI/UX Design, Interview Documents, Data Analytics, Business Analysis, Data Visualization, Big Data</p>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1CgN7DE3pNRNh_4BA_zrrMLqWz6KquwuD" target="_blank" rel="noopener noreferrer" class="material-card bg-gray-800/80 p-6 rounded-xl text-white shadow-lg">
+                <i class="fas fa-database text-4xl text-orange-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-yellow-500 mb-1">500 TB Data Science Toolbox</h3>
+                <p class="text-sm text-gray-300">Complete tutorials, books, courses, trainings, and workshops for free covering BI, MBA, SPSS, Cloud, Python, Tableau, Hadoop, Statistics, Big Data, Databases, IT Training, Data Science, AWS, Deep Learning, Data Analytics, Ethical Hacking, Computer Vision, Machine Learning, AI, Probability & Statistics, Google Cloud, Language Resources</p>
+            </a>
+
+        </div>
+    </main>
+
+    <footer class="bg-gray-900/80 backdrop-blur-sm p-4 md:p-6 text-center text-gray-400 text-sm mt-auto shadow-inner">
+        <div class="flex justify-center space-x-6 mb-4" aria-label="Social media links">
+            <a href="https://wa.me/260973495316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="text-2xl text-white hover:text-green-500 transition-colors">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61568599103956" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-2xl text-white hover:text-blue-600 transition-colors">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://youtube.com/@martootechhub?si=dLW8TW0zxpMOYxWF" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="text-2xl text-white hover:text-red-600 transition-colors">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        <p>&copy; 2024 Martoo Tech Works. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMenuButton = document.getElementById('close-menu-button');
+            const dropdownButtons = document.querySelectorAll('.mobile-dropdown-btn');
+
+            // Toggle mobile menu visibility
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+                menuButton.setAttribute('aria-expanded', mobileMenu.classList.contains('open'));
+            });
+
+            closeMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                menuButton.setAttribute('aria-expanded', 'false');
+            });
+
+            // Toggle mobile dropdown sub-menus
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const dropdown = button.nextElementSibling;
+                    if (dropdown) {
+                        dropdown.classList.toggle('hidden');
+                        const icon = button.querySelector('i');
+                        if (icon) {
+                            icon.classList.toggle('fa-chevron-down');
+                            icon.classList.toggle('fa-chevron-right');
+                        }
+                    }
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !menuButton.contains(e.target) && mobileMenu.classList.contains('open')) {
+                    mobileMenu.classList.remove('open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
